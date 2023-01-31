@@ -4,14 +4,14 @@ import java.security.SecureRandom;
 
 public class User{
     private String username;
-    private String hashed_password;
-    private byte[] password_salt;
+    private String hashedPassword;
+    private byte[] passwordSalt;
 
-    public User(String username,String password_string)
+    public User(String username,String passwordString)
     {
         this.username = username;
-        this.password_salt = getSalt();
-        this.hashed_password = generatePassword(password_string,this.password_salt);
+        this.passwordSalt = getSalt();
+        this.hashedPassword = generatePassword(passwordString,this.passwordSalt);
     }
 
     private static byte[] getSalt()
@@ -22,24 +22,24 @@ public class User{
         return salt;
     }
 
-    private static String generatePassword(String password_string,byte[] salt)
+    private static String generatePassword(String passwordString,byte[] salt)
     {
-        String generated_password = null;
+        String generatedPassword = null;
 
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(salt);
-            byte[] bytes = md.digest(password_string.getBytes());
+            byte[] bytes = md.digest(passwordString.getBytes());
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < bytes.length; i++) {
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
-            generated_password = sb.toString();
+            generatedPassword = sb.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
-        return generated_password;
+        return generatedPassword;
     }
 
     public void setUsername(String username) 
@@ -47,15 +47,20 @@ public class User{
         this.username = username;
     }
 
-    public String getHashedPassword() 
+    public String getUsername()
     {
-        return this.hashed_password;
+        return this.username;
     }
 
-    public boolean comparePassword(String input_password)
+    public String getHashedPassword() 
     {
-        String hashed_input_password = generatePassword(input_password, this.password_salt);
+        return this.hashedPassword;
+    }
 
-        return this.hashed_password.equals(hashed_input_password);
+    public boolean comparePassword(String inputPassword)
+    {
+        String hashedInputPassword = generatePassword(inputPassword, this.passwordSalt);
+
+        return this.hashedPassword.equals(hashedInputPassword);
     }
 }
