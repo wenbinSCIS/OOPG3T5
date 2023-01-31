@@ -52,15 +52,9 @@ public class User{
         return this.hashed_password;
     }
 
-    public byte[] getPasswordSalt()
-    {
-        return this.password_salt;
-    }
-
     public boolean comparePassword(String input_password)
     {
         String hashed_input_password = generatePassword(input_password, this.password_salt);
-        System.out.println(hashed_input_password);
 
         return this.hashed_password.equals(hashed_input_password);
     }
