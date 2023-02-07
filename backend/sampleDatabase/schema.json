@@ -1,0 +1,18 @@
+{
+    "required": [ "formName", "sections", "version"],
+    "properties": {
+        "formName": {
+           "bsonType": "string",
+           "description": "'formName' must be a string and is required"
+        },
+        "sections": {
+            "bsonType": ["null", "array"],
+            "description": "'name' must be a string and is required"
+         },
+         "version": {
+            "bsonType": "double",
+            "description": "'name' must be a string and is required"
+         }
+         
+    }
+}
