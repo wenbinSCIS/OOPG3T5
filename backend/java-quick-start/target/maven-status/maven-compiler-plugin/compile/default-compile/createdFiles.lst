@@ -1,0 +1,3 @@
+com\mongodb\quickstart\Create.class
+com\mongodb\quickstart\models\Grade.class
+com\mongodb\quickstart\models\Score.class
