@@ -34,7 +34,7 @@ Open MongoCompass to see your databases.
 Currently ive only edited the Create file which adds the `sample.json` into the db.
 
 Run the `Create` command below to add in a document into the db.
-![Alt text](relative/path/to/img.jpg?raw=true "Title")
+![image of db]("backend\Screenshot 2023-02-08 153515.jpg" "Title")
 
 # Command lines
 
