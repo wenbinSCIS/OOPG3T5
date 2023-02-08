@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class CompanyUser extends User{
+public class Vendor extends User{
     private ArrayList<Form> form_list;
 
-    public CompanyUser(String username,String password)
+    public Vendor(String username,String password)
     {
         super(username, password);
         this.form_list = new ArrayList<Form>();
