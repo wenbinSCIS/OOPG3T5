@@ -10,7 +10,7 @@ You can read more about the Quick Start series on the [MongoDB Developer Hub](ht
 
 Download [maven](https://maven.apache.org/download.cgi) (binary file)
 
-Download (mongo shell)[https://www.mongodb.com/try/download/shell] and (mongodb community version)[https://www.mongodb.com/try/download/community] (install all functionalities and restart com)
+Download [mongo shell](https://www.mongodb.com/try/download/shell) and [mongodb community version](https://www.mongodb.com/try/download/community) (install all functionalities and restart com)
 
 MongoDB needs a folder to store the database. Create a C:\data\db\ directory:
 
