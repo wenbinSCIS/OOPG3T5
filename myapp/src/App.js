@@ -30,7 +30,8 @@ export default function App() {
   return (
     <>
       <Router>
-        <Login />
+      
+        <MyRoute></MyRoute>
       </Router>
     </>
   );

@@ -7,11 +7,20 @@ import {
   MDBCol,
   MDBInput
 }
+
 from 'mdb-react-ui-kit';
 import logo from "../assets/img/log.jpg";
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 export default function Login() {
+    const navigate = useNavigate();
+
+    const navigateToHome = () => {
+
+      navigate('/home');
+    };
     return (
+        
 
         <MDBContainer className="my-5 gradient-form">
 
@@ -38,7 +47,7 @@ export default function Login() {
 
 
             <div className="text-center pt-1 mb-5 pb-1">
-              <MDBBtn className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
+              <MDBBtn onClick={navigateToHome} className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
               <a className="text-muted" href="#!">Forgot password?</a>
             </div>
 
@@ -52,8 +61,8 @@ export default function Login() {
           <div className="d-flex flex-column  justify-content-center gradient-custom-2 h-100 mb-4">
 
             <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-              <h4 class="mb-4">QUANTUM LEAP Portal</h4>
-              <p class="small mb-0">Do everything in here!
+              <h4 className="mb-4">QUANTUM LEAP Portal</h4>
+              <p className="small mb-0">Do everything in here!
               </p>
             </div>
 
