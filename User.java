@@ -17,7 +17,7 @@ public class User{
     private static byte[] getSalt()
     {
         SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
+        byte[] salt = new byte[32];
         random.nextBytes(salt);
         return salt;
     }
@@ -60,7 +60,6 @@ public class User{
     public boolean comparePassword(String inputPassword)
     {
         String hashedInputPassword = generatePassword(inputPassword, this.passwordSalt);
-
         return this.hashedPassword.equals(hashedInputPassword);
     }
 }
