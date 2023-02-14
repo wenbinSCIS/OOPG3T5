@@ -11,7 +11,7 @@ import {
 from 'mdb-react-ui-kit';
 import logo from "../assets/img/log.jpg";
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import backgroundVideo from '../assets/video/videofile3.mp4';
+import backgroundVideo from '../assets/video/videofile2.mp4';
 
 
 export default function Login() {
