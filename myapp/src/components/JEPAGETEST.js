@@ -1,6 +1,4 @@
-
 import React from 'react';
-import TextInput from './TextInput';
 import GenerateRow from './RowGeneration';
 
 export default function TestPage() {
@@ -42,6 +40,13 @@ export default function TestPage() {
       size = {4}
       inputType = {'Textinput'}
       details = {[["Email Address","ex: email@yahoo.com"]]}
+      >
+      </GenerateRow>
+      <GenerateRow
+      columns={1}
+      size = {4}
+      inputType = {'Dropdown'}
+      details = {[{title:'How did you hear about us?*',options:["Selection A","Selection B","Selection C"]}]}
       >
       </GenerateRow>
     </div>
