@@ -49,6 +49,29 @@ export default function TestPage() {
       details = {[{title:'How did you hear about us?*',options:["Selection A","Selection B","Selection C"]}]}
       >
       </GenerateRow>
+      <GenerateRow 
+      columns={1}
+      inputType = {'Textarea'}
+      details = {[['Feedback About us:'," "]]}
+      ></GenerateRow>
+      <GenerateRow 
+      columns={1}
+      inputType = {'Textarea'}
+      details = {[['Suggestions if any for further improvement:'," "]]}
+      ></GenerateRow>
+      <GenerateRow
+      columns={1}
+      size = {4}
+      inputType = {'Checkbox'}
+      details = {[{title:'Will you be willing to recommend us?', options:["Yes","Maybe","No"]}]}
+      >
+      </GenerateRow>
+      <GenerateRow
+      columns={1}
+      inputType = {'Checkbox'}
+      details = {[{title:'', options:["I agree to the Terms of Service and Privacy Policy. I have read the KVKK Clarification Text and I accept the processing of my personal data in accordance with the Explicit Consent Text."]}]}
+      >
+      </GenerateRow>
     </div>
     
   );
