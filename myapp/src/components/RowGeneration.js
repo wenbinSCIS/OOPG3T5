@@ -12,7 +12,7 @@ function GenerateRow(props) {
     }
     else{
         var dimensions = 12/props.columns
-    } 
+    }
     if(inputType=="Textinput"){
         for(let i=0;i<props.columns;i++){
             var info = props.details[i]

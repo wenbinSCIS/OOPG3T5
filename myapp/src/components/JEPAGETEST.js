@@ -2,12 +2,17 @@ import React from 'react';
 import GenerateRow from './RowGeneration';
 
 export default function TestPage() {
+
+    //Api calls here
+    var response = {
+        "code":200,
+    };
   return (
     <div className="container">
       <GenerateRow 
       columns={2}
       inputType = {'Textinput'}
-      details = {[['Full Name',"First Name"],[" ","Last Name"]]}
+      details = {[['Full Name',"First Name"],["","Last Name"]]}
       >
       </GenerateRow>
       <GenerateRow
@@ -19,13 +24,13 @@ export default function TestPage() {
       <GenerateRow
       columns={1}
       inputType = {'Textinput'}
-      details = {[[' ',"Street Address Line 2"]]}
+      details = {[['',"Street Address Line 2"]]}
       >
       </GenerateRow>
       <GenerateRow
       columns={2}
       inputType = {'Textinput'}
-      details = {[[" ","city"],[" ","State / Province"]]}
+      details = {[["","city"],["","State / Province"]]}
       >
       </GenerateRow>
       <GenerateRow
@@ -52,12 +57,12 @@ export default function TestPage() {
       <GenerateRow 
       columns={1}
       inputType = {'Textarea'}
-      details = {[['Feedback About us:'," "]]}
+      details = {[['Feedback About us:',""]]}
       ></GenerateRow>
       <GenerateRow 
       columns={1}
       inputType = {'Textarea'}
-      details = {[['Suggestions if any for further improvement:'," "]]}
+      details = {[['Suggestions if any for further improvement:',""]]}
       ></GenerateRow>
       <GenerateRow
       columns={1}
