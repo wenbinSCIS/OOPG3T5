@@ -5,39 +5,48 @@ import Textarea from './Textarea';
 import TextInput from './TextInput';
 
 function GenerateRow(props) {
-    const to_return = []
-    var inputType = props.inputType
-    if(props.size){
-        var dimensions = props.size
-    }
-    else{
-        var dimensions = 12/props.columns
-    }
-    if(inputType=="Textinput"){
-        for(let i=0;i<props.columns;i++){
-            var info = props.details[i]
-            to_return.push( <TextInput title={info[0]} hint={info[1]} size={dimensions}></TextInput>)
+    var to_return = []
+    var all_info = props.info
+    var false_header=false
+    for(let i=0;i<all_info.length;i++){
+        var element = all_info[i]
+        var inputType = element["elementType"]
+        if("size" in element){
+            var dimensions = parseInt(element["size"])
+        }
+        else{
+            var dimensions = 12 /all_info.length
+        }
+        
+        if(inputType=="Textinput"){
+            if(i>0 && all_info[0]["elementHeader"].length>0){
+                var false_header = true
+            }
+            to_return.push( <TextInput title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header}></TextInput>)
+        }
+        else if(inputType=="Dropdown"){
+            if(i>0 && all_info[0]["elementHeader"].length>0){
+                var false_header = true
+            }
+            to_return.push(<Dropdown title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header}></Dropdown>)
+            
+        }
+        else if(inputType=="Checkbox"){
+            if(i>0 && all_info[0]["elementHeader"].length>0){
+                var false_header = true
+            }
+            to_return.push(<Checkbox title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header}></Checkbox>)
+            
+        }
+        else if(inputType="Textarea"){
+            if(i>0 && all_info[0]["elementHeader"].length>0){
+                var false_header = true
+            }
+            to_return.push( <Textarea title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header}></Textarea>)
+            
         }
     }
-    else if(inputType=="Dropdown"){
-        for(let i=0;i<props.columns;i++){
-            var info = props.details[i]
-            to_return.push(<Dropdown title={info.title} options={info.options} size={dimensions}></Dropdown>)
-        }
-    }
-    else if(inputType=="Checkbox"){
-        for(let i=0;i<props.columns;i++){
-            var info = props.details[i]
-            to_return.push(<Checkbox title={info["title"]} options={info.options} size={dimensions}></Checkbox>)
-        }
-    }
-    else if(inputType="Textarea"){
-        for(let i=0;i<props.columns;i++){
-            var info = props.details[i]
-            to_return.push( <Textarea title={info[0]} hint={info[1]} size={dimensions}></Textarea>)
-        }
-    }
-    
+    console.log(to_return)
     return (
         <div className='row'>
             {to_return}

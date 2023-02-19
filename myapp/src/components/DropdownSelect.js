@@ -8,12 +8,17 @@ function Dropdown(props) {
     setSelectedValue(event.target.value);
   }
 
-    const number = `form-group col-md-${props.size}`
+    const number = `form-group col-md-${props.size} mb-1`
   
     return (
        <div className={number} style={{margin:0}}>
-        <label style={{margin:0,color:'deepskyblue'}}>{props.title}</label>
-        <br></br>
+        {props.title.length>0 &&
+        <label style={{margin:0,color:'deepskyblue'}}>{props.title} </label>
+        }
+        {
+          props.false_header &&
+          <br></br>
+        }
         <select className="form-control" value={selectedValue} onChange={handleValueChange}>
             
         {props.options.map((option, index) => (

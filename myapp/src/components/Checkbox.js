@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Checkbox({ options, title,size}) {
+function Checkbox({ options, title,size,false_header,name}) {
   
   const [selectedItems, setSelectedItems] = useState([]);
   const number = `form-group col-md-${size}`
@@ -18,12 +18,17 @@ function Checkbox({ options, title,size}) {
     }
   }
   return (
-    <div className={number} style={{margin:0}}>
-      <a style={{margin:0,color:'deepskyblue'}}>{title}</a>
-      <br></br>
+    <div className={number} style={{margin:0}} >
+      {title.length>0 &&
+        <label style={{margin:0,color:'deepskyblue'}}>{title} </label>
+      }
+      {
+        false_header &&
+        <br></br>
+      }
       {options.map((item,index) => (
-        <div>
-        <label key={item} >
+        <div key={item}>
+        <label> 
           <input
             type="checkbox"
             value={item}
@@ -31,7 +36,7 @@ function Checkbox({ options, title,size}) {
             checked={selectedItems.includes(item)}
             onChange={handleCheckboxChange}
           />
-          {item}
+          {" "+item}
         </label>
       </div>
       ))}
