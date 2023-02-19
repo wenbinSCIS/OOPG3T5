@@ -15,9 +15,13 @@ public class Read {
 
     public static void main(String[] args) {
         try (MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"))) {
-            MongoDatabase sampleTrainingDB = mongoClient.getDatabase("sample_training");
-            MongoCollection<Document> gradesCollection = sampleTrainingDB.getCollection("grades");
-
+            MongoDatabase formsDB = mongoClient.getDatabase("Forms");
+            MongoCollection<Document> forms = formsDB.getCollection("Form Elements");
+            
+            Document form = forms.find(new Document("formName", "myform2")).first();
+            System.out.println("form1: " + form.toJson());
+            
+            /* 
             // find one document with new Document
             Document student1 = gradesCollection.find(new Document("student_id", 10000)).first();
             System.out.println("Student 1: " + student1.toJson());
@@ -58,6 +62,7 @@ public class Read {
             for (Document student : docs) {
                 System.out.println(student.toJson());
             }
+            */
         }
     }
 }
