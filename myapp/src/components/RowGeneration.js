@@ -3,6 +3,7 @@ import Checkbox from './Checkbox';
 import Dropdown from './DropdownSelect';
 import Textarea from './Textarea';
 import TextInput from './TextInput';
+import Radio from './Radio';
 
 function GenerateRow(props) {
     var to_return = []
@@ -38,14 +39,33 @@ function GenerateRow(props) {
             to_return.push(<Checkbox title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header}></Checkbox>)
             
         }
-        else if(inputType="Textarea"){
+        else if(inputType=="Textarea"){
             if(i>0 && all_info[0]["elementHeader"].length>0){
                 var false_header = true
             }
             to_return.push( <Textarea title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header}></Textarea>)
             
         }
-    }
+        else if (inputType = "Radio") {
+            to_return.push(
+              <div className={`form-group col-md-${dimensions}`} style={{margin:0}}>
+                {element["elementHeader"].length > 0 && <label style={{margin:0,color:'deepskyblue'}}>{element["elementHeader"]}</label>}
+                {element["options"].map((option, index) => (
+                  <div key={index}>
+                    <label>
+                      <input
+                        type="radio"
+                        name={element["elementName"]}
+                        value={option}
+                      />
+                      {" " + option}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            );
+          }          
+          
     console.log(to_return)
     return (
         <div className='row'>
@@ -54,5 +74,5 @@ function GenerateRow(props) {
         
     );
   }
-  
+}
   export default GenerateRow;

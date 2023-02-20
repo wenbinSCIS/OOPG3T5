@@ -7,12 +7,18 @@ function MyForm() {
   const [showAddComponent, setShowAddComponent] = useState(false);
   const [formComponents, setFormComponents] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [elementName, setElementName] = useState('');
   const [options, setOptions] = useState([
     "Add Name field",
     "Add DropDown",
     "Add TextArea",
     "Add Checkbox",
+    "Add Radio",
   ]);
+  
+    const handleInputChange = (event) => {
+      setElementName(event.target.value);
+    }
 
   function handleOptionChange(event) {
     setSelectedOption(event.target.value);
@@ -42,7 +48,7 @@ function MyForm() {
       ],
     ],
   };
-
+  name_section.rowElements[0][0].elementHeader = elementName;
   var textarea_section = {
     sectionName: "Feedback",
     sectionText: "",
@@ -52,13 +58,13 @@ function MyForm() {
       [
         {
           elementName: "Feedback",
-          elementHeader: "Feedback About us:",
+          elementHeader: "",
           elementType: "Textarea",
         },
       ],
     ],
   };
-
+  textarea_section.rowElements[0][0].elementHeader = elementName;
   var dropdown_section = {
     sectionName: "How",
     sectionText: "",
@@ -68,7 +74,7 @@ function MyForm() {
       [
         {
           elementName: "How",
-          elementHeader: "How did you hear about us?*",
+          elementHeader: "",
           elementType: "Dropdown",
           size: "4",
           options: ["Selection A", "Selection B", "Selection C"],
@@ -76,7 +82,7 @@ function MyForm() {
       ],
     ],
   };
-
+  dropdown_section.rowElements[0][0].elementHeader = elementName;
   var checkbox_section = {
     sectionName: "Recommend",
     sectionText: "",
@@ -86,15 +92,34 @@ function MyForm() {
       [
         {
           elementName: "Recommend",
-          elementHeader: "Will you be willing to recommend us?",
           elementType: "Checkbox",
+          elementHeader: "",
           size: "4",
           options: ["Yes", "Maybe", "No"],
         },
       ],
     ],
   };
+  checkbox_section.rowElements[0][0].elementHeader = elementName;
 
+  var radio_section={
+    sectionName: "test",
+    sectionText: "",
+    sectionFont: "12",
+    numRows: "1",
+    rowElements: [
+      [
+        {
+          elementName: "Select",
+          elementHeader: "RadioTest",
+          elementType: "Radio",
+          size: "4",
+          options: ["Yes", "Maybe", "No"]
+        },
+      ],
+    ],
+  }
+  radio_section.rowElements[0][0].elementHeader = elementName;
   function handleAddComponent({name}) {
     // we should specific add components for each type
     let target = textarea_section;
@@ -112,7 +137,9 @@ function MyForm() {
     if (name == "Add Checkbox") {
       target = checkbox_section;
     }
-
+    if (name == "Add Radio"){
+      target = radio_section;
+    }
       setFormComponents([
         ...formComponents,
         <GenerateSection section={target}></GenerateSection>,
@@ -149,6 +176,7 @@ The i variable represents the index of the current element being iterated over i
           showAdd={showAddComponent}
         />
       </div>
+      
       <>
         {showAddComponent && (
           <div>
@@ -162,6 +190,17 @@ The i variable represents the index of the current element being iterated over i
                   </option>
                 ))}
               </select>
+            </div>
+    <div>
+    </div>
+            <div className="button-container">
+              <input
+                type="text"
+                className="centered-textbox"
+                placeholder="Enter element name"
+                value={elementName}
+                onChange={handleInputChange}
+              />
             </div>
             {selectedOption && (
               <div className="button-container">
@@ -178,6 +217,7 @@ The i variable represents the index of the current element being iterated over i
         )}
       </>
     </div>
+  
   );
 }
 
