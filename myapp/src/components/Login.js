@@ -43,9 +43,11 @@ export default function Login() {
             <br/>
             <p>Please login to your account</p>
             <br/>  
+            <label htmlFor='form1'>Email address</label>
+            <MDBInput wrapperClass='mb-4' id='form1' type='email'/>
 
-            <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'/>
-            <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'/>
+            <label htmlFor='form2'>Password</label>
+            <MDBInput wrapperClass='mb-4' id='form2' type='password'/>
 
 
             <div className="text-center pt-1 mb-5 pb-1">

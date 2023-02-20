@@ -1,13 +1,14 @@
 
 import { Link } from "react-router-dom";
-import Navbar from "./Navbar";
+
 import Footer from "./Footer";
 import Totop from "./Totop";
+import Sidebar from "./Sidebar/Sidebar";
 export default function Home() {
   return (
     <>
-      <Navbar />
       <section id="hero" className="d-flex align-items-center">
+      <Sidebar/>
         <div className="container">
           <div className="row">
             <div className="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1">
@@ -22,7 +23,7 @@ export default function Home() {
                     href="https://play.google.com/store/apps/details?id=com.wekn.factify"
                     className="btn download-btn"
                   >
-                    <i className="bx bxl-play-store"></i> Google Play
+                    <i className="bx bxl-play-store"></i> My Forms
                   </a>
                   <Link to="/adminlogin" className="btn download-btn">
                     <i className="bx bx-globe"></i>Go To Admin
