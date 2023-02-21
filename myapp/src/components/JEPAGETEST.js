@@ -188,7 +188,7 @@ export default function TestPage() {
 
   return (
     <section className='d-flex align-items-center'>
-      <Sidebar/>
+      <Sidebar></Sidebar>
     <div class="container">
     {to_return}
     </div>
