@@ -1,9 +1,9 @@
 import React from 'react';
 import GenerateRow from './RowGeneration';
 import GenerateSection from './SectionGeneration';
-
+import Sidebar from "./Sidebar/Sidebar.js";
 export default function TestPage() {
-
+    
     //Api calls here
     var response = {
       "formName":"myform2",
@@ -20,6 +20,8 @@ export default function TestPage() {
                       "placeholder":"First Name",
                       "placeholderPosition":"hint", //either hint or under for now
                       "elementType":"Textinput",
+                      // numCols
+                      // align
                   },
                   {
                     "elementName":"lastName",
@@ -185,9 +187,14 @@ export default function TestPage() {
   }
 
   return (
-    <div className="container">
-      {to_return}
+    <section className='d-flex align-items-center'>
+      <Sidebar/>
+    <div class="container">
+    {to_return}
     </div>
+    </section>
+    
+    
     
   );
 }
