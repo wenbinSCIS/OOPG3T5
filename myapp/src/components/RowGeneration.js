@@ -8,6 +8,7 @@ import Radio from './Radio';
 function GenerateRow(props) {
     var to_return = []
     var all_info = props.info
+    console.log(all_info)
     var false_header=false
     for(let i=0;i<all_info.length;i++){
         var element = all_info[i]
@@ -20,10 +21,10 @@ function GenerateRow(props) {
         }
         
         if(inputType=="Textinput"){
-            if(i>0 && all_info[0]["elementHeader"].length>0){
-                var false_header = true
-            }
-            to_return.push( <TextInput title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header}></TextInput>)
+          if(i>0 && all_info[0]["elementHeader"].length>0){
+              var false_header = true
+          }
+          to_return.push( <TextInput title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header}></TextInput>)
         }
         else if(inputType=="Dropdown"){
             if(i>0 && all_info[0]["elementHeader"].length>0){
@@ -44,9 +45,8 @@ function GenerateRow(props) {
                 var false_header = true
             }
             to_return.push( <Textarea title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header}></Textarea>)
-            
         }
-        else if (inputType = "Radio") {
+         else if (inputType == "Radio") {
             to_return.push(
               <div className={`form-group col-md-${dimensions}`} style={{margin:0}}>
                 {element["elementHeader"].length > 0 && <label style={{margin:0,color:'deepskyblue'}}>{element["elementHeader"]}</label>}
@@ -65,14 +65,13 @@ function GenerateRow(props) {
               </div>
             );
           }          
-          
-    console.log(to_return)
+        }
     return (
         <div className='row'>
             {to_return}
         </div>
         
     );
-  }
+  
 }
   export default GenerateRow;
