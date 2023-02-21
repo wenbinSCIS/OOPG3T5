@@ -1,0 +1,45 @@
+{
+    "formName":"myform2",
+    "sections":[
+        {
+            "sectionName":"Name",
+            "sectionText":"Fill in your name",
+            "sectionFont":12,
+            "pageElements":[
+                {
+                    "elementName":"firstName",
+                    "elementCode":"1",
+                    "placeholder":"first name"
+                },
+                {
+                    "elementName":"lastName",
+                    "elementCode":"1",
+                    "placeholder":"last name"
+                }
+            ]
+        },
+        {
+            "sectionName":"Address",
+            "sectionText":"Fill in your Address",
+            "sectionFont":12,
+            "pageElements":[
+                {
+                    "elementName":"line1",
+                    "elementCode":"1",
+                    "placeholder":"Address line 1"
+                },
+                {
+                    "elementName":"line2",
+                    "elementCode":"1",
+                    "placeholder":"Address line 2"
+                },
+                {
+                    "elementName":"line3",
+                    "elementCode":"1",
+                    "placeholder":"Address line 3"
+                }
+            ]
+        }
+    ],
+    "version": 1.1
+}
