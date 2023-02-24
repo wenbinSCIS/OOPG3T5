@@ -4,6 +4,7 @@ import Dropdown from './DropdownSelect';
 import Textarea from './Textarea';
 import TextInput from './TextInput';
 import Radio from './Radio';
+import Text from './Text';
 
 function GenerateRow(props) {
     var to_return = []
@@ -46,23 +47,12 @@ function GenerateRow(props) {
             }
             to_return.push( <Textarea title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header}></Textarea>)
         }
+        else if (inputType=="Text"){
+          to_return.push( <Text size={dimensions} name = {element["elementName"]} textSize = {element["textSize"] } text = {element["Text"]} alignment = {element["alignment"]}></Text>)
+        }
          else if (inputType == "Radio") {
             to_return.push(
-              <div className={`form-group col-md-${dimensions}`} style={{margin:0}}>
-                {element["elementHeader"].length > 0 && <label style={{margin:0,color:'deepskyblue'}}>{element["elementHeader"]}</label>}
-                {element["options"].map((option, index) => (
-                  <div key={index}>
-                    <label>
-                      <input
-                        type="radio"
-                        name={element["elementName"]}
-                        value={option}
-                      />
-                      {" " + option}
-                    </label>
-                  </div>
-                ))}
-              </div>
+              <Radio title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} orientation={element["elementOrientation"]} ></Radio>
             );
           }          
         }

@@ -2,13 +2,95 @@ import React from 'react';
 import GenerateRow from './RowGeneration';
 import GenerateSection from './SectionGeneration';
 import Sidebar from "./Sidebar/Sidebar.js";
-export default function TestPage() {
+export default function VendorAssessmentForm() {
     
     //Api calls here
     var response = {
-      "formName":"myform2",
+      "formName":"Vendor Assessment",
+      "formTitle":"Quantum Leap Incorporation PTE LTD",
+      "titleSize":"20",
       "sections":[
+        {
+          "sectionName":"Subheader",
+          "sectionText":"",
+          "sectionFont":"12", 
+          "numRows":"2",
+          "rowElements":[[
+              {
+                  "elementName":"formNo",
+                  "Text":"Form No.: QLI-QHSP-10-F01",
+                  "elementType":"Text",
+                  "textSize":"12"
+                  // numCols
+                  // align
+              },
+              {
+                "elementName":"RevNo",
+                "Text":"Rev. No: 00",
+                "elementType":"Text",
+                "textSize":"12"
+              },
+              {
+                "elementName":"EffectiveDate",
+                "Text":"Effective Date:04.04.2022",
+                "elementType":"Text",
+                "textSize":"12"
+              }
+          ],[
+            {
+              "elementName":"FormName",
+              "Text":"NEW VENDOR ASSESSMENT FORM",
+              "elementType":"Text",
+              "textSize":"17",
+              "alignment":"center"
+            },
+          ]
+        ]
+      },
+      {
+        "sectionName":"'Company Info'",
+        "sectionText":"Fill in your name",
+        "sectionFont":"12", 
+        "numRows":"2",
+        "rowElements":[[
+            {
+                "elementName":"CompanyName",
+                "elementHeader":"",
+                "placeholder":"Company's Name: ",
+                "placeholderPosition":"front", //either hint or under or front 
+                "elementType":"Textinput",
+            }
+        ],[
           {
+              "elementName":"CompanyRegistrationNo",
+              "elementHeader":"",
+              "placeholder":"Company Registration No:",
+              "placeholderPosition":"front", //either hint or under or front 
+              "elementType":"Textinput",
+          },
+          {
+            "elementName":"GSTRegister",
+            "elementHeader":"GST Registered:",
+            "elementType":"Radio",
+            "elementOrientation":"horizontal",
+            "options":["Yes","No"]
+        }
+      ]
+      
+      
+      
+      ]
+    },
+    
+    
+    
+    ]}
+
+
+
+
+
+         /*  {
               "sectionName":"Name",
               "sectionText":"Fill in your name",
               "sectionFont":"12", 
@@ -176,9 +258,9 @@ export default function TestPage() {
           ]]
         },
           
-      ],
-      "version": 1.1
-  }
+      ], */
+      //"version": 1.1
+  
   const to_return = []
   var sections = response["sections"]
   for(let i=0;i<sections.length;i++){

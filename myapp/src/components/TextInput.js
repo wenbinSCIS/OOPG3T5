@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Form from 'react-bootstrap/Form';
 
 function TextInput(props) {
     const [value, setValue] = useState('');
@@ -21,14 +23,16 @@ function TextInput(props) {
           props.false_header &&
           <br></br>
         }
-        <input
-          type="text"
+        <InputGroup >
+        {
+          props.hintPosition == "front" &&
+          <InputGroup.Text >{props.hint}</InputGroup.Text>
+        }
+        <Form.Control
           id={props.name}
-          className="form-control"
           placeholder={inlineHint}
-          value={value}
-          onChange={handleChange}
         />
+        </InputGroup>
         {props.hintPosition == "under" &&
           <a style={{margin:0,fontSize:'0.8rem',opacity: 0.8}}>{props.hint}</a>
         }
