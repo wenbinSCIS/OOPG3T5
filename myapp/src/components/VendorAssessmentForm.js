@@ -51,7 +51,7 @@ export default function VendorAssessmentForm() {
         "sectionName":"'Company Info'",
         "sectionText":"Fill in your name",
         "sectionFont":"12", 
-        "numRows":"2",
+        "numRows":"4",
         "rowElements":[[
             {
                 "elementName":"CompanyName",
@@ -75,16 +75,50 @@ export default function VendorAssessmentForm() {
             "elementOrientation":"horizontal",
             "options":["Yes","No"]
         }
-      ]
-      
-      
-      
+      ],
+      [
+        {
+            "elementName":"OfficeAddress",
+            "elementHeader":"",
+            "placeholder":"Office Address: ",
+            "placeholderPosition":"front", //either hint or under or front 
+            "elementType":"Textinput",
+        }
+    ],
+    [
+      {
+          "elementName":"Telephone",
+          "elementHeader":"",
+          "placeholder":"Tel: ",
+          "placeholderPosition":"front", //either hint or under or front 
+          "elementType":"Textinput",
+      },
+      {
+        "elementName":"Fax",
+        "elementHeader":"",
+        "placeholder":"Fax: ",
+        "placeholderPosition":"front", //either hint or under or front 
+        "elementType":"Textinput",
+    }
+  ]
       ]
     },
-    
-    
-    
+    {
+      "sectionName":"More Information",
+      "sectionText":"Type of business License / Registration:",
+      "sectionFont":"12", 
+      "numRows":"1",
+      "rowElements":[[
+          {
+            "elementName":"Licenses",
+            "elementHeader":"",
+            "elementType":"Checkbox",
+            "elementOrientation":"horizontal",
+            "options":["a. Sole proprietorship","b. Limited Company","c. Partnership Agreement",". Others"],
+        }
+      ]
     ]}
+  ]}
 
 
 

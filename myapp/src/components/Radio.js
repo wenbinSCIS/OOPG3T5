@@ -8,7 +8,6 @@ function Radio({ options, title, size, false_header, name, orientation }) {
   if(orientation =="horizontal"){
     number = number + " d-flex"
   }
-
   
   function handleOptionChange(event) {
     setSelectedOption(event.target.value);
@@ -30,10 +29,7 @@ function Radio({ options, title, size, false_header, name, orientation }) {
           id={index}
         /></div>
       ))}
-      </div>
-
-
-        
+      </div>  
   );
 }
 

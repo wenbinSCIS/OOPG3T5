@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
-function Checkbox({ options, title,size,false_header,name}) {
+function Checkbox({ options, title,size,false_header,name, orientation}) {
   
-  const [selectedItems, setSelectedItems] = useState([]);
-  const number = `form-group col-md-${size}`
+  var [selectedItems, setSelectedItems] = useState([]);
+  var number = `form-group col-md-${size}`
+  if(orientation =="horizontal"){
+    number = number + " d-flex"
+  }
 
   function handleCheckboxChange(event) {
-    const selectedItem = event.target.value;
-    const selectedIndex = selectedItems.indexOf(selectedItem);
+    var selectedItem = event.target.value;
+    var selectedIndex = selectedItems.indexOf(selectedItem);
 
     if (selectedIndex === -1) {
       setSelectedItems([...selectedItems, selectedItem]);
     } else {
-      const newSelectedItems = [...selectedItems];
+      var newSelectedItems = [...selectedItems];
       newSelectedItems.splice(selectedIndex, 1);
       setSelectedItems(newSelectedItems);
     }
@@ -26,17 +31,17 @@ function Checkbox({ options, title,size,false_header,name}) {
         false_header &&
         <br></br>
       }
-      {options.map((item,index) => (
-        <div key={item}>
+      {options.map((option,index) => (
+        <div key={option}>
         <label> 
-          <input
-            type="checkbox"
-            value={item}
-            index={index}
-            checked={selectedItems.includes(item)}
-            onChange={handleCheckboxChange}
-          />
-          {" "+item}
+        <InputGroup.Text >{option}</InputGroup.Text>
+        <div key={title} className="">
+        <Form.Check
+          inline
+          name={name}
+          type="checkbox"
+          id={index}
+        /></div>
         </label>
       </div>
       ))}
@@ -44,3 +49,4 @@ function Checkbox({ options, title,size,false_header,name}) {
   );
 }
 export default Checkbox;
+
