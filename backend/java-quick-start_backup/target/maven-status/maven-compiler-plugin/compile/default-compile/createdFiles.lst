@@ -1,0 +1,17 @@
+com\mongodb\quickstart\Create.class
+com\mongodb\quickstart\MongoDBSetup.class
+com\mongodb\quickstart\ReadFormAPI.class
+com\mongodb\quickstart\Delete.class
+com\mongodb\quickstart\Update.class
+com\mongodb\quickstart\MyFormAPI.class
+com\mongodb\quickstart\csfle\ConnectionHelper$1.class
+com\mongodb\quickstart\models\Grade.class
+com\mongodb\quickstart\csfle\ConnectionHelper$1$1.class
+com\mongodb\quickstart\csfle\ConnectionHelper.class
+com\mongodb\quickstart\MyForm$Section$RowElement.class
+com\mongodb\quickstart\Connection.class
+com\mongodb\quickstart\MappingPOJO.class
+com\mongodb\quickstart\models\Score.class
+com\mongodb\quickstart\MyForm$Section.class
+com\mongodb\quickstart\HelloMongoDB.class
+com\mongodb\quickstart\MyForm.class
