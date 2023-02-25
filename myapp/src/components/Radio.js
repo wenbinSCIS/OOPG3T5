@@ -14,7 +14,7 @@ function Radio({ options, title, size, false_header, name, orientation }) {
   }
   
   return (
-    <div className={number} style={{ margin: 0 }}>
+    <div className={number} style={{ margin: 2 }}>
       {title.length > 0 && (
         <InputGroup.Text >{title}</InputGroup.Text>
       )}
@@ -22,7 +22,7 @@ function Radio({ options, title, size, false_header, name, orientation }) {
       {options.map((option,index) => (
         <div key={title} className="">
         <Form.Check
-          inline="true"
+          // inline="false"
           label={option}
           name={name}
           type="radio"

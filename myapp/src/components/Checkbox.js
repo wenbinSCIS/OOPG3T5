@@ -23,7 +23,7 @@ function Checkbox({ options, title,size,false_header,name, orientation}) {
     }
   }
   return (
-    <div className={number} style={{margin:0}} >
+    <div className={number}>
       {title.length>0 &&
         <label style={{margin:0,color:'deepskyblue'}}>{title} </label>
       }
@@ -33,17 +33,18 @@ function Checkbox({ options, title,size,false_header,name, orientation}) {
       }
       {options.map((option,index) => (
         <div key={option}>
-        <label> 
-        <InputGroup.Text >{option}</InputGroup.Text>
-        <div key={title} className="">
-        <Form.Check
-          inline
-          name={name}
-          type="checkbox"
-          id={index}
-        /></div>
-        </label>
-      </div>
+          {/* <label>  */}
+          {/* <InputGroup.Text >{option}</InputGroup.Text> */}
+          <div key={title} className="">
+          <Form.Check
+            // inline
+            name={name}
+            type="checkbox"
+            id={index}
+            label={option}
+          /></div>
+          {/* </label> */}
+        </div>
       ))}
     </div>
   );
