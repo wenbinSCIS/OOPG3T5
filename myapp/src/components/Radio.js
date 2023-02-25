@@ -19,15 +19,16 @@ function Radio({ options, title, size, false_header, name, orientation }) {
         <InputGroup.Text >{title}</InputGroup.Text>
       )}
       {false_header && <br />}
+      <br></br>
       {options.map((option,index) => (
-        <div key={title} className="">
         <Form.Check
-          // inline="false"
+          inline
           label={option}
           name={name}
           type="radio"
           id={index}
-        /></div>
+          key={title}
+        />
       ))}
       </div>  
   );
