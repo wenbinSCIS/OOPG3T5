@@ -12,5 +12,6 @@ public interface FormRepository extends MongoRepository<Form, String> {
   List<Form> findByVersion(double version);
   Optional<Form> findByFormName(String formName);
   void deleteByFormName(String formName);
+  Optional<Form> findByFormNameAndVersion(String formName, double version);
 
 }

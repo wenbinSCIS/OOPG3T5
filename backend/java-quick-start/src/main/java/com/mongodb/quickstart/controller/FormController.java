@@ -61,6 +61,18 @@ public class FormController {
     }
   }
 
+    @GetMapping("/getFormByNameAndVersion/{formName}/{version}")
+    public ResponseEntity<Form> getFormByNameAndVersion(@PathVariable("formName") String formName, @PathVariable("version") double version) {
+    Optional<Form> formData = formRepository.findByFormNameAndVersion(formName, version);
+    
+    if (formData.isPresent()) {
+      return new ResponseEntity<>(formData.get(), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+
   @GetMapping("/getAllFormsByVersion/{version}")
   public ResponseEntity<List<Form>> findByVersion(@PathVariable("version") double version) {
     try {
