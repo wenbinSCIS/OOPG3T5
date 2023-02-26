@@ -2,6 +2,7 @@ import React from 'react';
 import GenerateRow from './RowGeneration';
 import GenerateSection from './SectionGeneration';
 import Sidebar from "./Sidebar/Sidebar.js";
+import Button from 'react-bootstrap/Button';
 export default function VendorAssessmentForm() {
     
     //Api calls here
@@ -180,7 +181,7 @@ export default function VendorAssessmentForm() {
       "sectionName":"Evaluation",
       "sectionText":"Evaluation",
       "sectionFont":"12", 
-      "numRows":"4",
+      "numRows":"8",
       "rowElements":[[
         {
           "elementName":"ISO 9001 Certification",
@@ -239,195 +240,124 @@ export default function VendorAssessmentForm() {
             "elementType":"Radio",
             "elementOrientation":"horizontal",
             "options":["Satisfactory","Unsatisfactory"]
-        }
-        
-      }]
-  ]
-    
-    
-    
-    
-    
-    }
-    
-  ]}
-
-
-  
-
-
-
-
-         /*  {
-              "sectionName":"Name",
-              "sectionText":"Fill in your name",
-              "sectionFont":"12", 
-              "numRows":"1",
-              "rowElements":[[
-                  {
-                      "elementName":"firstName",
-                      "elementHeader":"Full Name",
-                      "placeholder":"First Name",
-                      "placeholderPosition":"hint", //either hint or under for now
-                      "elementType":"Textinput",
-                      // numCols
-                      // align
-                  },
-                  {
-                    "elementName":"lastName",
-                    "elementHeader":"",
-                    "placeholder":"Last Name",
-                    "placeholderPosition":"hint",
-                    "elementType":"Textinput",
-                  }
-              ]]
+          }
+      }],
+      [
+        {
+          "elementName":"Product Evaluation",
+          "elementHeader":"",
+          "elementType":"Checkbox",
+          "elementOrientation":"horizontal",
+          "options":['Results of Samples/Product Evaluation: '],
+          "additional":{
+            "elementName":"Product Results",
+            "elementHeader":"",
+            "elementType":"Radio",
+            "elementOrientation":"horizontal",
+            "options":["Satisfactory","Unsatisfactory"]
+          }
+      }],
+      [
+        {
+          "elementName":"First Deal",
+          "elementHeader":"",
+          "elementType":"Checkbox",
+          "elementOrientation":"horizontal",
+          "options":["Results of First Deal:"],
+          "additional":{
+            "elementName":"First Deal Results",
+            "elementHeader":"",
+            "elementType":"Radio",
+            "elementOrientation":"horizontal",
+            "options":["Satisfactory","Unsatisfactory"]
+          }
+      }],
+      [
+        {
+          "elementName":"Track Record",
+          "elementHeader":"",
+          "elementType":"Checkbox",
+          "elementOrientation":"horizontal",
+          "options":["Track Record Review/ Customer Reference:"],
+          "additional":{
+            "elementName":"Track Record Results",
+            "elementHeader":"",
+            "elementType":"Radio",
+            "elementOrientation":"horizontal",
+            "options":["Satisfactory","Unsatisfactory"]
+          }
+      }],
+      [
+        {
+          "elementName":"Others",
+          "elementHeader":"",
+          "elementType":"Checkbox",
+          "elementOrientation":"horizontal",
+          "options":["Others (e.g. commercial, sole supplier, customer specified, franchise etc.)"],
+      }]]},
+      {
+        "sectionName":"Results of Evaluation",
+        "sectionText":"Results of Evaluation",
+        "sectionFont":"12", 
+        "numRows":"1",
+        "rowElements":[[
+            {
+              "elementName":"Approve/Deny",
+              "elementHeader":"",
+              "elementType":"Checkbox",
+              "elementOrientation":"horizontal",
+              "options":['Approved',"Not Approved"],
+            }
+        ]]},
+        {
+          "sectionName":"Eval and approval",
+          "sectionText":"",
+          "sectionFont":"12", 
+          "numRows":"3",
+          "rowElements":[[
+            {
+              "elementName":"Evalby",
+              "elementHeader":"",
+              "placeholder":"Evaluated By: ",
+              "placeholderPosition":"front", 
+              "elementType":"Textinput",
           },
           {
-            "sectionName":"Address",
-            "sectionText":"Fill in your address",
-            "sectionFont":"12", 
-            "numRows":"3",
-            "rowElements":[[
-                {
-                    "elementName":"streetAddress1",
-                    "elementHeader":"Address",
-                    "placeholder":"Street Address",
-                    "placeholderPosition":"hint", 
-                    "elementType":"Textinput",
-                }
-            ],
-            [
-              {
-                  "elementName":"streetAddress2",
-                  "elementHeader":"",
-                  "placeholder":"Street Address Line 2",
-                  "placeholderPosition":"hint", 
-                  "elementType":"Textinput",
-              }
+            "elementName":"EvalSignature",
+            "elementHeader":"",
+            "placeholder":"Signature:",
+            "placeholderPosition":"front", 
+            "elementType":"Textinput",
+        },
+          ],[
+            {
+              "elementName":"Director",
+              "elementHeader":"",
+              "placeholder":"Approved by Director: ",
+              "placeholderPosition":"front", 
+              "elementType":"Textinput",
+          },
+          {
+            "elementName":"DirectorSignature",
+            "elementHeader":"",
+            "placeholder":"Signature:",
+            "placeholderPosition":"front", 
+            "elementType":"Textinput",
+        },
           ],
           [
-            {
-                "elementName":"city",
-                "elementHeader":"",
-                "placeholder":"city",
-                "placeholderPosition":"hint", 
-                "elementType":"Textinput",
-            },
-            {
-              "elementName":"StateProvince",
-              "elementHeader":"",
-              "placeholder":"State / Province",
-              "placeholderPosition":"hint", 
-              "elementType":"Textinput",
-          }
-        ],
-          ]
+          {
+            "elementName":"Effective Date",
+            "elementHeader":"",
+            "placeholder":"Effective Date: ",
+            "placeholderPosition":"front", 
+            "elementType":"Textinput",
+            "size":"4"
         },
-        {
-          "sectionName":"phoneNumber",
-          "sectionText":"",
-          "sectionFont":"12", 
-          "numRows":"1",
-          "rowElements":[[
-              {
-                  "elementName":"phoneNumber",
-                  "elementHeader":"Phone Number",
-                  "placeholder":"+65",
-                  "placeholderPosition":"hint", //either hint or under for now
-                  "elementType":"Textinput",
-                  "size":"4"
-              }
-          ]]
-        },
-        {
-          "sectionName":"emailAddress",
-          "sectionText":"",
-          "sectionFont":"12", 
-          "numRows":"1",
-          "rowElements":[[
-              {
-                  "elementName":"emailAddress",
-                  "elementHeader":"Email Address",
-                  "placeholder":"ex: email@yahoo.com",
-                  "placeholderPosition":"hint", //either hint or under for now
-                  "elementType":"Textinput",
-                  "size":"4"
-              }
-          ]]
-        },
-        {
-          "sectionName":"How",
-          "sectionText":"",
-          "sectionFont":"12", 
-          "numRows":"1",
-          "rowElements":[[
-              {
-                  "elementName":"How",
-                  "elementHeader":"How did you hear about us?*",
-                  "elementType":"Dropdown",
-                  "size":"4",
-                  "options":["Selection A","Selection B","Selection C"]
-              }
-          ]]
-        },
-        {
-          "sectionName":"Feedback",
-          "sectionText":"",
-          "sectionFont":"12", 
-          "numRows":"1",
-          "rowElements":[[
-              {
-                  "elementName":"Feedback",
-                  "elementHeader":"Feedback About us:",
-                  "elementType":"Textarea"
-              }
-          ]]
-        },
-        {
-          "sectionName":"Suggestions",
-          "sectionText":"",
-          "sectionFont":"12", 
-          "numRows":"1",
-          "rowElements":[[
-              {
-                  "elementName":"Suggestions",
-                  "elementHeader":"Suggestions if any for further improvement:",
-                  "elementType":"Textarea"
-              }
-          ]]
-        },
-        {
-          "sectionName":"Recommend",
-          "sectionText":"",
-          "sectionFont":"12", 
-          "numRows":"1",
-          "rowElements":[[
-              {
-                  "elementName":"Recommend",
-                  "elementHeader":"Will you be willing to recommend us?",
-                  "elementType":"Checkbox",
-                  "size":"4",
-                  "options":["Yes","Maybe","No"],
-              }
-          ]]
-        },
-        {
-          "sectionName":"Terms",
-          "sectionText":"",
-          "sectionFont":"12", 
-          "numRows":"1",
-          "rowElements":[[
-              {
-                  "elementName":"Terms",
-                  "elementHeader":"",
-                  "elementType":"Checkbox",
-                  "options":["I agree to the Terms of Service and Privacy Policy. I have read the KVKK Clarification Text and I accept the processing of my personal data in accordance with the Explicit Consent Text."],
-              }
-          ]]
-        },
-          
-      ], */
-      //"version": 1.1
+        ]
+        ]},
+        
+  ]}
 
   const to_return = []
   var sections = response["sections"]
@@ -441,6 +371,7 @@ export default function VendorAssessmentForm() {
       <Sidebar></Sidebar>
     <div className="container">
     {to_return}
+    <Button variant="dark">Submit Form</Button>
     </div>
     </section>
   );
