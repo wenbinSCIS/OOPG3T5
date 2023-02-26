@@ -5,6 +5,8 @@ import Textarea from './Textarea';
 import TextInput from './TextInput';
 import Radio from './Radio';
 import Text from './Text';
+import Table from './Table';
+import TableComponent from './Table';
 
 function GenerateRow(props) {
     var to_return = []
@@ -54,7 +56,12 @@ function GenerateRow(props) {
             to_return.push(
               <Radio title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} orientation={element["elementOrientation"]} ></Radio>
             );
-          }          
+          }     
+        else if (inputType == "Table") {
+          to_return.push(
+            <TableComponent  columnHeaders={element["headers"]} size={dimensions} name = {element["elementName"]}  columns={element["noColumns"]} rows={element["noRows"]} ></TableComponent>
+          );
+        }      
         }
     return (
         <div className='row'>

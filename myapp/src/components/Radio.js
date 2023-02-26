@@ -4,7 +4,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 function Radio({ options, title, size, false_header, name, orientation }) {
   var [selectedOption, setSelectedOption] = useState(null);
-  var number = `form col-md-${size} mb-1`;
+  var number = `form col-md-${size} `;
   if(orientation =="horizontal"){
     number = number + " d-flex"
   }
@@ -14,20 +14,21 @@ function Radio({ options, title, size, false_header, name, orientation }) {
   }
   
   return (
-    <div className={number} style={{ margin: 2 }}>
+    <div className={number} style={{ margin: 0 }}>
       {title.length > 0 && (
-        <InputGroup.Text >{title}</InputGroup.Text>
+        <InputGroup.Text style={{ paddingTop: 2, paddingBottom:2,marginBottom:4 }}>{title}</InputGroup.Text>
       )}
       {false_header && <br />}
-      <br></br>
+      
       {options.map((option,index) => (
         <Form.Check
-          inline
+         
           label={option}
           name={name}
           type="radio"
           id={index}
           key={title}
+          style={{ margin: 7 }}
         />
       ))}
       </div>  

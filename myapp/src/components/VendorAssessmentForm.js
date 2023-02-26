@@ -117,6 +117,22 @@ export default function VendorAssessmentForm() {
             "options":["a. Sole proprietorship","b. Limited Company","c. Partnership Agreement",". Others"],
         }
       ]
+    ]},
+    {
+      "sectionName":"Contact Information",
+      "sectionText":"Contact Person:",
+      "sectionFont":"12", 
+      "numRows":"1",
+      "rowElements":[[
+          {
+            "elementName":"Contacts",
+            "elementHeader":"",
+            "elementType":"Table",
+            "noRows":"3",
+            "noColumns":"2",
+            "headers":["Name","Tel","Designation"],
+        }
+      ]
     ]}
   ]}
 

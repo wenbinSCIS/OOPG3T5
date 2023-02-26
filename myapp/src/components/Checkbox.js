@@ -39,7 +39,6 @@ function Checkbox({ options, title,size,false_header,name, orientation}) {
       {options.map((option,index) => (
 
           <Form.Check
-            inline
             name={name}
             type="checkbox"
             id={index}
