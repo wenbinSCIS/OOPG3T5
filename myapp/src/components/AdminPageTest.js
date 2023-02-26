@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import GenerateSection from "./SectionGeneration";
 import "./AdminPage.css";
 import AddComponent from "./AddComponent";
 import SaveComponent from "./SaveComponent";
-
+import FormSelector from "./FormSelector";
+import Button from "./Button";
+import axios from 'axios';
 function MyForm() {
   const [showAddComponent, setShowAddComponent] = useState(false);
   const [formComponents, setFormComponents] = useState([]);
@@ -11,6 +13,11 @@ function MyForm() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [elementName, setElementName] = useState('');
   const [isSaved, setSaveStatus] = useState(true);
+  const [nameSaveAs, setNameSaveAs] = useState('');
+  const [versionSaveAs, setVersionSaveAs] = useState('');
+  const [saveText, setSaveText] = useState('');
+  const [availableForms, setAvailableForms] = useState([]);
+  const [selectedForm, setSelectedForm] = useState(null);
   const [options, setOptions] = useState([
     "Add Name field",
     "Add DropDown",
@@ -18,7 +25,7 @@ function MyForm() {
     "Add Checkbox",
     "Add Radio",
   ]);
-  
+    
     const handleInputChange = (event) => {
       setElementName(event.target.value);
     }
@@ -26,7 +33,15 @@ function MyForm() {
   function handleOptionChange(event) {
     setSelectedOption(event.target.value);
   }
-
+  function handleLoadForm(event) {
+    setSelectedForm(event.target.value);
+  }
+  function handleNameSaveAs(event) {
+    setNameSaveAs(event.target.value);
+  }
+  function handleVersionSaveAs(event) {
+    setVersionSaveAs(event.target.value);
+  }
   var name_section = {
     sectionName: "Name",
     sectionText: "Fill in your name",
@@ -162,12 +177,39 @@ function MyForm() {
     setInfoComponents(updatedInfoComponents);
     setSaveStatus(false);
   }
-  function saveComponents(){
+  async function saveComponents(){
     console.log(infoComponents)
     // fetch
-    setSaveStatus(true);
-
+    let formJson = {
+      "formName" : selectedForm,
+      "sections" : infoComponents,
+      "version" : versionSaveAs
+    }
+    await axios.post("http://localhost:8080/api/createForm", formJson).then((response )=>{
+      console.log(response)
+      if(response.status == 201){
+        setSaveStatus(true);
+        setSaveText('Form saved successfully')
+      }else{
+        setSaveText('Error saving form')
+      }
+    } )
   }
+  async function loadExistingForms(){
+    await axios.get("http://localhost:8080/api/getAllForms").then((response )=>{
+      console.log(response.data)
+      let data = response.data
+      setAvailableForms(data.map(form => form.formName + " v" + form.version))});
+  }
+  async function loadSelectedForm(formName){
+    await axios.get("http://localhost:8080/api/getFormByName/" + formName).then((response )=>{
+      console.log(response.data)
+      let data = response.data
+      setInfoComponents(data.sections)
+      setFormComponents(data.sections.map(target =>  <GenerateSection section={target}></GenerateSection>))
+  })
+  }
+  // setInterval(loadExistingForms, 5000);
 
   /*
 The expression (_, i) is the parameter list of an arrow function that's passed to the filter method. The filter method creates a new array with all elements that pass the test implemented by the provided function.
@@ -179,6 +221,10 @@ The i variable represents the index of the current element being iterated over i
 
   return (
     <div className="container">
+      <FormSelector forms={availableForms} onChange={handleLoadForm} loadForms={loadExistingForms}/>
+      <div className="button-container">
+      <Button className="centered-button" onClick={() => loadSelectedForm(selectedForm)} text={"Load Form"} color="lightgreen"/>
+      </div>
       {formComponents.map((component, index) => (
         <div key={index}>
           {component}
@@ -239,8 +285,12 @@ The i variable represents the index of the current element being iterated over i
         <SaveComponent
           className="centered-button"
           saveComponents={()=> saveComponents()}
-          isSaved={isSaved}a
+          isSaved={isSaved}
+          text = {saveText}
         />
+        <input type="text" className="centered-textbox" placeholder="Form name" onChange={handleNameSaveAs} style={{margin: 1 + 'em'}}/>
+        <input type="text" className="centered-textbox" placeholder="Version number" onChange={handleVersionSaveAs}/>
+        
       </div>
     </div>
   
