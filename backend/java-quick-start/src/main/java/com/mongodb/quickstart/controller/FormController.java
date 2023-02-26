@@ -64,7 +64,6 @@ public class FormController {
     @GetMapping("/getFormByNameAndVersion/{formName}/{version}")
     public ResponseEntity<Form> getFormByNameAndVersion(@PathVariable("formName") String formName, @PathVariable("version") double version) {
     Optional<Form> formData = formRepository.findByFormNameAndVersion(formName, version);
-    
     if (formData.isPresent()) {
       return new ResponseEntity<>(formData.get(), HttpStatus.OK);
     } else {
@@ -87,8 +86,8 @@ public class FormController {
     }
   }
 
-  @PostMapping("/createForm")
-    public ResponseEntity<Form> createForm(@RequestBody Form form) {
+  @PostMapping("/forceCreateForm")
+    public ResponseEntity<Form> forceCreateForm(@RequestBody Form form) {
     try {
         Form _form = formRepository.save(new Form(form.getFormName(), form.getSections(), form.getVersion()));
         return new ResponseEntity<>(_form, HttpStatus.CREATED);
@@ -96,6 +95,21 @@ public class FormController {
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  @PostMapping("/createForm")
+  public ResponseEntity<?> createForm(@RequestBody Form form) {
+      Optional<Form> existingForm = formRepository.findByFormNameAndVersion(form.getFormName(), form.getVersion());
+      if (existingForm.isPresent()) {
+          return new ResponseEntity<>("Form with the given name and version already exists", HttpStatus.CONFLICT);
+      }
+      try {
+          Form _form = formRepository.save(new Form(form.getFormName(), form.getSections(), form.getVersion()));
+          return new ResponseEntity<>(_form, HttpStatus.CREATED);
+      } catch (Exception e) {
+          return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+  }
+
 
   //private static final Logger logger = LogManager.getLogger(FormController.class);
 
