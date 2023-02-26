@@ -39,7 +39,7 @@ const StatBox = ({ title, subtitle, icon,loc , progress}) => {
   '& > :not(style)': { flexGrow: 1 }
 }}>
     <Button variant="contained" onClick={() => window.location.href = loc}>
-      Bring me to the page
+      View More
     </Button>
   </Box>
 </Box>

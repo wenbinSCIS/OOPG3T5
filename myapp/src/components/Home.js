@@ -11,11 +11,16 @@ import StatBox from "./StatBox";
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import PendingIcon from '@mui/icons-material/Pending';
-
+import ActionTable from './ActionTable';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 export default function Home() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const actions = [
+    { formid: 1,status:"Inactive", formName: 'Form A' },
+    { formid: 2,status:"Inactive", formName: 'Form B' }
+  ];
   return (
     <>
     
@@ -124,7 +129,18 @@ export default function Home() {
     />
   </Box>
   </Box>
-  </Box>
+  </Box>          
+  <div className="row actionsneed">
+  <div>
+    <h2 className="text-g" style={{ fontWeight : "bold", fontSize: 30}}>
+      Actions Needed
+    </h2>
+  </div>
+  <div className="col-lg-12">
+    <ActionTable name='formName' actions={actions} />
+  </div>
+</div>
+
         </div>
       </section>
       <Footer />
