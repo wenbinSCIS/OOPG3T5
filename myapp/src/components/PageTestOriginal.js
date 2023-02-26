@@ -3,21 +3,6 @@ import GenerateRow from './RowGeneration';
 
 export default function TestPage() {
 
-    //Api calls here
-    var response = {
-        "code":200,
-        "page contents":{
-          total_rows:"11",
-          rows_data:[[]]
-          
-
-          
-        
-        
-        
-        
-        }
-    };
   return (
     <div className="container">
       <GenerateRow 

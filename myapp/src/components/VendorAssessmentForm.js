@@ -133,9 +133,127 @@ export default function VendorAssessmentForm() {
             "headers":["Name","Tel","Designation"],
         }
       ]
-    ]}
+    ]},
+    {
+      "sectionName":"Nature of Business",
+      "sectionText":"Nature of Business",
+      "sectionFont":"12", 
+      "numRows":"1",
+      "rowElements":[[
+          {
+            "elementName":"BusinessTypes",
+            "elementHeader":"",
+            "elementType":"Checkbox",
+            "elementOrientation":"horizontal",
+            "options":["Manufacturing","Agent/Dealer","Distributor","Others"],
+            "additional":{
+              "elementName":"Specify",
+              "elementHeader":"",
+              "placeholder":"Pls. Specify",
+              "placeholderPosition":"front", //either hint or under or front 
+              "elementType":"Textinput",
+          }
+        }
+      ]
+    ]},
+    {
+      "sectionName":"Products/Services",
+      "sectionText":"Products/Services",
+      "sectionFont":"12", 
+      "numRows":"2",
+      "rowElements":[[
+          {
+            "elementName":"ProductsandServices",
+            "elementHeader":"",
+            "elementType":"Textarea"
+        }
+      ],[
+      {
+        "elementName":"addLine",
+        "Text":"Submit company’s profile, brochure on product/services, if available.",
+        "elementType":"Text",
+        "textSize":"15",
+        "alignment":"left"
+    }],
+    ]},
+    {
+      "sectionName":"Evaluation",
+      "sectionText":"Evaluation",
+      "sectionFont":"12", 
+      "numRows":"4",
+      "rowElements":[[
+        {
+          "elementName":"ISO 9001 Certification",
+          "elementHeader":"",
+          "elementType":"Checkbox",
+          "elementOrientation":"horizontal",
+          "options":["ISO 9001 Certification:"],
+          "additional":{
+            "elementName":"CertBody",
+            "elementHeader":"",
+            "placeholder":"Certification Body:",
+            "placeholderPosition":"front", //either hint or under or front 
+            "elementType":"Textinput",
+        }
+      }],
+      [
+        {
+          "elementName":"Accreditation of Laboratory",
+          "elementHeader":"",
+          "elementType":"Checkbox",
+          "elementOrientation":"horizontal",
+          "options":["Accreditation of Laboratory:"],
+          "additional":{
+            "elementName":"AccreBody",
+            "elementHeader":"",
+            "placeholder":"Accreditation Body:",
+            "placeholderPosition":"front", //either hint or under or front 
+            "elementType":"Textinput",
+        }
+      }],
+      [
+        {
+          "elementName":"Product Certification",
+          "elementHeader":"",
+          "elementType":"Checkbox",
+          "elementOrientation":"horizontal",
+          "options":["Product Certification:"],
+          "additional":{
+            "elementName":"Product Markings",
+            "elementHeader":"",
+            "placeholder":"Product Markings (e.g. PSB, UL, TUV):",
+            "placeholderPosition":"front", //either hint or under or front 
+            "elementType":"Textinput",
+        }
+      }],
+      [
+        {
+          "elementName":"Site Evaluation",
+          "elementHeader":"",
+          "elementType":"Checkbox",
+          "elementOrientation":"horizontal",
+          "options":['Site Evaluation Results:'],
+          "additional":{
+            "elementName":"SiteResults",
+            "elementHeader":"",
+            "elementType":"Radio",
+            "elementOrientation":"horizontal",
+            "options":["Satisfactory","Unsatisfactory"]
+        }
+        
+      }]
+  ]
+    
+    
+    
+    
+    
+    }
+    
   ]}
 
+
+  
 
 
 
@@ -310,7 +428,7 @@ export default function VendorAssessmentForm() {
           
       ], */
       //"version": 1.1
-  
+
   const to_return = []
   var sections = response["sections"]
   for(let i=0;i<sections.length;i++){
@@ -321,12 +439,9 @@ export default function VendorAssessmentForm() {
   return (
     <section className='d-flex'>
       <Sidebar></Sidebar>
-    <div class="container">
+    <div className="container">
     {to_return}
     </div>
     </section>
-    
-    
-    
   );
 }

@@ -11,7 +11,6 @@ import TableComponent from './Table';
 function GenerateRow(props) {
     var to_return = []
     var all_info = props.info
-    console.log(all_info)
     var false_header=false
     for(let i=0;i<all_info.length;i++){
         var element = all_info[i]
@@ -40,7 +39,7 @@ function GenerateRow(props) {
             if(i>0 && all_info[0]["elementHeader"].length>0){
                 var false_header = true
             }
-            to_return.push(<Checkbox title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} orientation={element["elementOrientation"]}></Checkbox>)
+            to_return.push(<Checkbox title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} orientation={element["elementOrientation"]} additional = {element["additional"]}></Checkbox>)
             
         }
         else if(inputType=="Textarea"){
@@ -59,7 +58,7 @@ function GenerateRow(props) {
           }     
         else if (inputType == "Table") {
           to_return.push(
-            <TableComponent  columnHeaders={element["headers"]} size={dimensions} name = {element["elementName"]}  columns={element["noColumns"]} rows={element["noRows"]} ></TableComponent>
+            <TableComponent  columnHeaders={element["headers"]} size={dimensions} name = {element["elementName"]}  columns={element["noColumns"]} rows={element["noRows"] } ></TableComponent>
           );
         }      
         }
