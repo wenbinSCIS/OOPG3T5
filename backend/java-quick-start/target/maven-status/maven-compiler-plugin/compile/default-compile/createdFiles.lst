@@ -1,3 +1,7 @@
-com\mongodb\quickstart\Create.class
-com\mongodb\quickstart\models\Grade.class
-com\mongodb\quickstart\models\Score.class
+com\mongodb\quickstart\adf.html
+com\mongodb\quickstart\models\Form.class
+com\mongodb\quickstart\models\Form$Section.class
+com\mongodb\quickstart\SpringBootDataMongoDBApplication.class
+com\mongodb\quickstart\models\Form$Section$RowElement.class
+com\mongodb\quickstart\repository\FormRepository.class
+com\mongodb\quickstart\controller\FormController.class
