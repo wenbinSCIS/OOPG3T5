@@ -5,18 +5,17 @@ import { btnReset, v } from "../../styles/variables";
 
 export const SSidebar = styled.div`
     width: ${({ isOpen }) => (!isOpen ? `auto` : v.sidebarWidth)};
-    background: ${({ theme }) => theme.bg};
+    background: #FAF9FE};
     height: 100vh;
     padding: ${v.lgSpacing};
-
-    position: relative;
+    position:relative;
 `;
 
 export const SSidebarButton = styled.button`
     ${btnReset};
     position: absolute;
     top: ${v.xxlSpacing};
-    right: ${({ isOpen }) => (isOpen ? `-16px` : `-40px`)};
+    right: ${({ isOpen }) => (isOpen ? `0px` : `-40px`)};
     width: 32px;
     height: 32px;
     border-radius: 50%;

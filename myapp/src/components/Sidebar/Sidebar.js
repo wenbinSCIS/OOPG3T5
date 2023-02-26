@@ -7,8 +7,6 @@ import {
     SLinkLabel,
     SLinkNotification,
     SLogo,
-    SSearch,
-    SSearchIcon,
     SSidebar,
     SSidebarButton,
 
@@ -20,7 +18,6 @@ import {
     AiOutlineApartment,
     AiOutlineHome,
     AiOutlineLeft,
-    AiOutlineSearch,
     AiOutlineSetting,
 } from "react-icons/ai";
 import { MdLogout, MdOutlineAnalytics } from "react-icons/md";
@@ -30,19 +27,12 @@ import { BsPeople } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
 
 const Sidebar = () => {
-    const searchRef = useRef(null);
+
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const { pathname } = useLocation();
 
-    const searchClickHandler = () => {
-        if (!sidebarOpen) {
-            setSidebarOpen(true);
-            searchRef.current.focus();
-        } else {
-            // search functionality
-        }
-    };
+
 
     return (
         <SSidebar isOpen={sidebarOpen}>
@@ -54,19 +44,7 @@ const Sidebar = () => {
             <SLogo>
                 <img src={logoSVG} alt="logo" />
             </SLogo>
-            <SSearch
-                onClick={searchClickHandler}
-                style={!sidebarOpen ? { width: `fit-content` } : {}}
-            >
-                <SSearchIcon>
-                    <AiOutlineSearch />
-                </SSearchIcon>
-                <input
-                    ref={searchRef}
-                    placeholder="Search"
-                    style={!sidebarOpen ? { width: 0, padding: 0 } : {}}
-                />
-            </SSearch>
+
             <SDivider />
             {linksArray.map(({ icon, label, notification, to }) => (
                 <SLinkContainer key={label} isActive={pathname === to}>
