@@ -12,3 +12,5 @@ backend/java-quick-start/target/classes/com/mongodb/quickstart/models/Form$Secti
 backend/java-quick-start/target/classes/com/mongodb/quickstart/models/Form$Section$RowElement.class
 backend/java-quick-start/target/classes/com/mongodb/quickstart/controller/FormController.class
 *.lst
+*.lst
+*.class

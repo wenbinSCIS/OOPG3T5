@@ -18,6 +18,7 @@ function MyForm() {
   const [saveText, setSaveText] = useState('');
   const [availableForms, setAvailableForms] = useState([]);
   const [selectedForm, setSelectedForm] = useState(null);
+  const [selectedVersion, setSelectedVersion] = useState(null);
   const [options, setOptions] = useState([
     "Add Name field",
     "Add DropDown",
@@ -34,7 +35,10 @@ function MyForm() {
     setSelectedOption(event.target.value);
   }
   function handleLoadForm(event) {
-    setSelectedForm(event.target.value);
+    let formName = event.target.value.split(" ").slice(0,-1).join(" ")
+    let version = event.target.value.split(" ")[ event.target.value.split(" ").length -1].substring(1)
+    setSelectedVersion(version)
+    setSelectedForm(formName);
   }
   function handleNameSaveAs(event) {
     setNameSaveAs(event.target.value);
@@ -181,7 +185,7 @@ function MyForm() {
     console.log(infoComponents)
     // fetch
     let formJson = {
-      "formName" : selectedForm,
+      "formName" : nameSaveAs,
       "sections" : infoComponents,
       "version" : versionSaveAs
     }
@@ -201,8 +205,8 @@ function MyForm() {
       let data = response.data
       setAvailableForms(data.map(form => form.formName + " v" + form.version))});
   }
-  async function loadSelectedForm(formName){
-    await axios.get("http://localhost:8080/api/getFormByName/" + formName).then((response )=>{
+  async function loadSelectedForm(formName, version){
+    await axios.get("http://localhost:8080/api/getFormByNameAndVersion/" + formName + "/" + version).then((response )=>{
       console.log(response.data)
       let data = response.data
       setInfoComponents(data.sections)
@@ -223,7 +227,7 @@ The i variable represents the index of the current element being iterated over i
     <div className="container">
       <FormSelector forms={availableForms} onChange={handleLoadForm} loadForms={loadExistingForms}/>
       <div className="button-container">
-      <Button className="centered-button" onClick={() => loadSelectedForm(selectedForm)} text={"Load Form"} color="lightgreen"/>
+      <Button className="centered-button" onClick={() => loadSelectedForm(selectedForm, selectedVersion)} text={"Load Form"} color="lightgreen"/>
       </div>
       {formComponents.map((component, index) => (
         <div key={index}>
