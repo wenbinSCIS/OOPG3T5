@@ -58,10 +58,10 @@ export default function Home() {
       title="1"
       subtitle="Not Started"
       progress="0.75"
-    
+      loc = "./page1"
       icon={
         <HourglassEmptyIcon
-          sx={{ color: "blue", fontSize: "20px" }}
+          sx={{ color: "blue", fontSize: "30px" }}
         />
       }
     />
@@ -77,10 +77,10 @@ export default function Home() {
       title="1"
       subtitle="In Progress"
       progress="0.50"
-     
+      loc = "./page2"
       icon={
         <HourglassTopIcon
-          sx={{ color: "blue", fontSize: "20px" }}
+          sx={{ color: "blue", fontSize: "30px" }}
         />
       }
     />
@@ -96,10 +96,10 @@ export default function Home() {
       title="1"
       subtitle="Completed"
       progress="0.30"
-    
+      loc = "./page3"
       icon={
         <CheckCircleOutlineIcon
-          sx={{ color: "blue", fontSize: "20px" }}
+          sx={{ color: "blue", fontSize: "30px" }}
         />
       }
     />
@@ -115,10 +115,10 @@ export default function Home() {
       title="1"
       subtitle="Pending"
       progress="0.80"
-    
+      loc = "/page4"
       icon={
         <PendingIcon
-          sx={{ color: "blue", fontSize: "20px" }}
+          sx={{ color: "blue", fontSize: "30px" }}
         />
       }
     />
