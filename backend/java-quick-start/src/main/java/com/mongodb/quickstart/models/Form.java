@@ -2,20 +2,23 @@ package com.mongodb.quickstart.models;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "elements")
 public class Form {
+    @Id
+    private String id;
+    
+    private String formName;
+    private List<Section> sections;
+    private double version;
 
     public Form(String formName, List<Section> sections, double version) {
         this.formName = formName;
         this.sections = sections;
         this.version = version;
     }
-
-    private String formName;
-    private List<Section> sections;
-    private double version;
 
     // getters and setters
 
