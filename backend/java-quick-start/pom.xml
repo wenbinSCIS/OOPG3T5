@@ -90,10 +90,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
-                <configuration>
+                <!-- <configuration>
                     <source>15</source>
                     <target>15</target>
-                </configuration>
+                </configuration> -->
             </plugin>
             <!-- Add Spring Boot Maven plugin -->
             <plugin>

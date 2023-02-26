@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import GenerateSection from "./SectionGeneration";
 import "./AdminPage.css";
 import AddComponent from "./AddComponent";
+import SaveComponent from "./SaveComponent";
 
 function MyForm() {
   const [showAddComponent, setShowAddComponent] = useState(false);
   const [formComponents, setFormComponents] = useState([]);
+  const [infoComponents, setInfoComponents] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [elementName, setElementName] = useState('');
+  const [isSaved, setSaveStatus] = useState(true);
   const [options, setOptions] = useState([
     "Add Name field",
     "Add DropDown",
@@ -140,15 +143,30 @@ function MyForm() {
     if (name == "Add Radio"){
       target = radio_section;
     }
-      setFormComponents([
-        ...formComponents,
-        <GenerateSection section={target}></GenerateSection>,
-      ]);
+    setFormComponents([
+      ...formComponents,
+      <GenerateSection section={target}></GenerateSection>,
+    ]);
+    setInfoComponents([
+      ...infoComponents,
+      target
+    ]);
+    setSaveStatus(false);
   }
 
   function handleRemoveComponent(index) {
     const updatedComponents = formComponents.filter((_, i) => i !== index);
+    const updatedInfoComponents = formComponents.filter((_, i) => i !== index);
+
     setFormComponents(updatedComponents);
+    setInfoComponents(updatedInfoComponents);
+    setSaveStatus(false);
+  }
+  function saveComponents(){
+    console.log(infoComponents)
+    // fetch
+    setSaveStatus(true);
+
   }
 
   /*
@@ -203,19 +221,27 @@ The i variable represents the index of the current element being iterated over i
               />
             </div>
             {selectedOption && (
-              <div className="button-container">
-                {" "}
-                <button
-                  className="centered-button"
-                  onClick={() => handleAddComponent({ name: selectedOption })}
-                >
-                  Add Element
-                </button>
-              </div>
+            <div className="button-container">
+              {" "}
+              <button
+                className="centered-button"
+                onClick={() => handleAddComponent({ name: selectedOption })}
+              >
+                Add Element
+              </button>
+            </div>
             )}
+            
           </div>
         )}
       </>
+      <div className="button-container">
+        <SaveComponent
+          className="centered-button"
+          saveComponents={()=> saveComponents()}
+          isSaved={isSaved}a
+        />
+      </div>
     </div>
   
   );

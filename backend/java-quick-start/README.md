@@ -60,6 +60,9 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.HelloMongoDB" -De
 - Run the `Connection` class:
 
 ```sh
+
+mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Connection" -Dmongodb.uri="mongodb://localhost:27017" -Dexec.cleanupDaemonThreads=false
+
 mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Connection" -Dmongodb.uri="mongodb+srv://USERNAME:PASSWORD@cluster0-abcde.mongodb.net/test?w=majority" -Dexec.cleanupDaemonThreads=false
 ```
 

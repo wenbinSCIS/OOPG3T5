@@ -1,1 +1,13 @@
 frontend/my-app/node_modules
+*.class
+*.xml
+*.lst
+backend/java-quick-start/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+backend/java-quick-start/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+backend/java-quick-start/target/classes/logback.xml
+backend/java-quick-start/target/classes/com/mongodb/quickstart/SpringBootDataMongoDBApplication.class
+backend/java-quick-start/target/classes/com/mongodb/quickstart/repository/FormRepository.class
+backend/java-quick-start/target/classes/com/mongodb/quickstart/models/Form.class
+backend/java-quick-start/target/classes/com/mongodb/quickstart/models/Form$Section.class
+backend/java-quick-start/target/classes/com/mongodb/quickstart/models/Form$Section$RowElement.class
+backend/java-quick-start/target/classes/com/mongodb/quickstart/controller/FormController.class
