@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Button = ({ color, text, onClick }) => {
+const Creator = ({ color, text, onClick }) => {
   return (
     <button
       onClick={onClick}
@@ -12,14 +12,14 @@ const Button = ({ color, text, onClick }) => {
   );
 };
 
-Button.defaultProps = {
+Creator.defaultProps = {
   color: "steelblue",
 };
 
-Button.propTypes = {
+Creator.propTypes = {
   text: PropTypes.string,
   color: PropTypes.string,
   onClick: PropTypes.func,
 };
 
-export default Button;
+export default Creator;

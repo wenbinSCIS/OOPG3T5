@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
-import Button from "./Button";
+import Button from "./Buttons/Creator";
 
 const SaveComponent = ({ isSaved, saveComponents, text }) => {
   const location = useLocation();
