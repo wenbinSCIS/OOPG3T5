@@ -12,7 +12,7 @@ import FormSelector from "./FormSelector";
 import axios from "axios";
 import Sidebar from "./Sidebar/Sidebar";
 
-import SectionEditer from "./SectionEditer";
+import SectionEditor from "./SectionEditor";
 
 function MyForm() {
 
@@ -123,7 +123,7 @@ function MyForm() {
     ],
   };
   // dropdown_section.rowElements[0][0].elementHeader = elementName;
-  
+
   var checkbox_section = {
     sectionName: "Recommend",
     sectionText: "Recommend",
@@ -310,7 +310,7 @@ function MyForm() {
             <hr />
           </div>
         ))}
-        <SectionEditer onSubmit={handleFormSubmit} />
+        <SectionEditor onSubmit={handleFormSubmit} />
         <div className="button-container">
           <AddComponent
             className="centered-button"

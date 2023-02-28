@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-function SectionEditer ({onSubmit}) {
+function SectionEditor ({onSubmit}) {
   const [sectionData, setSectionData] = useState({
     sectionName: "New Section",
     sectionText: "New Section",
@@ -162,4 +162,4 @@ function SectionEditer ({onSubmit}) {
   );
 };
 
-export default SectionEditer;
+export default SectionEditor;
