@@ -43,8 +43,8 @@ const FormCard = ({ formItems }) => {
               <MDBListGroupItem>Status : <span className={`badge rounded-pill ${pillClass}`}>{item.status}</span></MDBListGroupItem>
             </MDBListGroup>
             <MDBCardBody>
-              <MDBCardLink href='#'>Card link</MDBCardLink>
-              <MDBCardLink href='#'>Card link</MDBCardLink>
+              <MDBCardLink href='#'>Get Started</MDBCardLink>
+          
             </MDBCardBody>
           </MDBCard>
         )
