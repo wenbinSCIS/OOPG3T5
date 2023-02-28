@@ -9,7 +9,7 @@ import {
   MDBListGroup,
   MDBListGroupItem
 } from 'mdb-react-ui-kit';
-import  placeholder  from "../assets/img/placeholder.jpg";
+import  placeholder  from "../assets/img/placeholder2.jpg";
 
 const FormCard = ({ formItems }) => {
 
