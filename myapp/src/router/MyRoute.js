@@ -14,14 +14,15 @@ import APIFETest from "../components/APIFETest";
 import MyForm from "../components/AdminPageTest";
 
 import VendorAssessmentForm from "../components/VendorAssessmentForm";
-
+import UncompletedForms from "../components/UncompletedForms";
 
 export default function MyRoute() {
   return (
     <>
       <Routes>
         <Route exact path="/" element={<Login/>} />
-        <Route exact path="/home" element={<Home/>} />
+        <Route exact path="/Home" element={<Home/>} />
+        <Route exact path="/UncompletedForms" element={<UncompletedForms/>} />
         <Route exact path="/testpage" element={<TestPage/>} /> 
         <Route exact path="/APIFETest" element={<APIFETest/>} /> 
         <Route exact path="/vendor" element={<VendorAssessmentForm/>} />
