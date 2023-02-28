@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import GenerateSection from "./SectionGeneration";
 import "./AdminPage.css";
 import AddComponent from "./AddComponent";
@@ -11,12 +12,17 @@ import FormSelector from "./FormSelector";
 import axios from "axios";
 import Sidebar from "./Sidebar/Sidebar";
 
+import SectionEditer from "./SectionEditer";
+
 function MyForm() {
+
   const [showAddComponent, setShowAddComponent] = useState(false);
   const [formComponents, setFormComponents] = useState([]);
   const [infoComponents, setInfoComponents] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [elementName, setElementName] = useState("");
+  // the above has to be removed
+  const [sectionData, setSectionData] = useState(null);
+
   const [isSaved, setSaveStatus] = useState(true);
   const [nameSaveAs, setNameSaveAs] = useState("");
   const [versionSaveAs, setVersionSaveAs] = useState("");
@@ -32,8 +38,13 @@ function MyForm() {
     "Add Radio",
   ]);
 
-  const handleInputChange = (event) => {
-    setElementName(event.target.value);
+  // const handleInputChange = (event) => {
+  //   setElementName(event.target.value);
+  // };
+
+  const handleFormSubmit = (data) => {
+    setSectionData(data);
+    handleAddElement({target:data});
   };
 
   function handleOptionChange(event) {
@@ -77,7 +88,7 @@ function MyForm() {
       ],
     ],
   };
-  name_section.rowElements[0][0].elementHeader = elementName;
+  // name_section.rowElements[0][0].elementHeader = elementName;
   var textarea_section = {
     sectionName: "Feedback",
     sectionText: "Feedback",
@@ -93,7 +104,7 @@ function MyForm() {
       ],
     ],
   };
-  textarea_section.rowElements[0][0].elementHeader = elementName;
+  // textarea_section.rowElements[0][0].elementHeader = elementName;
   var dropdown_section = {
     sectionName: "How",
     sectionText: "Please make a Selection",
@@ -111,7 +122,8 @@ function MyForm() {
       ],
     ],
   };
-  dropdown_section.rowElements[0][0].elementHeader = elementName;
+  // dropdown_section.rowElements[0][0].elementHeader = elementName;
+  
   var checkbox_section = {
     sectionName: "Recommend",
     sectionText: "Recommend",
@@ -129,7 +141,6 @@ function MyForm() {
       ],
     ],
   };
-  checkbox_section.rowElements[0][0].elementHeader = elementName;
 
   var radio_section = {
     sectionName: "test",
@@ -148,7 +159,17 @@ function MyForm() {
       ],
     ],
   };
-  radio_section.rowElements[0][0].elementHeader = elementName;
+
+  function handleAddElement({target}) {
+    setFormComponents([
+      ...formComponents,
+      <GenerateSection section={target}></GenerateSection>,
+    ]);
+    console.log(formComponents);
+    setInfoComponents([...infoComponents, target]);
+    setSaveStatus(false);
+  }
+
   function handleAddComponent({ name }) {
     // we should specific add components for each type
     let target = textarea_section;
@@ -204,6 +225,8 @@ function MyForm() {
     setFormComponents(updatedComponents);
   }
 
+
+/* Below is functions connecting to MongoDB (APIs) */
   async function saveComponents() {
     console.log(infoComponents);
     // fetch
@@ -256,14 +279,7 @@ function MyForm() {
   }
   // setInterval(loadExistingForms, 5000);
 
-  /*
-The expression (_, i) is the parameter list of an arrow function that's passed to the filter method. The filter method creates a new array with all elements that pass the test implemented by the provided function.
-
-In this specific case, the _ variable is a throwaway variable that represents the current element being iterated over in the formComponents array. It's being used here to ignore the value of the current element, as we only care about the index of the element.
-
-The i variable represents the index of the current element being iterated over in the formComponents array.
-*/
-
+/* returning the Page */
   return (
     <section className="d-flex">
       <Sidebar></Sidebar>
@@ -294,6 +310,7 @@ The i variable represents the index of the current element being iterated over i
             <hr />
           </div>
         ))}
+        <SectionEditer onSubmit={handleFormSubmit} />
         <div className="button-container">
           <AddComponent
             className="centered-button"
@@ -301,7 +318,6 @@ The i variable represents the index of the current element being iterated over i
             showAdd={showAddComponent}
           />
         </div>
-
         <>
           {showAddComponent && (
             <div>
@@ -316,15 +332,15 @@ The i variable represents the index of the current element being iterated over i
                   ))}
                 </select>
               </div>
-              <div className="button-container">
+              {/* <div className="button-container">
                 <input
                   type="text"
                   className="centered-textbox"
                   placeholder="Enter element name"
                   value={elementName}
-                  onChange={handleInputChange}
+                  // onChange={handleInputChange}
                 />
-              </div>
+              </div> */}
               {selectedOption && (
                 <div className="button-container">
                   {" "}
@@ -360,6 +376,9 @@ The i variable represents the index of the current element being iterated over i
             onChange={handleVersionSaveAs}
           />
         </div>
+        {/* {sectionData && (
+          <GenerateSection section={sectionData}></GenerateSection>
+        )} */}
       </div>
     </section>
   );
