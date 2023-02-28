@@ -81,13 +81,13 @@ const linksArray = [
     {
         label: "Home",
         icon: <AiOutlineHome />,
-        to: "/",
+        to: "/Home",
         notification: 0,
     },
     {
         label: "My Form",
         icon: <MdOutlineAnalytics />,
-        to: "/myform",
+        to: "/UncompletedForms",
         notification: 3,
     },
     {
