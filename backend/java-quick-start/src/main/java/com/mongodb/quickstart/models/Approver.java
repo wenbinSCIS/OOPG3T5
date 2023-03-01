@@ -1,7 +1,10 @@
 package com.mongodb.quickstart.models;
 
 public class Approver extends User{
-    
+    public Approver()
+    {
+        super();
+    }
     public Approver(String username,String password)
     {
         super(username, password,"Approver");

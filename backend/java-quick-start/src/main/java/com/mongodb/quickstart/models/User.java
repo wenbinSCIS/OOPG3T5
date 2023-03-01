@@ -1,15 +1,15 @@
 package com.mongodb.quickstart.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.List;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "userCollection")
-
-public class User{
+public class User {
     @Id
     private String id;
 
@@ -18,37 +18,33 @@ public class User{
     private byte[] passwordSalt;
     private String userType;
 
-    public User()
-    {
+    public User() {
         super();
     }
+    
 
-    public User(String username,String passwordString,String userType)
-    {
+    public User(String username, String passwordString, String userType) {
         this.username = username;
         this.passwordSalt = getSalt();
-        this.hashedPassword = generatePassword(passwordString,this.passwordSalt);
+        this.hashedPassword = generatePassword(passwordString, this.passwordSalt);
         this.userType = userType;
     }
 
-    public User(String username,String hashedPassword,byte[] passwordSalt, String userType)
-    {
+    public User(String username, String hashedPassword, byte[] passwordSalt, String userType) {
         this.username = username;
         this.passwordSalt = passwordSalt;
         this.hashedPassword = hashedPassword;
         this.userType = userType;
     }
 
-    private static byte[] getSalt()
-    {
+    private static byte[] getSalt() {
         SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
+        byte[] salt = new byte[32];
         random.nextBytes(salt);
         return salt;
     }
 
-    private static String generatePassword(String passwordString,byte[] salt)
-    {
+    private static String generatePassword(String passwordString, byte[] salt) {
         String generatedPassword = null;
 
         try {
@@ -67,35 +63,36 @@ public class User{
         return generatedPassword;
     }
 
-    public void setUsername(String username) 
-    {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getUsername()
-    {
+    public String getUsername() {
         return this.username;
     }
 
-    public String getUserType()
-    {
+    public String getUserType() {
         return this.userType;
     }
 
-    public String getHashedPassword() 
-    {
+    public void setUserType(String usertype) {
+        this.userType = usertype;
+    }
+
+    public String getHashedPassword() {
         return this.hashedPassword;
     }
 
-    public byte[] getPasswordSalt() 
-    {
+    public byte[] getPasswordSalt() {
         return this.passwordSalt;
     }
 
-    public boolean comparePassword(String inputPassword)
-    {
+    public boolean comparePassword(String inputPassword) {
         String hashedInputPassword = generatePassword(inputPassword, this.passwordSalt);
 
         return this.hashedPassword.equals(hashedInputPassword);
     }
+
+
 }
+    

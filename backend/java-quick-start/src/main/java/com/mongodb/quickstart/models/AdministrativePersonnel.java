@@ -1,7 +1,7 @@
 package com.mongodb.quickstart.models;
 
 public class AdministrativePersonnel extends User{
-    
+    public AdministrativePersonnel(){}
     public AdministrativePersonnel(String username,String password)
     {
         super(username, password,"AdministrativePersonnel");
