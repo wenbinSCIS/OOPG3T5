@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { BsHandIndexFill } from 'react-icons/bs';
+import TextInput from './TextInput';
+
 
 function Radio({ options, title, size, false_header, name, orientation }) {
 
@@ -14,26 +15,38 @@ function Radio({ options, title, size, false_header, name, orientation }) {
   function handleOptionChange(event) {
     setSelectedOption(event.target.value);
   }
-  
   return (
     <div className={number} style={{ margin: 0 }}>
       {title.length > 0 && (
         <InputGroup.Text style={{ paddingTop: 2, paddingBottom:2,marginBottom:4 }}>{title}</InputGroup.Text>
       )}
       {false_header && <br />}
-      {options.map((option,index) => (
+      {options.map((option,index) => option.optionType == "radio-text" ? (
+        <div>
+          <Form.Check
+            label={option.optionValue}
+            name={name}
+            type="radio"
+            key={index}
+            value = {option.optionValue}
+            onChange={(e) => handleOptionChange(e)}
+            style={{ margin: 7 }}
+          />
+            <TextInput title={option.textVariables.header} hint={option.textVariables.hintText} hintPosition={option.textVariables.hintPosition} name = {option.optionName + "_text"}false_header={false_header}></TextInput>
+          </div>
+        
+      ) : (
         <Form.Check
-         
-          label={option}
-          name={name}
-          type="radio"
-          key={index}
-          value = {option}
-          onChange={(e) => handleOptionChange(e)}
-          style={{ margin: 7 }}
-
-        />
-      ))}
+            label={option.optionValue}
+            name={name}
+            type="radio"
+            key={index}
+            value = {option.optionValue}
+            onChange={(e) => handleOptionChange(e)}
+            style={{ margin: 7 }}
+          />
+      )
+      )}
       </div>  
   );
 }
