@@ -40,7 +40,6 @@ function Checkbox({ options, title,size,false_header,name,orientation}) {
       <br></br>
       {options.map((option,index) => option.optionType == "checkbox-text" ? (
         <div>
-          <p>hi</p>
           <Form.Check
             label={option.optionValue}
             name={name}
