@@ -23,12 +23,23 @@ function TextInput(props) {
           props.hintPosition == "front" &&
           <InputGroup.Text >{props.hint}</InputGroup.Text>
         }
-        <Form.Control
-          id={props.name}
-          placeholder={inlineHint}
-          value = {text}
-          onChange ={(e) => setText(e.target.value)}
-        />
+        {(
+          props.disabled === null ? 
+          <Form.Control
+            id={props.name}
+            placeholder={inlineHint}
+            value = {text}
+            onChange ={(e) => setText(e.target.value)}
+            disabled={props.disabled}
+          /> :
+          <Form.Control
+            id={props.name}
+            placeholder={inlineHint}
+            value = {text}
+            onChange ={(e) => setText(e.target.value)}
+          />
+        )}
+        
         </InputGroup>
         {props.hintPosition == "under" &&
           <a style={{margin:0,fontSize:'0.8rem',opacity: 0.8}}>{props.hint}</a>
