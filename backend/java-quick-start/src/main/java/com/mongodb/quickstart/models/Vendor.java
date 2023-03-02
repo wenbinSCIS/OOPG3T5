@@ -6,6 +6,14 @@ public class Vendor extends User{
     private ArrayList<Form> assignedForms;
     public Vendor(){}
 
+    public ArrayList<Form> getAssignedForms() {
+        return assignedForms;
+    }
+
+    public void setAssignedForms(ArrayList<Form> assignedForms) {
+        this.assignedForms = assignedForms;
+    }
+
     public Vendor(String username,String password,ArrayList<Form> assignedForms)
     {
         super(username,password,"Vendor");

@@ -97,8 +97,32 @@ public class UserController {
     
 
 
-/*     @PutMapping("/updateUser/{username}")
-        public ResponseEntity<?> updateUser(@PathVariable String username, @RequestBody TempUser tempUser) {
+    @PutMapping("/updateVendorForm/{username}")
+        public ResponseEntity<?> updateVendorForm(@PathVariable String username, @RequestBody Vendor vendor) {
+            Optional<Vendor> userData = userRepository.findVendorByUsername(username,"Vendor");
+
+            if (userData.isPresent()) {
+                Vendor existingUser = userData.get();
+            
+              // check if the username in the request body matches the username in the URL path parameter
+                if (!existingUser.getUsername().equals(vendor.getUsername())) {
+                    return new ResponseEntity<>("Username in URL path parameter does not match username in request body", HttpStatus.BAD_REQUEST);
+                }
+
+                existingUser.setAssignedForms(vendor.getAssignedForms());
+
+                
+                userRepository.save(existingUser);
+                return new ResponseEntity<>(existingUser, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+    @PutMapping("/updateUserType/{username}")
+    //Only for changing between administrative personnel and approver. Will not add new field for
+    //assigned forms. Anyway a vendor will probably not become admin/approver and vice versa.
+        public ResponseEntity<?> updateUserType(@PathVariable String username, @RequestBody TempUser tempUser) {
             Optional<User> userData = userRepository.findByUsername(username);
 
             if (userData.isPresent()) {
@@ -109,22 +133,65 @@ public class UserController {
                     return new ResponseEntity<>("Username in URL path parameter does not match username in request body", HttpStatus.BAD_REQUEST);
                 }
 
-                String curType = tempUser.getUserType();
-
-                if (curType.equals("Vendor"))
-                {
-                    existingUser.setAssignedForms(tempUser.getAssignedForms());
-                }
-
-                existingUser.setUserType(tepmUser.getUserType());
-                
+                existingUser.setUserType(tempUser.getUserType());
                 userRepository.save(existingUser);
+
                 return new ResponseEntity<>(existingUser, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         }
-*/
+
+    @PutMapping("/updateUsername/{username}/{newUsername}")
+        public ResponseEntity<?> updateUsername(@PathVariable("username") String username, @RequestBody TempUser tempUser,@PathVariable("newUsername") String newUsername) {
+            Optional<User> userData = userRepository.findByUsername(username);
+
+            if (userData.isPresent()) {
+                User existingUser = userData.get();
+            
+              // check if the username in the request body matches the username in the URL path parameter
+                if (!existingUser.getUsername().equals(tempUser.getUsername())) {
+                    return new ResponseEntity<>("Username in URL path parameter does not match username in request body", HttpStatus.BAD_REQUEST);
+                }
+
+                existingUser.setUsername(newUsername);
+                userRepository.save(existingUser);
+
+                return new ResponseEntity<>(existingUser, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+    @PutMapping("/updateUserPassword/{username}")
+        public ResponseEntity<?> updateUserPassword(@PathVariable String username, @RequestBody TempUser tempUser) {
+            Optional<User> userData = userRepository.findByUsername(username);
+
+            if (userData.isPresent()) {
+                User existingUser = userData.get();
+            
+              // check if the username in the request body matches the username in the URL path parameter
+                if (!existingUser.getUsername().equals(tempUser.getUsername())) {
+                    return new ResponseEntity<>("Username in URL path parameter does not match username in request body", HttpStatus.BAD_REQUEST);
+                }
+
+                //create a new user object with input password string to 
+                //get new hashed password and salt
+
+                User placeholderUser = new User(username, tempUser.getPasswordString(), null);
+                String newHashedPassword = placeholderUser.getHashedPassword();
+                byte[] newPasswordSalt = placeholderUser.getPasswordSalt();
+
+                existingUser.setHashedPassword(newHashedPassword);
+                existingUser.setPasswordSalt(newPasswordSalt);
+                userRepository.save(existingUser);
+
+                return new ResponseEntity<>(existingUser, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
 
     @DeleteMapping("/deleteUser/{username}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable("username") String username) {

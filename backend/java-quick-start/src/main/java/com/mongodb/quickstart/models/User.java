@@ -83,6 +83,16 @@ public class User {
         return this.hashedPassword;
     }
 
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+
+    public void setPasswordSalt(byte[] passwordSalt) {
+        this.passwordSalt = passwordSalt;
+    }
+
+
     public byte[] getPasswordSalt() {
         return this.passwordSalt;
     }
