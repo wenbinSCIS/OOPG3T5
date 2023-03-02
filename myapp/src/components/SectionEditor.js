@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 
+import ElementEditor from "./ElementEditor";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function SectionEditor ({onSubmit}) {
@@ -161,50 +162,8 @@ function SectionEditor ({onSubmit}) {
           </Button>
         </Stack>
       </Form>
-      {sectionCreated && (
-        <Form>
-          <h5>Element Editor [in progress]</h5>
-          <Form.Group controlId="elementType">
-            <Form.Label
-              style={{ margin: 0, color: "deepskyblue" }}
-              // style={{ margin: 0, color: "#005FF1", fontWeight: "bold" }}
-            >
-              Select Type of Element
-            </Form.Label>
-            <Form.Select
-              style={{ width: "32%" }}
-              className="custom-select"
-              defaultValue="Choose an Element"
-              // onChange={handleInputChange}
-            >
-              <option key="Not an Option" value="Choose an Element">
-                Choose an Element
-              </option>
-              <option key="Text" value="Text">
-                Text
-              </option>
-              <option key="Textinput" value="Text Input">
-                Text input
-              </option>
-              <option key="Textarea" value="Text Area">
-                Text Area
-              </option>
-              <option key="DropdownSelect" value="Dropdown Select">
-                Dropdown Select
-              </option>
-              <option key="Radio" value="Radio">
-                Radio
-              </option>
-              <option key="Checkbox" value="Checkbox">
-                Checkbox
-              </option>
-              <option key="TableComponent" value="Table">
-                Table
-              </option>
-            </Form.Select>
-          </Form.Group>
-        </Form>
-      )}
+      {sectionCreated ? <ElementEditor /> : null}
+      
     </div>
   );
 };

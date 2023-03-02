@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { useState } from "react";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -7,8 +6,11 @@ import IconButton from "@mui/material/IconButton";
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import AddIcon from "@mui/icons-material/Add";
 import BuildIcon from "@mui/icons-material/Build";
+import { Modal }  from 'react-bootstrap';
 
 const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete}) => {
+  const [showModal, setShowModal] = useState(false);
+  
   return (
     <div>
       <Stack
@@ -18,12 +20,12 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete}) => {
         sx={{ justifyContent: "flex-end" }}
       >
         <IconButton
-        onClick={MoveDown}
+          onClick={MoveDown}
         >
           <ExpandCircleDownIcon fontSize="large" />
         </IconButton>
         <IconButton
-        onClick={MoveUp}
+          onClick={MoveUp}
         >
           <ExpandCircleDownIcon
             fontSize="large"
@@ -43,11 +45,33 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete}) => {
           alignItems="center"
           variant="contained"
           color="primary"
-          onClick={Edit}
+          onClick={() => setShowModal(true)}
         >
           <BuildIcon />
           &nbsp;Edit
         </Button>
+        <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Modal Body</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={() => console.log('Save changes')}>
+              Save 
+            </Button>
+          </Modal.Footer>
+          <style>{`
+            .modal-content {
+              border: 2px solid black;
+            }
+            .fade.modal-backdrop.show{
+              z-index:1039;
+            }
+          `}</style>
+        </Modal>
         <Button
           display="flex"
           alignItems="center"
@@ -63,6 +87,6 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete}) => {
       </Stack>
     </div>
   );
-}
+};
 
 export default EditPanel;
