@@ -3,7 +3,10 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
 
-function Checkbox({ options, title,size,false_header,name,orientation}) {
+function Checkbox({ options,title,size,false_header,name,orientation}) {
+  console.log(options)
+
+  
   
   const [selectedItems, setSelectedItems] = useState([]);
 
