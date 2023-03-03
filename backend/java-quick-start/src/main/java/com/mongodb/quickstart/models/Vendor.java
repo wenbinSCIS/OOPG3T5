@@ -3,24 +3,24 @@ package com.mongodb.quickstart.models;
 import java.util.ArrayList;
 
 public class Vendor extends User{
-    private ArrayList<Form> assignedForms;
+    private ArrayList<Object> assignedForms;
     public Vendor(){}
 
-    public ArrayList<Form> getAssignedForms() {
+    public ArrayList<Object> getAssignedForms() {
         return assignedForms;
     }
 
-    public void setAssignedForms(ArrayList<Form> assignedForms) {
+    public void setAssignedForms(ArrayList<Object> assignedForms) {
         this.assignedForms = assignedForms;
     }
 
-    public Vendor(String username,String password,ArrayList<Form> assignedForms)
+    public Vendor(String username,String password,ArrayList<Object> assignedForms)
     {
         super(username,password,"Vendor");
         this.assignedForms = assignedForms;
     }
 
-    public Vendor(String username,String hashedPassword,byte[] passwordSalt,ArrayList<Form> assignedForms)
+    public Vendor(String username,String hashedPassword,byte[] passwordSalt,ArrayList<Object> assignedForms)
     {
         super(username,hashedPassword,passwordSalt,"Vendor");
         this.assignedForms = assignedForms;

@@ -148,7 +148,13 @@ public class UserController {
 
             if (userData.isPresent()) {
                 User existingUser = userData.get();
-            
+
+                Optional<User> userDataCheck = userRepository.findByUsername(newUsername);
+
+                if (userDataCheck.isPresent()) {
+                    return new ResponseEntity<>("User with the given username already exists", HttpStatus.CONFLICT);
+                }
+
               // check if the username in the request body matches the username in the URL path parameter
                 if (!existingUser.getUsername().equals(tempUser.getUsername())) {
                     return new ResponseEntity<>("Username in URL path parameter does not match username in request body", HttpStatus.BAD_REQUEST);

@@ -6,7 +6,7 @@ public class TempUser{
     private String username;
     private String passwordString;
     private String userType;
-    private ArrayList<Form> assignedForms;
+    private ArrayList<Object> assignedForms;
 
     public TempUser()
     {
@@ -20,7 +20,7 @@ public class TempUser{
         this.assignedForms = null;
     }
 
-    public TempUser(String username,String passwordString,String userType,ArrayList<Form> assignedForms)
+    public TempUser(String username,String passwordString,String userType,ArrayList<Object> assignedForms)
     {
         this.username = username;
         this.passwordString = passwordString;
@@ -40,7 +40,8 @@ public class TempUser{
         return userType;
     }
 
-    public ArrayList<Form> getAssignedForms() {
+    public ArrayList<Object> getAssignedForms() {
         return assignedForms;
     }
+    
 }
