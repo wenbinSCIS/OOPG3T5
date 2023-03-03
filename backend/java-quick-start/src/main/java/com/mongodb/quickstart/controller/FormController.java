@@ -71,7 +71,6 @@ public class FormController {
     }
   }
 
-
   @GetMapping("/getAllFormsByVersion/{version}")
   public ResponseEntity<List<Form>> findByVersion(@PathVariable("version") double version) {
     try {
