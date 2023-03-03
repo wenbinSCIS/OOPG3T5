@@ -6,8 +6,9 @@ import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ElementEditor from "./ElementEditor";
 
-function SectionEditor ({onSubmit}) {
+function SectionEditor({ onPressed }) {
   const [sectionData, setSectionData] = useState({
     sectionName: "New Section",
     sectionText: "New Section",
@@ -44,29 +45,31 @@ function SectionEditor ({onSubmit}) {
     },
   });
 
-    const handleInputChange = (event) => {
-      const { id, value } = event.target;
-      setSectionData((prevSectionData) => ({
-        ...prevSectionData,
-        [id]: value,
-      }));
-    };
+  const handleInputChange = (event) => {
+    const { id, value } = event.target;
+    setSectionData((prevSectionData) => ({
+      ...prevSectionData,
+      [id]: value,
+    }));
+  };
 
-    const handleSubmit = (event) => { // should only be applied for event editor
-      event.preventDefault();
-      onSubmit(sectionData); //should not sent the data just yet
-      // setSectionCreated(!sectionCreated);
-      // console.log(sectionCreated);
-      // console.log(sectionData); 
-    };
+  const handleSubmit = (event) => {
+    // should only be applied for event editor
+    event.preventDefault();
+    onPressed(sectionData); //should not sent the data just yet - need to be under Element Editor onPressedElement
+    // only after I press save section at the end
+    // setSectionCreated(!sectionCreated);
+    // console.log(sectionCreated);
+    // console.log(sectionData);
+  };
 
-    function sectionIsCreated() {
-      setSectionCreated(true);
-    }
+  function sectionIsCreated() {
+    setSectionCreated(true);
+  }
 
-    function sectionNotCreated() {
-      setSectionCreated(false);
-    }
+  function sectionNotCreated() {
+    setSectionCreated(false);
+  }
 
   return (
     <div>
@@ -153,7 +156,7 @@ function SectionEditor ({onSubmit}) {
             alignItems="center"
             variant="contained"
             color="primary"
-            type="submit"
+            type="submit" // no longer submit
             onClick={sectionIsCreated}
           >
             Save Section&nbsp;&nbsp;
@@ -162,51 +165,10 @@ function SectionEditor ({onSubmit}) {
         </Stack>
       </Form>
       {sectionCreated && (
-        <Form>
-          <h5>Element Editor [in progress]</h5>
-          <Form.Group controlId="elementType">
-            <Form.Label
-              style={{ margin: 0, color: "deepskyblue" }}
-              // style={{ margin: 0, color: "#005FF1", fontWeight: "bold" }}
-            >
-              Select Type of Element
-            </Form.Label>
-            <Form.Select
-              style={{ width: "32%" }}
-              className="custom-select"
-              defaultValue="Choose an Element"
-              // onChange={handleInputChange}
-            >
-              <option key="Not an Option" value="Choose an Element">
-                Choose an Element
-              </option>
-              <option key="Text" value="Text">
-                Text
-              </option>
-              <option key="Textinput" value="Text Input">
-                Text input
-              </option>
-              <option key="Textarea" value="Text Area">
-                Text Area
-              </option>
-              <option key="DropdownSelect" value="Dropdown Select">
-                Dropdown Select
-              </option>
-              <option key="Radio" value="Radio">
-                Radio
-              </option>
-              <option key="Checkbox" value="Checkbox">
-                Checkbox
-              </option>
-              <option key="TableComponent" value="Table">
-                Table
-              </option>
-            </Form.Select>
-          </Form.Group>
-        </Form>
+        <ElementEditor /> // onPressedElement - need to add handle submit here? -> need to be at Save and Close as submit button within element editor
       )}
     </div>
   );
-};
+}
 
 export default SectionEditor;
