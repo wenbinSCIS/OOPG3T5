@@ -128,7 +128,7 @@ function MyForm() {
     sectionText: "Recommend",
     sectionFont: "12",
     numRows: "1",
-    rowElements: [
+    rowElements: [[
         {
           elementName: "Recommend",
           elementType: "Checkbox",
@@ -155,7 +155,7 @@ function MyForm() {
                 hintText:"Please specify"
               }
             }]
-        },
+        }],
       ]
   };
 
