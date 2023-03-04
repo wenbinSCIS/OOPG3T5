@@ -53,6 +53,7 @@ function SectionEditor({ onPressed }) {
     }));
   };
 
+  // This function helps to set the sectionData state within the admin page
   const handleSubmit = (event) => {
     // should only be applied for event editor
     event.preventDefault();
@@ -63,6 +64,7 @@ function SectionEditor({ onPressed }) {
     // console.log(sectionData);
   };
 
+  // the two functions below control the state for showing the element editor
   function sectionIsCreated() {
     setSectionCreated(true);
   }

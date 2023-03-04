@@ -1,26 +1,279 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form } from "react-bootstrap";
-import Textarea from "../Textarea";
-import TextInput from "../TextInput";
-import Text from "../Text";
 
-const ElementEditor = ({ onPressedElement }) => {
-  const [elementType, setElementType] = useState("");
-  const [selectedOption, setSelectedOption] = useState("");
+import Stack from "@mui/material/Stack";
+import SendIcon from "@mui/icons-material/Send";
+import Button from "@mui/material/Button";
+
+const ElementEditor = ({ sectionHeader, onPressedElement }) => {
+  const [elementType, setElementType] = useState(""); // element type
+
+  const [overallRowState, setOverallRowState] = useState([]);
+
+  const [rowState, setRowState] = useState([]);
+
+  const [elementState, setElementState] = useState({});
+
+  const [optionState, setOptionState] = useState({}); // this is for elements who have the ability to select options, for example dropdowns, checkboxes, etc, will be a dictionary initially then converted to a list
+
   // I need a state for all the form elements, empty list
-  // for each new row I need to 
+  // for each new row I need to
   // I need to add default states for each variable -> need default parameters then when I press change setOption then add them to the particular row element
   //for the dropdown and checkbox I would need additional states
+  // need to add save and close button in addition to add element
+
+  /*
+=============================================================================================
+The code below manages the state for element type, 
+
+handleChange: sets the elemeType value as the one that we have selected
+=============================================================================================
+*/
+  useEffect(
+    () => console.log("The element State is: ", elementState),
+    [elementState]
+  ); // add this to log all changes to elementState
+
+  useEffect(() => console.log("The row state is: ", rowState), [rowState]);
+
+  useEffect(() => console.log("The overall row state is: ", overallRowState), [overallRowState]);
+
+  // const currentElementState = useRef(elementState);
+
+  // useEffect(() =>
+  //   console.log(currentElementState.current), [elementState]);
+  // add this to log all changes to elementState
+
+  /* I need the userRef to define a mutable reference currentElementState using the userRef hook, and initialize it with the current value of elementState
+  
+  we then define an effect hook that logs the urrent value of elementState every time it changes using console.log. instead of logging the current value of elementState, we log the current value of elementState.current, which will always containe the latest value of elementState even if it contains a reference to optionsState
+  */
 
   const handleChange = (event) => {
     setElementType(event.target.value);
-  };
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+    setNumOptions(3); // the reason why I do this is because everytime I rotate between options I would like only 3 option to be displayed only
+    setNumRadioOptions(3); // the reason why I do this is because everytime I rotate between options I would like the 3 options to be displayed only
+    setNumCheckboxOptions(3); // the reason why I do this is because everytime I rotate between options I would like the 3 options to be displayed only
+    setOptionState({}); // want to revert option state everytime we select a new element
+
+    let chosenElementType = event.target.value;
+
+    setRowState([]); // I want individual row state to change when I select a different option - may have to adjust this
+    setElementState({ elementType: chosenElementType });
+
+    // if I do not do as above the number of options and the default value shown will not be consistent
   };
 
+  // This function handles changes when admin edits parameters on the form
+
+  const handleInputChange = (event, isOption) => {
+    // I need to add additonal logic if isOption == True, this includes updating the option State
+    if (!isOption) {
+      const { id, value } = event.target;
+      setElementState((elementState) => ({
+        ...elementState,
+        [id]: value,
+      }));
+    } else {
+      const selectedIndex = parseInt(event.target.id, 10);
+      const { value } = event.target;
+      setOptionState((optionState) => ({
+        ...optionState,
+        [selectedIndex]: value,
+      }));
+
+      // now I need to get a list of the values provided by options in order from 1 to the last index, so I need to sort first
+      const myList = Object.keys(optionState)
+        .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
+        .map((key) => optionState[key]);
+
+      setElementState((elementState) => ({
+        ...elementState,
+        options: myList,
+      }));
+    }
+  };
+
+  /*
+=============================================================================================
+The code below manages the state for the dropdown select option, 
+
+numOptions: How many options we want
+
+handleDropDownSelect: takes the input from the dropdown and Sets the numpOptions accordingly
+
+renderOptions: renders the options on the front end
+=============================================================================================
+*/
+
+  const [numOptions, setNumOptions] = useState(3); // dropdown select, default number of options is 3
+
+  const handleDropdownSelect = (event) => {
+    const selectedValue = parseInt(event.target.value, 10);
+    setNumOptions(selectedValue);
+  };
+
+  function renderOptions() {
+    const options = [];
+
+    for (let i = 0; i < numOptions; i++) {
+      options.push(
+        <Form.Group key={i} controlId={i} style={{ width: "50%" }}>
+          <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+            Option {i + 1}
+          </Form.Label>
+          <Form.Control
+            type="text"
+            required
+            onChange={(event) => handleInputChange(event, true)}
+          />
+        </Form.Group>
+      );
+    }
+
+    return options;
+  }
+
+  /*
+=============================================================================================
+The code below manages the state for the radio, 
+
+numRadioOptions: How many options we want
+
+handleRadioSelect: takes the input from the radio and sets the numpRadioOptions accordingly
+
+renderRadioOptions: renders the options on the front end
+=============================================================================================
+*/
+  const [numRadioOptions, setNumRadioOptions] = useState(3); // dropdown select, default number of options is 3
+
+  const handleRadioSelect = (event) => {
+    const selectedValue = parseInt(event.target.value, 10);
+    setNumRadioOptions(selectedValue);
+  };
+
+  function renderRadioOptions() {
+    const options = [];
+
+    for (let i = 0; i < numRadioOptions; i++) {
+      options.push(
+        <Form.Group key={i} controlId={i} style={{ width: "50%" }}>
+          <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+            Option {i + 1}
+          </Form.Label>
+          <Form.Control
+            type="text"
+            required
+            onChange={(event) => handleInputChange(event, true)}
+          />
+        </Form.Group>
+      );
+    }
+
+    return options;
+  }
+
+  /*
+=============================================================================================
+The code below manages the state for the checkbox, 
+
+numCheckboxOptions: How many options we want
+
+handleCheckboxSelect: takes the input from the checkbox and sets the numCheckboxOptions accordingly
+
+renderCheckboxOptions: renders the options on the front end
+=============================================================================================
+*/
+  const [numCheckboxOptions, setNumCheckboxOptions] = useState(3); // dropdown select, default number of options is 3
+
+  const handleCheckboxSelect = (event) => {
+    const selectedValue = parseInt(event.target.value, 10);
+    setNumCheckboxOptions(selectedValue);
+  };
+
+  function renderCheckboxOptions() {
+    const options = [];
+
+    for (let i = 0; i < numCheckboxOptions; i++) {
+      options.push(
+        <Form.Group key={i} controlId={i} style={{ width: "50%" }}>
+          <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+            Value {i + 1}
+          </Form.Label>
+          <Form.Control
+            type="text"
+            required
+            onChange={(event) => handleInputChange(event, true)}
+          />
+        </Form.Group>
+      );
+    }
+
+    return options;
+  }
+  /*
+=============================================================================================
+The code below manages the submission of the event
+=============================================================================================
+*/
+
+  function addItem(currentList, newItem) {
+    return [...currentList, newItem];
+  }
+
+  const handleRowState = () => {
+    setRowState((rowState) => addItem(rowState, elementState));
+  };
+
+  const handleOverallRowState = () => {
+    setOverallRowState((overallRowState) => addItem(overallRowState, rowState));
+  };
+
+  function handleEventSubmission() {
+    try {
+      handleRowState();
+      handleOverallRowState();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // const handleEventSubmission = () => {
+  //   handleRowState();
+  //   console.log(overallRowState);
+  // };
+
+  // const handleRowState = () => {
+  //   setRowState((rowState) => ({
+  //     ...rowState,
+  //     elementState,
+  //   }));
+  //   handleOverallRowState();
+  // };
+
+  // const handleOverallRowState = () => {
+  //   setOverallRowState((overallRowState) => ({
+  //     ...overallRowState,
+  //     rowState,
+  //   }));
+  // };
+
+  /*
+=============================================================================================
+Code to be Deprecated
+=============================================================================================
+*/
+
+  // none for now
+
+  /*
+=============================================================================================
+Returned Component
+=============================================================================================
+*/
+
   return (
-    <Form>
+    <Form onSubmit={onPressedElement}>
       <h5>Element Editor</h5>
       <Form.Group controlId="elementType">
         <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
@@ -44,8 +297,8 @@ const ElementEditor = ({ onPressedElement }) => {
           <option key="Textarea" value="Text Area">
             Text Area
           </option>
-          <option key="DropdownSelect" value="Dropdown Select">
-            Dropdown Select
+          <option key="Dropdown" value="Dropdown">
+            Dropdown
           </option>
           <option key="Radio" value="Radio">
             Radio
@@ -68,6 +321,7 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group controlId="Text" className="mb-3">
@@ -78,6 +332,7 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert Text that you want to display"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group
@@ -88,7 +343,11 @@ const ElementEditor = ({ onPressedElement }) => {
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
               Text Size (Optional)
             </Form.Label>
-            <Form.Select className="custom-select" defaultValue="12">
+            <Form.Select
+              className="custom-select"
+              defaultValue="12"
+              onChange={(event) => handleInputChange(event, false)}
+            >
               {Array.from({ length: 24 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
                   {index + 1}
@@ -108,6 +367,7 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
@@ -119,6 +379,7 @@ const ElementEditor = ({ onPressedElement }) => {
               e
               className="mb-3"
               placeholder="Insert Element Header (To be displayed above Text Area)"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
         </>
@@ -133,6 +394,7 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
@@ -143,6 +405,7 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert Element Header (To be displayed above Text Input)"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group controlId="placeholder" className="mb-3">
@@ -153,17 +416,21 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert placeholder text"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group
-            controlId="placeholder"
+            controlId="placeholderPosition"
             className="mb-3"
             style={{ width: "32%" }}
           >
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
               Placeholder position
             </Form.Label>
-            <Form.Select aria-label="Default select example">
+            <Form.Select
+              aria-label="Default select example"
+              onChange={(event) => handleInputChange(event, false)}
+            >
               <option value="hint">Hint (Within Text Input)</option>
               <option value="under">Under (Below Text Input)</option>
               <option value="front">Front (At the left of Text Input)</option>
@@ -171,7 +438,7 @@ const ElementEditor = ({ onPressedElement }) => {
           </Form.Group>
         </>
       )}
-      {elementType === "Dropdown Select" && (
+      {elementType === "Dropdown" && (
         <>
           <Form.Group controlId="elementName" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
@@ -181,6 +448,7 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
@@ -191,6 +459,7 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert Insert Element Header (To be displayed above DropDown)"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group
@@ -201,7 +470,11 @@ const ElementEditor = ({ onPressedElement }) => {
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
               Width of DropDown (Optional)
             </Form.Label>
-            <Form.Select className="custom-select" defaultValue="4">
+            <Form.Select
+              className="custom-select"
+              defaultValue="4"
+              onChange={(event) => handleInputChange(event, false)}
+            >
               {Array.from({ length: 5 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
                   {index + 1}
@@ -215,32 +488,21 @@ const ElementEditor = ({ onPressedElement }) => {
             style={{ width: "32%" }}
           >
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Options
+              Select Number of Options
             </Form.Label>
-            <Form.Select aria-label="Default select example">
-              <option value="selectionA">Selection A</option>
-              <option value="selectionB">Selection B</option>
-              <option value="selectionC">Selection C</option>
+            <Form.Select
+              className="custom-select"
+              defaultValue="3"
+              onChange={handleDropdownSelect}
+            >
+              {Array.from({ length: 10 }, (_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
             </Form.Select>
           </Form.Group>
-          <Form.Control
-            type="text"
-            placeholder="Enter Dropdown value 1 "
-            className="mb-3"
-            name="dropdownValue1"
-          />
-          <Form.Control
-            type="text"
-            placeholder="Enter Dropdown value 2 "
-            className="mb-3"
-            name="dropdownValue2"
-          />
-          <Form.Control
-            type="text"
-            placeholder="Enter Dropdown value 3 "
-            className="mb-3"
-            name="dropdownValue3"
-          />
+          {renderOptions()}
         </>
       )}
 
@@ -254,6 +516,7 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
@@ -264,15 +527,19 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert Element Header (To be displayed above Radio)"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group controlId="elementOrientation" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
               Element Orientation
             </Form.Label>
-            <Form.Select aria-label="Element Orientation">
-              <option value="Horizontal">Horizontal</option>
-              <option value="Vertical">Vertical</option>
+            <Form.Select
+              aria-label="Element Orientation"
+              onChange={(event) => handleInputChange(event, false)}
+            >
+              <option value="horizontal">Horizontal</option>
+              <option value="vertical">Vertical</option>
             </Form.Select>
           </Form.Group>
           <Form.Group
@@ -281,47 +548,21 @@ const ElementEditor = ({ onPressedElement }) => {
             style={{ width: "32%" }}
           >
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Default Options
+              Select Number of Options
             </Form.Label>
-            <div>
-              <Form.Check
-                type="radio"
-                label="Yes"
-                name="options"
-                id="yes-radio"
-              />
-              <Form.Check
-                type="radio"
-                label="Maybe"
-                name="options"
-                id="maybe-radio"
-              />
-              <Form.Check
-                type="radio"
-                label="No"
-                name="options"
-                id="no-radio"
-              />
-              <Form.Control
-                type="text"
-                placeholder="Enter Radio value 1 "
-                className="mb-3"
-                name="radioValue1"
-              />
-              <Form.Control
-                type="text"
-                placeholder="Enter Radio value 2 "
-                className="mb-3"
-                name="radioValue2"
-              />
-              <Form.Control
-                type="text"
-                placeholder="Enter Radio value 3 "
-                className="mb-3"
-                name="radioValue3"
-              />
-            </div>
+            <Form.Select
+              className="custom-select"
+              defaultValue="3"
+              onChange={handleRadioSelect}
+            >
+              {Array.from({ length: 10 }, (_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
+          {renderRadioOptions()}
         </>
       )}
       {elementType === "Checkbox" && (
@@ -334,6 +575,7 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
@@ -344,76 +586,62 @@ const ElementEditor = ({ onPressedElement }) => {
               type="text"
               className="mb-3"
               placeholder="Insert Element Header (To be displayed above Checkbox)"
+              onChange={(event) => handleInputChange(event, false)}
             />
           </Form.Group>
           <Form.Group controlId="elementOrientation" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
               Element Orientation
             </Form.Label>
-            <Form.Select aria-label="Element Orientation">
+            <Form.Select
+              aria-label="Element Orientation"
+              onChange={(event) => handleInputChange(event, false)}
+            >
               <option value="Horizontal">Horizontal</option>
               <option value="Vertical">Vertical</option>
             </Form.Select>
           </Form.Group>
-          <Form.Group controlId="options" className="mb-3">
+          <Form.Group
+            controlId="options"
+            className="mb-3"
+            style={{ width: "32%" }}
+          >
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Checkbox Values
+              Select Number of Checkbox Values
             </Form.Label>
-            <div>
-              <Form.Check
-                type="checkbox"
-                label="Selection A"
-                value="selectionA"
-                id="selectionA-checkbox"
-                onChange={handleOptionChange}
-              />
-              {selectedOption === "selectionA" && (
-                <>
-                  <Form.Label>Checkbox A:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter Checkbox value A"
-                    className="mb-3"
-                  />
-                </>
-              )}
-              <Form.Check
-                type="checkbox"
-                label="Selection B"
-                value="selectionB"
-                id="selectionB-checkbox"
-                onChange={handleOptionChange}
-              />
-              {selectedOption === "selectionB" && (
-                <>
-                  <Form.Label>Checkbox B:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter Checkbox value B"
-                    className="mb-3"
-                  />
-                </>
-              )}
-              <Form.Check
-                type="checkbox"
-                label="Selection C"
-                value="selectionC"
-                id="selectionC-checkbox"
-                onChange={handleOptionChange}
-              />
-              {selectedOption === "selectionC" && (
-                <>
-                  <Form.Label>Checkbox C:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter Checkbox value C"
-                    className="mb-3"
-                  />
-                </>
-              )}
-            </div>
+            <Form.Select
+              className="custom-select"
+              defaultValue="3"
+              onChange={handleCheckboxSelect}
+            >
+              {Array.from({ length: 10 }, (_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
+          {renderCheckboxOptions()}
         </>
+      )}
+      {elementType && elementType != "Choose an Element" && (
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={2}
+          sx={{ justifyContent: "flex-end" }}
+        >
+          <Button
+            alignItems="center"
+            variant="contained"
+            color="primary"
+            // type="submit" // no longer submit
+            onClick={handleEventSubmission}
+          >
+            Save Element&nbsp;&nbsp;
+            <SendIcon />
+          </Button>
+        </Stack>
       )}
     </Form>
   );
