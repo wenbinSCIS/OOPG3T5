@@ -53,6 +53,12 @@ function SectionEditor({ onPressed }) {
     }));
   };
 
+  const [isActive, setIsActive] = useState(true);
+
+  const handleToggle = () => {
+    setIsActive(!isActive);
+  };
+
   // This function helps to set the sectionData state within the admin page
   const handleSubmit = (event) => {
     // should only be applied for event editor
@@ -67,10 +73,12 @@ function SectionEditor({ onPressed }) {
   // the two functions below control the state for showing the element editor
   function sectionIsCreated() {
     setSectionCreated(true);
+    handleToggle();
   }
 
   function sectionNotCreated() {
     setSectionCreated(false);
+    handleToggle();
   }
 
   return (
@@ -149,9 +157,10 @@ function SectionEditor({ onPressed }) {
             <Button
               color="neutral"
               variant="contained"
+              disabled={isActive}
               onClick={sectionNotCreated}
             >
-              Cancel
+              Close Element Editor
             </Button>
           </ThemeProvider>
           <Button

@@ -6,7 +6,7 @@ import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 
 const ElementEditor = ({ sectionHeader, onPressedElement }) => {
-  const [elementType, setElementType] = useState(""); // element type
+  const [elementType, setElementType] = useState(null); // element type
 
   const [overallRowState, setOverallRowState] = useState([]);
 
@@ -16,17 +16,44 @@ const ElementEditor = ({ sectionHeader, onPressedElement }) => {
 
   const [optionState, setOptionState] = useState({}); // this is for elements who have the ability to select options, for example dropdowns, checkboxes, etc, will be a dictionary initially then converted to a list
 
-  // I need a state for all the form elements, empty list
-  // for each new row I need to
-  // I need to add default states for each variable -> need default parameters then when I press change setOption then add them to the particular row element
-  //for the dropdown and checkbox I would need additional states
   // need to add save and close button in addition to add element
+
+  /*
+=============================================================================================
+The code below manages the state for creating a new row or adding an element to an existing row (the first dropdown)
+
+It also manages the state for selecting and existing row by checking the row number that is returned
+
+handleNewRowAddElement: sets the elementType value as the one that we have selected
+=============================================================================================
+*/
+  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const handleNewRowAddElement = (e) => {
+    setSelectedOption(e.target.value);
+    console.log("The user chooses to: ", e.target.value);
+    setSelectedRow(null); // so that the state from handling target row does not persist
+    setElementType(null);
+  };
+
+  const handleTargetRow = (e) => {
+    let selectedRowNumber;
+    if (e.target.value === "Choose a Row") {
+      selectedRowNumber = e.target.value;
+    } else {
+      selectedRowNumber = parseInt(e.target.value, 10);
+    }
+    setSelectedRow(selectedRowNumber);
+    setElementType(null);
+    console.log("The user selects row: ", e.target.value);
+  };
 
   /*
 =============================================================================================
 The code below manages the state for element type, 
 
-handleChange: sets the elemeType value as the one that we have selected
+handleChange: sets the elementType value as the one that we have selected
 =============================================================================================
 */
   useEffect(
@@ -36,18 +63,10 @@ handleChange: sets the elemeType value as the one that we have selected
 
   useEffect(() => console.log("The row state is: ", rowState), [rowState]);
 
-  useEffect(() => console.log("The overall row state is: ", overallRowState), [overallRowState]);
-
-  // const currentElementState = useRef(elementState);
-
-  // useEffect(() =>
-  //   console.log(currentElementState.current), [elementState]);
-  // add this to log all changes to elementState
-
-  /* I need the userRef to define a mutable reference currentElementState using the userRef hook, and initialize it with the current value of elementState
-  
-  we then define an effect hook that logs the urrent value of elementState every time it changes using console.log. instead of logging the current value of elementState, we log the current value of elementState.current, which will always containe the latest value of elementState even if it contains a reference to optionsState
-  */
+  useEffect(
+    () => console.log("The overall row state is: ", overallRowState),
+    [overallRowState]
+  );
 
   const handleChange = (event) => {
     setElementType(event.target.value);
@@ -77,15 +96,16 @@ handleChange: sets the elemeType value as the one that we have selected
     } else {
       const selectedIndex = parseInt(event.target.id, 10);
       const { value } = event.target;
+      const updatedOptionState = { ...optionState, [selectedIndex]: value }; // I need the updated OptionState because updated the current state there is some lag
       setOptionState((optionState) => ({
         ...optionState,
         [selectedIndex]: value,
       }));
 
       // now I need to get a list of the values provided by options in order from 1 to the last index, so I need to sort first
-      const myList = Object.keys(optionState)
-        .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
-        .map((key) => optionState[key]);
+      const myList = Object.keys(updatedOptionState)
+        .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)) // smaller index over bigger index
+        .map((key) => updatedOptionState[key]);
 
       setElementState((elementState) => ({
         ...elementState,
@@ -214,6 +234,16 @@ renderCheckboxOptions: renders the options on the front end
   /*
 =============================================================================================
 The code below manages the submission of the event
+
+(if row being added is new)
+addItem: Helper function to allow us to add new element to the current row
+
+handleRowState: updates current state of the row being added
+
+handleOverallRowState: updates current state of all the section by appending new row
+
+(if element is being added to an existing row)
+appendToOverallState: appends element to selected row as chosen by the user
 =============================================================================================
 */
 
@@ -222,41 +252,41 @@ The code below manages the submission of the event
   }
 
   const handleRowState = () => {
+    const updatedRowState = [...rowState, elementState];
     setRowState((rowState) => addItem(rowState, elementState));
+    handleOverallRowState(updatedRowState);
   };
 
-  const handleOverallRowState = () => {
-    setOverallRowState((overallRowState) => addItem(overallRowState, rowState));
+  const handleOverallRowState = (updatedState) => {
+    const updatedOverallState = [...overallRowState, updatedState]; // updatedOverallState should be sent over to the overallRowState -> takes a while to update
+    setOverallRowState((overallRowState) =>
+      addItem(overallRowState, updatedState)
+    );
+    console.log(updatedOverallState); // this should be pushed to the admin page
+  };
+
+  const appendToOverallRowState = () => {
+    const currentRowState = [...overallRowState]; // create a new copy of the state
+    const rowIndex = selectedRow - 1; // index of the row you want to append to
+    const row = [...currentRowState[rowIndex]]; // create a new copy of the row
+    row.push(elementState); // append the new element to the row
+    currentRowState[rowIndex] = row; // replace the old row with the new one
+    setOverallRowState(currentRowState);
+    console.log(currentRowState);
   };
 
   function handleEventSubmission() {
     try {
-      handleRowState();
-      handleOverallRowState();
+      if (selectedOption === "new row") { //basically we can just do normal functions like append to a new row behind
+        handleRowState();
+      }
+      else {
+        appendToOverallRowState();
+      }
     } catch (error) {
       console.error(error);
     }
   }
-
-  // const handleEventSubmission = () => {
-  //   handleRowState();
-  //   console.log(overallRowState);
-  // };
-
-  // const handleRowState = () => {
-  //   setRowState((rowState) => ({
-  //     ...rowState,
-  //     elementState,
-  //   }));
-  //   handleOverallRowState();
-  // };
-
-  // const handleOverallRowState = () => {
-  //   setOverallRowState((overallRowState) => ({
-  //     ...overallRowState,
-  //     rowState,
-  //   }));
-  // };
 
   /*
 =============================================================================================
@@ -275,42 +305,90 @@ Returned Component
   return (
     <Form onSubmit={onPressedElement}>
       <h5>Element Editor</h5>
-      <Form.Group controlId="elementType">
+      <Form.Group controlId="newRowOrAddElement" className="mb-3">
         <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-          Select Type of Element
+          Create new row or add an element to an existing row?
         </Form.Label>
-        <Form.Select
-          style={{ width: "32%" }}
-          className="custom-select mb-3"
-          defaultValue="Choose an Element"
-          onChange={handleChange}
-        >
-          <option key="Not an Option" value="Choose an Element">
-            Choose an Element
-          </option>
-          <option key="Text" value="Text">
-            Text
-          </option>
-          <option key="Textinput" value="Text Input">
-            Text Input
-          </option>
-          <option key="Textarea" value="Text Area">
-            Text Area
-          </option>
-          <option key="Dropdown" value="Dropdown">
-            Dropdown
-          </option>
-          <option key="Radio" value="Radio">
-            Radio
-          </option>
-          <option key="Checkbox" value="Checkbox">
-            Checkbox
-          </option>
-          <option key="TableComponent" value="Table">
-            Table
-          </option>
-        </Form.Select>
+        <Form.Check
+          type="radio"
+          label="Create new row"
+          value="new row"
+          checked={selectedOption === "new row"}
+          onChange={handleNewRowAddElement}
+        />
+        {overallRowState.length > 0 && ( // I check overallrowstate length so if there are no exising rows I will not produce this element
+          <Form.Check
+            type="radio"
+            label="Add an element to an existing row"
+            value="add element"
+            checked={selectedOption === "add element"}
+            onChange={handleNewRowAddElement}
+          />
+        )}
       </Form.Group>
+      {selectedOption === "add element" && (
+        <Form.Group controlId="row number">
+          <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+            Select Row Number
+          </Form.Label>
+          <Form.Select
+            style={{ width: "32%" }}
+            className="custom-select mb-3"
+            defaultValue="Choose a Row"
+            onChange={handleTargetRow}
+          >
+            <option key="Choose a Row" value="Choose a Row">
+              Choose a Row
+            </option>
+            {Array.from({ length: overallRowState.length }, (_, index) => (
+              <option key={index + 1} value={index + 1}>
+                {index + 1}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+      )}
+      {selectedOption === "new row" ||
+      (selectedOption === "add element" &&
+        selectedRow != "Choose a Row" &&
+        selectedRow != null) ? (
+        <Form.Group controlId="elementType">
+          <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+            Select Type of Element
+          </Form.Label>
+          <Form.Select
+            style={{ width: "32%" }}
+            className="custom-select mb-3"
+            value={elementType ?? "Choose an Element"} // so this is for the selected option == new row, if change from add new element to create new row, the value shown on element selector will revert back to Choose and element rather than remaining the same
+            onChange={handleChange}
+          >
+            <option key="Not an Option" value="Choose an Element">
+              Choose an Element
+            </option>
+            <option key="Text" value="Text">
+              Text
+            </option>
+            <option key="Textinput" value="Text Input">
+              Text Input
+            </option>
+            <option key="Textarea" value="Text Area">
+              Text Area
+            </option>
+            <option key="Dropdown" value="Dropdown">
+              Dropdown
+            </option>
+            <option key="Radio" value="Radio">
+              Radio
+            </option>
+            <option key="Checkbox" value="Checkbox">
+              Checkbox
+            </option>
+            {/* <option key="TableComponent" value="Table">
+              Table
+            </option> */}
+          </Form.Select>
+        </Form.Group>
+      ) : null}
       {elementType === "Text" && (
         <>
           <Form.Group controlId="elementName" className="mb-3">
