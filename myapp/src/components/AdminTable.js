@@ -41,7 +41,7 @@ function AdminTable({ data }) {
               <td>{item.formName}</td>
               <td>{item.requestDate}</td>
               <td>
-              <MDBBtn color="success" rounded pill>Start</MDBBtn>
+              <MDBBtn outline rounded color='success'>Start</MDBBtn>
               </td>
             </tr>
           ))}
@@ -50,10 +50,11 @@ function AdminTable({ data }) {
       <MDBRow className="justify-content-center">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <MDBCol key={page} size="1">
-            <MDBBtn
+            <MDBBtn 
               color={currentPage === page ? 'primary' : 'secondary'}
               onClick={() => handlePageChange(page)}
               size="sm"
+         
             >
               {page}
             </MDBBtn>
