@@ -91,9 +91,9 @@ const linksArray = [
         notification: 3,
     },
     {
-        label: "Past Forms",
+        label: "Completed Forms",
         icon: <BsPeople />,
-        to: "/pastform",
+        to: "/CompletedForms",
         notification: 0,
     },
     {

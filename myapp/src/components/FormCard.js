@@ -28,7 +28,7 @@ const FormCard = ({ formItems }) => {
             pillClass = "bg-success";
             break;
           case "Pending Review":
-            pillClass = "bg-warning";
+            pillClass = "bg-primary";
             break;
           default:
             break;
