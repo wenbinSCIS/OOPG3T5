@@ -27,12 +27,12 @@ function GenerateRow(props) {
       const element = info[i];
       if (element["elementType"] === "Textinput" && !(element["elementName"] in Textin)) {
         newElements[element["elementName"]] = "";
+        setTextin(prevState => ({
+          ...prevState,
+          ...newElements
+        }));
       }
     }
-    setTextin(prevState => ({
-      ...prevState,
-      ...newElements
-    }));
   }, [Textin]);
 
   const handleTextinChange = e => {
