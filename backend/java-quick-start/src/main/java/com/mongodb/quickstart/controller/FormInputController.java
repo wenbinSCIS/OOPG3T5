@@ -75,9 +75,10 @@ public class FormInputController {
             }
         }
 
-    @GetMapping("/getFormInputByUsername/{username}")
-    public ResponseEntity<List<FormInput>> getFormInputByUsername(@PathVariable("username") String username) {
+    @GetMapping("/getFormInputByUsername")
+    public ResponseEntity<List<FormInput>> getFormInputByUsername(@RequestBody FormInput tempFormInput) {
         try {
+            String username = tempFormInput.getUsername();
             List<FormInput> formInput = new ArrayList<FormInput>();
         
             if (username == null)
