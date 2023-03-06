@@ -118,8 +118,11 @@ public class FormInputController {
             }
     }
 
-    @GetMapping("/getFormInputByFormNameUsernameFormVersion/{formName}/{username}/{formVersion}")
-    public ResponseEntity<FormInput> getFormInputByFormNameUsernameVersion(@PathVariable("formName") String formName,@PathVariable("username") String username ,@PathVariable("formVersion") double formVersion) {
+    @GetMapping("/getFormInputByFormNameUsernameFormVersion")
+    public ResponseEntity<FormInput> getFormInputByFormNameUsernameVersion(@RequestBody FormInput tempFormInput) {
+        String formName = tempFormInput.getFormName();
+        String username = tempFormInput.getUsername();
+        double formVersion = tempFormInput.getFormVersion();
         Optional<FormInput> formInputData = formInputRepository.findByFormNameAndUsernameAndFormVersion(formName,username,formVersion);
         if (formInputData.isPresent()) {
             return new ResponseEntity<>(formInputData.get(), HttpStatus.OK);
