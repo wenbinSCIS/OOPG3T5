@@ -158,9 +158,9 @@ public class UserController {
             }
         }
 
-    @PutMapping("/updateUserPassword/{username}")
-        public ResponseEntity<?> updateUserPassword(@PathVariable String username, @RequestBody TempUser tempUser) {
-            Optional<User> userData = userRepository.findByUsername(username);
+    @PutMapping("/updateUserPassword")
+        public ResponseEntity<?> updateUserPassword( @RequestBody TempUser tempUser) {
+            Optional<User> userData = userRepository.findByUsername(tempUser.getUsername());
 
             if (userData.isPresent()) {
                 User existingUser = userData.get();
@@ -173,7 +173,7 @@ public class UserController {
                 //create a new user object with input password string to 
                 //get new hashed password and salt
 
-                User placeholderUser = new User(username, tempUser.getPasswordString(), null);
+                User placeholderUser = new User(tempUser.getUsername(), tempUser.getPasswordString(), null);
                 String newHashedPassword = placeholderUser.getHashedPassword();
                 byte[] newPasswordSalt = placeholderUser.getPasswordSalt();
 
