@@ -188,10 +188,10 @@ public class UserController {
         }
 
 
-    @DeleteMapping("/deleteUser/{username}")
-    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("username") String username) {
+    @DeleteMapping("/deleteUser")
+    public ResponseEntity<HttpStatus> deleteUser(@RequestBody TempUser tempUser) {
         try {
-            userRepository.deleteByUsername(username);
+            userRepository.deleteByUsername(tempUser.getUsername());
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
