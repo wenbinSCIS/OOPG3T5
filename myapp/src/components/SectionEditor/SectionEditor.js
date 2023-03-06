@@ -63,12 +63,24 @@ function SectionEditor({ onPressed }) {
   const handleSubmit = (event) => {
     // should only be applied for event editor
     event.preventDefault();
-    onPressed(sectionData); //should not sent the data just yet - need to be under Element Editor onPressedElement
+    onPressed(sectionData); // onPressed is the same as handleFormSubmit, we are setting the sectionData in the admin page to the one residing here
+    //should not sent the data just yet - need to be under Element Editor onPressedElement
     // only after I press save section at the end
     // setSectionCreated(!sectionCreated);
     // console.log(sectionCreated);
     // console.log(sectionData);
   };
+
+  // importan function here!! - is sent to element editor to retrieve rows, need to also set numrows by counting the number of rows here
+
+  const retrieveFromElementEditor = (rows) => { 
+    const newSection = {...sectionData};
+    newSection.rowElements = rows;
+    const rowsLength = rows.length;
+    newSection.numRows = String(rowsLength);
+    setSectionData(newSection);
+    onPressed(newSection); // send info to admin page
+  }
 
   // the two functions below control the state for showing the element editor
   function sectionIsCreated() {
@@ -83,6 +95,7 @@ function SectionEditor({ onPressed }) {
 
   return (
     <div>
+      {/* <Form> */}
       <Form onSubmit={handleSubmit}>
         <h5>Section Editor</h5>
         <Form.Group controlId="sectionName" className="mb-3">
@@ -106,7 +119,7 @@ function SectionEditor({ onPressed }) {
           />
         </Form.Group>
         <div className="d-flex">
-          <div className="me-3">
+          {/* <div className="me-3">
             <Form.Group controlId="numRows">
               <Form.Label
                 style={{ margin: 0, color: "deepskyblue" }}
@@ -127,7 +140,7 @@ function SectionEditor({ onPressed }) {
                 ))}
               </Form.Select>
             </Form.Group>
-          </div>
+          </div> */}
           <div>
             <Form.Group controlId="sectionFont">
               <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
@@ -168,15 +181,16 @@ function SectionEditor({ onPressed }) {
             variant="contained"
             color="primary"
             type="submit" // no longer submit
+            disabled={!isActive}
             onClick={sectionIsCreated}
           >
-            Save Section&nbsp;&nbsp;
+            Open Element Editor&nbsp;&nbsp;
             <SendIcon />
           </Button>
         </Stack>
       </Form>
       {sectionCreated && (
-        <ElementEditor /> // onPressedElement - need to add handle submit here? -> need to be at Save and Close as submit button within element editor
+        <ElementEditor onPressedElement={retrieveFromElementEditor} /> // onPressedElement - need to add handle submit here? -> need to be at Save and Close as submit button within element editor
       )}
     </div>
   );

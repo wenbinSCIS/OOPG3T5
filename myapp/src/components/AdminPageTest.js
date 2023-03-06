@@ -295,8 +295,17 @@ function MyForm() {
             color="lightgreen"
           />
         </div>
+        <SectionEditor onPressed={handleFormSubmit} />
+        <div className="button-container">
+          <AddComponent
+            className="centered-button"
+            onAdd={() => setShowAddComponent(!showAddComponent)}
+            showAdd={showAddComponent}
+          />
+        </div>
         {formComponents.map((component, index) => (
           <div key={index}>
+            <hr />
             <EditPanel
               MoveDown={() => handleMoveComponentDown(index)}
               MoveUp={() => handleMoveComponentUp(index)}
@@ -308,14 +317,6 @@ function MyForm() {
             <hr />
           </div>
         ))}
-        <SectionEditor onPressed={handleFormSubmit} />
-        <div className="button-container">
-          <AddComponent
-            className="centered-button"
-            onAdd={() => setShowAddComponent(!showAddComponent)}
-            showAdd={showAddComponent}
-          />
-        </div>
         <>
           {showAddComponent && (
             <div>
