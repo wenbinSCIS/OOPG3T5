@@ -111,11 +111,11 @@ public class UserController {
             }
         }
 
-    @PutMapping("/updateUserType/{username}")
+    @PutMapping("/updateUserType")
     //Only for changing between administrative personnel and approver. Will not add new field for
     //assigned forms. Anyway a vendor will probably not become admin/approver and vice versa.
-        public ResponseEntity<?> updateUserType(@PathVariable String username, @RequestBody TempUser tempUser) {
-            Optional<User> userData = userRepository.findByUsername(username);
+        public ResponseEntity<?> updateUserType(@RequestBody TempUser tempUser) {
+            Optional<User> userData = userRepository.findByUsername(tempUser.getUsername());
 
             if (userData.isPresent()) {
                 User existingUser = userData.get();
