@@ -97,21 +97,13 @@ public class UserController {
     
 
 
-    @PutMapping("/updateVendorForm/{username}")
-        public ResponseEntity<?> updateVendorForm(@PathVariable String username, @RequestBody Vendor vendor) {
-            Optional<Vendor> userData = userRepository.findVendorByUsername(username,"Vendor");
+    @PutMapping("/updateVendorForm")
+        public ResponseEntity<?> updateVendorForm(@RequestBody Vendor vendor) {
+            Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
 
             if (userData.isPresent()) {
                 Vendor existingUser = userData.get();
-            
-              // check if the username in the request body matches the username in the URL path parameter
-                if (!existingUser.getUsername().equals(vendor.getUsername())) {
-                    return new ResponseEntity<>("Username in URL path parameter does not match username in request body", HttpStatus.BAD_REQUEST);
-                }
-
                 existingUser.setAssignedForms(vendor.getAssignedForms());
-
-                
                 userRepository.save(existingUser);
                 return new ResponseEntity<>(existingUser, HttpStatus.OK);
             } else {
