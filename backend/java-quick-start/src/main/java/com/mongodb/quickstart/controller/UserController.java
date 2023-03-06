@@ -51,9 +51,9 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getUserByUserType/{userType}")
-    public ResponseEntity<List<User>> getUserByUserType(@PathVariable("userType") String userType) {
-        List<User> users = userRepository.findByUserType(userType);
+    @PutMapping("/getUserByUserType")
+    public ResponseEntity<List<User>> getUserByUserType(@RequestBody TempUser tempUser) {
+        List<User> users = userRepository.findByUserType(tempUser.getUserType());
 
         if (!users.isEmpty()) {
             return new ResponseEntity<>(users, HttpStatus.OK);
