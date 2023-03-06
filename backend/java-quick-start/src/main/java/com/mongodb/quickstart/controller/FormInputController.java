@@ -148,13 +148,16 @@ public class FormInputController {
 
   //private static final Logger logger = LogManager.getLogger(FormController.class);
 
-    @PutMapping("/updateFormInputData/{formName}/{username}/{formVersion}")
-    public ResponseEntity<FormInput> updateFormInputData(@PathVariable("formName") String formName,@PathVariable("username") String username ,@PathVariable("formVersion") double formVersion, @RequestBody FormInput formInput) {
+    @PutMapping("/updateFormInputData")
+    public ResponseEntity<FormInput> updateFormInputData(@RequestBody FormInput tempFormInput) {
+        String formName = tempFormInput.getFormName();
+        String username = tempFormInput.getUsername();
+        double formVersion = tempFormInput.getFormVersion();
         Optional<FormInput> formData = formInputRepository.findByFormNameAndUsernameAndFormVersion(formName,username,formVersion);
 
         if (formData.isPresent()) {
             FormInput existingFormInput = formData.get();
-            existingFormInput.setFormInputData(formInput.getFormInputData());
+            existingFormInput.setFormInputData(tempFormInput.getFormInputData());
             FormInput updatedForm = formInputRepository.save(existingFormInput);
             return new ResponseEntity<>(updatedForm, HttpStatus.OK);
         } else {
