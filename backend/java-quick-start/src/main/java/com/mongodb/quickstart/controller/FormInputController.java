@@ -50,9 +50,10 @@ public class FormInputController {
             }
         }
 
-    @GetMapping("/getFormInputByFormName/{formName}")
-    public ResponseEntity<List<FormInput>> getFormInputByFormName(@PathVariable("formName") String formName) {
+    @GetMapping("/getFormInputByFormName")
+    public ResponseEntity<List<FormInput>> getFormInputByFormName(@RequestBody FormInput tempFormInput) {
         try {
+            String formName = tempFormInput.getFormName();
             List<FormInput> formInput = new ArrayList<FormInput>();
         
             if (formName == null)
