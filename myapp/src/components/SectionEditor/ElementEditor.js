@@ -70,9 +70,9 @@ handleChange: sets the elementType value as the one that we have selected
 
   const handleChange = (event) => {
     setElementType(event.target.value);
-    setNumOptions(3); // the reason why I do this is because everytime I rotate between options I would like only 3 option to be displayed only
-    setNumRadioOptions(3); // the reason why I do this is because everytime I rotate between options I would like the 3 options to be displayed only
-    setNumCheckboxOptions(3); // the reason why I do this is because everytime I rotate between options I would like the 3 options to be displayed only
+
+    setNumOptionsHeaders(3); // the reason why I do this is because everytime I rotate between headers/options I would like the 3 headers /options to be displayed only
+
     setOptionState({}); // want to revert option state everytime we select a new element
 
     let chosenElementType = event.target.value;
@@ -85,7 +85,7 @@ handleChange: sets the elementType value as the one that we have selected
 
   // This function handles changes when admin edits parameters on the form
 
-  const handleInputChange = (event, isOption) => {
+  const handleInputChange = (event, isOption = false, eKey = "options") => {
     // I need to add additonal logic if isOption == True, this includes updating the option State
     if (!isOption) {
       const { id, value } = event.target;
@@ -109,128 +109,51 @@ handleChange: sets the elementType value as the one that we have selected
 
       setElementState((elementState) => ({
         ...elementState,
-        options: myList,
+        [eKey]: myList, // the default value of key is options from the parameter, but it will have to be changed to headers if Table is selected
       }));
     }
   };
 
   /*
 =============================================================================================
-The code below manages the state for the dropdown select option, 
+The code below manages the state for the Dropdown,Radio,Checkbox and Table elements
 
-numOptions: How many options we want
+numOptionsHeaders: How many headers/options we want
 
-handleDropDownSelect: takes the input from the dropdown and Sets the numpOptions accordingly
+handleOptionsHeadersSelect: takes the input from the elements and sets the numOptionsHeaders accordingly
 
-renderOptions: renders the options on the front end
+renderOptionsHeaders: renders the options/headers on the front end
 =============================================================================================
 */
+  const [numOptionsHeaders, setNumOptionsHeaders] = useState(3); // dropdown select, default number of options is 3
 
-  const [numOptions, setNumOptions] = useState(3); // dropdown select, default number of options is 3
-
-  const handleDropdownSelect = (event) => {
+  const handleOptionsHeadersSelect = (event) => {
     const selectedValue = parseInt(event.target.value, 10);
-    setNumOptions(selectedValue);
+    setNumOptionsHeaders(selectedValue);
   };
 
-  function renderOptions() {
-    const options = [];
+  function renderOptionsHeaders(elementKey = "options", label = "Option") {
+    // elementKey is either options or headers, but can be expanded. Label for now just Header or Option
+    const optionsOrHeaders = [];
 
-    for (let i = 0; i < numOptions; i++) {
-      options.push(
+    for (let i = 0; i < numOptionsHeaders; i++) {
+      optionsOrHeaders.push(
         <Form.Group key={i} controlId={i} style={{ width: "50%" }}>
           <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-            Option {i + 1}
+            {label} {i + 1}
           </Form.Label>
           <Form.Control
             type="text"
             required
-            onChange={(event) => handleInputChange(event, true)}
+            onChange={(event) => handleInputChange(event, true, elementKey)}
           />
         </Form.Group>
       );
     }
 
-    return options;
+    return optionsOrHeaders;
   }
 
-  /*
-=============================================================================================
-The code below manages the state for the radio, 
-
-numRadioOptions: How many options we want
-
-handleRadioSelect: takes the input from the radio and sets the numpRadioOptions accordingly
-
-renderRadioOptions: renders the options on the front end
-=============================================================================================
-*/
-  const [numRadioOptions, setNumRadioOptions] = useState(3); // dropdown select, default number of options is 3
-
-  const handleRadioSelect = (event) => {
-    const selectedValue = parseInt(event.target.value, 10);
-    setNumRadioOptions(selectedValue);
-  };
-
-  function renderRadioOptions() {
-    const options = [];
-
-    for (let i = 0; i < numRadioOptions; i++) {
-      options.push(
-        <Form.Group key={i} controlId={i} style={{ width: "50%" }}>
-          <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-            Option {i + 1}
-          </Form.Label>
-          <Form.Control
-            type="text"
-            required
-            onChange={(event) => handleInputChange(event, true)}
-          />
-        </Form.Group>
-      );
-    }
-
-    return options;
-  }
-
-  /*
-=============================================================================================
-The code below manages the state for the checkbox, 
-
-numCheckboxOptions: How many options we want
-
-handleCheckboxSelect: takes the input from the checkbox and sets the numCheckboxOptions accordingly
-
-renderCheckboxOptions: renders the options on the front end
-=============================================================================================
-*/
-  const [numCheckboxOptions, setNumCheckboxOptions] = useState(3); // dropdown select, default number of options is 3
-
-  const handleCheckboxSelect = (event) => {
-    const selectedValue = parseInt(event.target.value, 10);
-    setNumCheckboxOptions(selectedValue);
-  };
-
-  function renderCheckboxOptions() {
-    const options = [];
-
-    for (let i = 0; i < numCheckboxOptions; i++) {
-      options.push(
-        <Form.Group key={i} controlId={i} style={{ width: "50%" }}>
-          <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-            Value {i + 1}
-          </Form.Label>
-          <Form.Control
-            type="text"
-            required
-            onChange={(event) => handleInputChange(event, true)}
-          />
-        </Form.Group>
-      );
-    }
-
-    return options;
-  }
   /*
 =============================================================================================
 The code below manages the submission of the event
@@ -277,10 +200,10 @@ appendToOverallState: appends element to selected row as chosen by the user
 
   function handleEventSubmission() {
     try {
-      if (selectedOption === "new row") { //basically we can just do normal functions like append to a new row behind
+      if (selectedOption === "new row") {
+        //basically we can just do normal functions like append to a new row behind
         handleRowState();
-      }
-      else {
+      } else {
         appendToOverallRowState();
       }
     } catch (error) {
@@ -294,7 +217,7 @@ Code to be Deprecated
 =============================================================================================
 */
 
-  // none for now
+// none for now
 
   /*
 =============================================================================================
@@ -383,9 +306,9 @@ Returned Component
             <option key="Checkbox" value="Checkbox">
               Checkbox
             </option>
-            {/* <option key="TableComponent" value="Table">
+            <option key="Table" value="Table">
               Table
-            </option> */}
+            </option>
           </Form.Select>
         </Form.Group>
       ) : null}
@@ -571,7 +494,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="3"
-              onChange={handleDropdownSelect}
+              onChange={handleOptionsHeadersSelect}
             >
               {Array.from({ length: 10 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
@@ -580,7 +503,7 @@ Returned Component
               ))}
             </Form.Select>
           </Form.Group>
-          {renderOptions()}
+          {renderOptionsHeaders()}
         </>
       )}
 
@@ -631,7 +554,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="3"
-              onChange={handleRadioSelect}
+              onChange={handleOptionsHeadersSelect}
             >
               {Array.from({ length: 10 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
@@ -640,7 +563,7 @@ Returned Component
               ))}
             </Form.Select>
           </Form.Group>
-          {renderRadioOptions()}
+          {renderOptionsHeaders()}
         </>
       )}
       {elementType === "Checkbox" && (
@@ -690,7 +613,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="3"
-              onChange={handleCheckboxSelect}
+              onChange={handleOptionsHeadersSelect}
             >
               {Array.from({ length: 10 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
@@ -699,7 +622,74 @@ Returned Component
               ))}
             </Form.Select>
           </Form.Group>
-          {renderCheckboxOptions()}
+          {renderOptionsHeaders()}
+        </>
+      )}
+      {elementType === "Table" && (
+        <>
+          <Form.Group controlId="elementName" className="mb-3">
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Element Name
+            </Form.Label>
+            <Form.Control
+              type="text"
+              className="mb-3"
+              placeholder="Insert Element Name (Element ID)"
+              onChange={(event) => handleInputChange(event, false)}
+            />
+          </Form.Group>
+          <Form.Group controlId="elementHeader" className="mb-3">
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Element Header
+            </Form.Label>
+            <Form.Control
+              type="text"
+              className="mb-3"
+              placeholder="Insert Element Header (To be displayed above Checkbox)"
+              onChange={(event) => handleInputChange(event, false)}
+            />
+          </Form.Group>
+          <Form.Group
+            controlId="noRows"
+            className="mb-3"
+            style={{ width: "32%" }}
+          >
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Select Number of Rows
+            </Form.Label>
+            <Form.Select
+              className="custom-select"
+              defaultValue="5"
+              onChange={(event) => handleInputChange(event, false)}
+            >
+              {Array.from({ length: 20 }, (_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          <Form.Group
+            controlId="headers"
+            className="mb-3"
+            style={{ width: "32%" }}
+          >
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Select Number of Headers
+            </Form.Label>
+            <Form.Select
+              className="custom-select"
+              defaultValue="3"
+              onChange={handleOptionsHeadersSelect}
+            >
+              {Array.from({ length: 10 }, (_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          {renderOptionsHeaders("headers", "Header")}
         </>
       )}
       {elementType && elementType != "Choose an Element" && (
