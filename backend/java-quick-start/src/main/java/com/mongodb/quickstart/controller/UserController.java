@@ -209,6 +209,25 @@ public class UserController {
               // check if the username in the request body matches the username in the URL path parameter
 
                 Boolean isCorrectPassword = existingUser.comparePassword(tempUser.getPasswordString());
+                if (isCorrectPassword)
+                {
+                    if (existingUser instanceof Vendor)
+                    {
+                        Vendor existingVendor = (Vendor) existingUser;
+                        Vendor logInUser = new Vendor(existingVendor.getUsername(),existingVendor.getAssignedForms());
+                        return new ResponseEntity<>(logInUser,HttpStatus.OK);
+                    }
+                    else if(existingUser instanceof Approver)
+                    {
+                        Approver logInUser = (Approver) existingUser;
+                        return new ResponseEntity<>(logInUser,HttpStatus.OK);
+                    }
+                    else if(existingUser instanceof AdministrativePersonnel)
+                    {
+                        AdministrativePersonnel logInUser = (AdministrativePersonnel) existingUser;
+                        return new ResponseEntity<>(logInUser,HttpStatus.OK);
+                    }
+                }
 
                 return new ResponseEntity<>(isCorrectPassword, HttpStatus.OK);
             } else {

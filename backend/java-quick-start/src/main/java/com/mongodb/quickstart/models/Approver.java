@@ -14,4 +14,9 @@ public class Approver extends User{
     {
         super(username,hashedPassword,passwordSalt,"Approver");
     }
+
+    public Approver(String username)
+    {
+        super(username,null,null,"Approver");
+    }
 }

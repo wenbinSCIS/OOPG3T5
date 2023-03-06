@@ -26,6 +26,12 @@ public class Vendor extends User{
         this.assignedForms = assignedForms;
     }
 
+    public Vendor(String username,ArrayList<Object> assignedForm)
+    {
+        super(username,null,null,"Vendor");
+        this.assignedForms = assignedForm;
+    }
+
     public static class AssignedForm {
         private String formName;
         private String status;

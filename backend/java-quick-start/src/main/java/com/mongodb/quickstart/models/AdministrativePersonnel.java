@@ -11,4 +11,9 @@ public class AdministrativePersonnel extends User{
     {
         super(username,hashedPassword,passwordSalt,"AdministrativePersonnel");
     }
+
+    public AdministrativePersonnel(String username)
+    {
+        super(username,null,null,"AdministrativePersonnel");
+    }
 }
