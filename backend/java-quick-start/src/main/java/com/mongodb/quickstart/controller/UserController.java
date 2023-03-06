@@ -134,25 +134,22 @@ public class UserController {
             }
         }
 
-    @PutMapping("/updateUsername/{username}/{newUsername}")
-        public ResponseEntity<?> updateUsername(@PathVariable("username") String username, @RequestBody TempUser tempUser,@PathVariable("newUsername") String newUsername) {
+    @PutMapping("/updateUsername/{username}")
+        public ResponseEntity<?> updateUsername(@PathVariable("username") String username, @RequestBody TempUser tempUser) {
             Optional<User> userData = userRepository.findByUsername(username);
 
             if (userData.isPresent()) {
                 User existingUser = userData.get();
 
-                Optional<User> userDataCheck = userRepository.findByUsername(newUsername);
+                Optional<User> userDataCheck = userRepository.findByUsername(tempUser.getUsername());
 
                 if (userDataCheck.isPresent()) {
                     return new ResponseEntity<>("User with the given username already exists", HttpStatus.CONFLICT);
                 }
 
               // check if the username in the request body matches the username in the URL path parameter
-                if (!existingUser.getUsername().equals(tempUser.getUsername())) {
-                    return new ResponseEntity<>("Username in URL path parameter does not match username in request body", HttpStatus.BAD_REQUEST);
-                }
 
-                existingUser.setUsername(newUsername);
+                existingUser.setUsername(tempUser.getUsername());
                 userRepository.save(existingUser);
 
                 return new ResponseEntity<>(existingUser, HttpStatus.OK);
