@@ -182,11 +182,14 @@ public class FormInputController {
         }
     }
 
-    @DeleteMapping("/deleteFormByFormNameUsernameFormVersion/{formName}/{username}/{formVersion}")
-    public ResponseEntity<HttpStatus> deleteForm(@PathVariable("formName") String formName,@PathVariable("username") String username ,@PathVariable("formVersion") double formVersion) {
+    @DeleteMapping("/deleteFormByFormNameUsernameFormVersion")
+    public ResponseEntity<HttpStatus> deleteForm(@RequestBody FormInput tempFormInput) {
         try {
-        formInputRepository.deleteByFormNameAndUsernameAndFormVersion(formName,username,formVersion);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            String formName = tempFormInput.getFormName();
+            String username = tempFormInput.getUsername();
+            double formVersion = tempFormInput.getFormVersion();
+            formInputRepository.deleteByFormNameAndUsernameAndFormVersion(formName,username,formVersion);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
