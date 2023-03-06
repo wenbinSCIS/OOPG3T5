@@ -40,9 +40,9 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/getUserByName/{username}")
-    public ResponseEntity<User> getUserByName(@PathVariable("username") String username) {
-        Optional<User> userData = userRepository.findByUsername(username);
+    @PutMapping("/getUserByName")
+    public ResponseEntity<User> getUserByName(@RequestBody TempUser tempUser) {
+        Optional<User> userData = userRepository.findByUsername(tempUser.getUsername());
 
         if (userData.isPresent()) {
             return new ResponseEntity<>(userData.get(), HttpStatus.OK);
