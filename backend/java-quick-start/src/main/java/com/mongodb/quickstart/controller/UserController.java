@@ -208,4 +208,22 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/userLogIn")
+        public ResponseEntity<?> userLogIn(@RequestBody TempUser tempUser) {
+            String username = tempUser.getUsername();
+            Optional<User> userData = userRepository.findByUsername(username);
+
+            if (userData.isPresent()) {
+                User existingUser = userData.get();
+
+              // check if the username in the request body matches the username in the URL path parameter
+
+                Boolean isCorrectPassword = existingUser.comparePassword(tempUser.getPasswordString());
+
+                return new ResponseEntity<>(isCorrectPassword, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
 }
