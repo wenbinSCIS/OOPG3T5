@@ -165,13 +165,16 @@ public class FormInputController {
         }
     }
 
-    @PutMapping("/updateFormVersion/{formName}/{username}/{formVersion}")
-    public ResponseEntity<FormInput> updateFormVersion(@PathVariable("formName") String formName,@PathVariable("username") String username ,@PathVariable("formVersion") double formVersion, @RequestBody FormInput formInput) {
+    @PutMapping("/updateFormVersion/{newFormVersion}")
+    public ResponseEntity<FormInput> updateFormVersion(@RequestBody FormInput tempFormInput,@PathVariable("newFormVersion") double newFormVersion) {
+        String formName = tempFormInput.getFormName();
+        String username = tempFormInput.getUsername();
+        double formVersion = tempFormInput.getFormVersion();
         Optional<FormInput> formData = formInputRepository.findByFormNameAndUsernameAndFormVersion(formName,username,formVersion);
 
         if (formData.isPresent()) {
             FormInput existingFormInput = formData.get();
-            existingFormInput.setFormVersion(formInput.getFormVersion());
+            existingFormInput.setFormVersion(newFormVersion);
             FormInput updatedForm = formInputRepository.save(existingFormInput);
             return new ResponseEntity<>(updatedForm, HttpStatus.OK);
         } else {
