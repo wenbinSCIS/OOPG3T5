@@ -16,6 +16,7 @@ import MyForm from "../components/AdminPageTest";
 import VendorAssessmentForm from "../components/VendorAssessmentForm";
 import UncompletedForms from "../components/UncompletedForms";
 import CompletedForms from "../components/CompletedForms";
+import GenerateRow from "../components/Imtesting/RowGeneration";
 export default function MyRoute() {
   return (
     <>
@@ -29,6 +30,7 @@ export default function MyRoute() {
         <Route exact path="/APIFETest" element={<APIFETest/>} /> 
         <Route exact path="/vendor" element={<VendorAssessmentForm/>} />
         <Route exact path="/testadmin" element={<MyForm/>}/> 
+        <Route exact path="/test" element={<GenerateRow/>}/> 
         <Route component={Error} />
       </Routes>
     </>
