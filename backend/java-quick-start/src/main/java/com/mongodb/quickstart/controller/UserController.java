@@ -40,7 +40,7 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PutMapping("/getUserByName")
+    @GetMapping("/getUserByName")
     public ResponseEntity<User> getUserByName(@RequestBody TempUser tempUser) {
         Optional<User> userData = userRepository.findByUsername(tempUser.getUsername());
 
@@ -51,7 +51,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/getUserByUserType")
+    @GetMapping("/getUserByUserType")
     public ResponseEntity<List<User>> getUserByUserType(@RequestBody TempUser tempUser) {
         List<User> users = userRepository.findByUserType(tempUser.getUserType());
 
