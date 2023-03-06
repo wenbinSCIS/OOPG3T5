@@ -96,9 +96,11 @@ public class FormInputController {
             }
     }
 
-    @GetMapping("/getFormInputByFormNameFormVersion/{formName}/{formVersion}")
-    public ResponseEntity<List<FormInput>> getFormInputByNameAndVersion(@PathVariable("formName") String formName, @PathVariable("formVersion") double formVersion) {
+    @GetMapping("/getFormInputByFormNameFormVersion")
+    public ResponseEntity<List<FormInput>> getFormInputByNameAndVersion(@RequestBody FormInput tempFormInput) {
         try {
+            String formName = tempFormInput.getFormName();
+            double formVersion = tempFormInput.getFormVersion();
             List<FormInput> formInput = new ArrayList<FormInput>();
         
             if (formName == null)
