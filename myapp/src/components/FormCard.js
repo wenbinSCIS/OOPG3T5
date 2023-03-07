@@ -31,10 +31,10 @@ const FormCard = ({ formItems }) => {
             break;
         }
         return (
-          <MDBCard key={item.formid}>
+          <MDBCard key={item.formName + item.formVersion}>
             <MDBCardImage position='top' alt='...' src={placeholder} />
             <MDBCardBody>
-              <MDBCardTitle>{item.title}</MDBCardTitle>
+              <MDBCardTitle>{item.formName}</MDBCardTitle>
               <MDBCardText>
                 {item.description}
               </MDBCardText>
