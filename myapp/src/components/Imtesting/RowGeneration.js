@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TextInput from './TextInput';
+import Checkbox from './Checkbox';
 
 
 function GenerateRow(props) {

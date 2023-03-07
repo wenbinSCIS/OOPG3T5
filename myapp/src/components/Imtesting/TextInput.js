@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 
 function TextInput(props) {
     //const [text , setText] = useState('');  
+    console.log(props)
     const number = `form-group col-md-${props.size} mb-1`
     var inlineHint = "";
     if(props.hintPosition == "hint"){
@@ -29,6 +30,7 @@ function TextInput(props) {
           placeholder={inlineHint}
           value = {props.text} //change
           onChange ={props.onChange} //change
+          data-format = "textinput"
         />
         </InputGroup>
         {props.hintPosition == "under" &&
