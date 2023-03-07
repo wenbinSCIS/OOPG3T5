@@ -7,6 +7,8 @@ import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import AddIcon from "@mui/icons-material/Add";
 import BuildIcon from "@mui/icons-material/Build";
 import { Modal }  from 'react-bootstrap';
+import { Form, Col } from 'react-bootstrap';
+
 
 const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete}) => {
   const [showModal, setShowModal] = useState(false);
@@ -52,14 +54,45 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete}) => {
         </Button>
         <Modal show={showModal} onHide={() => setShowModal(false)}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal</Modal.Title>
+            <Modal.Title>Section Editor</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Modal Body</Modal.Body>
+          <Modal.Body><Form>
+            <Form.Group controlId="form">
+              <Form.Label style={{ color: 'deepskyblue' }}>Section Name*</Form.Label>
+              <Form.Control className="mb-3" type="text" placeholder="Section_name" />
+            </Form.Group>
+            <Form.Group controlId="form">
+              <Form.Label style={{ color: 'deepskyblue' }}>Section Text</Form.Label>
+              <Form.Control className="mb-3" type="text" placeholder="Section_text" />
+            </Form.Group>
+            <Form.Group controlId="form">
+              <Form.Label style={{ color: 'deepskyblue' }}>Element Name</Form.Label>
+              <Form.Control className="mb-3" type="text" placeholder="Element_name" />
+            </Form.Group>
+            <Form.Group controlId="form">
+            <Form.Label style={{ color: 'deepskyblue' }}>Section Font (optional)</Form.Label>
+            <Form.Select className="mb-3">
+              <option>Select font</option>
+              {Array.from({ length: 24 }, (_, i) => (
+                <option key={i} value={i + 1}>{i + 1}</option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          <Form.Group controlId="form">
+            <Form.Label style={{ color: 'deepskyblue' }}>Font Size</Form.Label>
+            <Form.Select className="mb-3">
+              <option>Select a font size</option>
+              {Array.from({ length: 24 }, (_, i) => (
+                <option key={i} value={i + 1}>{i + 1}</option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          </Form></Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={() => console.log('Save changes')}>
+            <Button variant="primary" className="btn-primary" onClick={() => console.log('Save changes')}>
               Save 
             </Button>
           </Modal.Footer>

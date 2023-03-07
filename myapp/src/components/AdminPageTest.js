@@ -42,6 +42,7 @@ function MyForm() {
   // };
 
   const handleFormSubmit = (data) => {
+    console.log(data)
     setSectionData(data);
     handleAddElement({ target: data });
   };
@@ -160,6 +161,7 @@ function MyForm() {
   };
 
   function handleAddElement({ target }) {
+    console.log(target);
     setFormComponents([
       ...formComponents,
       <GenerateSection section={target}></GenerateSection>,
@@ -303,77 +305,79 @@ function MyForm() {
             showAdd={showAddComponent}
           />
         </div>
-        {formComponents.map((component, index) => (
-          <div key={index}>
-            <hr />
-            <EditPanel
-              MoveDown={() => handleMoveComponentDown(index)}
-              MoveUp={() => handleMoveComponentUp(index)}
-              // Add={() => handleMoveComponentUp(index)}
-              // Edit={() => handleMoveComponentUp(index)}
-              Delete={() => handleRemoveComponent(index)}
-            />
-            {component}
-            <hr />
-          </div>
-        ))}
-        <>
-          {showAddComponent && (
-            <div>
-              <div className="button-container">
-                {" "}
-                <select onChange={handleOptionChange}>
-                  <option value="">Select an Element to add</option>
-                  {options.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {/* <div className="button-container">
-                <input
-                  type="text"
-                  className="centered-textbox"
-                  placeholder="Enter element name"
-                  value={elementName}
-                  // onChange={handleInputChange}
-                />
-              </div> */}
-              {selectedOption && (
+        <div id='previewSection'>
+          {formComponents.map((component, index) => (
+            <div key={index}>
+              <hr />
+              <EditPanel
+                MoveDown={() => handleMoveComponentDown(index)}
+                MoveUp={() => handleMoveComponentUp(index)}
+                // Add={() => handleMoveComponentUp(index)}
+                // Edit={() => handleMoveComponentUp(index)}
+                Delete={() => handleRemoveComponent(index)}
+              />
+              {component}
+              <hr />
+            </div>
+          ))}
+          <>
+            {showAddComponent && (
+              <div>
                 <div className="button-container">
                   {" "}
-                  <button
-                    className="centered-button"
-                    onClick={() => handleAddComponent({ name: selectedOption })}
-                  >
-                    Add Element
-                  </button>
+                  <select onChange={handleOptionChange}>
+                    <option value="">Select an Element to add</option>
+                    {options.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              )}
-            </div>
-          )}
-        </>
-        <div className="button-container">
-          <SaveComponent
-            className="centered-button"
-            saveComponents={() => saveComponents()}
-            isSaved={isSaved}
-            text={saveText}
-          />
-          <input
-            type="text"
-            className="centered-textbox"
-            placeholder="Form name"
-            onChange={handleNameSaveAs}
-            style={{ margin: 1 + "em" }}
-          />
-          <input
-            type="text"
-            className="centered-textbox"
-            placeholder="Version number"
-            onChange={handleVersionSaveAs}
-          />
+                {/* <div className="button-container">
+                  <input
+                    type="text"
+                    className="centered-textbox"
+                    placeholder="Enter element name"
+                    value={elementName}
+                    // onChange={handleInputChange}
+                  />
+                </div> */}
+                {selectedOption && (
+                  <div className="button-container">
+                    {" "}
+                    <button
+                      className="centered-button"
+                      onClick={() => handleAddComponent({ name: selectedOption })}
+                    >
+                      Add Element
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </>
+          <div className="button-container">
+            <SaveComponent
+              className="centered-button"
+              saveComponents={() => saveComponents()}
+              isSaved={isSaved}
+              text={saveText}
+            />
+            <input
+              type="text"
+              className="centered-textbox"
+              placeholder="Form name"
+              onChange={handleNameSaveAs}
+              style={{ margin: 1 + "em" }}
+            />
+            <input
+              type="text"
+              className="centered-textbox"
+              placeholder="Version number"
+              onChange={handleVersionSaveAs}
+            />
+          </div>
         </div>
         {/* {sectionData && (
           <GenerateSection section={sectionData}></GenerateSection>

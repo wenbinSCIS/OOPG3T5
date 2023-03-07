@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 
 import ElementEditor from "./ElementEditor";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ElementEditor from "./ElementEditor";
 
 function SectionEditor({ onPressed }) {
   const [sectionData, setSectionData] = useState({
@@ -34,7 +33,7 @@ function SectionEditor({ onPressed }) {
       ],
     ],
   });
-
+  
   const [sectionCreated, setSectionCreated] = useState(false);
 
   const theme = createTheme({
@@ -76,6 +75,7 @@ function SectionEditor({ onPressed }) {
 
   const retrieveFromElementEditor = (rows) => { 
     const newSection = {...sectionData};
+    console.log(newSection)
     newSection.rowElements = rows;
     const rowsLength = rows.length;
     newSection.numRows = String(rowsLength);
