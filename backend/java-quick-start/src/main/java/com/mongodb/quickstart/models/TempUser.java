@@ -8,6 +8,7 @@ public class TempUser{
     private String userType;
     private ArrayList<Object> assignedForms;
     private ArrayList<Object> createdForm;
+    private ArrayList<Object> vendorForm;
 
     public TempUser()
     {
@@ -20,24 +21,17 @@ public class TempUser{
         this.userType = userType;
         this.assignedForms = null;
         this.createdForm = null;
+        this.vendorForm = null;
     }
 
-    public TempUser(String username,String passwordString,String userType,ArrayList<Object> assignedForms)
-    {
-        this.username = username;
-        this.passwordString = passwordString;
-        this.userType = userType;
-        this.assignedForms = assignedForms;
-        this.createdForm = null;
-    }
-
-    public TempUser(String username,String passwordString,String userType,ArrayList<Object> assignedForms,ArrayList<Object> createdForm)
+    public TempUser(String username,String passwordString,String userType,ArrayList<Object> assignedForms,ArrayList<Object> createdForm,ArrayList<Object> vendorForm)
     {
         this.username = username;
         this.passwordString = passwordString;
         this.userType = userType;
         this.assignedForms = assignedForms;
         this.createdForm = createdForm;
+        this.vendorForm = vendorForm;
     }
 
     public ArrayList<Object> getCreatedForm() {
@@ -57,6 +51,9 @@ public class TempUser{
 
     public ArrayList<Object> getAssignedForms() {
         return assignedForms;
+    }
+    public ArrayList<Object> getVendorForm() {
+        return vendorForm;
     }
     
 }
