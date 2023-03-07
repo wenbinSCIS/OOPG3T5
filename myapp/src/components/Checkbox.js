@@ -5,6 +5,7 @@ import TextInput from './TextInput';
 
 function Checkbox({ options,title,size,false_header,name,orientation}) {
 
+  console.log(orientation)
   
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -37,7 +38,6 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
   }
  
   function handleTextinChange(e) {
-    console.log("here")
     const inputName = e.target.name;
     const inputText = e.target.value;
     const newSelectedItems = [...selectedItems];
@@ -52,10 +52,7 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
       setSelectedItems(newSelectedItems);
     }
   }
-  
-
-  console.log(selectedItems)
-  
+    
   return (
     <div className={number}>
       {title.length>0 &&
