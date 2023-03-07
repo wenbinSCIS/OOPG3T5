@@ -41,13 +41,38 @@ var prop = {'section':{
   }
 ],[
     {
-        "elementName":"How",
-        "elementHeader":"How did you hear about us?*",
-        "elementType":"Dropdown",
-        "size":"4",
-        "options":["Selection A","Selection B","Selection C"]
-    }
-],
+      "elementName":"Licenses",
+      "elementHeader":"",
+      "elementType":"Checkbox",
+      "elementOrientation":"horizontal",
+      "options":[{
+        optionType: "checkbox",
+        optionName:"a. Sole proprietorship",
+        optionValue:"a. Sole proprietorship",
+      },
+      {
+        optionType: "checkbox",
+        optionName:"b. Limited Company",
+        optionValue:"b. Limited Company",
+      },
+      {
+        optionType: "checkbox",
+        optionName:"c. Partnership Agreement",
+        optionValue:"c. Partnership Agreement",
+      },
+      {
+        optionType: "checkbox-text",
+        optionName:"others",
+        optionValue:"Others",
+        textVariables:{
+          //textname will inherit radio optionName + "_text" 
+          header:"",
+          hintPosition:"front",
+          hintText:"Please specify"
+        }
+      }],
+  }
+]
   ]
 }}
 
