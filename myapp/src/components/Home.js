@@ -33,7 +33,7 @@ export default function Home() {
             <div className="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1">
               <div>
                 
-                <h2 className="text-g" style={{ fontWeight : "bold", fontSize: 30}}>
+                <h2 className="text-g" style={{ fontWeight : "bold", fontSize: 30, color: 'black'}}>
                   Welcome back, John
                 </h2>
 
@@ -132,7 +132,7 @@ export default function Home() {
   </Box>          
   <div className="row actionsneed">
   <div>
-    <h2 className="text-g" style={{ fontWeight : "bold", fontSize: 30}}>
+    <h2 className="text-g" style={{ fontWeight : "bold", fontSize: 30 , color: 'black'}}>
       Actions Needed
     </h2>
   </div>

@@ -7,8 +7,9 @@ import Button from "@mui/material/Button";
 
 import ElementEditor from "./ElementEditor";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ElementEditor from "./ElementEditor";
 
-function SectionEditor ({onSubmit}) {
+function SectionEditor({ onPressed }) {
   const [sectionData, setSectionData] = useState({
     sectionName: "New Section",
     sectionText: "New Section",
@@ -45,32 +46,57 @@ function SectionEditor ({onSubmit}) {
     },
   });
 
-    const handleInputChange = (event) => {
-      const { id, value } = event.target;
-      setSectionData((prevSectionData) => ({
-        ...prevSectionData,
-        [id]: value,
-      }));
-    };
+  const handleInputChange = (event) => {
+    const { id, value } = event.target;
+    setSectionData((prevSectionData) => ({
+      ...prevSectionData,
+      [id]: value,
+    }));
+  };
 
-    const handleSubmit = (event) => { // should only be applied for event editor
-      event.preventDefault();
-      onSubmit(sectionData); //should not sent the data just yet
-      // setSectionCreated(!sectionCreated);
-      // console.log(sectionCreated);
-      // console.log(sectionData); 
-    };
+  const [isActive, setIsActive] = useState(true);
 
-    function sectionIsCreated() {
-      setSectionCreated(true);
-    }
+  const handleToggle = () => {
+    setIsActive(!isActive);
+  };
 
-    function sectionNotCreated() {
-      setSectionCreated(false);
-    }
+  // This function helps to set the sectionData state within the admin page
+  const handleSubmit = (event) => {
+    // should only be applied for event editor
+    event.preventDefault();
+    onPressed(sectionData); // onPressed is the same as handleFormSubmit, we are setting the sectionData in the admin page to the one residing here
+    //should not sent the data just yet - need to be under Element Editor onPressedElement
+    // only after I press save section at the end
+    // setSectionCreated(!sectionCreated);
+    // console.log(sectionCreated);
+    // console.log(sectionData);
+  };
+
+  // importan function here!! - is sent to element editor to retrieve rows, need to also set numrows by counting the number of rows here
+
+  const retrieveFromElementEditor = (rows) => { 
+    const newSection = {...sectionData};
+    newSection.rowElements = rows;
+    const rowsLength = rows.length;
+    newSection.numRows = String(rowsLength);
+    setSectionData(newSection);
+    onPressed(newSection); // send info to admin page
+  }
+
+  // the two functions below control the state for showing the element editor
+  function sectionIsCreated() {
+    setSectionCreated(true);
+    handleToggle();
+  }
+
+  function sectionNotCreated() {
+    setSectionCreated(false);
+    handleToggle();
+  }
 
   return (
     <div>
+      {/* <Form> */}
       <Form onSubmit={handleSubmit}>
         <h5>Section Editor</h5>
         <Form.Group controlId="sectionName" className="mb-3">
@@ -94,7 +120,7 @@ function SectionEditor ({onSubmit}) {
           />
         </Form.Group>
         <div className="d-flex">
-          <div className="me-3">
+          {/* <div className="me-3">
             <Form.Group controlId="numRows">
               <Form.Label
                 style={{ margin: 0, color: "deepskyblue" }}
@@ -115,7 +141,7 @@ function SectionEditor ({onSubmit}) {
                 ))}
               </Form.Select>
             </Form.Group>
-          </div>
+          </div> */}
           <div>
             <Form.Group controlId="sectionFont">
               <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
@@ -145,27 +171,30 @@ function SectionEditor ({onSubmit}) {
             <Button
               color="neutral"
               variant="contained"
+              disabled={isActive}
               onClick={sectionNotCreated}
             >
-              Cancel
+              Close Element Editor
             </Button>
           </ThemeProvider>
           <Button
             alignItems="center"
             variant="contained"
             color="primary"
-            type="submit"
+            type="submit" // no longer submit
+            disabled={!isActive}
             onClick={sectionIsCreated}
           >
-            Save Section&nbsp;&nbsp;
+            Open Element Editor&nbsp;&nbsp;
             <SendIcon />
           </Button>
         </Stack>
       </Form>
-      {sectionCreated ? <ElementEditor /> : null}
-      
+      {sectionCreated && (
+        <ElementEditor onPressedElement={retrieveFromElementEditor} /> // onPressedElement - need to add handle submit here? -> need to be at Save and Close as submit button within element editor
+      )}
     </div>
   );
-};
+}
 
 export default SectionEditor;
