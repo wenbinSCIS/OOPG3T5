@@ -41,16 +41,14 @@ public class AdministrativePersonnel extends User{
 
     public static class CreatedForm {
         private String formName;
-        private String status;
         private double formVersion;
 
         public CreatedForm() {
             super();
         }
 
-        public CreatedForm(String formName, String status, double formVersion) {
+        public CreatedForm(String formName, double formVersion) {
             this.formName = formName;
-            this.status = status;
             this.formVersion = formVersion;
         }
 
@@ -62,12 +60,7 @@ public class AdministrativePersonnel extends User{
             this.formName = formName;
         }
 
-        public String getStatus() {
-            return status;
-        }
 
-        public void setStatus(String status) {
-            this.status = status;
         }
     
         public double getFormVersion() {

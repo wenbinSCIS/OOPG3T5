@@ -54,7 +54,6 @@ public class Approver extends User{
 
     public static class CreatedForm {
         private String formName;
-        private String status;
         private double formVersion;
 
         public CreatedForm() {
@@ -63,7 +62,6 @@ public class Approver extends User{
 
         public CreatedForm(String formName, String status, double formVersion) {
             this.formName = formName;
-            this.status = status;
             this.formVersion = formVersion;
         }
 
@@ -75,13 +73,6 @@ public class Approver extends User{
             this.formName = formName;
         }
 
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
     
         public double getFormVersion() {
             return formVersion;
