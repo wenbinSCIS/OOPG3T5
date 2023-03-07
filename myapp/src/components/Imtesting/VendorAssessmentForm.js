@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GenerateSection from './SectionGeneration';
-import Sidebar from "./Sidebar/Sidebar.js";
+import Sidebar from "../Sidebar/Sidebar.js";
 import Button from 'react-bootstrap/Button';
-export default function VendorAssessmentForm() {
+export default function VendorAssessmentForm1() {
     
     //Api calls here
     var response = {
@@ -10,8 +10,7 @@ export default function VendorAssessmentForm() {
       "formTitle":"Quantum Leap Incorporation PTE LTD",
       "titleSize":"20",
       "sections":[
-        
-        {'section':{
+        {
           "sectionName":"Address",
           "sectionText":"Fill in your address",
           "sectionFont":"12", 
@@ -84,7 +83,7 @@ export default function VendorAssessmentForm() {
         }
       ]
         ]
-      }}    
+      }    
   ]}
 
 
@@ -94,9 +93,10 @@ export default function VendorAssessmentForm() {
   var sections = response["sections"]
   for(let i=0;i<sections.length;i++){
     const each_section = sections[i]
-    to_return.push(<GenerateSection section={each_section}></GenerateSection>)
+    to_return.push(<GenerateSection section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
   }
 
+  console.log(allData)
   return (
     <section className='d-flex'>
       <Sidebar></Sidebar>

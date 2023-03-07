@@ -4,27 +4,29 @@ import Checkbox from './Checkbox';
 
 
 function GenerateRow(props) {
-  //const [Textin , setTextin] = useState({});
   var info = props.info
+
+  var allData = props.allData //useState prop from main
+  var setallData = props.setallData //setState prop from main
 
 
   useEffect(() => {
     const newElements = {};
     for(let i=0; i<info.length; i++){
       const element = info[i];
-      if (element["elementType"] === "Textinput" && !(element["elementName"] in props.Data)) {
+      if (element["elementType"] === "Textinput" && !(element["elementName"] in allData)) {
         newElements[element["elementName"]] = "";
-        props.onChange(prevState => ({
+        setallData(prevState => ({
           ...prevState,
           ...newElements
         }));
       }
     }
-  }, [props.Data]);
+  }, [allData]);
 
   const handleTextinChange = e => {
     const {name , value} = e.target;
-    props.onChange(prevState => ({
+    setallData(prevState => ({
       ...prevState,
       [name]: value
     }));
@@ -48,7 +50,7 @@ function GenerateRow(props) {
           false_header = true;
       }
 
-      const text = props.Data[element["elementName"]] || "";
+      const text = allData[element["elementName"]] || "";
       to_return.push(
         <TextInput
           title={element["elementHeader"]}
