@@ -1,5 +1,4 @@
 import React from 'react';
-import GenerateRow from './RowGeneration';
 import GenerateSection from './SectionGeneration';
 import Sidebar from "./Sidebar/Sidebar.js";
 import Button from 'react-bootstrap/Button';
@@ -115,7 +114,32 @@ export default function VendorAssessmentForm() {
             "elementHeader":"",
             "elementType":"Checkbox",
             "elementOrientation":"horizontal",
-            "options":["a. Sole proprietorship","b. Limited Company","c. Partnership Agreement",". Others"],
+            "options":[{
+              optionType: "checkbox",
+              optionName:"a. Sole proprietorship",
+              optionValue:"a. Sole proprietorship",
+            },
+            {
+              optionType: "checkbox",
+              optionName:"b. Limited Company",
+              optionValue:"b. Limited Company",
+            },
+            {
+              optionType: "checkbox",
+              optionName:"c. Partnership Agreement",
+              optionValue:"c. Partnership Agreement",
+            },
+            {
+              optionType: "checkbox-text",
+              optionName:"others",
+              optionValue:"Others",
+              textVariables:{
+                //textname will inherit radio optionName + "_text" 
+                header:"",
+                hintPosition:"front",
+                hintText:"Please specify"
+              }
+            }],
         }
       ]
     ]},

@@ -4,9 +4,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
 
 function Checkbox({ options,title,size,false_header,name,orientation}) {
-  console.log(options)
 
-  
   
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -17,18 +15,41 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
 
   function handleCheckboxChange(event) {
     var selectedItem = event.target.value;
-    var selectedIndex = selectedItems.indexOf(selectedItem);
-
+    var selectedType = event.target.dataset.format;
+  
+    var selectedIndex = selectedItems.findIndex(
+      item => item.name === selectedItem && item.type === selectedType
+    );
+  
+    var useStateobj = {
+      name: selectedItem,
+      type: selectedType,
+      text: ""
+    };
+  
     if (selectedIndex === -1) {
-      setSelectedItems([...selectedItems, selectedItem]);
-      
+      setSelectedItems([...selectedItems, useStateobj]);
     } else {
       var newSelectedItems = [...selectedItems];
       newSelectedItems.splice(selectedIndex, 1);
       setSelectedItems(newSelectedItems);
     }
-    
   }
+ 
+
+  function handleTextinChange(e) {
+    console.log(e.target)
+    const { name, value } = e.target;
+    for (let obj of selectedItems) {
+      if (obj.name === name) {
+        obj.text = value;
+        setSelectedItems([...selectedItems]); // set state to update the text value
+      }
+    }
+  }
+  
+  console.log(selectedItems)
+  
   return (
     <div className={number}>
       {title.length>0 &&
@@ -47,13 +68,18 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
             label={option.optionValue}
             name={name}
             type="checkbox"
+            data-format = "checkbox-text"
             key={index}
             id={index}
             value = {option.optionValue}
             onChange={(e) => handleCheckboxChange(e)}
             style={{ margin: 1 }}
           />
-            <TextInput title={option.textVariables.header} hint={option.textVariables.hintText} hintPosition={option.textVariables.hintPosition} name = {option.optionName + "_text"}false_header={false_header}></TextInput>
+            <TextInput title={option.textVariables.header}
+             hint={option.textVariables.hintText} 
+             hintPosition={option.textVariables.hintPosition} 
+             name = "checkbox-text" 
+             false_header={false_header} onChange={handleTextinChange}></TextInput>
         </div>
         
       ) : (
@@ -61,6 +87,7 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
             label={option.optionValue}
             name={name}
             type="checkbox"
+            data-format = "checkbox"
             key={index}
             id={index}
             value = {option.optionValue}
