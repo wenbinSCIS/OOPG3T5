@@ -15,22 +15,22 @@ import { ArrowForwardIos } from '@mui/icons-material';
 export default function UncompletedForms() {
   const formCards = [
     {
-      title: "QLI-QHSP-10-F01 New Vendor Assessment Form",
+      formName: "QLI-QHSP-10-F01 New Vendor Assessment Form",
       status: "Not Started",
       description: "Required to complete",
-      formid : 1,
+      formVersion : 1,
     },
     {
-      title: "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
+      formName: "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
       status: "In Progress",
       description: "Required to complete",
-      formid : 2,
+      formVersion : 2,
     },
     {
-      title: "QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation",
+      formName: "QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation",
       status: "Not Started",
       description: "Required to complete",
-      formid : 3,
+      formVersion : 3,
     },
   ];
 
