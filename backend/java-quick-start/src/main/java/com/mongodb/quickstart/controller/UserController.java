@@ -219,12 +219,14 @@ public class UserController {
                     }
                     else if(existingUser instanceof Approver)
                     {
-                        Approver logInUser = (Approver) existingUser;
+                        Approver existingApprover = (Approver) existingUser;
+                        Approver logInUser = new Approver(existingApprover.getUsername());
                         return new ResponseEntity<>(logInUser,HttpStatus.OK);
                     }
                     else if(existingUser instanceof AdministrativePersonnel)
                     {
-                        AdministrativePersonnel logInUser = (AdministrativePersonnel) existingUser;
+                        AdministrativePersonnel existingAdministrativePersonnel = (AdministrativePersonnel) existingUser;
+                        AdministrativePersonnel logInUser = new AdministrativePersonnel(existingAdministrativePersonnel.getUsername());
                         return new ResponseEntity<>(logInUser,HttpStatus.OK);
                     }
                 }
