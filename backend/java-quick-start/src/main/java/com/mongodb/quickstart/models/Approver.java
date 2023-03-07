@@ -32,31 +32,25 @@ public class Approver extends User{
         this.vendorForm = vendorForm;
     }
 
+
+
     public ArrayList<Object> getCreatedForm() {
         return createdForm;
     }
+
     public void setCreatedForm(ArrayList<Object> createdForm) {
         this.createdForm = createdForm;
-    }
-    public ArrayList<Object> getVendorForm() {
-        return vendorForm;
-    }
-    public void setVendorForm(ArrayList<Object> vendorForm) {
-        this.vendorForm = vendorForm;
     }
 
     public ArrayList<Object> getVendorForm() {
         return vendorForm;
     }
+
     public void setVendorForm(ArrayList<Object> vendorForm) {
         this.vendorForm = vendorForm;
     }
-    public ArrayList<Object> getCreatedForm() {
-        return createdForm;
-    }
-    public void setCreatedForm(ArrayList<Object> createdForm) {
-        this.createdForm = createdForm;
-    }
+
+
 
     public static class CreatedForm {
         private String formName;
