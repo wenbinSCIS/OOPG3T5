@@ -3,8 +3,6 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 
 function TextInput(props) {
-    //const [text , setText] = useState('');  
-    console.log(props)
     const number = `form-group col-md-${props.size} mb-1`
     var inlineHint = "";
     if(props.hintPosition == "hint"){

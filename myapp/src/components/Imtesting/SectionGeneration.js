@@ -55,7 +55,9 @@ var prop = {'section':{
 
 function GenerateSection(props) {
 
-    const [allData , setallData] = useState({});
+    var allData = props.allData //useState prop from main
+    var setallData = props.setallData //setState prop from main
+
     
     const rows = prop['section']["numRows"]
     const rowElements = prop['section']["rowElements"]
@@ -64,7 +66,7 @@ function GenerateSection(props) {
 
     for(let i=0;i<rows;i++){
         var curr_row = rowElements[i]
-        to_return.push(<GenerateRow info = {curr_row} Data = {allData} onChange={setallData} ></GenerateRow>)
+        to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} ></GenerateRow>)
     }
     return (
         <div className='row mb-3'>
