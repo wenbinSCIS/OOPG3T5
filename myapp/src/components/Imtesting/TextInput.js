@@ -26,12 +26,12 @@ function TextInput(props) {
         }
         <Form.Control
           id={props.name}
-          name = {props.name}
+          name={props.name}
           placeholder={inlineHint}
-          value = {props.text} //change
-          onChange ={props.onChange} //change
-          data-format = "textinput"
-        />
+          value={props.text}
+          onChange={props.onChange}
+          data-format="textinput"
+        />  
         </InputGroup>
         {props.hintPosition == "under" &&
           <a style={{margin:0,fontSize:'0.8rem',opacity: 0.8}}>{props.hint}</a>

@@ -30,8 +30,6 @@ function GenerateRow(props) {
     }));
   }
 
-  console.log(props.Data)
-
 
   const to_return = [];
   var false_header=false;

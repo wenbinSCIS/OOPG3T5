@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
-import Radio from './Radio';
 
-function Checkbox({ options, title,size,false_header,name,orientation,additional}) {
+function Checkbox({ options,title,size,false_header,name,orientation}) {
+
   
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -15,23 +15,49 @@ function Checkbox({ options, title,size,false_header,name,orientation,additional
 
   function handleCheckboxChange(event) {
     var selectedItem = event.target.value;
-    var selectedIndex = selectedItems.indexOf(selectedItem);
-
+    var selectedType = event.target.dataset.format;
+  
+    var selectedIndex = selectedItems.findIndex(
+      item => item.name === selectedItem && item.type === selectedType
+    );
+  
+    var useStateobj = {
+      name: selectedItem,
+      type: selectedType,
+      text: ""
+    };
+  
     if (selectedIndex === -1) {
-      setSelectedItems([...selectedItems, selectedItem]);
-      
+      setSelectedItems([...selectedItems, useStateobj]);
     } else {
       var newSelectedItems = [...selectedItems];
       newSelectedItems.splice(selectedIndex, 1);
       setSelectedItems(newSelectedItems);
     }
-
-    console.log(selectedItems)
-    
   }
+ 
+  function handleTextinChange(e) {
+    console.log("here")
+    const inputName = e.target.name;
+    const inputText = e.target.value;
+    const newSelectedItems = [...selectedItems];
+  
+    const selectedItemIndex = newSelectedItems.findIndex(item => item.name === inputName && item.type === 'checkbox-text');
+  
+    if (selectedItemIndex > -1) {
+      const selectedItem = newSelectedItems[selectedItemIndex];
+      selectedItem.text = inputText;
+  
+      newSelectedItems.splice(selectedItemIndex, 1, selectedItem);
+      setSelectedItems(newSelectedItems);
+    }
+  }
+  
+
+  console.log(selectedItems)
+  
   return (
     <div className={number}>
-      
       {title.length>0 &&
        <InputGroup.Text >
        <label style={{margin:1,color:'deepskyblue'}}>{title} </label>
@@ -42,30 +68,47 @@ function Checkbox({ options, title,size,false_header,name,orientation,additional
         <br></br>
       }
       <br></br>
-      {options.map((option,index) => (
-
+      {options.map((option,index) => option.optionType == "checkbox-text" ? (
+        <div>
           <Form.Check
+            label={option.optionValue}
             name={name}
             type="checkbox"
-            id={index}
-            label={option}
+            data-format = "checkbox-text"
             key={index}
-            style={{margin:5}}
-            onChange = { (e) => handleCheckboxChange(e)}
-            value={option}
+            id={index}
+            value = {option.optionValue}
+            onChange={(e) => handleCheckboxChange(e)}
+            style={{ margin: 1 }}
           />
-      ))}
-      <br></br>
-      {additional!=null &&
-      additional["elementType"] =="Textinput" &&
-      <TextInput title={additional["elementHeader"]} hint={additional["placeholder"]} hintPosition={additional["placeholderPosition"]} name = {additional["elementName"]} false_header={false_header}></TextInput>
-      }
-      {additional!=null &&
-      additional["elementType"] =="Radio" &&
-      <Radio title={additional["elementHeader"]} options={additional["options"]} name = {additional["elementName"]} orientation={additional["elementOrientation"]} ></Radio>
-      }
-    </div>
+            <TextInput
+            title={option.textVariables.header}
+            hint={option.textVariables.hintText}
+            hintPosition={option.textVariables.hintPosition}
+            name={option.optionValue} // use a unique name for each TextInput component
+            false_header={false_header}
+            onChange={(e) => handleTextinChange(e)}
+            text={selectedItems.find(item => item.name === option.optionValue && item.type === 'checkbox-text')?.text || ''}
+      />
+        </div>
+        
+      ) : (
+        <Form.Check
+            label={option.optionValue}
+            name={name}
+            type="checkbox"
+            data-format = "checkbox"
+            key={index}
+            id={index}
+            value = {option.optionValue}
+            onChange={(e) => handleCheckboxChange(e)}
+            style={{ margin: 1 }}
+          />
+          )
+      )}
+    </div>  
   );
 }
+
 export default Checkbox;
 
