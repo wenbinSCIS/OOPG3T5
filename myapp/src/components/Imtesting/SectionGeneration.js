@@ -5,7 +5,7 @@ var prop = {'section':{
     "sectionName":"Address",
     "sectionText":"Fill in your address",
     "sectionFont":"12", 
-    "numRows":"3",
+    "numRows":"4",
     "rowElements":[[
         {
             "elementName":"streetAddress1",
@@ -39,6 +39,14 @@ var prop = {'section':{
       "placeholderPosition":"hint", 
       "elementType":"Textinput",
   }
+],[
+    {
+        "elementName":"How",
+        "elementHeader":"How did you hear about us?*",
+        "elementType":"Dropdown",
+        "size":"4",
+        "options":["Selection A","Selection B","Selection C"]
+    }
 ],
   ]
 }}
