@@ -6,11 +6,11 @@ public class AdministrativePersonnel extends User{
     private ArrayList<Object> createdForm;
     private ArrayList<Object> vendorForm;
     public AdministrativePersonnel(){}
-    public AdministrativePersonnel(String username,String password,ArrayList<Object> createdForm,ArrayList<Object> vendorForm)
+    public AdministrativePersonnel(String username,String password)
     {
         super(username, password,"AdministrativePersonnel");
-        this.createdForm = createdForm;
-        this.vendorForm = vendorForm;
+        this.createdForm = new ArrayList<>();
+        this.vendorForm = new ArrayList<>();
     }
 
     public AdministrativePersonnel(String username,String hashedPassword,byte[] passwordSalt,ArrayList<Object> createdForm,ArrayList<Object> vendorForm)

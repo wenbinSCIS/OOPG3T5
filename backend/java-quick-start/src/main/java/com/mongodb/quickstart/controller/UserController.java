@@ -73,7 +73,7 @@ public class UserController {
 
         if (userType.equals("AdministrativePersonnel"))
         {
-            AdministrativePersonnel newAdmin = new AdministrativePersonnel(tempUser.getUsername(), tempUser.getPasswordString(),tempUser.getCreatedForm(),tempUser.getVendorForm());
+            AdministrativePersonnel newAdmin = new AdministrativePersonnel(tempUser.getUsername(), tempUser.getPasswordString());
             AdministrativePersonnel _user = userRepository.save(newAdmin);
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
         }
@@ -220,7 +220,7 @@ public class UserController {
                     else if(existingUser instanceof Approver)
                     {
                         Approver existingApprover = (Approver) existingUser;
-                        Approver logInUser = new Approver(existingApprover.getUsername());
+                        Approver logInUser = new Approver(existingApprover.getUsername(),existingApprover.getCreatedForm(),existingApprover.getVendorForm());
                         return new ResponseEntity<>(logInUser,HttpStatus.OK);
                     }
                     else if(existingUser instanceof AdministrativePersonnel)

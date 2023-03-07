@@ -6,14 +6,6 @@ public class Vendor extends User{
     private ArrayList<Object> assignedForms;
     public Vendor(){}
 
-    public ArrayList<Object> getAssignedForms() {
-        return assignedForms;
-    }
-
-    public void setAssignedForms(ArrayList<Object> assignedForms) {
-        this.assignedForms = assignedForms;
-    }
-
     public Vendor(String username,String password,ArrayList<Object> assignedForms)
     {
         super(username,password,"Vendor");
@@ -30,6 +22,14 @@ public class Vendor extends User{
     {
         super(username,null,null,"Vendor");
         this.assignedForms = assignedForm;
+    }
+
+    public ArrayList<Object> getAssignedForms() {
+        return assignedForms;
+    }
+
+    public void setAssignedForms(ArrayList<Object> assignedForms) {
+        this.assignedForms = assignedForms;
     }
 
     public static class AssignedForm {
