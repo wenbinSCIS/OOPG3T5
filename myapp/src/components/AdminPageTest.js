@@ -12,10 +12,9 @@ import FormSelector from "./FormSelector";
 import axios from "axios";
 import Sidebar from "./Sidebar/Sidebar";
 
-import SectionEditor from "./SectionEditor";
+import SectionEditor from "./SectionEditor/SectionEditor";
 
 function MyForm() {
-
   const [showAddComponent, setShowAddComponent] = useState(false);
   const [formComponents, setFormComponents] = useState([]);
   const [infoComponents, setInfoComponents] = useState([]);
@@ -44,7 +43,7 @@ function MyForm() {
 
   const handleFormSubmit = (data) => {
     setSectionData(data);
-    handleAddElement({target:data});
+    handleAddElement({ target: data });
   };
 
   function handleOptionChange(event) {
@@ -160,7 +159,7 @@ function MyForm() {
     ],
   };
 
-  function handleAddElement({target}) {
+  function handleAddElement({ target }) {
     setFormComponents([
       ...formComponents,
       <GenerateSection section={target}></GenerateSection>,
@@ -225,8 +224,7 @@ function MyForm() {
     setFormComponents(updatedComponents);
   }
 
-
-/* Below is functions connecting to MongoDB (APIs) */
+  /* Below is functions connecting to MongoDB (APIs) */
   async function saveComponents() {
     console.log(infoComponents);
     // fetch
@@ -279,7 +277,7 @@ function MyForm() {
   }
   // setInterval(loadExistingForms, 5000);
 
-/* returning the Page */
+  /* returning the Page */
   return (
     <section className="d-flex">
       <Sidebar></Sidebar>
@@ -297,8 +295,17 @@ function MyForm() {
             color="lightgreen"
           />
         </div>
+        <SectionEditor onPressed={handleFormSubmit} />
+        <div className="button-container">
+          <AddComponent
+            className="centered-button"
+            onAdd={() => setShowAddComponent(!showAddComponent)}
+            showAdd={showAddComponent}
+          />
+        </div>
         {formComponents.map((component, index) => (
           <div key={index}>
+            <hr />
             <EditPanel
               MoveDown={() => handleMoveComponentDown(index)}
               MoveUp={() => handleMoveComponentUp(index)}
@@ -310,14 +317,6 @@ function MyForm() {
             <hr />
           </div>
         ))}
-        <SectionEditor onSubmit={handleFormSubmit} />
-        <div className="button-container">
-          <AddComponent
-            className="centered-button"
-            onAdd={() => setShowAddComponent(!showAddComponent)}
-            showAdd={showAddComponent}
-          />
-        </div>
         <>
           {showAddComponent && (
             <div>

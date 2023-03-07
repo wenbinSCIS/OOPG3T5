@@ -12,27 +12,27 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowForwardIos } from '@mui/icons-material';
 
-export default function UncompletedForms() {
+export default function CompletedForms() {
 
   
   const formCards = [
     {
-      formName: "QLI-QHSP-10-F01 New Vendor Assessment Form",
-      status: "Not Started",
-      description: "Required to complete",
-      formVersion : 1,
+      title: "QLI-QHSP-10-F01 New Vendor Assessment Form",
+      status: "Pending Review",
+      description: "Completed",
+      formid : 1,
     },
     {
-      formName: "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
-      status: "In Progress",
-      description: "Required to complete",
-      formVersion : 2,
+      title: "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
+      status: "Approved",
+      description: "Completed",
+      formid : 2,
     },
     {
-      formName: "QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation",
-      status: "Not Started",
-      description: "Required to complete",
-      formVersion : 3,
+      title: "QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation",
+      status: "Approved",
+      description: "Completed",
+      formid : 3,
     },
   ];
 
@@ -64,8 +64,8 @@ export default function UncompletedForms() {
           <div className="row">
             <div className="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1">
               <div>
-                <h2 className="text-g" style={{ fontWeight : "bold", fontSize: 30, color :"black"  }}>
-                  Uncompleted Forms
+                <h2 className="text-g" style={{ fontWeight : "bold", fontSize: 30, color :"black" }}>
+                  Completed Forms
                 </h2>
               </div>
             </div>
