@@ -11,10 +11,29 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowForwardIos } from '@mui/icons-material';
-import React, { useState } from "react";
-export default function UncompletedForms() {
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+export default function CompletedForms() {
   const [selectedTag, setSelectedTag] = useState(null);
+  const [formCards, setFormCards] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post("http://localhost:8080/user/getUserByName", {
+          username: "Nico"
+        });
+        setFormCards(response.data.assignedForms);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
   
+  /*
   const formCards = [
     {
       formName: "QLI-QHSP-10-F01 New Vendor Assessment Form",
@@ -35,7 +54,8 @@ export default function UncompletedForms() {
       formVersion : 3,
     },
   ];
-
+  */
+  
   const filteredFormCards = selectedTag
   ? formCards.filter((card) => card.status === selectedTag)
   : formCards;
