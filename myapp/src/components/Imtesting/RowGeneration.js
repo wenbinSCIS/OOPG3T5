@@ -3,7 +3,7 @@ import TextInput from './TextInput';
 import Checkbox from './Checkbox';
 import Radio from './Radio';
 import Dropdown from './DropdownSelect';
-
+import Textarea from './Textarea';
 
 function GenerateRow(props) {
   var info = props.info
@@ -88,7 +88,13 @@ function GenerateRow(props) {
       to_return.push(
         <Radio title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} orientation={element["elementOrientation"]}  onChange={handleValueChange}></Radio>
       );
-    }   
+    }
+    else if(inputType=="Textarea"){
+      if(i>0 && info[0]["elementHeader"].length>0){
+          var false_header = true
+      }
+      to_return.push( <Textarea title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header} onChange={handleInputChange}></Textarea>)
+  }   
   }
 
   return (

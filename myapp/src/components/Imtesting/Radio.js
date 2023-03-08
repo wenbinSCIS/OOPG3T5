@@ -13,7 +13,6 @@ function Radio({onChange, options, title, size, false_header, name, orientation 
     number = number + " d-flex"
   }
 
-
   function handleRadioChange(event) {
     var useStateobj = {
       name: event.target.value,

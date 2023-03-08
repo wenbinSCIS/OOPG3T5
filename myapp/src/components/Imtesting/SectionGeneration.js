@@ -5,7 +5,7 @@ var prop = {'section':{
     "sectionName":"Address",
     "sectionText":"Fill in your address",
     "sectionFont":"12", 
-    "numRows":"6",
+    "numRows":"7",
     "rowElements":[[
         {
             "elementName":"streetAddress1",
@@ -117,6 +117,13 @@ var prop = {'section':{
           ],
         },
       ],
+      [
+        {
+            "elementName":"Feedback",
+            "elementHeader":"Feedback About us:",
+            "elementType":"Textarea"
+        }
+      ]
       
   ]
 }}
