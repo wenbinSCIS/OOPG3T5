@@ -59,9 +59,6 @@ public class AdministrativePersonnel extends User{
         public void setFormName(String formName) {
             this.formName = formName;
         }
-
-
-        }
     
         public double getFormVersion() {
             return formVersion;

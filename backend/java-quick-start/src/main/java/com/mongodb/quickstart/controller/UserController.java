@@ -21,9 +21,6 @@ import com.mongodb.quickstart.models.Approver;
 import com.mongodb.quickstart.models.TempUser;
 import com.mongodb.quickstart.models.User;
 import com.mongodb.quickstart.models.Vendor;
-import com.mongodb.quickstart.models.AdministrativePersonnel;
-import com.mongodb.quickstart.models.Approver;
-import com.mongodb.quickstart.models.TempUser;
 import com.mongodb.quickstart.repository.UserRepository;
 
 @CrossOrigin(origins = "http://localhost:3001")
