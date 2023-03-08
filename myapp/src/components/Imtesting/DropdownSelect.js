@@ -37,7 +37,7 @@ function Dropdown(props) {
           props.false_header &&
           <br></br>
         }
-        <select className="form-control" value={selectedValue} onChange={handleValueChange}>
+        <select name={props.name} className="form-control" value={selectedValue} onChange={handleValueChange}>
           {props.options.map((option, index) => (
             <option key={index} value={option}>
               {option}

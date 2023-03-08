@@ -14,15 +14,15 @@ export default function VendorAssessmentForm1() {
           "sectionName":"Address",
           "sectionText":"Fill in your address",
           "sectionFont":"12", 
-          "numRows":"4",
+          "numRows":"5",
           "rowElements":[[
-              {
-                  "elementName":"streetAddress1",
-                  "elementHeader":"Address",
-                  "placeholder":"Street Address",
-                  "placeholderPosition":"hint", 
-                  "elementType":"Textinput",
-              }
+            {
+                "elementName":"streetAddress1",
+                "elementHeader":"Address",
+                "placeholder":"Street Address",
+                "placeholderPosition":"hint", 
+                "elementType":"Textinput",
+            }
           ],
           [
             {
@@ -32,56 +32,87 @@ export default function VendorAssessmentForm1() {
                 "placeholderPosition":"hint", 
                 "elementType":"Textinput",
             }
-        ],
-        [
-          {
-              "elementName":"city",
+          ],
+          [
+            {
+                "elementName":"city",
+                "elementHeader":"",
+                "placeholder":"city",
+                "placeholderPosition":"hint", 
+                "elementType":"Textinput",
+            },
+            {
+              "elementName":"StateProvince",
               "elementHeader":"",
-              "placeholder":"city",
+              "placeholder":"State / Province",
               "placeholderPosition":"hint", 
               "elementType":"Textinput",
-          },
-          {
-            "elementName":"StateProvince",
-            "elementHeader":"",
-            "placeholder":"State / Province",
-            "placeholderPosition":"hint", 
-            "elementType":"Textinput",
-        }
-      ],[
-          {
-            "elementName":"Licenses",
-            "elementHeader":"",
-            "elementType":"Checkbox",
-            "elementOrientation":"horizontal",
-            "options":[{
-              optionType: "checkbox",
-              optionName:"a. Sole proprietorship",
-              optionValue:"a. Sole proprietorship",
+            }
+          ],
+          [
+            {
+              "elementName":"Licenses",
+              "elementHeader":"",
+              "elementType":"Checkbox",
+              "elementOrientation":"horizontal",
+              "options":[{
+                optionType: "checkbox",
+                optionName:"a. Sole proprietorship",
+                optionValue:"a. Sole proprietorship",
+              },
+              {
+                optionType: "checkbox",
+                optionName:"b. Limited Company",
+                optionValue:"b. Limited Company",
+              },
+              {
+                optionType: "checkbox",
+                optionName:"c. Partnership Agreement",
+                optionValue:"c. Partnership Agreement",
+              },
+              {
+                optionType: "checkbox-text",
+                optionName:"others",
+                optionValue:"Others",
+                textVariables:{
+                  //textname will inherit radio optionName + "_text" 
+                  header:"",
+                  hintPosition:"front",
+                  hintText:"Please specify"
+                }
+              }],
             },
             {
-              optionType: "checkbox",
-              optionName:"b. Limited Company",
-              optionValue:"b. Limited Company",
+              elementName: "Select",
+              elementHeader: "Do you like our service",
+              elementType: "Radio",
+              size: "4",
+              options: //["yes","no","others"]
+              [
+                {
+                  optionType: "radio",
+                  optionName:"Yes",
+                  optionValue:"Yes",
+                },
+                {
+                  optionType: "radio",
+                  optionName:"No",
+                  optionValue:"No",
+                },
+                {
+                  optionType: "radio-text",
+                  optionName:"others",
+                  optionValue:"Others",
+                  textVariables:{
+                    //textID will inherit radio optionName + "_text" 
+                    header:"others",
+                    hintPosition:"front",
+                    hintText:"Please specify",
+                  }
+                }
+              ]
             },
-            {
-              optionType: "checkbox",
-              optionName:"c. Partnership Agreement",
-              optionValue:"c. Partnership Agreement",
-            },
-            {
-              optionType: "checkbox-text",
-              optionName:"others",
-              optionValue:"Others",
-              textVariables:{
-                //textname will inherit radio optionName + "_text" 
-                header:"",
-                hintPosition:"front",
-                hintText:"Please specify"
-              }
-            }],
-        }
-      ]
+          ]
         ]
       }    
   ]}
