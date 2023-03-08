@@ -39,7 +39,7 @@ function GenerateRow(props) {
             if(i>0 && all_info[0]["elementHeader"].length>0){
                 var false_header = true
             }
-            to_return.push(<Checkbox title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} orientation={element["elementOrientation"]} additional = {element["additional"]}></Checkbox>)
+            to_return.push(<Checkbox title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} orientation={element["elementOrientation"]} ></Checkbox>)
             
         }
         else if(inputType=="Textarea"){

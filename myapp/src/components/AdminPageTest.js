@@ -128,17 +128,35 @@ function MyForm() {
     sectionText: "Recommend",
     sectionFont: "12",
     numRows: "1",
-    rowElements: [
-      [
+    rowElements: [[
         {
           elementName: "Recommend",
           elementType: "Checkbox",
           elementHeader: "",
           size: "4",
-          options: ["Yes", "Maybe", "No"],
-        },
-      ],
-    ],
+          options: [{
+              optionType: "checkbox",
+              optionName:"Yes",
+              optionValue:"Yes",
+            },
+            {
+              optionType: "checkbox",
+              optionName:"No",
+              optionValue:"No",
+            },
+            {
+              optionType: "checkbox-text",
+              optionName:"others",
+              optionValue:"Others",
+              textVariables:{
+                //textname will inherit radio optionName + "_text" 
+                header:"others",
+                hintPosition:"front",
+                hintText:"Please specify"
+              }
+            }]
+        }],
+      ]
   };
 
   var radio_section = {
@@ -153,7 +171,31 @@ function MyForm() {
           elementHeader: "RadioTest",
           elementType: "Radio",
           size: "4",
-          options: ["Yes", "Maybe", "No"],
+          options: //["yes","no","others"]
+          [
+            {
+              optionType: "radio",
+              optionName:"Yes",
+              optionValue:"Yes",
+            },
+            {
+              optionType: "radio",
+              optionName:"No",
+              optionValue:"No",
+            },
+            {
+              optionType: "radio-text",
+              optionName:"others",
+              optionValue:"Others",
+              textVariables:{
+                //textID will inherit radio optionName + "_text" 
+                header:"others",
+                hintPosition:"front",
+                hintText:"Please specify",
+                // false_header:null,
+              }
+            }
+          ],
         },
       ],
     ],

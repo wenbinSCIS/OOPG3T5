@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
-import Radio from './Radio';
 
-function Checkbox({ options, title,size,false_header,name,orientation,additional}) {
+function Checkbox({ options,title,size,false_header,name,orientation}) {
+  console.log(options)
+
+  
   
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -29,7 +31,6 @@ function Checkbox({ options, title,size,false_header,name,orientation,additional
   }
   return (
     <div className={number}>
-      
       {title.length>0 &&
        <InputGroup.Text >
        <label style={{margin:1,color:'deepskyblue'}}>{title} </label>
@@ -40,30 +41,59 @@ function Checkbox({ options, title,size,false_header,name,orientation,additional
         <br></br>
       }
       <br></br>
-      {options.map((option,index) => (
-
+      {options.map((option,index) => option.optionType == "checkbox-text" ? (
+        <div>
           <Form.Check
+            label={option.optionValue}
             name={name}
             type="checkbox"
-            id={index}
-            label={option}
             key={index}
-            style={{margin:5}}
-            onChange = { (e) => handleCheckboxChange(e)}
-            value={option}
+            id={index}
+            value = {option.optionValue}
+            onChange={(e) => handleCheckboxChange(e)}
+            style={{ margin: 1 }}
           />
-      ))}
-      <br></br>
-      {additional!=null &&
-      additional["elementType"] =="Textinput" &&
-      <TextInput title={additional["elementHeader"]} hint={additional["placeholder"]} hintPosition={additional["placeholderPosition"]} name = {additional["elementName"]} false_header={false_header}></TextInput>
-      }
-      {additional!=null &&
-      additional["elementType"] =="Radio" &&
-      <Radio title={additional["elementHeader"]} options={additional["options"]} name = {additional["elementName"]} orientation={additional["elementOrientation"]} ></Radio>
-      }
-    </div>
+            <TextInput title={option.textVariables.header} hint={option.textVariables.hintText} hintPosition={option.textVariables.hintPosition} name = {option.optionName + "_text"}false_header={false_header} disabled={!selectedItems.includes(option.optionValue)}></TextInput>
+        </div>
+        
+      ) : (
+        <Form.Check
+            label={option.optionValue}
+            name={name}
+            type="checkbox"
+            key={index}
+            id={index}
+            value = {option.optionValue}
+            onChange={(e) => handleCheckboxChange(e)}
+            style={{ margin: 1 }}
+          />
+          )
+      )}
+    </div>  
   );
 }
+
+// (
+
+//   <Form.Check
+//     name={name}
+//     type="checkbox"
+//     id={index}
+//     label={option}
+//     key={index}
+//     style={{margin:5}}
+//     onChange = { (e) => handleCheckboxChange(e)}
+//     value={option}
+//   />
+// ))}
+// <br></br>
+// {additional!=null &&
+// additional["elementType"] =="Textinput" &&
+// <TextInput title={additional["elementHeader"]} hint={additional["placeholder"]} hintPosition={additional["placeholderPosition"]} name = {additional["elementName"]} false_header={false_header}></TextInput>
+// }
+// {additional!=null &&
+// additional["elementType"] =="Radio" &&
+// <Radio title={additional["elementHeader"]} options={additional["options"]} name = {additional["elementName"]} orientation={additional["elementOrientation"]} ></Radio>
+// }
 export default Checkbox;
 
