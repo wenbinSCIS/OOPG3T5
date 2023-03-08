@@ -7,16 +7,21 @@ import TextInput from './TextInput';
 function Radio({ options, title, size, false_header, name, orientation }) {
 
   var [selectedOption, setSelectedOption] = useState('');
-  var [disabled, setDisabled] = useState(true);
+  // var [disabled, setDisabled] = useState(true);
   var number = `form col-md-${size} `;
   if(orientation === "horizontal"){
     number = number + " d-flex"
   }
   function handleOptionChange(event) {
     setSelectedOption(event.target.value);
-    
-    console.log(disabled)
   }
+  // function disableTextInput(event){
+  //   if(event.target.checked === true){
+  //     setDisabled(false)
+  //   }else{
+  //     setDisabled(true)
+  //   }
+  // }
   return (
     <div className={number} style={{ margin: 0 }}>
       {title.length > 0 && (
@@ -31,10 +36,10 @@ function Radio({ options, title, size, false_header, name, orientation }) {
             type="radio"
             key={index}
             value = {option.optionValue}
-            onChange={(e) => {handleOptionChange(e); setDisabled(!disabled);}}
+            onChange={(e) => {handleOptionChange(e); }}
             style={{ margin: 7 }}
           />
-            <TextInput title={option.textVariables.header} hint={option.textVariables.hintText} hintPosition={option.textVariables.hintPosition} name = {option.optionName + "_text"}false_header={false_header} disabled={disabled}></TextInput>
+            <TextInput title={option.textVariables.header} hint={option.textVariables.hintText} hintPosition={option.textVariables.hintPosition} name = {option.optionName + "_text"}false_header={false_header} disabled={selectedOption !== option.optionValue}></TextInput>
           </div>
         
       ) : (

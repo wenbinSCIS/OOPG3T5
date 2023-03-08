@@ -53,7 +53,7 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
             onChange={(e) => handleCheckboxChange(e)}
             style={{ margin: 1 }}
           />
-            <TextInput title={option.textVariables.header} hint={option.textVariables.hintText} hintPosition={option.textVariables.hintPosition} name = {option.optionName + "_text"}false_header={false_header}></TextInput>
+            <TextInput title={option.textVariables.header} hint={option.textVariables.hintText} hintPosition={option.textVariables.hintPosition} name = {option.optionName + "_text"}false_header={false_header} disabled={!selectedItems.includes(option.optionValue)}></TextInput>
         </div>
         
       ) : (

@@ -24,7 +24,7 @@ function TextInput(props) {
           <InputGroup.Text >{props.hint}</InputGroup.Text>
         }
         {(
-          props.disabled === null ? 
+          props.disabled !== null ? 
           <Form.Control
             id={props.name}
             placeholder={inlineHint}
