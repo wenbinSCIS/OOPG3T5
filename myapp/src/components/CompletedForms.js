@@ -11,9 +11,9 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowForwardIos } from '@mui/icons-material';
-
+import React, { useState } from "react";
 export default function CompletedForms() {
-
+  const [selectedTag, setSelectedTag] = useState(null);
   
   const formCards = [
     {
@@ -36,6 +36,9 @@ export default function CompletedForms() {
     },
   ];
 
+  const filteredFormCards = selectedTag
+  ? formCards.filter((card) => card.status === selectedTag)
+  : formCards;
 
 
   const GridContainer = styled(Slider)`
@@ -67,6 +70,29 @@ export default function CompletedForms() {
                 <h2 className="text-g" style={{ fontWeight : "bold", fontSize: 30, color :"black" }}>
                   Completed Forms
                 </h2>
+                <div sx={{ display: "flex", flexWrap: "wrap", mt: 2 }}>
+          <Button
+            variant={selectedTag === null ? "contained" : "outlined"}
+            onClick={() => setSelectedTag(null)}
+            sx={{ mr: 1, mb: 1 }}
+          >
+            All
+          </Button>
+          <Button
+            variant={selectedTag === "Pending Review" ? "contained" : "outlined"}
+            onClick={() => setSelectedTag("Pending Review")}
+            sx={{ mr: 1, mb: 1 }}
+          >
+            Pending Review
+          </Button>
+          <Button
+            variant={selectedTag === "Approved" ? "contained" : "outlined"}
+            onClick={() => setSelectedTag("Approved")}
+            sx={{ mr: 1, mb: 1 }}
+          >
+            Approved
+          </Button>
+        </div>
               </div>
             </div>
           </div>
@@ -78,7 +104,7 @@ export default function CompletedForms() {
             slidesToScroll={2}
             nextArrow={<IconButton><ArrowForwardIos /></IconButton>}
           >
-            {formCards.map((formItem) => (
+            {filteredFormCards.map((formItem) => (
               <div key={formItem.formid}>
                 <FormCard formItems={[formItem]} style={{ width: '700px' }} />
               </div>

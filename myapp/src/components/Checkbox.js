@@ -37,7 +37,6 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
   }
  
   function handleTextinChange(e) {
-    console.log("here")
     const inputName = e.target.name;
     const inputText = e.target.value;
     const newSelectedItems = [...selectedItems];
@@ -52,10 +51,6 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
       setSelectedItems(newSelectedItems);
     }
   }
-  
-
-  console.log(selectedItems)
-  
   return (
     <div className={number}>
       {title.length>0 &&
@@ -88,7 +83,8 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
             name={option.optionValue} // use a unique name for each TextInput component
             false_header={false_header}
             onChange={(e) => handleTextinChange(e)}
-            text={selectedItems.find(item => item.name === option.optionValue && item.type === 'checkbox-text')?.text || ''}
+            text={selectedItems.find(item => item.name === option.optionValue && item.type === 'checkbox-text')?.text || '' }
+            disabled={!selectedItems.includes(option.optionValue)}
       />
         </div>
         

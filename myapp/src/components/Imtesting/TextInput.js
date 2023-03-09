@@ -29,6 +29,7 @@ function TextInput(props) {
           value={props.text}
           onChange={props.onChange}
           data-format="textinput"
+          disabled={props.disabled !== null ? props.disabled : false}
         />  
         </InputGroup>
         {props.hintPosition == "under" &&

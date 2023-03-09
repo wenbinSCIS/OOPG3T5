@@ -5,7 +5,7 @@ var prop = {'section':{
     "sectionName":"Address",
     "sectionText":"Fill in your address",
     "sectionFont":"12", 
-    "numRows":"4",
+    "numRows":"7",
     "rowElements":[[
         {
             "elementName":"streetAddress1",
@@ -16,38 +16,115 @@ var prop = {'section':{
         }
     ],
     [
-      {
+        {
           "elementName":"streetAddress2",
           "elementHeader":"",
           "placeholder":"Street Address Line 2",
           "placeholderPosition":"hint", 
           "elementType":"Textinput",
       }
-  ],
-  [
-    {
-        "elementName":"city",
-        "elementHeader":"",
-        "placeholder":"city",
-        "placeholderPosition":"hint", 
-        "elementType":"Textinput",
-    },
-    {
-      "elementName":"StateProvince",
-      "elementHeader":"",
-      "placeholder":"State / Province",
-      "placeholderPosition":"hint", 
-      "elementType":"Textinput",
-  }
-],[
-    {
-        "elementName":"How",
-        "elementHeader":"How did you hear about us?*",
-        "elementType":"Dropdown",
-        "size":"4",
-        "options":["Selection A","Selection B","Selection C"]
-    }
-],
+    ],
+    [
+        {
+            "elementName":"city",
+            "elementHeader":"",
+            "placeholder":"city",
+            "placeholderPosition":"hint", 
+            "elementType":"Textinput",
+        },
+        {
+            "elementName":"StateProvince",
+            "elementHeader":"",
+            "placeholder":"State / Province",
+            "placeholderPosition":"hint", 
+            "elementType":"Textinput",
+        }
+    ],
+    [
+        {
+            "elementName":"How",
+            "elementHeader":"How did you hear about us?*",
+            "elementType":"Dropdown",
+            "size":"4",
+            "options":["Selection A","Selection B","Selection C"]
+        }
+    ],
+    [
+        {
+          "elementName":"Licenses",
+          "elementHeader":"",
+          "elementType":"Checkbox",
+          "elementOrientation":"horizontal",
+          "options":[{
+            optionType: "Checkbox",
+            optionName:"a. Sole proprietorship",
+            optionValue:"a. Sole proprietorship",
+          },    
+          {
+            optionType: "Checkbox",
+            optionName:"b. Limited Company",
+            optionValue:"b. Limited Company",
+          },
+          {
+            optionType: "Checkbox",
+            optionName:"c. Partnership Agreement",
+            optionValue:"c. Partnership Agreement",
+          },
+          {
+            optionType: "Checkbox-text",
+            optionName:"others",
+            optionValue:"Others",
+            textVariables:{
+              //textname will inherit radio optionName + "_text" 
+              header:"",
+              hintPosition:"front",
+              hintText:"Please specify"
+            }
+          }],
+        }
+    ],
+    [
+        {
+          elementName: "Like",
+          elementHeader: "Like",
+          elementType: "Radio",
+          size: "8",
+          "elementOrientation":"horizontal",
+          options:
+          [
+            {
+              optionType: "radio",
+              optionName:"Yes",
+              optionValue:"Yes",
+            },
+            {
+              optionType: "radio",
+              optionName:"No",
+              optionValue:"No",
+            },
+            {
+              optionType: "radio-text",
+              optionName:"others",
+              optionValue:"Others",
+              textVariables:{
+                //textID will inherit radio optionName + "_text" 
+                header:"others",
+                hintPosition:"front",
+                hintText:"Please specify",
+                // false_header:null,
+              }
+            }
+          ],
+        },
+      ],
+      [
+        {
+            "elementName":"Feedback",
+            "elementHeader":"Feedback About us:",
+            "elementType":"Textarea"
+        }
+      ]
+      
   ]
 }}
 

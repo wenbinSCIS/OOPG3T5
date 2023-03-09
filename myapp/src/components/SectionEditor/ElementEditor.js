@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 
-const ElementEditor = ({ sectionHeader, onPressedElement }) => {
+const ElementEditor = ({ onPressedElement }) => {
   const [elementType, setElementType] = useState(null); // element type
 
   const [overallRowState, setOverallRowState] = useState([]);
@@ -78,7 +78,58 @@ handleChange: sets the elementType value as the one that we have selected
     let chosenElementType = event.target.value;
 
     setRowState([]); // I want individual row state to change when I select a different option - may have to adjust this
+
+    // have to set the default values for individual data types
     setElementState({ elementType: chosenElementType });
+
+    if (chosenElementType === "Text") {
+      setElementState({ elementType: chosenElementType, textSize: "12" });
+    }
+
+    if (chosenElementType === "Textarea") {
+      setElementState({ elementType: chosenElementType, elementHeader: "" });
+    }
+
+    if (chosenElementType === "Textinput") {
+      setElementState({
+        elementType: chosenElementType,
+        elementHeader: "",
+        placeholderPosition: "hint",
+      });
+    }
+
+    if (chosenElementType === "Dropdown") {
+      setElementState({
+        elementType: chosenElementType,
+        elementHeader: "",
+        size: "4",
+      });
+    }
+
+    if (chosenElementType === "Radio") {
+      setElementState({
+        elementType: chosenElementType,
+        elementHeader: "",
+        elementOrientation: "horizontal",
+      });
+    }
+
+    if (chosenElementType === "Checkbox") {
+      setElementState({
+        elementType: chosenElementType,
+        elementHeader: "",
+        elementOrientation: "horizontal",
+      });
+    }
+
+    if (chosenElementType === "Table") {
+      setElementState({
+        elementType: chosenElementType,
+        elementHeader: "",
+        noRows: "5",
+        noColumns: "",
+      });
+    }
 
     // if I do not do as above the number of options and the default value shown will not be consistent
   };
@@ -185,7 +236,7 @@ appendToOverallState: appends element to selected row as chosen by the user
     setOverallRowState((overallRowState) =>
       addItem(overallRowState, updatedState)
     );
-    console.log(updatedOverallState); // this should be pushed to the admin page
+    // console.log(updatedOverallState); // this should be pushed to the admin page
   };
 
   const appendToOverallRowState = () => {
@@ -195,20 +246,77 @@ appendToOverallState: appends element to selected row as chosen by the user
     row.push(elementState); // append the new element to the row
     currentRowState[rowIndex] = row; // replace the old row with the new one
     setOverallRowState(currentRowState);
-    console.log(currentRowState);
+    // console.log(currentRowState); // should be pushed to admin
   };
 
   function handleEventSubmission() {
-    try {
-      if (selectedOption === "new row") {
-        //basically we can just do normal functions like append to a new row behind
-        handleRowState();
-      } else {
-        appendToOverallRowState();
-      }
-    } catch (error) {
-      console.error(error);
+    let elementIsGood = false;
+
+    if (
+      elementState.elementType == "Text" &&
+      "elementName" in elementState &&
+      "Text" in elementState
+    ) {
+      elementIsGood = true;
+      console.log("you are good!");
     }
+
+    if (
+      elementState.elementType == "Textinput" &&
+      "elementName" in elementState &&
+      "placeholder" in elementState
+    ) {
+      elementIsGood = true;
+      console.log("you are good!");
+    }
+
+    if (
+      elementState.elementType == "Textarea" &&
+      "elementName" in elementState
+    ) {
+      elementIsGood = true;
+      console.log("you are good!");
+    }
+
+    if (
+      (elementState.elementType == "Dropdown" ||
+        elementState.elementType == "Checkbox" ||
+        elementState.elementType == "Radio") &&
+      "elementName" in elementState &&
+      "options" in elementState
+    ) {
+      elementIsGood = true;
+      console.log("you are good!");
+    }
+
+    if (
+      elementState.elementType == "Table" &&
+      "elementName" in elementState &&
+      "headers" in elementState
+    ) {
+      elementIsGood = true;
+      console.log("you are good!");
+    }
+
+    if (elementIsGood) {
+      try {
+        if (selectedOption === "new row") {
+          //basically we can just do normal functions like append to a new row behind
+          handleRowState();
+        } else {
+          appendToOverallRowState();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      alert("Please fill up empty element editor fields!");
+    }
+  }
+
+  function handleSubmissiontoAdmin() {
+    onPressedElement(overallRowState); // same as retrieve elements from section editor
+    console.log("Element Editor sends data to Section Editor")
   }
 
   /*
@@ -217,7 +325,7 @@ Code to be Deprecated
 =============================================================================================
 */
 
-// none for now
+  // none for now
 
   /*
 =============================================================================================
@@ -226,7 +334,7 @@ Returned Component
 */
 
   return (
-    <Form onSubmit={onPressedElement}>
+    <Form>
       <h5>Element Editor</h5>
       <Form.Group controlId="newRowOrAddElement" className="mb-3">
         <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
@@ -291,10 +399,10 @@ Returned Component
             <option key="Text" value="Text">
               Text
             </option>
-            <option key="Textinput" value="Text Input">
+            <option key="Textinput" value="Textinput">
               Text Input
             </option>
-            <option key="Textarea" value="Text Area">
+            <option key="Textarea" value="Textarea">
               Text Area
             </option>
             <option key="Dropdown" value="Dropdown">
@@ -358,7 +466,7 @@ Returned Component
           </Form.Group>
         </>
       )}
-      {elementType === "Text Area" && (
+      {elementType === "Textarea" && (
         <>
           <Form.Group controlId="elementName" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
@@ -373,7 +481,7 @@ Returned Component
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Element Header
+              Element Header (Optional)
             </Form.Label>
             <Form.Control
               type="text"
@@ -385,7 +493,7 @@ Returned Component
           </Form.Group>
         </>
       )}
-      {elementType === "Text Input" && (
+      {elementType === "Textinput" && (
         <>
           <Form.Group controlId="elementName" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
@@ -400,7 +508,7 @@ Returned Component
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Element Header
+              Element Header (Optional)
             </Form.Label>
             <Form.Control
               type="text"
@@ -454,7 +562,7 @@ Returned Component
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Element Header
+              Element Header (Optional)
             </Form.Label>
             <Form.Control
               type="text"
@@ -522,7 +630,7 @@ Returned Component
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Element Header
+              Element Header (Optional)
             </Form.Label>
             <Form.Control
               type="text"
@@ -581,7 +689,7 @@ Returned Component
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Element Header
+              Element Header (Optional)
             </Form.Label>
             <Form.Control
               type="text"
@@ -640,7 +748,7 @@ Returned Component
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Element Header
+              Element Header (Optional)
             </Form.Label>
             <Form.Control
               type="text"
@@ -693,23 +801,42 @@ Returned Component
         </>
       )}
       {elementType && elementType != "Choose an Element" && (
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={2}
-          sx={{ justifyContent: "flex-end" }}
-        >
-          <Button
+        <>
+          <Stack
+            direction="row"
             alignItems="center"
-            variant="contained"
-            color="primary"
-            // type="submit" // no longer submit
-            onClick={handleEventSubmission}
+            spacing={2}
+            sx={{ justifyContent: "flex-end" }}
           >
-            Save Element&nbsp;&nbsp;
-            <SendIcon />
-          </Button>
-        </Stack>
+            <Button
+              alignItems="center"
+              variant="contained"
+              color="primary"
+              onClick={handleEventSubmission}
+              sx={{ marginBottom: "1rem" }}
+            >
+              Save Element&nbsp;&nbsp;
+              <SendIcon />
+            </Button>
+          </Stack>
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={2}
+            sx={{ justifyContent: "flex-end" }}
+          >
+            <Button
+              alignItems="center"
+              variant="contained"
+              color="success"
+              // type="submit" // no longer submit
+              onClick={handleSubmissiontoAdmin}
+            >
+              Save Section&nbsp;&nbsp;
+              <SendIcon />
+            </Button>
+          </Stack>
+        </>
       )}
     </Form>
   );
