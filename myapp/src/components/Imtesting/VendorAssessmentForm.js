@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import GenerateSection from './SectionGeneration.js';
 import Sidebar from "../Sidebar/Sidebar.js";
 import Button from 'react-bootstrap/Button';
@@ -56,7 +56,7 @@ export default function VendorAssessmentForm1() {
               optionValue:"Others",
               textVariables:{
                 //textID will inherit radio optionName + "_text" 
-                header:"others",
+                header:"",
                 hintPosition:"front",
                 hintText:"Please specify",
                 // false_header:null,
@@ -174,31 +174,79 @@ export default function VendorAssessmentForm1() {
   }
   ]
   }
-  
+   var userObject =  //this object will be called from API
+  {
+    "CompanyName": "Write",
+    "CompanyRegistrationNo": "Anything",
+    "OfficeAddress": "SMU",
+    "Telephone": "123456",
+    "Fax": "123123",
+    "Contacts": [
+        {
+            "Name": "123456",
+            "Tel": "123"
+        },
+        {
+            "Tel": "123",
+            "Designation": "asdadad"
+        },
+        {
+            "Designation": "asdasdad"
+        }
+    ],
+    "How": "Selection B",
+    "Like": {
+        "name": "Others",
+        "type": "radio-text",
+        "text": "here as well"
+    },
+    "Licenses": [
+        {
+            "name": "b. Limited Company",
+            "type": "Checkbox",
+            "text": ""
+        },
+        {
+            "name": "Others",
+            "type": "Checkbox-text",
+            "text": "asdas"
+        }
+    ],
+    "Feedback": "asdasdadad"
+}
+  var [allData , setallData] = useState({}); //All data to save for user
 
-
-  
-
-
-  const [allData , setallData] = useState({}); //All data to save for user
-
-  const to_return = []
-
-  var sections = response['sections']
-
-  for(let i=0;i<sections.length;i++){
-    const each_section = sections[i]
-    to_return.push(<GenerateSection section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
+  if(userObject===undefined){
+    var userObject = {}
   }
-
+  useEffect(() => {
+    if (userObject !== undefined) {
+      setallData(prevData => ({ ...prevData, ...userObject }));
+    }
+  }, []); // empty dependency array to run the effect only once
+  
+  
   console.log(allData)
-  return (
-    <section className='d-flex'>
-      <Sidebar></Sidebar>
-    <div className="container">
-    {to_return}
-    <Button variant="dark">Submit Form</Button>
-    </div>
-    </section>
-  );
+    const to_return = []
+
+    var sections = response['sections']
+  
+    for(let i=0;i<sections.length;i++){
+      const each_section = sections[i]
+      to_return.push(<GenerateSection section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
+    }
+  
+    return (
+      <section className='d-flex'>
+        <Sidebar></Sidebar>
+      <div className="container">
+      {to_return}
+      <Button variant="dark">Submit Form</Button>
+      </div>
+      </section>
+    );
+  
+  
+
+  
 }

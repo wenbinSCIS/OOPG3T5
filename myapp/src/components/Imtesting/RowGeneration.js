@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TextInput from './TextInput';
-import Checkbox from './Checkbox';
+import Checkbox from './Checkbox'
 import Radio from './Radio';
 import Dropdown from './DropdownSelect';
 import Textarea from './Textarea';
@@ -64,7 +64,6 @@ function GenerateRow(props) {
     });
   };
   
-
   const to_return = [];
   var false_header=false;
   for(let i=0;i<info.length;i++){
@@ -99,7 +98,7 @@ function GenerateRow(props) {
       if(i>0 && info[0]["elementHeader"].length>0){
           var false_header = true
       }
-      to_return.push(<Dropdown title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} onChange={handleInputChange}></Dropdown>)
+      to_return.push(<Dropdown data = {allData[element["elementName"]]} title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} onChange={handleInputChange}></Dropdown>)
       
     }
     //checkbox
@@ -107,25 +106,26 @@ function GenerateRow(props) {
       if(i>0 && info[0]["elementHeader"].length>0){
           var false_header = true
       }
-      to_return.push(<Checkbox title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} orientation={element["elementOrientation"]} onChange={handleValueChange}></Checkbox>)       
+      to_return.push(<Checkbox data = {allData[element["elementName"]]} title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} orientation={element["elementOrientation"]} onChange={handleValueChange} ></Checkbox>)       
     }
     //radio
     else if (inputType == "Radio") {
       to_return.push(
-        <Radio title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} orientation={element["elementOrientation"]}  onChange={handleValueChange}></Radio>
+        <Radio data = {allData[element["elementName"]]} title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} orientation={element["elementOrientation"]}  onChange={handleValueChange}></Radio>
       );
     }
     //textarea
     else if(inputType=="Textarea"){
+      const text = allData[element["elementName"]] || "";
       if(i>0 && info[0]["elementHeader"].length>0){
           var false_header = true
       }
-      to_return.push( <Textarea title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header} onChange={handleInputChange}></Textarea>)
+      to_return.push( <Textarea title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header} onChange={handleInputChange} text = {text}></Textarea>)
     } 
     //table
     else if (inputType == "Table") {
       to_return.push(
-        <TableComponent  columnHeaders={element["headers"]} size={dimensions} name = {element["elementName"]}  columns={element["noColumns"]} rows={element["noRows"]} onChange={handleTableChange} data = {allData[element["elementName"]]}></TableComponent>
+        <TableComponent  columnHeaders={element["headers"]} size={dimensions} name = {element["elementName"]}  columns={element["noColumns"]} rows={element["noRows"]} onChange={handleTableChange} data = {allData[element["elementName"]]} ></TableComponent>
       );
     }   
   }
