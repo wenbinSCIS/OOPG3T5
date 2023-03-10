@@ -157,7 +157,21 @@ export default function VendorAssessmentForm1() {
             "headers":["Name","Tel","Designation"],
         }
       ]
-    ]}// section 4 table
+    ]},// section 4 table
+    {
+    "sectionName":"Contact Information",
+      "sectionText":"Contact Person:",
+      "sectionFont":"12", 
+      "numRows":"1",
+      "rowElements":[[{
+        "elementName":"How",
+        "elementHeader":"How did you hear about us?*",
+        "elementType":"Dropdown",
+        "size":"4",
+        "options":["Selection A","Selection B","Selection C"]
+    }]]
+    
+  }
   ]
   }
   
