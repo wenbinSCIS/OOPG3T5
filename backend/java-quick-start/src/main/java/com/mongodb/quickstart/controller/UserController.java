@@ -31,42 +31,30 @@ import com.mongodb.quickstart.repository.UserRepository;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
 
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry
-                        .addMapping("/**")
-                        .allowedMethods(CorsConfiguration.ALL)
-                        .allowedHeaders(CorsConfiguration.ALL)
-                        .allowedOriginPatterns(CorsConfiguration.ALL);
-            }
-        };
-    }
     
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("/getAllUser")
+    @PostMapping("/getAllUser")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userRepository.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/getUserByName")
+    @PostMapping("/getUserByName")
     public ResponseEntity<User> getUserByName(@RequestBody TempUser tempUser) {
         Optional<User> userData = userRepository.findByUsername(tempUser.getUsername());
-
+    
         if (userData.isPresent()) {
             return new ResponseEntity<>(userData.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
 
-    @GetMapping("/getUserByUserType")
+    @PostMapping("/getUserByUserType")
     public ResponseEntity<List<User>> getUserByUserType(@RequestBody TempUser tempUser) {
         List<User> users = userRepository.findByUserType(tempUser.getUserType());
 

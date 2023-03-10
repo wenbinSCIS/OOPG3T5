@@ -24,7 +24,15 @@ export default function CompletedForms() {
         const response = await axios.post("http://localhost:8080/user/getUserByName", {
           username: "Nico"
         });
-        setFormCards(response.data.assignedForms);
+        
+        var apiResponse = response.data.assignedForms
+        var forms = []
+        for (let i=0;i<apiResponse.length;i++){
+          if (apiResponse[i].status=="Not Started"||apiResponse[i].status=="In Progress"){
+            forms.push(apiResponse[i])
+          }
+        }
+        setFormCards(forms);
       } catch (error) {
         console.log(error);
       }

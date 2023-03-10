@@ -11,30 +11,34 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowForwardIos } from '@mui/icons-material';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 export default function CompletedForms() {
   const [selectedTag, setSelectedTag] = useState(null);
-  
-  const formCards = [
-    {
-      title: "QLI-QHSP-10-F01 New Vendor Assessment Form",
-      status: "Pending Review",
-      description: "Completed",
-      formid : 1,
-    },
-    {
-      title: "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
-      status: "Approved",
-      description: "Completed",
-      formid : 2,
-    },
-    {
-      title: "QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation",
-      status: "Approved",
-      description: "Completed",
-      formid : 3,
-    },
-  ];
+  const [formCards, setFormCards] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post("http://localhost:8080/user/getUserByName", {
+          username: "Nico"
+        });
+        
+        var apiResponse = response.data.assignedForms
+        var forms = []
+        for (let i=0;i<apiResponse.length;i++){
+          if (apiResponse[i].status=="Pending Review"||apiResponse[i].status=="Approved"){
+            forms.push(apiResponse[i])
+          }
+        }
+        setFormCards(forms);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const filteredFormCards = selectedTag
   ? formCards.filter((card) => card.status === selectedTag)
