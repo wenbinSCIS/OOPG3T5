@@ -80,7 +80,9 @@ function SectionEditor({ onPressed }) {
     const rowsLength = rows.length;
     newSection.numRows = String(rowsLength);
     setSectionData(newSection);
-    onPressed(newSection); // send info to admin page
+    onPressed(newSection); 
+    //trigger element row
+    // send info to admin page
   }
 
   // the two functions below control the state for showing the element editor

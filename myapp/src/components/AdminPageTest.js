@@ -225,6 +225,9 @@ function MyForm() {
     updatedComponents[index + 1] = temp;
     setFormComponents(updatedComponents);
   }
+  function handleAddSection(index){
+
+  }
 
   /* Below is functions connecting to MongoDB (APIs) */
   async function saveComponents() {
@@ -297,7 +300,7 @@ function MyForm() {
             color="lightgreen"
           />
         </div>
-        <SectionEditor onPressed={handleFormSubmit} />
+        <SectionEditor  onPressed={handleFormSubmit} />
         <div className="button-container">
           <AddComponent
             className="centered-button"
@@ -312,9 +315,11 @@ function MyForm() {
               <EditPanel
                 MoveDown={() => handleMoveComponentDown(index)}
                 MoveUp={() => handleMoveComponentUp(index)}
-                // Add={() => handleMoveComponentUp(index)}
+                Add={() => handleAddSection(index)}
                 // Edit={() => handleMoveComponentUp(index)}
                 Delete={() => handleRemoveComponent(index)}
+                formComponents={formComponents}
+                setFormComponents={setFormComponents}
               />
               {component}
               <hr />
@@ -382,6 +387,7 @@ function MyForm() {
         {/* {sectionData && (
           <GenerateSection section={sectionData}></GenerateSection>
         )} */}
+        
       </div>
     </section>
   );

@@ -8,11 +8,65 @@ import AddIcon from "@mui/icons-material/Add";
 import BuildIcon from "@mui/icons-material/Build";
 import { Modal }  from 'react-bootstrap';
 import { Form, Col } from 'react-bootstrap';
+import SectionEditor from '../SectionEditor/SectionEditor';
+import GenerateSection from "../SectionGeneration";
+import "../AdminPage.css"
 
 
-const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete}) => {
+const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete,formComponents,setFormComponents}) => {
   const [showModal, setShowModal] = useState(false);
-  
+  const [showModal2, setShowModal2] = useState(false);
+  const [sectionName, setSectionName] = useState("");
+  const [sectionFontSize, setSectionFontSize] = useState("");
+  const [sectionText, setSectionText] = useState("");
+  const [sectionData, setSectionData] = useState(null);
+  const [isSaved, setSaveStatus] = useState(true);
+  const [showAddComponent, setShowAddComponent] = useState(false);
+  // const [formComponents, setFormComponents] = useState([]);
+  const [infoComponents, setInfoComponents] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+ 
+
+  const handleFormSubmit = (data) => {
+    console.log(data)
+    setSectionData(data);
+    handleAddElement({ target: data });
+  };
+  const handleSave = () => {
+    // Call the Add function and pass the section name and font size
+    const newSection = {
+      sectionText: sectionName,
+      numRows: 1,
+      rowElements: [
+        {
+          numCols: 1,
+          colElements: [
+            {
+              elementType: "text",
+              text: sectionText,
+              fontSize: sectionFontSize
+            }
+          ]
+        }
+      ]
+    };
+    Add(newSection);
+    // Reset the section name and font size, and hide the modal
+    setSectionName("");
+    setSectionText("");
+    setSectionFontSize("");
+    setShowModal2(false);
+  };
+  function handleAddElement({ target }) {
+    console.log(target);
+    setFormComponents([
+      ...formComponents,
+      <GenerateSection section={target}></GenerateSection>,
+    ]);
+    console.log(formComponents);
+    setInfoComponents([...infoComponents, target]);
+    setSaveStatus(false);
+  }
   return (
     <div>
       <Stack
@@ -38,11 +92,66 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete}) => {
           alignItems="center"
           variant="contained"
           color="success"
-          onClick={Add}
+          onClick={() => setShowModal2(true)}
         >
           <AddIcon />
           &nbsp;Add
         </Button>
+        <Modal show={showModal2} onHide={() => setShowModal2(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add a New Section</Modal.Title>
+        </Modal.Header> 
+
+          <Modal.Body>          
+            <SectionEditor onPressed={handleFormSubmit}/>
+
+            {/* <Form>
+              <Form.Group as={Col}>
+                <Form.Label>Section Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter section name"
+                  value={sectionName}
+                  className="mb-3"
+                  onChange={(e) => setSectionName(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Label>Section Text</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter section text"
+                  value={sectionText}
+                  className="mb-3"
+                  onChange={(e) => setSectionText(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Label>Section Font Size</Form.Label>
+                <Form.Select
+                  value={sectionFontSize}
+                  className="mb-3"
+                  onChange={(e) => setSectionFontSize(e.target.value)}
+                >
+                  <option value="">Choose...</option>
+                  {Array.from({ length: 10 }, (_, i) => i + 1).map((value) => (
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </Form> */}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal2(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={handleSave}>
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <Button
           alignItems="center"
           variant="contained"
