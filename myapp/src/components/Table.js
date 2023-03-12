@@ -4,19 +4,13 @@ import React, { useState } from 'react';
 
 function TableComponent(props) {
     const number = `col-md-${props.size}`
-    var columns = props.columns
-    var numRows = props.rows
     var column_headers = props.columnHeaders
 
-    // Initialize state for the user input
-    const [data, setData] = useState(() => Array.from({ length: numRows }, () => ({})));
+    const data = props.data
 
-  // Handle changes to an input field
-  const handleChange = (event, rowIndex, dataKey) => {
-    const newData = [];
-    newData[rowIndex][dataKey] = event.target.value;
-    setData(newData);
-  };
+    
+
+  
     return (
         <div className={number}>
         <Table bordered hover >
@@ -36,9 +30,9 @@ function TableComponent(props) {
                 <td key={index}>
                     <input
                       type="text"
-                      value={data[rowIndex][index] || ''}
+                      value={data[rowIndex][column] || ''}
                       onChange={(event) =>
-                        handleChange(event, rowIndex, column.dataKey)
+                        props.onChange(event, rowIndex, column,props.name)
                       }
                     />
                 </td>

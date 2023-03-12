@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
 
-function Checkbox({ options,title,size,false_header,name,orientation}) {
+function Checkbox({data,onChange, options,title,size,false_header,name,orientation}) {
 
-  
-  const [selectedItems, setSelectedItems] = useState([]);
+
+ var [selectedItems, setSelectedItems] = useState([]);
+
+  if(data!==undefined){
+    selectedItems = data
+  }
 
   var number = `form-group col-md-${size}`
   if(orientation =="horizontal"){
@@ -16,7 +20,6 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
   function handleCheckboxChange(event) {
     var selectedItem = event.target.value;
     var selectedType = event.target.dataset.format;
-  
     var selectedIndex = selectedItems.findIndex(
       item => item.name === selectedItem && item.type === selectedType
     );
@@ -26,31 +29,32 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
       type: selectedType,
       text: ""
     };
-  
+    var newSelectedItems = []
     if (selectedIndex === -1) {
+      newSelectedItems = [...selectedItems, useStateobj]
       setSelectedItems([...selectedItems, useStateobj]);
     } else {
       var newSelectedItems = [...selectedItems];
-      newSelectedItems.splice(selectedIndex, 1);
-      setSelectedItems(newSelectedItems);
+      newSelectedItems.splice(selectedIndex, 1);      
     }
+    setSelectedItems(newSelectedItems);
+    onChange(name, newSelectedItems)    
   }
- 
-  function handleTextinChange(e) {
-    const inputName = e.target.name;
+  function handleTextinChange(parentName ,parentCheckboxValue, e) {
+    // const inputName = e.target.name;
     const inputText = e.target.value;
     const newSelectedItems = [...selectedItems];
   
-    const selectedItemIndex = newSelectedItems.findIndex(item => item.name === inputName && item.type === 'checkbox-text');
-  
+    const selectedItemIndex = newSelectedItems.findIndex(item => item.name === parentCheckboxValue && item.type === 'Checkbox-text');
     if (selectedItemIndex > -1) {
       const selectedItem = newSelectedItems[selectedItemIndex];
       selectedItem.text = inputText;
-  
       newSelectedItems.splice(selectedItemIndex, 1, selectedItem);
-      setSelectedItems(newSelectedItems);
     }
+    setSelectedItems(newSelectedItems);
+    onChange(parentName, newSelectedItems)
   }
+   
   return (
     <div className={number}>
       {title.length>0 &&
@@ -63,43 +67,48 @@ function Checkbox({ options,title,size,false_header,name,orientation}) {
         <br></br>
       }
       <br></br>
-      {options.map((option,index) => option.optionType == "checkbox-text" ? (
-        <div>
+      {options.map((option,index) => option.optionType == "Checkbox-text" ? (
+        <div style={{ display: 'flex', alignItems: 'center' }} >
           <Form.Check
             label={option.optionValue}
+            checked={data != null && data.find(item => item.name === option.optionValue) ? true : false}            
             name={name}
-            type="checkbox"
-            data-format = "checkbox-text"
-            key={index}
+            type="Checkbox"
+            data-format = "Checkbox-text"
+            key={option}
             id={index}
             value = {option.optionValue}
             onChange={(e) => handleCheckboxChange(e)}
-            style={{ margin: 1 }}
+            style={{ margin: 5}}
           />
             <TextInput
+            key="test"
             title={option.textVariables.header}
             hint={option.textVariables.hintText}
             hintPosition={option.textVariables.hintPosition}
-            name={option.optionValue} // use a unique name for each TextInput component
+            name={option.optionValue + "_text"} // use a unique name for each TextInput component
             false_header={false_header}
-            onChange={(e) => handleTextinChange(e)}
-            text={selectedItems.find(item => item.name === option.optionValue && item.type === 'checkbox-text')?.text || '' }
-            disabled={!selectedItems.includes(option.optionValue)}
+            onChange={(e) => handleTextinChange(name,option.optionValue, e)}
+            text={data != null && data.find(item => item.name === option.optionValue && item.type === "Checkbox-text") ? data.find(item => item.name === option.optionValue && item.type === "Checkbox-text").text : ""}
+            disabled={data != null && data.find(item => item.name === option.optionValue) ? false : true}
       />
         </div>
         
       ) : (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
         <Form.Check
             label={option.optionValue}
+            checked={data != null && data.find(item => item.name === option.optionValue) ? true : false}            
             name={name}
-            type="checkbox"
-            data-format = "checkbox"
-            key={index}
+            type="Checkbox"
+            data-format = "Checkbox"
+            key={option}
             id={index}
             value = {option.optionValue}
             onChange={(e) => handleCheckboxChange(e)}
-            style={{ margin: 1 }}
+            style={{ margin: 5 }}
           />
+          </div>
           )
       )}
     </div>  

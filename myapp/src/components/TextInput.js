@@ -3,9 +3,11 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 
 function TextInput(props) {
-    //const [text , setText] = useState('');  
-    console.log(props)
-    const number = `form-group col-md-${props.size} mb-1`
+  var number = `form-group col-md-${props.size} mb-1 mt-1`
+
+  if (props.size == undefined){
+    number = `form-group`
+  }
     var inlineHint = "";
     if(props.hintPosition == "hint"){
       inlineHint = props.hint
