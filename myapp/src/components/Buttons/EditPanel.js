@@ -97,51 +97,13 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete,formComponents,setFormCompon
           <AddIcon />
           &nbsp;Add
         </Button>
-        <Modal show={showModal2} onHide={() => setShowModal2(false)}>
+        <Modal style show={showModal2} onHide={() => setShowModal2(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Add a New Section</Modal.Title>
         </Modal.Header> 
 
           <Modal.Body>          
             <SectionEditor onPressed={handleFormSubmit}/>
-
-            {/* <Form>
-              <Form.Group as={Col}>
-                <Form.Label>Section Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter section name"
-                  value={sectionName}
-                  className="mb-3"
-                  onChange={(e) => setSectionName(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Section Text</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter section text"
-                  value={sectionText}
-                  className="mb-3"
-                  onChange={(e) => setSectionText(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Section Font Size</Form.Label>
-                <Form.Select
-                  value={sectionFontSize}
-                  className="mb-3"
-                  onChange={(e) => setSectionFontSize(e.target.value)}
-                >
-                  <option value="">Choose...</option>
-                  {Array.from({ length: 10 }, (_, i) => i + 1).map((value) => (
-                    <option key={value} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-            </Form> */}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal2(false)}>
