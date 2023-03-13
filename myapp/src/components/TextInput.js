@@ -3,8 +3,11 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 
 function TextInput(props) {
-    const [text , setText] = useState('');  
-    const number = `form-group col-md-${props.size} mb-1`
+  var number = `form-group col-md-${props.size} mb-1 mt-1`
+
+  if (props.size == undefined){
+    number = `form-group`
+  }
     var inlineHint = "";
     if(props.hintPosition == "hint"){
       inlineHint = props.hint
@@ -25,10 +28,13 @@ function TextInput(props) {
         }
         <Form.Control
           id={props.name}
+          name={props.name}
           placeholder={inlineHint}
-          value = {text}
-          onChange ={(e) => setText(e.target.value)}
-        />
+          value={props.text}
+          onChange={props.onChange}
+          data-format="textinput"
+          disabled={props.disabled !== null ? props.disabled : false}
+        />  
         </InputGroup>
         {props.hintPosition == "under" &&
           <a style={{margin:0,fontSize:'0.8rem',opacity: 0.8}}>{props.hint}</a>

@@ -6,6 +6,7 @@ function Dropdown(props) {
 
   function handleValueChange(event) {
     setSelectedValue(event.target.value);
+    props.onChange(event)
   }
 
     const number = `form-group col-md-${props.size} mb-1`
@@ -36,9 +37,9 @@ function Dropdown(props) {
           props.false_header &&
           <br></br>
         }
-        <select className="form-control" value={selectedValue} onChange={handleValueChange}>
+        <select name={props.name} className="form-control" value={props.data} onChange={handleValueChange}>
           {props.options.map((option, index) => (
-            <option key={index} value={option}>
+            <option key={index} value={option} >
               {option}
             </option>
           ))}

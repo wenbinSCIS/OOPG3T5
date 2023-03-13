@@ -1,8 +1,15 @@
 import rowElementsReact, { useState } from 'react';
 import GenerateRow from './RowGeneration';
 
+
+
+
 function GenerateSection(props) {
-    
+
+    var allData = props.allData //useState prop from main
+    var setallData = props.setallData //setState prop from main
+
+   
     const rows = props['section']["numRows"]
     const rowElements = props['section']["rowElements"]
     const to_return = []
@@ -10,7 +17,7 @@ function GenerateSection(props) {
 
     for(let i=0;i<rows;i++){
         var curr_row = rowElements[i]
-        to_return.push(<GenerateRow info = {curr_row}></GenerateRow>)
+        to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} ></GenerateRow>)
     }
     return (
         <div className='row mb-3'>
