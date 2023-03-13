@@ -29,7 +29,7 @@ function AdminTable({ data }) {
           <th className="gray-th">Index</th>
     <th className="gray-th">Company Name</th>
     <th className="gray-th">Form Name</th>
-    <th className="gray-th">Request Date</th>
+    <th className="gray-th">Version</th>
     <th className="gray-th">Action</th>
           </tr>
         </MDBTableHead>
@@ -39,7 +39,7 @@ function AdminTable({ data }) {
               <td>{startIndex + index + 1}</td>
               <td>{item.companyName}</td>
               <td>{item.formName}</td>
-              <td>{item.requestDate}</td>
+              <td>{item.version}</td>
               <td>
               <MDBBtn outline rounded color='success'>Start</MDBBtn>
               </td>
