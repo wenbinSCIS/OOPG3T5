@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import com.mongodb.quickstart.models.AdministrativePersonnel;
 import com.mongodb.quickstart.models.User;
 import com.mongodb.quickstart.models.Vendor;
 

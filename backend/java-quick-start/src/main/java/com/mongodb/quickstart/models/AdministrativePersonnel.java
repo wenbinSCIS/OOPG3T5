@@ -3,39 +3,39 @@ package com.mongodb.quickstart.models;
 import java.util.ArrayList;
 
 public class AdministrativePersonnel extends User{
-    private ArrayList<Object> createdForm;
-    private ArrayList<Object> vendorForm;
+    private ArrayList<CreatedForm> createdForm;
+    private ArrayList<VendorForm> vendorForm;
     public AdministrativePersonnel(){}
-    public AdministrativePersonnel(String username,String password)
+    public AdministrativePersonnel(String username,String password,ArrayList<com.mongodb.quickstart.models.Approver.CreatedForm> createdForm2, ArrayList<com.mongodb.quickstart.models.Approver.VendorForm> vendorForm2)
     {
         super(username, password,"AdministrativePersonnel");
-        this.createdForm = new ArrayList<>();
-        this.vendorForm = new ArrayList<>();
+        this.createdForm = createdForm2;
+        this.vendorForm = vendorForm2;
     }
 
-    public AdministrativePersonnel(String username,String hashedPassword,byte[] passwordSalt,ArrayList<Object> createdForm,ArrayList<Object> vendorForm)
+    public AdministrativePersonnel(String username,String hashedPassword,byte[] passwordSalt,ArrayList<com.mongodb.quickstart.models.Approver.CreatedForm> createdForm2,ArrayList<com.mongodb.quickstart.models.Approver.VendorForm> vendorForm2)
     {
         super(username,hashedPassword,passwordSalt,"AdministrativePersonnel");
-        this.createdForm = createdForm;
-        this.vendorForm = vendorForm;
+        this.createdForm = createdForm2;
+        this.vendorForm = vendorForm2;
     }
 
-    public AdministrativePersonnel(String username,ArrayList<Object> createdForm,ArrayList<Object> vendorForm)
+    public AdministrativePersonnel(String username,ArrayList<CreatedForm> createdForm,ArrayList<VendorForm> vendorForm)
     {
         super(username,null,null,"AdministrativePersonnel");
         this.createdForm = createdForm;
         this.vendorForm = vendorForm;
     }
-    public ArrayList<Object> getVendorForm() {
+    public ArrayList<VendorForm> getVendorForm() {
         return vendorForm;
     }
-    public void setVendorForm(ArrayList<Object> vendorForm) {
+    public void setVendorForm(ArrayList<VendorForm> vendorForm) {
         this.vendorForm = vendorForm;
     }
-    public ArrayList<Object> getCreatedForm() {
+    public ArrayList<CreatedForm> getCreatedForm() {
         return createdForm;
     }
-    public void setCreatedForm(ArrayList<Object> createdForm) {
+    public void setCreatedForm(ArrayList<CreatedForm> createdForm) {
         this.createdForm = createdForm;
     }
 

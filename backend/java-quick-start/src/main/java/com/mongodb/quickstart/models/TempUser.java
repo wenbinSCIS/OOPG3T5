@@ -2,13 +2,17 @@ package com.mongodb.quickstart.models;
 
 import java.util.ArrayList;
 
+import com.mongodb.quickstart.models.AdministrativePersonnel.CreatedForm;
+import com.mongodb.quickstart.models.AdministrativePersonnel.VendorForm;
+import com.mongodb.quickstart.models.Vendor.AssignedForm;
+
 public class TempUser{
     private String username;
     private String passwordString;
     private String userType;
-    private ArrayList<Object> assignedForms;
-    private ArrayList<Object> createdForm;
-    private ArrayList<Object> vendorForm;
+    private ArrayList<AssignedForm> assignedForms;
+    private ArrayList<CreatedForm> createdForm;
+    private ArrayList<VendorForm> vendorForm;
 
     public TempUser()
     {
@@ -24,7 +28,7 @@ public class TempUser{
         this.vendorForm = null;
     }
 
-    public TempUser(String username,String passwordString,String userType,ArrayList<Object> assignedForms,ArrayList<Object> createdForm,ArrayList<Object> vendorForm)
+    public TempUser(String username,String passwordString,String userType,ArrayList<AssignedForm> assignedForms,ArrayList<CreatedForm> createdForm,ArrayList<VendorForm> vendorForm)
     {
         this.username = username;
         this.passwordString = passwordString;
@@ -34,7 +38,7 @@ public class TempUser{
         this.vendorForm = vendorForm;
     }
 
-    public ArrayList<Object> getCreatedForm() {
+    public ArrayList<CreatedForm> getCreatedForm() {
         return createdForm;
     }
     public String getUsername() {
@@ -49,10 +53,10 @@ public class TempUser{
         return userType;
     }
 
-    public ArrayList<Object> getAssignedForms() {
+    public ArrayList<AssignedForm> getAssignedForms() {
         return assignedForms;
     }
-    public ArrayList<Object> getVendorForm() {
+    public ArrayList<VendorForm> getVendorForm() {
         return vendorForm;
     }
     
