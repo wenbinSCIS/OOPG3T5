@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Footer from './Footer';
 import Totop from './Totop';
-import Sidebar from './Sidebar/Sidebar';
+import AdminSidebar from './Sidebar/AdminSidebar';
 import Header from './Header';
 import AdminTable from './AdminTable';
 import TextField from '@mui/material/TextField';
@@ -36,7 +36,7 @@ export default function ApprovalList() {
   return (
     <>
       <section id="hero" className="d-flex">
-        <Sidebar />
+        <AdminSidebar />
         <div className="container">
           <Header />
           <div className="row">
