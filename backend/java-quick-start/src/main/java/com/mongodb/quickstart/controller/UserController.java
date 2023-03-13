@@ -166,6 +166,39 @@ public class UserController {
             }
         }
 
+        @PutMapping("/updateVendorAssignedFormStatus")
+        public ResponseEntity<?> updateVendorAssignedFormStatus(@RequestBody Vendor vendor) {
+            Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
+
+            if (userData.isPresent()) {
+                Vendor existingUser = userData.get();
+                ArrayList<AssignedForm> appendFormList = vendor.getAssignedForms();
+                AssignedForm updateForm = appendFormList.get(0);
+                String updateName = updateForm.getFormName();
+                double updateVersion = updateForm.getFormVersion();
+                String updateStatus = updateForm.getStatus();
+                
+                ArrayList<AssignedForm> currentList = existingUser.getAssignedForms();
+
+                for(int i=0;i<currentList.size();i++)
+                {
+                    AssignedForm currentForm = currentList.get(i);
+                    String currentName = currentForm.getFormName();
+                    double currentVersion = currentForm.getFormVersion();
+                    if(currentName.equals(updateName) && currentVersion==updateVersion)
+                    {
+                        currentForm.setStatus(updateStatus);
+                        break;
+                    }
+                }
+                existingUser.setAssignedForms(currentList);
+                userRepository.save(existingUser);
+                return new ResponseEntity<>(existingUser, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
 //update created form for admin and approver
     @PutMapping("/updateCreatedForm")
     public ResponseEntity<?> updateCreatedForm(@RequestBody AdministrativePersonnel admin) {
@@ -235,72 +268,107 @@ public class UserController {
     }
 
 //Update Vendor Form for admin and approver
-@PutMapping("/updateAdminVendorForm")
-public ResponseEntity<?> updateAdminVendorForm(@RequestBody AdministrativePersonnel admin) {
-    Optional<User> userData = userRepository.findByUsername(admin.getUsername());
+    @PutMapping("/updateAdminVendorForm")
+    public ResponseEntity<?> updateAdminVendorForm(@RequestBody AdministrativePersonnel admin) {
+        Optional<User> userData = userRepository.findByUsername(admin.getUsername());
 
-    if (userData.isPresent()) {
-        AdministrativePersonnel existingUser = (AdministrativePersonnel) userData.get();
-        existingUser.setVendorForm(admin.getVendorForm());
-        userRepository.save(existingUser);
-        return new ResponseEntity<>(existingUser, HttpStatus.OK);
-    } else {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-}
-
-@PutMapping("/appendAdminVendorForm")
-public ResponseEntity<?> appendAdminVendorForm(@RequestBody AdministrativePersonnel admin) {
-    Optional<User> userData = userRepository.findByUsername(admin.getUsername());
-
-    if (userData.isPresent()) {
-        AdministrativePersonnel existingUser = (AdministrativePersonnel) userData.get();
-        ArrayList<VendorForm> appendFormList = admin.getVendorForm();
-        ArrayList<VendorForm> currentList = existingUser.getVendorForm();
-
-        for(int i=0;i<appendFormList.size();i++)
-        {
-            currentList.add(appendFormList.get(i));
+        if (userData.isPresent()) {
+            AdministrativePersonnel existingUser = (AdministrativePersonnel) userData.get();
+            existingUser.setVendorForm(admin.getVendorForm());
+            userRepository.save(existingUser);
+            return new ResponseEntity<>(existingUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        existingUser.setVendorForm(currentList);
-        userRepository.save(existingUser);
-        return new ResponseEntity<>(existingUser, HttpStatus.OK);
-    } else {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-}
 
-@PutMapping("/deleteSingleAdminVendorForm")
-public ResponseEntity<?> deleteSingleAdminVendorForm(@RequestBody AdministrativePersonnel admin) {
-    Optional<User> userData = userRepository.findByUsername(admin.getUsername());
+    @PutMapping("/appendAdminVendorForm")
+    public ResponseEntity<?> appendAdminVendorForm(@RequestBody AdministrativePersonnel admin) {
+        Optional<User> userData = userRepository.findByUsername(admin.getUsername());
 
-    if (userData.isPresent()) {
-        AdministrativePersonnel existingUser = (AdministrativePersonnel) userData.get();
-        ArrayList<VendorForm> appendFormList = admin.getVendorForm();
-        VendorForm deleteForm = appendFormList.get(0);
-        String deleteName = deleteForm.getFormName();
-        double deleteVersion = deleteForm.getFormVersion();
-        
-        ArrayList<VendorForm> currentList = existingUser.getVendorForm();
+        if (userData.isPresent()) {
+            AdministrativePersonnel existingUser = (AdministrativePersonnel) userData.get();
+            ArrayList<VendorForm> appendFormList = admin.getVendorForm();
+            ArrayList<VendorForm> currentList = existingUser.getVendorForm();
 
-        for(int i=0;i<currentList.size();i++)
-        {
-            VendorForm currentForm = currentList.get(i);
-            String currentName = currentForm.getFormName();
-            double currentVersion = currentForm.getFormVersion();
-            if(currentName.equals(deleteName) && currentVersion==deleteVersion)
+            for(int i=0;i<appendFormList.size();i++)
             {
-                currentList.remove(i);
-                break;
+                currentList.add(appendFormList.get(i));
             }
+            existingUser.setVendorForm(currentList);
+            userRepository.save(existingUser);
+            return new ResponseEntity<>(existingUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        existingUser.setVendorForm(currentList);
-        userRepository.save(existingUser);
-        return new ResponseEntity<>(existingUser, HttpStatus.OK);
-    } else {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-}
+
+    @PutMapping("/deleteSingleAdminVendorForm")
+    public ResponseEntity<?> deleteSingleAdminVendorForm(@RequestBody AdministrativePersonnel admin) {
+        Optional<User> userData = userRepository.findByUsername(admin.getUsername());
+
+        if (userData.isPresent()) {
+            AdministrativePersonnel existingUser = (AdministrativePersonnel) userData.get();
+            ArrayList<VendorForm> appendFormList = admin.getVendorForm();
+            VendorForm deleteForm = appendFormList.get(0);
+            String deleteName = deleteForm.getFormName();
+            double deleteVersion = deleteForm.getFormVersion();
+            
+            ArrayList<VendorForm> currentList = existingUser.getVendorForm();
+
+            for(int i=0;i<currentList.size();i++)
+            {
+                VendorForm currentForm = currentList.get(i);
+                String currentName = currentForm.getFormName();
+                double currentVersion = currentForm.getFormVersion();
+                if(currentName.equals(deleteName) && currentVersion==deleteVersion)
+                {
+                    currentList.remove(i);
+                    break;
+                }
+            }
+            existingUser.setVendorForm(currentList);
+            userRepository.save(existingUser);
+            return new ResponseEntity<>(existingUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @PutMapping("/updateAdminVendorFormStatus")
+    public ResponseEntity<?> updateAdminVendorFormStatus(@RequestBody AdministrativePersonnel admin) {
+        Optional<User> userData = userRepository.findByUsername(admin.getUsername());
+
+        if (userData.isPresent()) {
+            AdministrativePersonnel existingUser = (AdministrativePersonnel) userData.get();
+            ArrayList<VendorForm> appendFormList = admin.getVendorForm();
+            VendorForm updateForm = appendFormList.get(0);
+            String updateName = updateForm.getFormName();
+            double updateVersion = updateForm.getFormVersion();
+            String updateStatus = updateForm.getStatus();
+            
+            ArrayList<VendorForm> currentList = existingUser.getVendorForm();
+
+            for(int i=0;i<currentList.size();i++)
+            {
+                VendorForm currentForm = currentList.get(i);
+                String currentName = currentForm.getFormName();
+                double currentVersion = currentForm.getFormVersion();
+                if(currentName.equals(updateName) && currentVersion==updateVersion)
+                {
+                    currentForm.setStatus(updateStatus);
+                    break;
+                }
+            }
+            existingUser.setVendorForm(currentList);
+            userRepository.save(existingUser);
+            return new ResponseEntity<>(existingUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     @PutMapping("/updateUserType")
     //Only for changing between administrative personnel and approver. Will not add new field for
