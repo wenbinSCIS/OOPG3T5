@@ -1,0 +1,333 @@
+{
+	"info": {
+		"_postman_id": "77481bc1-5db1-4ed5-8e07-cb8f6db3b084",
+		"name": "FormInput CRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19224622"
+	},
+	"item": [
+		{
+			"name": "Create Form Input",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"formName\":\"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n    \"username\":\"Nico\",\r\n    \"formVersion\":1,\r\n    \"formInputData\":\r\n    [\r\n        {\r\n            \"name\":\"Nico\",\r\n            \"some data\":\"something something something\"\r\n        },\r\n        {\r\n            \"some other data\":\"123456\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/formInput/createFormInput",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formInput",
+						"createFormInput"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Form Input 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"formName\":\"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n    \"username\":\"Nico\",\r\n    \"formVersion\":2,\r\n    \"formInputData\":\r\n    [\r\n        {\r\n            \"name\":\"Nico\",\r\n            \"some data\":\"2nd create example\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/formInput/createFormInput",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formInput",
+						"createFormInput"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Form Input 3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"formName\":\"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n    \"username\":\"Some Company\",\r\n    \"formVersion\":2,\r\n    \"formInputData\":\r\n    [\r\n        {\r\n            \"name\":\"Some Company\",\r\n            \"some data\":\"3rd create example\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/formInput/createFormInput",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formInput",
+						"createFormInput"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Form Input",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/formInput/getAllFormInput",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formInput",
+						"getAllFormInput"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Form Input By Form Name",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"formName\":\"QLI-QHSP-10-F01 New Vendor Assessment Form\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/formInput/getFormInputByFormName",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formInput",
+						"getFormInputByFormName"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Form Input By Form Name And Version",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"formName\":\"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n    \"formVersion\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/formInput/getFormInputByFormNameFormVersion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formInput",
+						"getFormInputByFormNameFormVersion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Form Input By Username",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Nico\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/formInput/getFormInputByUsername",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formInput",
+						"getFormInputByUsername"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Form Input By Form Name, Username and Version",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"formName\":\"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n    \"username\":\"Nico\",\r\n    \"formVersion\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formInput",
+						"getFormInputByFormNameUsernameFormVersion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Form Input Data",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"formName\":\"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n    \"username\":\"Nico\",\r\n    \"formVersion\":1,\r\n    \"formInputData\":\r\n    [\r\n        {\r\n            \"data\":\"updated\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/formInput/updateFormInputData",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formInput",
+						"updateFormInputData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Form Version",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"formName\":\"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n    \"username\":\"Nico\",\r\n    \"formVersion\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/formInput/updateFormVersion/21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formInput",
+						"updateFormVersion",
+						"21"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Form Input",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"formName\":\"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n    \"username\":\"Nico\",\r\n    \"formVersion\":21\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/formInput/deleteFormByFormNameUsernameFormVersion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"formInput",
+						"deleteFormByFormNameUsernameFormVersion"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

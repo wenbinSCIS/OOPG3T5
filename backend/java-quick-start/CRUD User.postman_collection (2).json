@@ -1,0 +1,698 @@
+{
+	"info": {
+		"_postman_id": "4625f5a7-d3e1-4f1f-a18b-c51c1e1c5e5f",
+		"name": "CRUD User",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19224622"
+	},
+	"item": [
+		{
+			"name": "Create User Vendor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Nico\",\r\n    \"passwordString\":\"123456\",\r\n    \"userType\":\"Vendor\",\r\n    \"assignedForms\": [\r\n    {\r\n      \"formName\": \"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n      \"status\": \"Not Started\",\r\n      \"description\": \"Required to complete\",\r\n      \"formVersion\" : 1\r\n    },\r\n    {\r\n      \"formName\": \"QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation\",\r\n      \"status\": \"In Progress\",\r\n      \"description\": \"Required to complete\",\r\n      \"formVersion\" : 2\r\n    },\r\n    {\r\n      \"formName\": \"QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation\",\r\n      \"status\": \"Not Started\",\r\n      \"description\": \"Required to complete\",\r\n      \"formVersion\" : 3\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/createUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"createUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Approver",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Tom\",\r\n    \"passwordString\":\"abcdef\",\r\n    \"userType\":\"Approver\",\r\n    \"createdForm\": [\r\n    {\r\n      \"formName\": \"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n      \"formVersion\" : 1\r\n    }\r\n    ],\r\n    \"vendorForm\": [\r\n    {\r\n      \"formName\": \"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n      \"status\": \"Not Started\",\r\n      \"vendorName\": \"Nico\",\r\n      \"formVersion\" : 1\r\n    }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/createUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"createUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/getAllUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"getAllUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Name Nico",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Nico\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/getUserByName",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"getUserByName"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Type Vendor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userType\":\"Vendor\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/getUserByUserType",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"getUserByUserType"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Vendor Form Nico",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Nico\",\r\n    \"assignedForms\": [\r\n    {\r\n      \"formName\": \"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n      \"status\": \"Not Started\",\r\n      \"description\": \"Required to complete\",\r\n      \"formVersion\" : 1\r\n    }]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/updateVendorAssignedForm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"updateVendorAssignedForm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Append Vendor Form Nico",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Nico\",\r\n    \"assignedForms\": [\r\n    {\r\n      \"formName\": \"QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation\",\r\n      \"status\": \"In Progress\",\r\n      \"description\": \"Required to complete\",\r\n      \"formVersion\" : 2\r\n    },\r\n    {\r\n      \"formName\": \"A new form\",\r\n      \"status\": \"In Progress\",\r\n      \"description\": \"Required to complete\",\r\n      \"formVersion\" : 3\r\n    }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/appendVendorAssignedForm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"appendVendorAssignedForm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Single Vendor Form Nico",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Nico\",\r\n    \"assignedForms\": [\r\n    {\r\n      \"formName\": \"QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation\",\r\n      \"status\": \"In Progress\",\r\n      \"description\": \"Required to complete\",\r\n      \"formVersion\" : 2\r\n    }]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/deleteSingleVendorAssignedForm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"deleteSingleVendorAssignedForm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Status Vendor Form Nico",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Nico\",\r\n    \"assignedForms\": [\r\n        {\r\n            \"formName\": \"A new form\",\r\n            \"status\": \"Completed\",\r\n            \"description\": \"Required to complete\",\r\n            \"formVersion\": 3.0\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/updateVendorAssignedFormStatus",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"updateVendorAssignedFormStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Created Form Tom",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Tom\",\r\n    \"createdForm\": [\r\n    {\r\n      \"formName\": \"QLI-QHSP-10-F01 New Vendor Assessment Form\",\r\n      \"formVersion\" : 2\r\n    }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/updateCreatedForm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"updateCreatedForm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Append Created Form Tom",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Tom\",\r\n    \"createdForm\": [\r\n    {\r\n      \"formName\": \"This is a new form\",\r\n      \"formVersion\" : 3\r\n    },\r\n        {\r\n      \"formName\": \"This is a second new form\",\r\n      \"formVersion\" : 1\r\n    }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/appendCreatedForm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"appendCreatedForm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Single Created Form Tom",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Tom\",\r\n    \"createdForm\": [\r\n    {\r\n      \"formName\": \"This is a new form\",\r\n      \"formVersion\" : 3\r\n    }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/deleteSingleCreatedForm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"deleteSingleCreatedForm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Type Tom",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Tom\",\r\n    \"userType\":\"AdministrativePersonnel\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/updateUserType",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"updateUserType"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Name Tom-->Jerry",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Jerry\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/updateUsername/Tom",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"updateUsername",
+						"Tom"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Password Jerry",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Jerry\",\r\n    \"passwordString\":\"654321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/updateUserPassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"updateUserPassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Vendor Form Jerry",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Jerry\",\r\n    \"vendorForm\": [\r\n    {\r\n      \"formName\": \"Test vendor form and admin\",\r\n      \"status\": \"Not Started\",\r\n      \"vendorName\": \"Nico\",\r\n      \"formVersion\" : 2\r\n    }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/updateAdminVendorForm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"updateAdminVendorForm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Append Vendor Form Jerry",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Jerry\",\r\n    \"vendorForm\": [\r\n    {\r\n      \"formName\": \"A form\",\r\n      \"status\": \"Not Started\",\r\n      \"vendorName\": \"Nico\",\r\n      \"formVersion\" : 3\r\n    },\r\n    {\r\n      \"formName\": \"Another form\",\r\n      \"status\": \"Not Started\",\r\n      \"vendorName\": \"Nico\",\r\n      \"formVersion\" : 3\r\n    }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/appendAdminVendorForm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"appendAdminVendorForm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Single Created Form Jerry",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Jerry\",\r\n    \"vendorForm\": [\r\n    {\r\n      \"formName\": \"Another form\",\r\n      \"status\": \"Not Started\",\r\n      \"vendorName\": \"Nico\",\r\n      \"formVersion\" : 3\r\n    }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/deleteSingleAdminVendorForm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"deleteSingleAdminVendorForm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Status Created Form Jerry",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Jerry\",\r\n    \"vendorForm\": [\r\n    {\r\n      \"formName\": \"A form\",\r\n      \"status\": \"Approved by admin, awaiting approver\",\r\n      \"vendorName\": \"Nico\",\r\n      \"formVersion\" : 3\r\n    }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/updateAdminVendorFormStatus",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"updateAdminVendorFormStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Log In Nico",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Nico\",\r\n    \"passwordString\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/userLogIn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"userLogIn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Log In Tom",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Tom\",\r\n    \"passwordString\":\"abcdef\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/userLogIn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"userLogIn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Nico",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Nico\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/deleteUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"deleteUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Tom",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Tom\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/deleteUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"deleteUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Jerry",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Jerry\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/deleteUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"deleteUser"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
