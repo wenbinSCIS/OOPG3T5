@@ -88,7 +88,7 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete,formComponents,setFormCompon
             sx={{ transform: "rotate(180deg)" }}
           />
         </IconButton>
-        <Button
+        {/* <Button
           alignItems="center"
           variant="contained"
           color="success"
@@ -108,12 +108,12 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete,formComponents,setFormCompon
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal2(false)}>
               Cancel
-            </Button>
-            <Button variant="primary" onClick={handleSave}>
+            </Button> */}
+            {/* <Button variant="primary" onClick={handleSave}>
               Save
-            </Button>
-          </Modal.Footer>
-        </Modal>
+            </Button> */}
+          {/* </Modal.Footer>
+        </Modal> */}
         <Button
           alignItems="center"
           variant="contained"

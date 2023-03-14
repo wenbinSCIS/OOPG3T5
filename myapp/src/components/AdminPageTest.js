@@ -11,6 +11,7 @@ import SaveComponent from "./SaveComponent";
 import FormSelector from "./FormSelector";
 import axios from "axios";
 import Sidebar from "./Sidebar/Sidebar";
+import AddButton from './Buttons/AddButton';
 
 import SectionEditor from "./SectionEditor/SectionEditor";
 
@@ -280,6 +281,7 @@ function MyForm() {
         );
       });
   }
+  console.log(formComponents)
   // setInterval(loadExistingForms, 5000);
 
   /* returning the Page */
@@ -387,9 +389,14 @@ function MyForm() {
         {/* {sectionData && (
           <GenerateSection section={sectionData}></GenerateSection>
         )} */}
-        
       </div>
+        <div style={{ position: "absolute", bottom: 50, width: "100%" }}>
+        <div style={{ textAlign: 'center' }}>
+          <AddButton Add={() => handleAddSection()} formComponents={formComponents} setFormComponents={setFormComponents} />
+        </div>
+    </div>
     </section>
+    
   );
 }
 
