@@ -13,6 +13,25 @@ public class Form {
     private String formName;
     private List<Section> sections;
     private double version;
+    private String formTitle; //added
+    private String titleSize; //added
+    
+
+    public String getFormTitle() {
+        return formTitle;
+    }
+
+    public void setFormTitle(String formTitle) {
+        this.formTitle = formTitle;
+    }
+
+    public String getTitleSize() {
+        return titleSize;
+    }
+
+    public void setTitleSize(String titleSize) {
+        this.titleSize = titleSize;
+    }
 
     public Form(String formName, List<Section> sections, double version) {
         this.formName = formName;
@@ -113,19 +132,29 @@ public class Form {
             private String placeholderPosition;
             private String elementType;
             private int size;
-            private List<String> options;
+            private OptionObject options;
 
             // getters and setters
 
             public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition,
-                    String elementType, int size, List<String> options) {
+                    String elementType, int size, OptionObject options) {
                 this.elementName = elementName;
                 this.elementHeader = elementHeader;
                 this.placeholder = placeholder;
                 this.placeholderPosition = placeholderPosition;
                 this.elementType = elementType;
                 this.size = size;
-                this.options = options;
+                
+            }
+
+            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition,
+                    String elementType,  OptionObject options) {
+                this.elementName = elementName;
+                this.elementHeader = elementHeader;
+                this.placeholder = placeholder;
+                this.placeholderPosition = placeholderPosition;
+                this.elementType = elementType;
+                
             }
 
             public String getElementName() {
@@ -175,14 +204,109 @@ public class Form {
             public void setSize(int size) {
                 this.size = size;
             }
+            
 
-            public List<String> getOptions() {
+            public static class OptionObject{
+                public String optionType;
+                public String optionName;
+                public String optionValue;
+                public textVariables textVariables;
+
+                public String getOptionType() {
+                    return optionType;
+                }
+
+                public void setOptionType(String optionType) {
+                    this.optionType = optionType;
+                }
+
+                public String getOptionName() {
+                    return optionName;
+                }
+
+                public void setOptionName(String optionName) {
+                    this.optionName = optionName;
+                }
+
+                public String getOptionValue() {
+                    return optionValue;
+                }
+
+                public void setOptionValue(String optionValue) {
+                    this.optionValue = optionValue;
+                }
+
+                
+
+                public OptionObject(String optionType, String optionName, String optionValue,
+                        textVariables textVariables) {
+                    this.optionType = optionType;
+                    this.optionName = optionName;
+                    this.optionValue = optionValue;
+                    this.textVariables = textVariables;
+                }
+
+                public OptionObject(String optionType, String optionName, String optionValue) {
+                    this.optionType = optionType;
+                    this.optionName = optionName;
+                    this.optionValue = optionValue;
+                }
+
+                public static class textVariables{
+                    public String header;
+                    public String hintPosition;
+                    public String hintText;
+
+                    public textVariables(String header, String hintPosition, String hintText) {
+                        this.header = header;
+                        this.hintPosition = hintPosition;
+                        this.hintText = hintText;
+                    }
+                    
+                    public String getHeader() {
+                        return header;
+                    }
+
+                    public void setHeader(String header) {
+                        this.header = header;
+                    }
+
+                    public String getHintPosition() {
+                        return hintPosition;
+                    }
+
+                    public void setHintPosition(String hintPosition) {
+                        this.hintPosition = hintPosition;
+                    }
+
+                    public String getHintText() {
+                        return hintText;
+                    }
+
+                    public void setHintText(String hintText) {
+                        this.hintText = hintText;
+                    }
+                }
+
+                public textVariables getTextVariables() {
+                    return textVariables;
+                }
+
+                public void setTextVariables(textVariables textVariables) {
+                    this.textVariables = textVariables;
+                }
+
+            }
+
+            public OptionObject getOptions() {
                 return options;
             }
 
-            public void setOptions(List<String> options) {
+            public void setOptions(OptionObject options) {
                 this.options = options;
             }
+
+            
         }
     }
 }
