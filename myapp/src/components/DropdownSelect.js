@@ -39,8 +39,8 @@ function Dropdown(props) {
         }
         <select name={props.name} className="form-control" value={props.data} onChange={handleValueChange}>
           {props.options.map((option, index) => (
-            <option key={index} value={option} >
-              {option}
+            <option key={option.optionName} value={option.optionValue} >
+              {option.optionValue}
             </option>
           ))}
         </select>
