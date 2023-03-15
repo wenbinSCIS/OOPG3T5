@@ -16,6 +16,7 @@ import MyForm from "../components/AdminPageTest";
 import VendorAssessmentForm from "../components/VendorAssessmentForm";
 import UncompletedForms from "../components/UncompletedForms";
 import CompletedForms from "../components/CompletedForms";
+import VendorAssessmentFormApprover from "../components/VendorAssessmentFormApprover";
 export default function MyRoute() {
   return (
     <>
@@ -28,6 +29,7 @@ export default function MyRoute() {
         <Route exact path="/testpage" element={<TestPage/>} /> 
         <Route exact path="/APIFETest" element={<APIFETest/>} /> 
         <Route exact path="/vendor" element={<VendorAssessmentForm/>} />
+        <Route exact path="/vendorApprover" element={<VendorAssessmentFormApprover/>} />
         <Route exact path="/testadmin" element={<MyForm/>}/> 
         <Route component={Error} />
       </Routes>

@@ -3,7 +3,7 @@ import GenerateSection from './SectionGeneration.js';
 import Sidebar from "./Sidebar/Sidebar.js";
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-export default function VendorAssessmentForm() {
+export default function VendorAssessmentForm1() {
 
 
   //Api calls here

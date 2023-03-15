@@ -5,12 +5,7 @@ import React, { useState } from 'react';
 function TableComponent(props) {
     const number = `col-md-${props.size}`
     var column_headers = props.columnHeaders
-
     const data = props.data
-
-    
-
-  
     return (
         <div className={number}>
         <Table bordered hover >

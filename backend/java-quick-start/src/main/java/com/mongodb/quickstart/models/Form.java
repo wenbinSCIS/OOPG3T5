@@ -136,10 +136,32 @@ public class Form {
             private String elementOrientation;
             private int size;
             private List<OptionObject> options;
+            private String noRows;
+            private  List<String> headers;
             
 
+            public String getNoRows() {
+                return noRows;
+            }
+
+
+            public void setNoRows(String noRows) {
+                this.noRows = noRows;
+            }
+
+
+            public List<String> getHeaders() {
+                return headers;
+            }
+
+
+            public void setHeaders(List<String> headers) {
+                this.headers = headers;
+            }
+
+
             // getters and setters
-            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, String elementType, String elementOrientation, int size, List<OptionObject> options) {
+            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, String elementType, String elementOrientation, int size, List<OptionObject> options,String noRows,List<String> headers) {
             this.elementName = elementName;
             this.elementHeader = elementHeader;
             this.placeholder = placeholder;
@@ -148,6 +170,8 @@ public class Form {
             this.elementOrientation = elementOrientation;
             this.size = size;
             this.options = options;
+            this.noRows = noRows;
+            this.headers = headers;
             }
                 
 
