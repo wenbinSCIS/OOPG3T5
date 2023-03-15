@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "a8a3a192-893b-48c8-96b9-24e552ed4877",
+		"name": "OOP CRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19215911"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/api/createForm",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"formName\": \"myform76\",\r\n    \"sections\": [\r\n        {\r\n            \"sectionName\": \"Name\",\r\n            \"sectionText\": \"Fill in your name\",\r\n            \"sectionFont\": \"12\",\r\n            \"numRows\": 1,\r\n            \"rowElements\": [\r\n                [\r\n                    {\r\n                        \"elementName\": \"firstName\",\r\n                        \"elementHeader\": \"Full Name\",\r\n                        \"placeholder\": \"First Name\",\r\n                        \"placeholderPosition\": \"hint\",\r\n                        \"elementType\": \"Textinput\",\r\n                        \"size\": 0,\r\n                        \"options\": null\r\n                    },\r\n                    {\r\n                        \"elementName\": \"lastName\",\r\n                        \"elementHeader\": \"\",\r\n                        \"placeholder\": \"Last Name\",\r\n                        \"placeholderPosition\": \"hint\",\r\n                        \"elementType\": \"Textinput\",\r\n                        \"size\": 0,\r\n                        \"options\": null\r\n                    }\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"sectionName\": \"Address\",\r\n            \"sectionText\": \"Fill in your address\",\r\n            \"sectionFont\": \"12\",\r\n            \"numRows\": 3,\r\n            \"rowElements\": [\r\n                [\r\n                    {\r\n                        \"elementName\": \"streetAddress1\",\r\n                        \"elementHeader\": \"Address\",\r\n                        \"placeholder\": \"Street Address\",\r\n                        \"placeholderPosition\": \"hint\",\r\n                        \"elementType\": \"Textinput\",\r\n                        \"size\": 0,\r\n                        \"options\": null\r\n                    }\r\n                ],\r\n                [\r\n                    {\r\n                        \"elementName\": \"streetAddress2\",\r\n                        \"elementHeader\": \"\",\r\n                        \"placeholder\": \"Street Address Line 2\",\r\n                        \"placeholderPosition\": \"hint\",\r\n                        \"elementType\": \"Textinput\",\r\n                        \"size\": 0,\r\n                        \"options\": null\r\n                    }\r\n                ],\r\n                [\r\n                    {\r\n                        \"elementName\": \"city\",\r\n                        \"elementHeader\": \"\",\r\n                        \"placeholder\": \"city\",\r\n                        \"placeholderPosition\": \"hint\",\r\n                        \"elementType\": \"Textinput\",\r\n                        \"size\": 0,\r\n                        \"options\": null\r\n                    },\r\n                    {\r\n                        \"elementName\": \"StateProvince\",\r\n                        \"elementHeader\": \"\",\r\n                        \"placeholder\": \"State / Province\",\r\n                        \"placeholderPosition\": \"hint\",\r\n                        \"elementType\": \"Textinput\",\r\n                        \"size\": 0,\r\n                        \"options\": null\r\n                    }\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"sectionName\": \"phoneNumber\",\r\n            \"sectionText\": \"\",\r\n            \"sectionFont\": \"12\",\r\n            \"numRows\": 1,\r\n            \"rowElements\": [\r\n                [\r\n                    {\r\n                        \"elementName\": \"phoneNumber\",\r\n                        \"elementHeader\": \"Phone Number\",\r\n                        \"placeholder\": \"+65\",\r\n                        \"placeholderPosition\": \"hint\",\r\n                        \"elementType\": \"Textinput\",\r\n                        \"size\": 4,\r\n                        \"options\": null\r\n                    }\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"sectionName\": \"emailAddress\",\r\n            \"sectionText\": \"\",\r\n            \"sectionFont\": \"12\",\r\n            \"numRows\": 1,\r\n            \"rowElements\": [\r\n                [\r\n                    {\r\n                        \"elementName\": \"emailAddress\",\r\n                        \"elementHeader\": \"Email Address\",\r\n                        \"placeholder\": \"ex: email@yahoo.com\",\r\n                        \"placeholderPosition\": \"hint\",\r\n                        \"elementType\": \"Textinput\",\r\n                        \"size\": 4,\r\n                        \"options\": null\r\n                    }\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"sectionName\": \"How\",\r\n            \"sectionText\": \"\",\r\n            \"sectionFont\": \"12\",\r\n            \"numRows\": 1,\r\n            \"rowElements\": [\r\n                [\r\n                    {\r\n                        \"elementName\": \"How\",\r\n                        \"elementHeader\": \"How did you hear about us?*\",\r\n                        \"placeholder\": null,\r\n                        \"placeholderPosition\": null,\r\n                        \"elementType\": \"Dropdown\",\r\n                        \"size\": 4,\r\n                        \"options\": [\r\n                            \"Selection A\",\r\n                            \"Selection B\",\r\n                            \"Selection C\"\r\n                        ]\r\n                    }\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"sectionName\": \"Feedback\",\r\n            \"sectionText\": \"\",\r\n            \"sectionFont\": \"12\",\r\n            \"numRows\": 1,\r\n            \"rowElements\": [\r\n                [\r\n                    {\r\n                        \"elementName\": \"Feedback\",\r\n                        \"elementHeader\": \"Feedback About us:\",\r\n                        \"placeholder\": null,\r\n                        \"placeholderPosition\": null,\r\n                        \"elementType\": \"Textarea\",\r\n                        \"size\": 0,\r\n                        \"options\": null\r\n                    }\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"sectionName\": \"Suggestions\",\r\n            \"sectionText\": \"\",\r\n            \"sectionFont\": \"12\",\r\n            \"numRows\": 1,\r\n            \"rowElements\": [\r\n                [\r\n                    {\r\n                        \"elementName\": \"Suggestions\",\r\n                        \"elementHeader\": \"Suggestions if any for further improvement:\",\r\n                        \"placeholder\": null,\r\n                        \"placeholderPosition\": null,\r\n                        \"elementType\": \"Textarea\",\r\n                        \"size\": 0,\r\n                        \"options\": null\r\n                    }\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"sectionName\": \"Recommend\",\r\n            \"sectionText\": \"\",\r\n            \"sectionFont\": \"12\",\r\n            \"numRows\": 1,\r\n            \"rowElements\": [\r\n                [\r\n                    {\r\n                        \"elementName\": \"Recommend\",\r\n                        \"elementHeader\": \"Will you be willing to recommend us?\",\r\n                        \"placeholder\": null,\r\n                        \"placeholderPosition\": null,\r\n                        \"elementType\": \"Checkbox\",\r\n                        \"size\": 4,\r\n                        \"options\": [\r\n                            \"Yes\",\r\n                            \"Maybe\",\r\n                            \"No\"\r\n                        ]\r\n                    }\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"sectionName\": \"Terms\",\r\n            \"sectionText\": \"\",\r\n            \"sectionFont\": \"12\",\r\n            \"numRows\": 1,\r\n            \"rowElements\": [\r\n                [\r\n                    {\r\n                        \"elementName\": \"Terms\",\r\n                        \"elementHeader\": \"\",\r\n                        \"placeholder\": null,\r\n                        \"placeholderPosition\": null,\r\n                        \"elementType\": \"Checkbox\",\r\n                        \"size\": 0,\r\n                        \"options\": [\r\n                            \"I agree to the Terms of Service and Privacy Policy. I have read the KVKK Clarification Text and I accept the processing of my personal data in accordance with the Explicit Consent Text.\"\r\n                        ]\r\n                    }\r\n                ]\r\n            ]\r\n        }\r\n    ],\r\n    \"version\": 1.1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/createForm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"createForm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/getFormByName/myform76",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getFormByName/myform76",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getFormByName",
+						"myform76"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/getAllFormsByVersion/1.1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllFormsByVersion/1.1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllFormsByVersion",
+						"1.1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/updateFormByName/myform76",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"formName\": \"testform\",\r\n    \"sections\": [{\r\n\t\t\t\"sectionName\": \"Name\",\r\n\t\t\t\"sectionText\": \"Fill in your name\",\r\n\t\t\t\"sectionFont\": \"12\",\r\n\t\t\t\"numRows\": \"1\",\r\n\t\t\t\"rowElements\": [\r\n\t\t\t\t[{\r\n\t\t\t\t\t\t\"elementName\": \"firstName\",\r\n\t\t\t\t\t\t\"elementHeader\": \"Full Name\",\r\n\t\t\t\t\t\t\"placeholder\": \"First Name\",\r\n\t\t\t\t\t\t\"placeholderPosition\": \"hint\",\r\n\t\t\t\t\t\t\"elementType\": \"Textinput\"\r\n\t\t\t\t\t},\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"elementName\": \"lastName\",\r\n\t\t\t\t\t\t\"elementHeader\": \"\",\r\n\t\t\t\t\t\t\"placeholder\": \"Last Name\",\r\n\t\t\t\t\t\t\"placeholderPosition\": \"hint\",\r\n\t\t\t\t\t\t\"elementType\": \"Textinput\"\r\n\t\t\t\t\t}\r\n\t\t\t\t]\r\n\t\t\t]\r\n\t\t}\r\n\t],\r\n\t\"version\": 1.14\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/updateFormByName/myform76",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"updateFormByName",
+						"myform76"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/deleteFormByName/testform",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/deleteFormByName/testform",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"deleteFormByName",
+						"testform"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
