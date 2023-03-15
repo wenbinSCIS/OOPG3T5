@@ -13,7 +13,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import { ArrowForwardIos } from '@mui/icons-material';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 export default function CompletedForms() {
   const [selectedTag, setSelectedTag] = useState(null);
   const [formCards, setFormCards] = useState([]);
@@ -22,7 +21,7 @@ export default function CompletedForms() {
     const fetchData = async () => {
       try {
         const response = await axios.post("http://localhost:8080/user/getUserByName", {
-          username: "Nico"
+          username: "Nico" //get from session storage
         });
         
         var apiResponse = response.data.assignedForms

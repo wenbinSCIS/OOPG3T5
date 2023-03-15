@@ -17,6 +17,14 @@ public class Form {
     private String titleSize; //added
     
 
+    public Form(String formName, List<Section> sections, double version, String formTitle, String titleSize) {
+        this.formName = formName;
+        this.sections = sections;
+        this.version = version;
+        this.formTitle = formTitle;
+        this.titleSize = titleSize;
+    }
+
     public String getFormTitle() {
         return formTitle;
     }
@@ -31,12 +39,6 @@ public class Form {
 
     public void setTitleSize(String titleSize) {
         this.titleSize = titleSize;
-    }
-
-    public Form(String formName, List<Section> sections, double version) {
-        this.formName = formName;
-        this.sections = sections;
-        this.version = version;
     }
 
     // getters and setters
@@ -131,30 +133,47 @@ public class Form {
             private String placeholder;
             private String placeholderPosition;
             private String elementType;
+            private String elementOrientation;
             private int size;
-            private OptionObject options;
+            private List<OptionObject> options;
+            
 
             // getters and setters
+            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, String elementType, String elementOrientation, int size, List<OptionObject> options) {
+            this.elementName = elementName;
+            this.elementHeader = elementHeader;
+            this.placeholder = placeholder;
+            this.placeholderPosition = placeholderPosition;
+            this.elementType = elementType;
+            this.elementOrientation = elementOrientation;
+            this.size = size;
+            this.options = options;
+            }
+                
 
             public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition,
-                    String elementType, int size, OptionObject options) {
+                    String elementType) {
                 this.elementName = elementName;
                 this.elementHeader = elementHeader;
                 this.placeholder = placeholder;
                 this.placeholderPosition = placeholderPosition;
                 this.elementType = elementType;
-                this.size = size;
-                
             }
 
-            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition,
-                    String elementType,  OptionObject options) {
+
+
+            public RowElement(String elementName, String elementHeader, String elementType, String elementOrientation,
+                    int size, List<OptionObject> options) {
                 this.elementName = elementName;
                 this.elementHeader = elementHeader;
-                this.placeholder = placeholder;
-                this.placeholderPosition = placeholderPosition;
                 this.elementType = elementType;
-                
+                this.elementOrientation = elementOrientation;
+                this.size = size;
+                this.options = options;
+            }
+
+            public RowElement() {
+                // Default constructor
             }
 
             public String getElementName() {
@@ -205,12 +224,44 @@ public class Form {
                 this.size = size;
             }
             
+            public List<OptionObject> getOptions() {
+                return options;
+            }
+
+            public void setOptions(List<OptionObject> options) {
+                this.options = options;
+            }
+            
+            public String getElementOrientation() {
+                return elementOrientation;
+            }
+
+            public void setElementOrientation(String elementOrientation) {
+                this.elementOrientation = elementOrientation;
+            }
 
             public static class OptionObject{
                 public String optionType;
                 public String optionName;
                 public String optionValue;
                 public textVariables textVariables;
+
+                public OptionObject(String optionType, String optionName, String optionValue,
+                textVariables textVariables) {
+                    this.optionType = optionType;
+                    this.optionName = optionName;
+                    this.optionValue = optionValue;
+                    this.textVariables = textVariables;
+                }
+
+                public OptionObject(String optionType, String optionName, String optionValue) {
+                    this.optionType = optionType;
+                    this.optionName = optionName;
+                    this.optionValue = optionValue;
+                }
+
+                public OptionObject(){
+                }
 
                 public String getOptionType() {
                     return optionType;
@@ -236,20 +287,12 @@ public class Form {
                     this.optionValue = optionValue;
                 }
 
-                
-
-                public OptionObject(String optionType, String optionName, String optionValue,
-                        textVariables textVariables) {
-                    this.optionType = optionType;
-                    this.optionName = optionName;
-                    this.optionValue = optionValue;
-                    this.textVariables = textVariables;
+                public textVariables getTextVariables() {
+                    return textVariables;
                 }
 
-                public OptionObject(String optionType, String optionName, String optionValue) {
-                    this.optionType = optionType;
-                    this.optionName = optionName;
-                    this.optionValue = optionValue;
+                public void setTextVariables(textVariables textVariables) {
+                    this.textVariables = textVariables;
                 }
 
                 public static class textVariables{
@@ -288,23 +331,11 @@ public class Form {
                     }
                 }
 
-                public textVariables getTextVariables() {
-                    return textVariables;
-                }
 
-                public void setTextVariables(textVariables textVariables) {
-                    this.textVariables = textVariables;
-                }
 
             }
 
-            public OptionObject getOptions() {
-                return options;
-            }
 
-            public void setOptions(OptionObject options) {
-                this.options = options;
-            }
 
             
         }
