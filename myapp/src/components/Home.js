@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../theme";
 import Footer from "./Footer";
@@ -13,14 +13,41 @@ import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import PendingIcon from '@mui/icons-material/Pending';
 import ActionTable from './ActionTable';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+// import React, { useState, useEffect } from 'react';
+
 export default function Home() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  const actions = [
-    { formid: 1,status:"Inactive", formName: 'Form A' },
-    { formid: 2,status:"Inactive", formName: 'Form B' }
-  ];
+  const tempUserJSON = {
+    "username": "Nico",
+    "hashedPassword": "c1e7a8cf4fdb873ceac220d3f76fefdce2540e8aae816f2e3f3476b51a48ecdb",
+    "passwordSalt": "nLgv+NsawHfAgujc/QTU0xM3gfD6cJuDG6h5d7yhp+4=",
+    "userType": "Vendor",
+    "assignedForms": [
+        {
+            "formName": "QLI-QHSP-10-F01 New Vendor Assessment Form",
+            "status": "Not Started",
+            "description": "Required to complete",
+            "formVersion": 1.0
+        },
+        {
+            "formName": "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
+            "status": "In Progress",
+            "description": "Required to complete",
+            "formVersion": 2.0
+        },
+        {
+            "formName": "QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation",
+            "status": "Not Started",
+            "description": "Required to complete",
+            "formVersion": 3.0
+        }
+    ]
+  }
+  const userObject = localStorage.getItem("userObject") || tempUserJSON;
+  
+  
+  const actions = userObject.assignedForms;
   return (
     <>
     
