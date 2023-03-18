@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import GenerateSection from './SectionGeneration.js';
+import GenerateSectionApproval from './SectionGenerationApprover.js';
 import Sidebar from "./Sidebar/Sidebar.js";
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
-export default function VendorAssessmentForm() {
+export default function VendorAssessmentFormApprover() {
 
   var [allData, setallData] = useState({}); //All data to save for user
   var [isLoaded, setIsLoaded] = useState(false);
   var [formData, setFormData] = useState(null);
-  var [approverComments, setApproverComments] = useState({ //get from API Future
-    "'Company Info'": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-    "Evaluation": "this sucks"
-});
+  const [remarks, setRemarks] = useState({})
 
   var formName = "VendorAssessment" //Get from session storage instead
   var formVersion = 1 //Get from session storage instead
@@ -79,13 +76,14 @@ export default function VendorAssessmentForm() {
   }
 
   const to_return = []
+  console.log(remarks)
 
   if (formData) {
     var sections = formData['sections']
     console.log(sections)
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
-      to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
+      to_return.push(<GenerateSectionApproval remarks = {remarks} setRemarks = {setRemarks} section={each_section} allData = {allData} setallData = {setallData}></GenerateSectionApproval>)
     }}
   
     return (

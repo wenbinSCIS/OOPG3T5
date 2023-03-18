@@ -205,6 +205,81 @@ renderOptionsHeaders: renders the options/headers on the front end
     return optionsOrHeaders;
   }
 
+  /* we are updating the rending function from here onwards (WIP) */
+
+  const [optionHeaderType, setOptionHeaderType] = useState([]); // needs to be a list of optionHeader States for each option / header - shag
+
+  function renderOptionsHeadersType(elementKey = "options", label = "Option") {
+    // elementKey is either options or headers, but can be expanded. Label for now just Header or Option
+    const optionsOrHeaders = [];
+
+    const tempOptionHeadersList = [...optionHeaderType];
+
+    if (optionHeaderType.length > numOptionsHeaders) { // what am I doing here? I want to remove optionheader types in the list if the person changes the number of checkbox values to a smaller one, that way the excess data will be trimmed off
+      tempOptionHeadersList.splice(numOptionsHeaders);
+    } // I need to add this to the onchange of selecting the number of checkbox values, if not it won't work.
+
+    for (let i = 0; i < numOptionsHeaders; i++) { // basically Im just adding more element type = null if the user picks a larger checkbox value
+      if (tempOptionHeadersList.length - 1 >= i) {
+      } else {
+        tempOptionHeadersList.push(null);
+      }
+    }
+
+    // setOptionHeaderType(tempOptionHeadersList);
+
+    for (let i = 0; i < numOptionsHeaders; i++) {
+      optionsOrHeaders.push(
+        // <>
+        //   <Form.Group key={i} controlId={i} style={{ width: "50%" }}>
+        //     <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+        //       {label} {i + 1}
+        //     </Form.Label>
+        //     <Form.Control
+        //       type="text"
+        //       required
+        //       onChange={(event) => handleInputChange(event, true, elementKey)}
+        //     />
+        //   </Form.Group>
+        <Form.Group key={i} controlId={i}>
+          <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+            Select {label} type for {label} {i + 1}
+          </Form.Label>
+          <Form.Select
+            style={{ width: "32%" }}
+            className="custom-select mb-3"
+            value={tempOptionHeadersList[i] ?? "Choose a Type"} // so this is for the selected option == new row, if change from add new element to create new row, the value shown on element selector will revert back to Choose and element rather than remaining the same
+            onChange={(event) => {
+              const { id, value } = event.target;
+              const updatedOptionHeaders = [...tempOptionHeadersList];
+              updatedOptionHeaders[id] = value;
+              setOptionHeaderType(updatedOptionHeaders); // updated the new value of the setoptionHeadertype list
+            }}
+          >
+            <option key="Not an Option" value="Choose a Type">
+              Choose a Type
+            </option>
+            <option key="Normal" value="Normal">
+              Normal
+            </option>
+            <option key="Text" value="Text">
+              Text
+            </option>
+          </Form.Select>
+        </Form.Group>
+        // </>
+      );
+    }
+
+    return optionsOrHeaders;
+  }
+
+  // const handleTypeChosen = (event) => {
+  //   const { id, value } = event.target;
+  //   const updatedOptionHeaders = [...tempOptionHeadersList];
+  //   updatedOptionHeaders[id] = value;
+  //   setOptionHeaderType(updatedOptionHeaders);
+  // };
   /*
 =============================================================================================
 The code below manages the submission of the event
@@ -316,7 +391,7 @@ appendToOverallState: appends element to selected row as chosen by the user
 
   function handleSubmissiontoAdmin() {
     onPressedElement(overallRowState); // same as retrieve elements from section editor
-    console.log("Element Editor sends data to Section Editor")
+    console.log("Element Editor sends data to Section Editor");
   }
 
   /*
@@ -730,7 +805,7 @@ Returned Component
               ))}
             </Form.Select>
           </Form.Group>
-          {renderOptionsHeaders()}
+          {renderOptionsHeadersType()}
         </>
       )}
       {elementType === "Table" && (
@@ -783,7 +858,7 @@ Returned Component
             style={{ width: "32%" }}
           >
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Select Number of Headers
+              Select Number of Headers / Columns
             </Form.Label>
             <Form.Select
               className="custom-select"
