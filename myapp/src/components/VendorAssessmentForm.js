@@ -14,7 +14,7 @@ export default function VendorAssessmentForm() {
     "Evaluation": "this sucks"
 });
 
-  var formName = "VendorAssessment" //Get from session storage instead
+  var formName = "QLI-QHSP-10-F01 New Vendor Assessment Form" //Get from session storage instead
   var formVersion = 1 //Get from session storage instead
   var user = 'Nico' //Get from session storage instead
 
@@ -77,7 +77,6 @@ export default function VendorAssessmentForm() {
         });
     }
   }
-
   const to_return = []
 
   if (formData) {

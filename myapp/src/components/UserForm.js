@@ -9,36 +9,39 @@ export default function UserForm() {
   var [isUserFormLoaded , setIsUserFormLoaded] = useState(false);
 
   var [formData, setFormData] = useState(null);
-  var [toReturn, setToReturn] = useState([]);
+  //var [toReturn, setToReturn] = useState([]);
 
-  
+  var [approverComments, setApproverComments] = useState({ //get from API Future
+    "'Company Info'": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+    "Evaluation": "this sucks"
+});
+
   var url = window.location.href;
-  var formVersion = localStorage.getItem('formVersion') || "";
-  var formName = localStorage.getItem('formName') || "";
+  var formVersion = localStorage.getItem('formVersion') || 1;
+  var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
+  var username = localStorage.getItem('username') || "Nico";
 
-  
+  async function getData(formName) {
+    try {
+      console.log('Sending request...');
+      const response = await axios.get(`http://localhost:8080/api/getFormByNameAndVersion/${formName}/${formVersion}`);
+      console.log('Response received:', response.data);
+      setFormData(response.data);//?
+      if(response.status === 200){
+        setIsUserFormLoaded(true)
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
     if(!isUserFormLoaded){
-      var to_return = []
-      console.log('useeffect?')
-      var urlGet = `http://localhost:8080/api/getFormByNameAndVersion/${formName}/${formVersion}`;
-      console.log('urlGet',urlGet)
-      axios.get(urlGet).then((response)=>{
-        console.log('response.data',response.data);
-        setFormData(response.data);
-        var sections = response.data['sections']
-        for(let i=0;i<sections.length;i++){
-          const each_section = sections[i]
-          to_return.push(<GenerateSection section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
-        }
-        setToReturn(to_return)
-        if(response.status === 200){
-          setIsUserFormLoaded(true)
-        }
-    });
-    }
-    loadUserInput("testFormName2", 1, "testUsername1");
+      getData(formName)}
+      loadUserInput(formName, formVersion, username);
   }, []); // empty dependency array to run the effect only once
+
+
   
   // async function fetchFormData() {
   //   var getUrl = `http://localhost:8080/api/getFormByNameAndVersion/${formName}/${formVersion}`;
@@ -82,24 +85,37 @@ export default function UserForm() {
       await axios
       .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
       .then((response) => {
+        setIsUserInputLoaded(true);
+        alert("Saved new input data!");
         console.log(response.data);
       });
     }else{
       await axios
       .put(`http://localhost:8080/formInput/updateFormInputData`, inputJson)
       .then((response) => {
+        alert("Resaved input data!");
         console.log(response.data);
       });
     }
   }
-  
-  
-  
+
+  const to_return = []
+
+  if (formData) {
+    var sections = formData['sections']
+    console.log(sections)
+    for (let i = 0; i < sections.length; i++) {
+      const each_section = sections[i]
+      to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
+    }}
+  else{
+    alert("Form not found")
+  }
     return (
       <section className='d-flex'>
         <Sidebar></Sidebar>
       <div className="container">
-      {toReturn}
+      {to_return}
       <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, "Nico")}>Save</Button>
       <Button variant="dark">Submit Form</Button>
       </div>
