@@ -116,7 +116,7 @@ export default function UserForm() {
         <Sidebar></Sidebar>
       <div className="container">
       {to_return}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, "Nico")}>Save</Button>
+      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, username)}>Save</Button>
       <Button variant="dark">Submit Form</Button>
       </div>
       </section>

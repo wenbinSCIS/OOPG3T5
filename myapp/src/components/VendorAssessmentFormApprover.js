@@ -11,14 +11,14 @@ export default function VendorAssessmentFormApprover() {
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
 
-  var formName = "VendorAssessment" //Get from session storage instead
-  var formVersion = 1 //Get from session storage instead
-  var user = 'Nico' //Get from session storage instead
+  var formVersion = localStorage.getItem('formVersion') || 1;
+  var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
+  var username = localStorage.getItem('username') || "Nico";
 
   async function getData(formName) {
     try {
       console.log('Sending request...');
-      const response = await axios.get(`http://localhost:8080/api/getFormByName/${formName}`);
+      const response = await axios.get(`http://localhost:8080/api/getFormByNameAndVersion/${formName}/${formVersion}`);
       console.log('Response received:', response.data);
       setFormData(response.data);
     } catch (error) {
@@ -28,7 +28,7 @@ export default function VendorAssessmentFormApprover() {
 
   useEffect(() => {
     getData(formName);
-    loadUserInput(formName, formVersion, user);
+    loadUserInput(formName, formVersion, username);
   }, []); // empty dependency array to run the effect only once
 
   async function loadUserInput(formName, formVersion, username) {
@@ -76,7 +76,6 @@ export default function VendorAssessmentFormApprover() {
   }
 
   const to_return = []
-  console.log(remarks)
 
   if (formData) {
     var sections = formData['sections']
@@ -91,7 +90,7 @@ export default function VendorAssessmentFormApprover() {
         <Sidebar></Sidebar>
       <div className="container">
       {to_return}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, user)}>Save</Button>
+      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, username)}>Save</Button>
       <Button variant="dark">Submit Form</Button>
       </div>
       </section>

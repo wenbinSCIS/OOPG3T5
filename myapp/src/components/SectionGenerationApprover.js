@@ -29,7 +29,7 @@ function GenerateSectionApproval(props) {
 
     for(let i=0;i<rows;i++){
         var curr_row = rowElements[i]
-        to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} ></GenerateRow>)
+        to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} generateFor = 'Approver'></GenerateRow>)
     }
     return (
         <div className='row mb-3'>
