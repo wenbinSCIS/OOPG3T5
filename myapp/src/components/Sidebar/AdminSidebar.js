@@ -85,13 +85,13 @@ const linksArray = [
     {
         label: "My Form",
         icon: <MdOutlineAnalytics />,
-        to: "/ApprovalList",
+        to: "/UncompletedForms",
       
     },
     {
         label: "Completed Forms",
         icon: <BsPeople />,
-        to: "/AdminCreation",
+        to: "/CompletedForms",
        
     },
     {

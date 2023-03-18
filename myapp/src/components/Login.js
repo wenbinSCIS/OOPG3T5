@@ -1,7 +1,7 @@
 
 import React from 'react';
 import {
-  
+  MDBBtn,
   MDBContainer,
   MDBRow,
   MDBCol,
@@ -9,8 +9,6 @@ import {
 }
 
 from 'mdb-react-ui-kit';
-
-import Button from '@mui/material/Button';
 import logo from "../assets/img/log.jpg";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import backgroundVideo from '../assets/video/videofile2.mp4';
@@ -53,9 +51,7 @@ export default function Login() {
 
 
             <div className="text-center pt-1 mb-5 pb-1">
-              <Button onClick={navigateToHome} variant="outlined">Sign in</Button>
-              <br/>
-              <br/>
+              <MDBBtn onClick={navigateToHome} className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
               <a className="text-muted" href="#!">Forgot password?</a>
             </div>
 
