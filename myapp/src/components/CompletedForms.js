@@ -21,7 +21,7 @@ export default function CompletedForms() {
     const fetchData = async () => {
       try {
         const response = await axios.post("http://localhost:8080/user/getUserByName", {
-          username: "Nico"
+          username: "Nico" //get from session storage
         });
         
         var apiResponse = response.data.assignedForms
