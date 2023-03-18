@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import GenerateSection from "./SectionGeneration";
 import "./AdminPage.css";
@@ -35,6 +35,7 @@ function MyForm() {
     "Add TextArea",
     "Add Checkbox",
     "Add Radio",
+    "Add Table"
   ]);
 
   // const handleInputChange = (event) => {
@@ -44,6 +45,7 @@ function MyForm() {
   const handleFormSubmit = (data) => {
     setSectionData(data);
     handleAddElement({ target: data });
+    console.log(data);
   };
 
   function handleOptionChange(event) {
@@ -128,35 +130,39 @@ function MyForm() {
     sectionText: "Recommend",
     sectionFont: "12",
     numRows: "1",
-    rowElements: [[
+    rowElements: [
+      [
         {
           elementName: "Recommend",
           elementType: "Checkbox",
           elementHeader: "",
           size: "4",
-          options: [{
+          options: [
+            {
               optionType: "checkbox",
-              optionName:"Yes",
-              optionValue:"Yes",
+              optionName: "Yes",
+              optionValue: "Yes",
             },
             {
               optionType: "checkbox",
-              optionName:"No",
-              optionValue:"No",
+              optionName: "No",
+              optionValue: "No",
             },
             {
               optionType: "checkbox-text",
-              optionName:"others",
-              optionValue:"Others",
-              textVariables:{
-                //textname will inherit radio optionName + "_text" 
-                header:"others",
-                hintPosition:"front",
-                hintText:"Please specify"
-              }
-            }]
-        }],
-      ]
+              optionName: "others",
+              optionValue: "Others",
+              textVariables: {
+                //textname will inherit radio optionName + "_text"
+                header: "others",
+                hintPosition: "front",
+                hintText: "Please specify",
+              },
+            },
+          ],
+        },
+      ],
+    ],
   };
 
   var radio_section = {
@@ -171,40 +177,137 @@ function MyForm() {
           elementHeader: "RadioTest",
           elementType: "Radio",
           size: "4",
-          options: //["yes","no","others"]
-          [
+          //["yes","no","others"]
+          options: [
             {
               optionType: "radio",
-              optionName:"Yes",
-              optionValue:"Yes",
+              optionName: "Yes",
+              optionValue: "Yes",
             },
             {
               optionType: "radio",
-              optionName:"No",
-              optionValue:"No",
+              optionName: "No",
+              optionValue: "No",
             },
             {
               optionType: "radio-text",
-              optionName:"others",
-              optionValue:"Others",
-              textVariables:{
-                //textID will inherit radio optionName + "_text" 
-                header:"others",
-                hintPosition:"front",
-                hintText:"Please specify",
+              optionName: "others",
+              optionValue: "Others",
+              textVariables: {
+                //textID will inherit radio optionName + "_text"
+                header: "others",
+                hintPosition: "front",
+                hintText: "Please specify",
                 // false_header:null,
-              }
-            }
+              },
+            },
           ],
         },
       ],
     ],
   };
 
+  var table_section = {
+    sectionName: "Contact Information",
+    sectionText: "Contact Person:",
+    sectionFont: "12",
+    numRows: "2",
+    rowElements: [
+      [
+        {
+          elementName: "Contacts",
+          elementHeader: "",
+          elementType: "Table",
+          noRows: "3",
+          noColumns: "2",
+          headers: ["Name", "Tel", "Designation"],
+        },
+      ],
+      [
+        {
+          elementName: "Feedback",
+          elementHeader: "Feedback About us:",
+          elementType: "Textarea",
+        },
+      ],
+    ],
+  };
+
+  /*
+=============================================================================================
+userobject, setdata and set all data new paramater for generate section
+=============================================================================================
+*/
+
+  // var userObject =
+  //   //this object will be called from API
+  //   {
+  //     CompanyName: "Write",
+  //     CompanyRegistrationNo: "Anything",
+  //     OfficeAddress: "SMU",
+  //     Telephone: "123456",
+  //     Fax: "123123",
+  //     Contacts: [
+  //       {
+  //         Name: "123456",
+  //         Tel: "123",
+  //       },
+  //       {
+  //         Tel: "123",
+  //         Designation: "asdadad",
+  //       },
+  //       {
+  //         Designation: "asdasdad",
+  //       },
+  //     ],
+  //     How: "Selection B",
+  //     Like: {
+  //       name: "Others",
+  //       type: "radio-text",
+  //       text: "here as well",
+  //     },
+  //     Licenses: [
+  //       {
+  //         name: "b. Limited Company",
+  //         type: "Checkbox",
+  //         text: "",
+  //       },
+  //       {
+  //         name: "Others",
+  //         type: "Checkbox-text",
+  //         text: "asdas",
+  //       },
+  //     ],
+  //     Feedback: "asdasdadad",
+  //   };
+
+  var [allData, setallData] = useState({}); //All data to save for user
+
+  if (userObject === undefined) {
+    var userObject = {};
+  }
+  useEffect(() => {
+    if (userObject !== undefined) {
+      setallData((prevData) => ({ ...prevData, ...userObject }));
+    }
+  }, []); // empty dependency array to run the effect only once
+
+  /*
+=============================================================================================
+Code below handles the addition of elements, handleAddElement to be built on
+
+handleAddComponent is deprecated
+=============================================================================================
+*/
+
   function handleAddElement({ target }) {
     setFormComponents([
       ...formComponents,
-      <GenerateSection section={target}></GenerateSection>,
+      <GenerateSection
+        section={target}
+        allData={allData}
+        setallData={setallData}
+      ></GenerateSection>,
     ]);
     console.log(formComponents);
     setInfoComponents([...infoComponents, target]);
@@ -231,9 +334,16 @@ function MyForm() {
     if (name == "Add Radio") {
       target = radio_section;
     }
+    if (name == "Add Table") {
+      target = table_section;
+    }
     setFormComponents([
       ...formComponents,
-      <GenerateSection section={target}></GenerateSection>,
+      <GenerateSection
+        section={target}
+        allData={allData}
+        setallData={setallData}
+      ></GenerateSection>,
     ]);
     setInfoComponents([...infoComponents, target]);
     setSaveStatus(false);
