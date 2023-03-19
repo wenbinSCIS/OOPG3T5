@@ -5,22 +5,20 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 export default function VendorAssessmentFormApprover() {
+
   var [allData, setallData] = useState({}); //All data to save for user
   var [isLoaded, setIsLoaded] = useState(false);
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
 
-  var formName = sessionStorage.getItem('formName') || "";
-  var formVersion = sessionStorage.getItem('formVersion') || "";
-  var company = sessionStorage.getItem('companyName') || "";
-  var user = 'Dew' //get from session storage
-  //var user = sessionStorage.getItem('user') || "";
+  var formName = "VendorAssessment" //Get from session storage instead
+  var formVersion = 1 //Get from session storage instead
+  var user = 'Nico' //Get from session storage instead
 
-
-  async function getData(formName, formVersion) {
+  async function getData(formName) {
     try {
       console.log('Sending request...');
-      const response = await axios.get(`http://localhost:8080/api/getFormByNameAndVersion/${formName}/${formVersion}`);
+      const response = await axios.get(`http://localhost:8080/api/getFormByName/${formName}`);
       console.log('Response received:', response.data);
       setFormData(response.data);
     } catch (error) {
@@ -29,14 +27,14 @@ export default function VendorAssessmentFormApprover() {
   }
 
   useEffect(() => {
-    getData(formName, formVersion);
-    loadUserInput(formName, formVersion, company);
+    getData(formName);
+    loadUserInput(formName, formVersion, user);
   }, []); // empty dependency array to run the effect only once
 
-  async function loadUserInput(formName, formVersion, company) {
+  async function loadUserInput(formName, formVersion, username) {
     var inputJson = {
       "formName": formName,
-      "username": company,
+      "username": username,
       "formVersion": formVersion,
     }
     await axios
@@ -49,61 +47,6 @@ export default function VendorAssessmentFormApprover() {
         }
       });
     return null
-  }
-
-  async function reject() {
-    // Call API to update form status
-    var requestBody = {
-      username: user,
-      vendorForm: [
-        {
-          formName: formName,
-          status: "Pending Approval",
-          vendorName: company,
-          formVersion: formVersion
-        }
-      ]
-    };
-    await axios.put('http://localhost:8080/user/updateAdminVendorFormStatus', requestBody);
-    requestBody = {
-      username: company,
-      assignedForms: [
-        {
-          formName: formName,
-          status: "Pending Approval",
-          formVersion: formVersion
-        }
-      ]
-    };
-    await axios.put('http://localhost:8080/user/updateVendorAssignedFormStatus', requestBody);
-  }
-  
-  async function approve() {
-    // Call API to update form status
-    console.log(user, formName, formVersion, company)
-    var requestBody = {
-      username: user,
-      vendorForm: [
-        {
-          formName: formName,
-          status: "Approved",
-          vendorName: company,
-          formVersion: formVersion
-        }
-      ]
-    };
-    await axios.put('http://localhost:8080/user/updateAdminVendorFormStatus', requestBody);
-    requestBody = {
-      username: company,
-      assignedForms: [
-        {
-          formName: formName,
-          status: "Approved",
-          formVersion: formVersion
-        }
-      ]
-    };
-    await axios.put('http://localhost:8080/user/updateVendorAssignedFormStatus', requestBody);
   }
 
   async function saveUserInput(formName, formVersion, username) {
@@ -131,7 +74,7 @@ export default function VendorAssessmentFormApprover() {
         });
     }
   }
-  
+
   const to_return = []
   console.log(remarks)
 
@@ -148,8 +91,8 @@ export default function VendorAssessmentFormApprover() {
         <Sidebar></Sidebar>
       <div className="container">
       {to_return}
-      <Button style={{margin: 1 + 'em'}} variant="danger" onClick={()=> reject(formName, formVersion, company)}>Reject</Button>
-      <Button variant="success" onClick={()=> approve(formName, formVersion, company)}>Approve</Button>
+      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, user)}>Save</Button>
+      <Button variant="dark">Submit Form</Button>
       </div>
       </section>
     );

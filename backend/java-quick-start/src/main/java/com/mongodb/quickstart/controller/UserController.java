@@ -347,6 +347,7 @@ public class UserController {
             String updateName = updateForm.getFormName();
             double updateVersion = updateForm.getFormVersion();
             String updateStatus = updateForm.getStatus();
+            String updateCompanyName = updateForm.getVendorName();
             
             ArrayList<VendorForm> currentList = existingUser.getVendorForm();
 
@@ -355,7 +356,8 @@ public class UserController {
                 VendorForm currentForm = currentList.get(i);
                 String currentName = currentForm.getFormName();
                 double currentVersion = currentForm.getFormVersion();
-                if(currentName.equals(updateName) && currentVersion==updateVersion)
+                String compnayName = currentForm.getVendorName();
+                if(currentName.equals(updateName) && currentVersion==updateVersion && compnayName.equals(updateCompanyName))
                 {
                     currentForm.setStatus(updateStatus);
                     break;
