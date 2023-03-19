@@ -51,8 +51,10 @@ export default function VendorAssessmentFormApprover() {
     return null
   }
 
-  async function reject() {
+  async function reject(formName, formVersion, username) {
     // Call API to update form status
+    saveUserInput(formName, formVersion, username)
+
     var requestBody = {
       username: user,
       vendorForm: [
@@ -78,8 +80,10 @@ export default function VendorAssessmentFormApprover() {
     await axios.put('http://localhost:8080/user/updateVendorAssignedFormStatus', requestBody);
   }
   
-  async function approve() {
+  async function approve(formName, formVersion, username) {
     // Call API to update form status
+    saveUserInput(formName, formVersion, username)
+
     console.log(user, formName, formVersion, company)
     var requestBody = {
       username: user,
