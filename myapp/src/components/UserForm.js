@@ -13,8 +13,11 @@ export default function UserForm() {
 
   
   var url = window.location.href;
-  var formVersion = localStorage.getItem('formVersion') || "";
-  var formName = localStorage.getItem('formName') || "";
+  //var formVersion = localStorage.getItem('formVersion') || "";
+  //var formName = localStorage.getItem('formName') || "";
+
+  var formVersion = sessionStorage.getItem('formVersion') || "";
+  var formName = sessionStorage.getItem('formName') || "";
 
   
   useEffect(() => {
