@@ -55,7 +55,6 @@ export default function Login() {
             <br/>  
             <label htmlFor='form1'>Email address</label>
             {usernameInput}
-            {username}
 
             <label htmlFor='form2'>Password</label>
             {passwordInput}
