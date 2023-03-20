@@ -31,7 +31,7 @@ export default function Login() {
 
     const [username, usernameInput] = useInput({ type: "email" });
     const [password, passwordInput] = useInput({ type: "password" });
-    const [errorMessage,setErrorMessage] = useState("this is a test")
+    const [errorMessage,setErrorMessage] = useState("")
 
     async function tryLogIn() {
       // fetch
@@ -61,9 +61,9 @@ export default function Login() {
             {
               
             }
-          } else {
-            setErrorMessage("Login failed. Please check that your username and password are correct");
           }
+        }).catch(function(error){
+          setErrorMessage("Login failed. Please check if you username and password are correct.")
         });
       }
 
