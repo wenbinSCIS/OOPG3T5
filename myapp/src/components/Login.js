@@ -1,5 +1,5 @@
 
-import React,{useState} from 'react';
+import React,{useState,setState} from 'react';
 import {
   MDBBtn,
   MDBContainer,
@@ -31,6 +31,7 @@ export default function Login() {
 
     const [username, usernameInput] = useInput({ type: "email" });
     const [password, passwordInput] = useInput({ type: "password" });
+    const [errorMessage,setErrorMessage] = useState("this is a test")
 
     async function tryLogIn() {
       // fetch
@@ -61,7 +62,7 @@ export default function Login() {
               
             }
           } else {
-            console.log("failed");
+            setErrorMessage("Login failed. Please check that your username and password are correct");
           }
         });
       }
@@ -93,6 +94,7 @@ export default function Login() {
 
             <label htmlFor='form2'>Password</label>
             {passwordInput}
+            <p style={{color:"red",fontStyle: "italic"}}>{errorMessage}</p>
 
 
             <div className="text-center pt-1 mb-5 pb-1">
