@@ -42,7 +42,7 @@ export default function Login() {
       await axios
         .put("http://localhost:8080/user/userLogIn", formJson)
         .then((response) => {
-          if (response.status === 200) {
+          if (response.status >= 200 && response.status < 300) {
             let curUsername = response.data.username;
             sessionStorage.setItem("username",curUsername);
 
