@@ -63,7 +63,14 @@ export default function Login() {
             }
           }
         }).catch(function(error){
-          setErrorMessage("Login failed. Please check if you username and password are correct.")
+          if (error.response.status === 404)
+          {
+            setErrorMessage("Login failed. Please check if you username and password are correct.")
+          }
+          else if (error.response.status >= 500)
+          {
+            setErrorMessage("A connection error has occured. Please try again later.")
+          }
         });
       }
 
