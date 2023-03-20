@@ -138,35 +138,6 @@ handleChange: sets the elementType value as the one that we have selected
 
   // This function handles changes when admin edits parameters on the form
 
-  const handleInputChange = (event, isOption = false, eKey = "options") => {
-    // I need to add additonal logic if isOption == True, this includes updating the option State
-    if (!isOption) {
-      const { id, value } = event.target;
-      setElementState((elementState) => ({
-        ...elementState,
-        [id]: value,
-      }));
-    } else {
-      const selectedIndex = parseInt(event.target.id, 10);
-      const { value } = event.target;
-      const updatedOptionState = { ...optionState, [selectedIndex]: value }; // I need the updated OptionState because updated the current state there is some lag
-      setOptionState((optionState) => ({
-        ...optionState,
-        [selectedIndex]: value,
-      }));
-
-      // now I need to get a list of the values provided by options in order from 1 to the last index, so I need to sort first
-      const myList = Object.keys(updatedOptionState)
-        .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)) // smaller index over bigger index
-        .map((key) => updatedOptionState[key]);
-
-      setElementState((elementState) => ({
-        ...elementState,
-        [eKey]: myList, // the default value of key is options from the parameter, but it will have to be changed to headers if Table is selected
-      }));
-    }
-  };
-
   const handleInputChangeImproved = (
     event,
     isOption = false,
@@ -205,7 +176,8 @@ handleChange: sets the elementType value as the one that we have selected
       const updatedOptionState = { ...optionState };
       let optionObject = {};
 
-      if (index in updatedOptionState) { // basically if it already exi
+      if (index in updatedOptionState) {
+        // basically if it already exi
         optionObject = { ...updatedOptionState[index] };
       }
       if (id == "optionName") {
@@ -250,6 +222,20 @@ renderOptionsHeaders: renders the options/headers on the front end
   const handleOptionsHeadersSelect = (event) => {
     const selectedValue = parseInt(event.target.value, 10);
     setNumOptionsHeaders(selectedValue);
+
+    const tempOptionState = { ...optionState };
+
+    const newOptionState = {};
+
+    const compareValue = selectedValue - 1; // basically we want to compare value to remove any residual options from the option state beyond the number of options selected. i,e if I filled out option 6 but now I only want 3 options, I will remove option 6
+
+    for (const [key, value] of Object.entries(tempOptionState)) {
+      if (key <= compareValue) {
+        newOptionState[key] = value;
+      }
+    }
+    
+    setOptionState(newOptionState);
   };
 
   function renderOptionsHeaders(elementKey = "options", label = "Option") {
@@ -687,7 +673,34 @@ Code to be Deprecated
 =============================================================================================
 */
 
-  // none for now
+  const handleInputChange = (event, isOption = false, eKey = "options") => {
+    // I need to add additonal logic if isOption == True, this includes updating the option State
+    if (!isOption) {
+      const { id, value } = event.target;
+      setElementState((elementState) => ({
+        ...elementState,
+        [id]: value,
+      }));
+    } else {
+      const selectedIndex = parseInt(event.target.id, 10);
+      const { value } = event.target;
+      const updatedOptionState = { ...optionState, [selectedIndex]: value }; // I need the updated OptionState because updated the current state there is some lag
+      setOptionState((optionState) => ({
+        ...optionState,
+        [selectedIndex]: value,
+      }));
+
+      // now I need to get a list of the values provided by options in order from 1 to the last index, so I need to sort first
+      const myList = Object.keys(updatedOptionState)
+        .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)) // smaller index over bigger index
+        .map((key) => updatedOptionState[key]);
+
+      setElementState((elementState) => ({
+        ...elementState,
+        [eKey]: myList, // the default value of key is options from the parameter, but it will have to be changed to headers if Table is selected
+      }));
+    }
+  };
 
   /*
 =============================================================================================

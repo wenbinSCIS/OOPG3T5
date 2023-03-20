@@ -5,13 +5,13 @@ import Radio from './Radio';
 import Dropdown from './DropdownSelect';
 import Textarea from './Textarea';
 import TableComponent from './Table';
+import Text from './Text';
 
 function GenerateRow(props) {
   var info = props.info
 
   var allData = props.allData //useState prop from main
   var setallData = props.setallData //setState prop from main
-
 
   useEffect(() => {
     const newElements = {};
