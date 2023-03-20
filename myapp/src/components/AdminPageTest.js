@@ -11,6 +11,7 @@ import SaveComponent from "./SaveComponent";
 import FormSelector from "./FormSelector";
 import axios from "axios";
 import Sidebar from "./Sidebar/Sidebar";
+import AddButton from './Buttons/AddButton';
 
 import SectionEditor from "./SectionEditor/SectionEditor";
 
@@ -43,6 +44,7 @@ function MyForm() {
   // };
 
   const handleFormSubmit = (data) => {
+    console.log(data)
     setSectionData(data);
     handleAddElement({ target: data });
     console.log(data);
@@ -301,6 +303,7 @@ handleAddComponent is deprecated
 */
 
   function handleAddElement({ target }) {
+    console.log(target);
     setFormComponents([
       ...formComponents,
       <GenerateSection
@@ -375,6 +378,9 @@ handleAddComponent is deprecated
     updatedComponents[index + 1] = temp;
     setFormComponents(updatedComponents);
   }
+  function handleAddSection(index){
+
+  }
 
   /* Below is functions connecting to MongoDB (APIs) */
   async function saveComponents() {
@@ -427,6 +433,7 @@ handleAddComponent is deprecated
         );
       });
   }
+  console.log(formComponents)
   // setInterval(loadExistingForms, 5000);
 
   /* returning the Page */
@@ -447,7 +454,7 @@ handleAddComponent is deprecated
             color="lightgreen"
           />
         </div>
-        <SectionEditor onPressed={handleFormSubmit} />
+        <SectionEditor  onPressed={handleFormSubmit} />
         <div className="button-container">
           <AddComponent
             className="centered-button"
@@ -455,83 +462,93 @@ handleAddComponent is deprecated
             showAdd={showAddComponent}
           />
         </div>
-        {formComponents.map((component, index) => (
-          <div key={index}>
-            <hr />
-            <EditPanel
-              MoveDown={() => handleMoveComponentDown(index)}
-              MoveUp={() => handleMoveComponentUp(index)}
-              // Add={() => handleMoveComponentUp(index)}
-              // Edit={() => handleMoveComponentUp(index)}
-              Delete={() => handleRemoveComponent(index)}
-            />
-            {component}
-            <hr />
-          </div>
-        ))}
-        <>
-          {showAddComponent && (
-            <div>
-              <div className="button-container">
-                {" "}
-                <select onChange={handleOptionChange}>
-                  <option value="">Select an Element to add</option>
-                  {options.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {/* <div className="button-container">
-                <input
-                  type="text"
-                  className="centered-textbox"
-                  placeholder="Enter element name"
-                  value={elementName}
-                  // onChange={handleInputChange}
-                />
-              </div> */}
-              {selectedOption && (
+        <div id='previewSection'>
+          {formComponents.map((component, index) => (
+            <div key={index}>
+              <hr />
+              <EditPanel
+                MoveDown={() => handleMoveComponentDown(index)}
+                MoveUp={() => handleMoveComponentUp(index)}
+                Add={() => handleAddSection(index)}
+                // Edit={() => handleMoveComponentUp(index)}
+                Delete={() => handleRemoveComponent(index)}
+                formComponents={formComponents}
+                setFormComponents={setFormComponents}
+              />
+              {component}
+              <hr />
+            </div>
+          ))}
+          <>
+            {showAddComponent && (
+              <div>
                 <div className="button-container">
                   {" "}
-                  <button
-                    className="centered-button"
-                    onClick={() => handleAddComponent({ name: selectedOption })}
-                  >
-                    Add Element
-                  </button>
+                  <select onChange={handleOptionChange}>
+                    <option value="">Select an Element to add</option>
+                    {options.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              )}
-            </div>
-          )}
-        </>
-        <div className="button-container">
-          <SaveComponent
-            className="centered-button"
-            saveComponents={() => saveComponents()}
-            isSaved={isSaved}
-            text={saveText}
-          />
-          <input
-            type="text"
-            className="centered-textbox"
-            placeholder="Form name"
-            onChange={handleNameSaveAs}
-            style={{ margin: 1 + "em" }}
-          />
-          <input
-            type="text"
-            className="centered-textbox"
-            placeholder="Version number"
-            onChange={handleVersionSaveAs}
-          />
+                {/* <div className="button-container">
+                  <input
+                    type="text"
+                    className="centered-textbox"
+                    placeholder="Enter element name"
+                    value={elementName}
+                    // onChange={handleInputChange}
+                  />
+                </div> */}
+                {selectedOption && (
+                  <div className="button-container">
+                    {" "}
+                    <button
+                      className="centered-button"
+                      onClick={() => handleAddComponent({ name: selectedOption })}
+                    >
+                      Add Element
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </>
+          <div className="button-container">
+            <SaveComponent
+              className="centered-button"
+              saveComponents={() => saveComponents()}
+              isSaved={isSaved}
+              text={saveText}
+            />
+            <input
+              type="text"
+              className="centered-textbox"
+              placeholder="Form name"
+              onChange={handleNameSaveAs}
+              style={{ margin: 1 + "em" }}
+            />
+            <input
+              type="text"
+              className="centered-textbox"
+              placeholder="Version number"
+              onChange={handleVersionSaveAs}
+            />
+          </div>
         </div>
         {/* {sectionData && (
           <GenerateSection section={sectionData}></GenerateSection>
         )} */}
       </div>
+        <div style={{ position: "absolute", bottom: 50, width: "100%" }}>
+        <div style={{ textAlign: 'center' }}>
+          <AddButton Add={() => handleAddSection()} formComponents={formComponents} setFormComponents={setFormComponents} />
+        </div>
+    </div>
     </section>
+    
   );
 }
 
