@@ -3,7 +3,7 @@ import Footer from './Footer';
 import Totop from './Totop';
 import AdminSidebar from './Sidebar/AdminSidebar';
 import Header from './Header';
-import AdminTable from './AdminTable';
+import ApproverTable from './ApproverTable';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -66,7 +66,7 @@ export default function ApprovalList() {
             </div>
           </div>
           <div className="row">
-            <AdminTable data={filteredData} />
+            <ApproverTable data={filteredData} />
           </div>
         </div>
       </section>

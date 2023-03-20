@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import Button from '@mui/material/Button';
-function AdminTable({ data }) {
+function ApproverTable({ data }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
@@ -29,8 +29,7 @@ function AdminTable({ data }) {
           <th className="gray-th">Index</th>
     <th className="gray-th">Company Name</th>
     <th className="gray-th">Form Name</th>
-  
-    <th className="gray-th">Status</th>
+    <th className="gray-th">Request Date</th>
     <th className="gray-th">Action</th>
           </tr>
         </MDBTableHead>
@@ -40,10 +39,9 @@ function AdminTable({ data }) {
               <td>{startIndex + index + 1}</td>
               <td>{item.companyName}</td>
               <td>{item.formName}</td>
-            
-              <td>{item.status}</td>
+              <td>{item.requestDate}</td>
               <td>
-              <Button variant="outlined" outline rounded color='success' >Review</Button>
+              <Button variant="outlined" outline rounded color='success' >Start</Button>
               </td>
             </tr>
           ))}
@@ -67,4 +65,4 @@ function AdminTable({ data }) {
   );
 }
 
-export default AdminTable;
+export default ApproverTable;
