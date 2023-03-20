@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 
 import Stack from "@mui/material/Stack";
@@ -10,10 +10,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function SectionEditor({ onPressed }) {
   const [sectionData, setSectionData] = useState([]);
-  
-=======
-
->>>>>>> Stashed changes
   const [sectionCreated, setSectionCreated] = useState(false);
 
   const theme = createTheme({
@@ -62,7 +58,7 @@ function SectionEditor({ onPressed }) {
     newSection.numRows = String(rowsLength);
     setSectionData(newSection);
     onPressed(newSection); // send info to admin page
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -77,12 +73,22 @@ function SectionEditor({ onPressed }) {
   };
   // the two functions below control the state for showing the element editor
   function sectionIsCreated() {
-    setSectionCreated(true);
-    handleToggle();
+    if ("sectionName" in sectionData && "sectionText" in sectionData) {
+      setSectionCreated(true);
+      handleToggle();
+    } else {
+      alert("Please fill up empty section editor fields!");
+    }
   }
   function sectionNotCreated() {
-    setSectionCreated(false);
-    handleToggle();
+    const result = window.confirm(
+      "Do you want to close element editor? all changed section data will be deleted",
+      "Yes, please close it",
+    );
+    if (result) {
+      setSectionCreated(false);
+      handleToggle();
+    }
   }
   console.log(sectionData)
   return (
@@ -197,6 +203,7 @@ function SectionEditor({ onPressed }) {
         <ElementEditor onPressedElement={retrieveFromElementEditor} /> // onPressedElement - need to add handle submit here? -> need to be at Save and Close as submit button within element editor
       )}
     </div>
+    // preview tab taking section data should be last item here
   );
 }
 

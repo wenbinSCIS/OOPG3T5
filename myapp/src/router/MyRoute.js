@@ -11,6 +11,8 @@ import TestPage from "../components/JEPAGETEST";
 
 import APIFETest from "../components/APIFETest";
 import ApprovalList from "../components/ApprovalList";
+import AdminApprovalList from "../components/AdminApprovalList";
+import AdminCreation from "../components/AdminCreation";
 import MyForm from "../components/AdminPageTest";
 
 import VendorAssessmentForm from "../components/VendorAssessmentForm";
@@ -24,7 +26,9 @@ export default function MyRoute() {
         <Route exact path="/Home" element={<Home/>} />
         <Route exact path="/UncompletedForms" element={<UncompletedForms/>} />
         <Route exact path="/CompletedForms" element={<CompletedForms/>} />
+        <Route exact path="/AdminApprovalList" element={<AdminApprovalList/>} />
         <Route exact path="/ApprovalList" element={<ApprovalList/>} />
+        <Route exact path="/AdminCreation" element={<AdminCreation/>} />
         <Route exact path="/testpage" element={<TestPage/>} /> 
         <Route exact path="/APIFETest" element={<APIFETest/>} /> 
         <Route exact path="/vendor" element={<VendorAssessmentForm/>} />

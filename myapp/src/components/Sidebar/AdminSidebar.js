@@ -10,7 +10,7 @@ import {
     SSidebar,
     SSidebarButton,
 
-} from "./styles";
+} from "./adminstyles";
 
 import  logoSVG  from "../../assets/img/log.jpg";
 
@@ -80,19 +80,19 @@ const linksArray = [
         label: "Home",
         icon: <AiOutlineHome />,
         to: "/Home",
-     
+   
     },
     {
         label: "My Form",
         icon: <MdOutlineAnalytics />,
-        to: "/UncompletedForms",
-    
+        to: "/ApprovalList",
+      
     },
     {
         label: "Completed Forms",
         icon: <BsPeople />,
-        to: "/CompletedForms",
-   
+        to: "/AdminCreation",
+       
     },
     {
         label: "Form results",
