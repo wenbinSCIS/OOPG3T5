@@ -320,7 +320,7 @@ appendToOverallState: appends element to selected row as chosen by the user
   function handleSubmissiontoAdmin() {
     console.log(overallRowState); 
     onPressedElement(overallRowState); // same as retrieve elements from section editor
-    console.log("Element Editor sends data to Section Editor")
+    console.log("Element Editor sends data to Section Editor");
     setOverallRowState([]);
   }
 

@@ -11,6 +11,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 function SectionEditor({ onPressed }) {
   const [sectionData, setSectionData] = useState([]);
   
+=======
+
+>>>>>>> Stashed changes
   const [sectionCreated, setSectionCreated] = useState(false);
 
   const theme = createTheme({
