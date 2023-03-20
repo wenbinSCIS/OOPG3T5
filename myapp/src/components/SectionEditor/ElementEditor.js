@@ -581,8 +581,11 @@ appendToOverallState: appends element to selected row as chosen by the user
 
   const handleOverallRowState = (updatedState) => {
     const updatedOverallState = [...overallRowState, updatedState]; // updatedOverallState should be sent over to the overallRowState -> takes a while to update
-    setOverallRowState((overallRowState) =>
+    console.log(updatedState)
+    console.log(updatedOverallState)
+    setOverallRowState((overallRowState) => 
       addItem(overallRowState, updatedState)
+      
     );
     // console.log(updatedOverallState); // this should be pushed to the admin page
   };
@@ -663,8 +666,10 @@ appendToOverallState: appends element to selected row as chosen by the user
   }
 
   function handleSubmissiontoAdmin() {
+    console.log(overallRowState); 
     onPressedElement(overallRowState); // same as retrieve elements from section editor
-    console.log("Element Editor sends data to Section Editor");
+    console.log("Element Editor sends data to Section Editor")
+    setOverallRowState([]);
   }
 
   /*
