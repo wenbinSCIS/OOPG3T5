@@ -12,6 +12,7 @@ from 'mdb-react-ui-kit';
 import logo from "../assets/img/log.jpg";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import backgroundVideo from '../assets/video/videofile2.mp4';
+import axios from "axios";
 
 
 export default function Login() {
@@ -30,6 +31,40 @@ export default function Login() {
 
     const [username, usernameInput] = useInput({ type: "email" });
     const [password, passwordInput] = useInput({ type: "password" });
+
+    async function tryLogIn() {
+      // fetch
+      let formJson = {
+        username: username,
+        passwordString: password,
+      };
+      await axios
+        .put("http://localhost:8080/user/userLogIn", formJson)
+        .then((response) => {
+          if (response.status == 200) {
+            let curUsername = response.data.username;
+            sessionStorage.setItem("username",curUsername);
+
+            let userType = response.data.userType;
+            sessionStorage.setItem("userType",response.data.userType);
+
+            if (userType=="Vendor")
+            {
+              navigate("/home")
+            }
+            else if (userType=="AdministrativePersonnel")
+            {
+              
+            }
+            else if(userType=="Approver")
+            {
+              
+            }
+          } else {
+            console.log("failed");
+          }
+        });
+      }
 
     return (
         
@@ -61,7 +96,7 @@ export default function Login() {
 
 
             <div className="text-center pt-1 mb-5 pb-1">
-              <MDBBtn onClick={navigateToHome} className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
+              <MDBBtn onClick={tryLogIn} className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
               <a className="text-muted" href="#!">Forgot password?</a>
             </div>
 
