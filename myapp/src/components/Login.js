@@ -42,22 +42,22 @@ export default function Login() {
       await axios
         .put("http://localhost:8080/user/userLogIn", formJson)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             let curUsername = response.data.username;
             sessionStorage.setItem("username",curUsername);
 
             let userType = response.data.userType;
             sessionStorage.setItem("userType",response.data.userType);
 
-            if (userType=="Vendor")
+            if (userType==="Vendor")
             {
               navigate("/home")
             }
-            else if (userType=="AdministrativePersonnel")
+            else if (userType==="AdministrativePersonnel")
             {
               
             }
-            else if(userType=="Approver")
+            else if(userType==="Approver")
             {
               
             }
