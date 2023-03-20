@@ -55,11 +55,11 @@ export default function Login() {
             }
             else if (userType==="AdministrativePersonnel")
             {
-              
+              navigate("/AdminApprovalList")
             }
             else if(userType==="Approver")
             {
-              
+              navigate("/ApprovalList")
             }
           }
         }).catch(function(error){
