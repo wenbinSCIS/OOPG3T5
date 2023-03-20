@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React,{useState} from 'react';
 import {
   MDBBtn,
   MDBContainer,
@@ -21,6 +21,16 @@ export default function Login() {
 
       navigate('/home');
     };
+
+    function useInput({ type }) {
+      const [value, setValue] = useState("");
+      const input = <MDBInput wrapperClass='mb-4' value={value} onChange={e => setValue(e.target.value)} type={type} />;
+      return [value, input];
+    }
+
+    const [username, usernameInput] = useInput({ type: "email" });
+    const [password, passwordInput] = useInput({ type: "password" });
+
     return (
         
 
@@ -44,10 +54,11 @@ export default function Login() {
             <p>Please login to your account</p>
             <br/>  
             <label htmlFor='form1'>Email address</label>
-            <MDBInput wrapperClass='mb-4' id='form1' type='email'/>
+            {usernameInput}
+            {username}
 
             <label htmlFor='form2'>Password</label>
-            <MDBInput wrapperClass='mb-4' id='form2' type='password'/>
+            {passwordInput}
 
 
             <div className="text-center pt-1 mb-5 pb-1">
