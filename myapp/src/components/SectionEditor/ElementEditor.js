@@ -75,6 +75,8 @@ handleChange: sets the elementType value as the one that we have selected
 
     setOptionState({}); // want to revert option state everytime we select a new element
 
+    setOptionTypeList([]); // want to revert the option type chosen for radio, dropdown and checbox back to default, both normal and text are configured differently
+
     let chosenElementType = event.target.value;
 
     setRowState([]); // I want individual row state to change when I select a different option - may have to adjust this
@@ -165,6 +167,73 @@ handleChange: sets the elementType value as the one that we have selected
     }
   };
 
+  const handleInputChangeImproved = (
+    event,
+    isOption = false,
+    isHeader = false,
+    eKey = "options",
+    index = null
+  ) => {
+    // I need to add additonal logic if isOption == True, this includes updating the option State
+    if (!isOption && !isHeader) {
+      const { id, value } = event.target;
+      setElementState((elementState) => ({
+        ...elementState,
+        [id]: value,
+      }));
+    } else if (isHeader) {
+      const selectedIndex = parseInt(event.target.id, 10);
+      const { value } = event.target;
+      const updatedOptionState = { ...optionState, [selectedIndex]: value }; // I need the updated OptionState because updated the current state there is some lag
+      setOptionState((optionState) => ({
+        ...optionState,
+        [selectedIndex]: value,
+      }));
+
+      // now I need to get a list of the values provided by options in order from 1 to the last index, so I need to sort first
+      const myList = Object.keys(updatedOptionState)
+        .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)) // smaller index over bigger index
+        .map((key) => updatedOptionState[key]);
+
+      setElementState((elementState) => ({
+        ...elementState,
+        [eKey]: myList, // the default value of key is options from the parameter, but it will have to be changed to headers if Table is selected
+      }));
+    } else if (isOption) {
+      const { id, value } = event.target;
+      console.log(id, value, index);
+      const updatedOptionState = { ...optionState };
+      let optionObject = {};
+
+      if (index in updatedOptionState) { // basically if it already exi
+        optionObject = { ...updatedOptionState[index] };
+      }
+      if (id == "optionName") {
+        optionObject[id] = value;
+        optionObject["optionValue"] = value;
+        if (elementState.elementType == "Dropdown") {
+          optionObject["optionType"] = "Dropdown";
+        }
+      } else {
+        // text variables is a nested dict for each option
+        optionObject.textVariables[id] = value;
+      }
+
+      updatedOptionState[index] = optionObject;
+      console.log(updatedOptionState);
+      setOptionState(updatedOptionState);
+
+      const myList = Object.keys(updatedOptionState)
+        .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)) // smaller index over bigger index
+        .map((key) => updatedOptionState[key]);
+
+      setElementState((elementState) => ({
+        ...elementState,
+        [eKey]: myList, // the default value of key is options from the parameter, but it will have to be changed to headers if Table is selected
+      }));
+    }
+  };
+
   /*
 =============================================================================================
 The code below manages the state for the Dropdown,Radio,Checkbox and Table elements
@@ -184,22 +253,45 @@ renderOptionsHeaders: renders the options/headers on the front end
   };
 
   function renderOptionsHeaders(elementKey = "options", label = "Option") {
-    // elementKey is either options or headers, but can be expanded. Label for now just Header or Option
-    const optionsOrHeaders = [];
+    // elementKey is either options or headers, but can be expanded. Label for now just Header or Option.
+    // this will be only used for tables and dropdown, this is because the dropdown json formating follows that of radio and checkbox but on the fe it makes more sense to follow the table formatting
+    // to circumvent we set the control id if options is the element key to option Name and handleInputChangeImproved as IsOption == true, it should work
 
-    for (let i = 0; i < numOptionsHeaders; i++) {
-      optionsOrHeaders.push(
-        <Form.Group key={i} controlId={i} style={{ width: "50%" }}>
-          <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-            {label} {i + 1}
-          </Form.Label>
-          <Form.Control
-            type="text"
-            required
-            onChange={(event) => handleInputChange(event, true, elementKey)}
-          />
-        </Form.Group>
-      );
+    const optionsOrHeaders = [];
+    if (elementKey == "headers") {
+      for (let i = 0; i < numOptionsHeaders; i++) {
+        optionsOrHeaders.push(
+          <Form.Group key={i} controlId={i} style={{ width: "50%" }}>
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              {label} {i + 1}
+            </Form.Label>
+            <Form.Control
+              type="text"
+              required
+              onChange={(event) =>
+                handleInputChangeImproved(event, false, true, elementKey)
+              }
+            />
+          </Form.Group>
+        );
+      }
+    } else {
+      for (let i = 0; i < numOptionsHeaders; i++) {
+        optionsOrHeaders.push(
+          <Form.Group key={i} controlId="optionName" style={{ width: "50%" }}>
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              {label} {i + 1}
+            </Form.Label>
+            <Form.Control
+              type="text"
+              required
+              onChange={(event) =>
+                handleInputChangeImproved(event, true, false, elementKey, i)
+              }
+            />
+          </Form.Group>
+        );
+      }
     }
 
     return optionsOrHeaders;
@@ -207,79 +299,274 @@ renderOptionsHeaders: renders the options/headers on the front end
 
   /* we are updating the rending function from here onwards (WIP) */
 
-  const [optionHeaderType, setOptionHeaderType] = useState([]); // needs to be a list of optionHeader States for each option / header - shag
+  const [optionTypeList, setOptionTypeList] = useState([]); // Controls what is currently seen for the user in the dropdown for each option
 
-  function renderOptionsHeadersType(elementKey = "options", label = "Option") {
-    // elementKey is either options or headers, but can be expanded. Label for now just Header or Option
-    const optionsOrHeaders = [];
+  const handleOptionsSelect = (event) => {
+    const selectedValue = parseInt(event.target.value, 10);
+    console.log(selectedValue);
+    setNumOptionsHeaders(selectedValue);
 
-    const tempOptionHeadersList = [...optionHeaderType];
-
-    if (optionHeaderType.length > numOptionsHeaders) { // what am I doing here? I want to remove optionheader types in the list if the person changes the number of checkbox values to a smaller one, that way the excess data will be trimmed off
-      tempOptionHeadersList.splice(numOptionsHeaders);
+    const tempOptionTypeList = [...optionTypeList];
+    if (tempOptionTypeList.length > selectedValue) {
+      // what am I doing here? I want to remove option types in the list if the person changes the number of checkbox values to a smaller one, that way the excess data will be trimmed off
+      tempOptionTypeList.splice(selectedValue);
     } // I need to add this to the onchange of selecting the number of checkbox values, if not it won't work.
 
-    for (let i = 0; i < numOptionsHeaders; i++) { // basically Im just adding more element type = null if the user picks a larger checkbox value
-      if (tempOptionHeadersList.length - 1 >= i) {
-      } else {
-        tempOptionHeadersList.push(null);
+    const tempOptionState = { ...optionState };
+
+    const newOptionState = {};
+
+    const compareValue = selectedValue - 1; // basically we want to compare value to remove any residual options from the option state beyond the number of options selected. i,e if I filled out option 6 but now I only want 3 options, I will remove option 6
+
+    for (const [key, value] of Object.entries(tempOptionState)) {
+      if (key <= compareValue) {
+        newOptionState[key] = value;
       }
     }
 
-    // setOptionHeaderType(tempOptionHeadersList);
+    setOptionTypeList(tempOptionTypeList);
+    setOptionState(newOptionState);
+    // console.log(tempOptionTypeList);
+  };
+
+  function renderOptions(elementKey = "options", label = "Option") {
+    // elementKey is either options or headers, but can be expanded. Label for now just Header or Option, need to pass elementKey into ekey in handleOptionChange
+    const optionsOrHeaders = [];
+
+    const tempOptionTypeList = [...optionTypeList];
+
+    for (let i = 0; i < numOptionsHeaders; i++) {
+      // basically Im just adding more element type = null if the user picks a larger checkbox value
+      if (tempOptionTypeList.length - 1 >= i) {
+      } else {
+        tempOptionTypeList.push(null);
+      }
+    }
 
     for (let i = 0; i < numOptionsHeaders; i++) {
       optionsOrHeaders.push(
-        // <>
-        //   <Form.Group key={i} controlId={i} style={{ width: "50%" }}>
-        //     <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-        //       {label} {i + 1}
-        //     </Form.Label>
-        //     <Form.Control
-        //       type="text"
-        //       required
-        //       onChange={(event) => handleInputChange(event, true, elementKey)}
-        //     />
-        //   </Form.Group>
-        <Form.Group key={i} controlId={i}>
-          <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-            Select {label} type for {label} {i + 1}
-          </Form.Label>
-          <Form.Select
-            style={{ width: "32%" }}
-            className="custom-select mb-3"
-            value={tempOptionHeadersList[i] ?? "Choose a Type"} // so this is for the selected option == new row, if change from add new element to create new row, the value shown on element selector will revert back to Choose and element rather than remaining the same
-            onChange={(event) => {
-              const { id, value } = event.target;
-              const updatedOptionHeaders = [...tempOptionHeadersList];
-              updatedOptionHeaders[id] = value;
-              setOptionHeaderType(updatedOptionHeaders); // updated the new value of the setoptionHeadertype list
-            }}
-          >
-            <option key="Not an Option" value="Choose a Type">
-              Choose a Type
-            </option>
-            <option key="Normal" value="Normal">
-              Normal
-            </option>
-            <option key="Text" value="Text">
-              Text
-            </option>
-          </Form.Select>
-        </Form.Group>
-        // </>
+        <div className="d-flex">
+          <div className="me-3">
+            <Form.Group key={i} controlId={i}>
+              <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+                {label} {i + 1} type
+              </Form.Label>
+              <Form.Select
+                // style={{ width: "32%" }}
+                className="custom-select mb-3"
+                value={tempOptionTypeList[i] ?? "Choose a Type"}
+                onChange={(event) =>
+                  handleTypeChosen(event, tempOptionTypeList)
+                }
+              >
+                <option key="Not an Option" value="Choose a Type">
+                  Choose a Type
+                </option>
+                <option key="Normal" value="Normal">
+                  Normal
+                </option>
+                <option key="Text" value="Text">
+                  Text
+                </option>
+              </Form.Select>
+            </Form.Group>
+          </div>
+          {tempOptionTypeList[i] == "Normal" && (
+            <div>
+              <Form.Group controlId="optionName">
+                <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+                  Option Value
+                </Form.Label>
+                <Form.Control
+                  // style={{ width: "70%" }}
+                  type="text"
+                  // className="mb-3"
+                  placeholder="Option Value"
+                  onChange={(event) =>
+                    handleInputChangeImproved(event, true, false, elementKey, i)
+                  }
+                />
+              </Form.Group>
+            </div>
+          )}
+          {tempOptionTypeList[i] == "Text" && (
+            <>
+              <div className="me-3">
+                <Form.Group controlId="optionName">
+                  <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+                    Option Value
+                  </Form.Label>
+                  <Form.Control
+                    // style={{ width: "70%", margin: 0 }}
+                    type="text"
+                    className="mb-3"
+                    placeholder="Option Value"
+                    onChange={(event) =>
+                      handleInputChangeImproved(
+                        event,
+                        true,
+                        false,
+                        elementKey,
+                        i
+                      )
+                    }
+                  />
+                </Form.Group>
+              </div>
+
+              <div className="me-3">
+                <Form.Group controlId="hintPosition">
+                  <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+                    Hint Position (Optional)
+                  </Form.Label>
+                  <Form.Select
+                    onChange={(event) =>
+                      handleInputChangeImproved(
+                        event,
+                        true,
+                        false,
+                        elementKey,
+                        i
+                      )
+                    }
+                    defaultValue="front"
+                  >
+                    <option value="hint">Hint (Within Text Input)</option>
+                    <option value="under">Under (Below Text Input)</option>
+                    <option value="front">
+                      Front (At the left of Text Input)
+                    </option>
+                  </Form.Select>
+                </Form.Group>
+              </div>
+              <div className="me-3">
+                <Form.Group controlId="hintText">
+                  <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+                    Hint Text
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="mb-3"
+                    placeholder="Hint Text"
+                    onChange={(event) =>
+                      handleInputChangeImproved(
+                        event,
+                        true,
+                        false,
+                        elementKey,
+                        i
+                      )
+                    }
+                  />
+                </Form.Group>
+              </div>
+              <div className="me-3">
+                <Form.Group controlId="header">
+                  <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+                    Header Value (optional)
+                  </Form.Label>
+                  <Form.Control
+                    // style={{ width: "80%", margin: 0 }}
+                    type="text"
+                    className="mb-3"
+                    placeholder="Header Value"
+                    onChange={(event) =>
+                      handleInputChangeImproved(
+                        event,
+                        true,
+                        false,
+                        elementKey,
+                        i
+                      )
+                    }
+                  />
+                </Form.Group>
+              </div>
+            </>
+          )}
+        </div>
       );
     }
 
     return optionsOrHeaders;
   }
 
-  // const handleTypeChosen = (event) => {
+  const handleTypeChosen = (event, headersList) => {
+    const { id, value } = event.target; // id in this case refers to the current index of the option
+    let newValue = "";
+    if (elementState.elementType == "Checkbox") {
+      if (value == "Normal") {
+        newValue = "Checkbox";
+      } else {
+        newValue = "Checkbox-text";
+      }
+    }
+    if (elementState.elementType == "Radio") {
+      if (value == "Normal") {
+        newValue = "Radio";
+      } else {
+        newValue = "radio-text";
+      }
+    }
+    // if (elementState.elementType == "Dropdown") { // not triggering handle type chosen that's why this is irrelevant
+    //   if (value == "Normal") {
+    //     newValue = "Dropdown";
+    //   } else {
+    //     newValue = "Dropdown-text";
+    //   }
+    // }
+
+    const updatedOptionTypeList = [...headersList];
+    if (value == "Choose a Type") {
+      updatedOptionTypeList[id] = null; // want it to be null for consistency
+    } else {
+      updatedOptionTypeList[id] = value;
+    }
+    setOptionTypeList(updatedOptionTypeList); // updated the new value of the setoptionType list
+
+    const updatedOptionState = { ...optionState };
+    if (value == "Normal") {
+      updatedOptionState[id] = { optionType: newValue };
+    } else if (value == "Text") {
+      updatedOptionState[id] = {
+        optionType: newValue,
+        textVariables: { hintPosition: "front", header: "" },
+      }; // need to add tested structure for text variables
+    } else {
+      delete updatedOptionState[id]; // I don't want to leave it inside if "Choose a Type" is selected again needs to be omitted
+    }
+    // }
+    setOptionState(updatedOptionState);
+    console.log(updatedOptionState);
+  };
+
+  // const handleOptionChange = (event, index, eKey = "options") => {
   //   const { id, value } = event.target;
-  //   const updatedOptionHeaders = [...tempOptionHeadersList];
-  //   updatedOptionHeaders[id] = value;
-  //   setOptionHeaderType(updatedOptionHeaders);
+  //   const updatedOptionState = { ...optionState };
+  //   if (index in updatedOptionState) {
+  //     const optionObject = { ...updatedOptionState[index] };
+  //     if (id == "optionName") {
+  //       optionObject[id] = value;
+  //       optionObject["optionValue"] = value;
+  //     } else {
+  //       // text variables is a nested dict for each option
+  //       optionObject.textVariables[id] = value;
+  //     }
+  //     updatedOptionState[index] = optionObject;
+  //   }
+
+  //   setOptionState(updatedOptionState);
+
+  //   const myList = Object.keys(updatedOptionState)
+  //     .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)) // smaller index over bigger index
+  //     .map((key) => updatedOptionState[key]);
+
+  //   setElementState((elementState) => ({
+  //     ...elementState,
+  //     [eKey]: myList, // the default value of key is options from the parameter, but it will have to be changed to headers if Table is selected
+  //   }));
   // };
+
   /*
 =============================================================================================
 The code below manages the submission of the event
@@ -505,7 +792,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group controlId="Text" className="mb-3">
@@ -516,7 +803,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Text that you want to display"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group
@@ -530,7 +817,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="12"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             >
               {Array.from({ length: 24 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
@@ -551,7 +838,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
@@ -563,7 +850,7 @@ Returned Component
               e
               className="mb-3"
               placeholder="Insert Element Header (To be displayed above Text Area)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
         </>
@@ -578,7 +865,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
@@ -589,7 +876,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Element Header (To be displayed above Text Input)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group controlId="placeholder" className="mb-3">
@@ -600,7 +887,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert placeholder text"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group
@@ -613,7 +900,7 @@ Returned Component
             </Form.Label>
             <Form.Select
               aria-label="Default select example"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             >
               <option value="hint">Hint (Within Text Input)</option>
               <option value="under">Under (Below Text Input)</option>
@@ -632,7 +919,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
@@ -643,7 +930,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Insert Element Header (To be displayed above DropDown)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group
@@ -657,7 +944,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="4"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             >
               {Array.from({ length: 5 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
@@ -700,7 +987,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
@@ -711,7 +998,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Element Header (To be displayed above Radio)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group controlId="elementOrientation" className="mb-3">
@@ -720,7 +1007,7 @@ Returned Component
             </Form.Label>
             <Form.Select
               aria-label="Element Orientation"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             >
               <option value="horizontal">Horizontal</option>
               <option value="vertical">Vertical</option>
@@ -737,7 +1024,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="3"
-              onChange={handleOptionsHeadersSelect}
+              onChange={handleOptionsSelect}
             >
               {Array.from({ length: 10 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
@@ -746,7 +1033,7 @@ Returned Component
               ))}
             </Form.Select>
           </Form.Group>
-          {renderOptionsHeaders()}
+          {renderOptions()}
         </>
       )}
       {elementType === "Checkbox" && (
@@ -759,7 +1046,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
@@ -770,7 +1057,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Element Header (To be displayed above Checkbox)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group controlId="elementOrientation" className="mb-3">
@@ -779,7 +1066,7 @@ Returned Component
             </Form.Label>
             <Form.Select
               aria-label="Element Orientation"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             >
               <option value="Horizontal">Horizontal</option>
               <option value="Vertical">Vertical</option>
@@ -796,7 +1083,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="3"
-              onChange={handleOptionsHeadersSelect}
+              onChange={handleOptionsSelect}
             >
               {Array.from({ length: 10 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
@@ -805,7 +1092,7 @@ Returned Component
               ))}
             </Form.Select>
           </Form.Group>
-          {renderOptionsHeadersType()}
+          {renderOptions()}
         </>
       )}
       {elementType === "Table" && (
@@ -818,7 +1105,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Element Name (Element ID)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group controlId="elementHeader" className="mb-3">
@@ -829,7 +1116,7 @@ Returned Component
               type="text"
               className="mb-3"
               placeholder="Insert Element Header (To be displayed above Checkbox)"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
           <Form.Group
@@ -843,7 +1130,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="5"
-              onChange={(event) => handleInputChange(event, false)}
+              onChange={(event) => handleInputChangeImproved(event)}
             >
               {Array.from({ length: 20 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>

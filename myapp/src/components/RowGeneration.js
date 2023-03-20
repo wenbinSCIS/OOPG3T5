@@ -127,7 +127,11 @@ function GenerateRow(props) {
       to_return.push(
         <TableComponent  columnHeaders={element["headers"]} size={dimensions} name = {element["elementName"]}  columns={element["noColumns"]} rows={element["noRows"]} onChange={handleTableChange} data = {allData[element["elementName"]]} ></TableComponent>
       );
-    }   
+    }  
+    //text
+    else if (inputType=="Text"){
+      to_return.push( <Text size={dimensions} name = {element["elementName"]} textSize = {element["textSize"] } text = {element["Text"]} alignment = {element["alignment"]}></Text>)
+    } 
   }
 
   return (
