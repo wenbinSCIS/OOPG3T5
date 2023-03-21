@@ -73,6 +73,8 @@ handleInputChangeImproved: Handles changes to written input for all elements bef
   const handleChange = (event) => {
     setElementType(event.target.value);
 
+    handleToggleElement(event.target.value); // this is for the save element button so that it is updated in real time, if a new element is picked will not be greyed out
+
     setNumOptionsHeaders(3); // the reason why I do this is because everytime I rotate between headers/options I would like the 3 headers /options to be displayed only
 
     setOptionState({}); // want to revert option state everytime we select a new element
@@ -549,6 +551,7 @@ appendToOverallState: appends element to selected row as chosen by the user
       addItem(overallRowState, updatedState)
     );
     // console.log(updatedOverallState); // this should be pushed to the admin page
+    handleToggleSection();
   };
 
   const appendToOverallRowState = () => {
@@ -559,10 +562,12 @@ appendToOverallState: appends element to selected row as chosen by the user
     currentRowState[rowIndex] = row; // replace the old row with the new one
     setOverallRowState(currentRowState);
     // console.log(currentRowState); // should be pushed to admin
+    handleToggleSection();
   };
 
   function handleEventSubmission() {
     let elementIsGood = false;
+    let isRadioCheckboxGood = true;
 
     if (
       elementState.elementType == "Text" &&
@@ -591,14 +596,70 @@ appendToOverallState: appends element to selected row as chosen by the user
     }
 
     if (
-      (elementState.elementType == "Dropdown" ||
-        elementState.elementType == "Checkbox" ||
-        elementState.elementType == "Radio") &&
+      elementState.elementType == "Dropdown" &&
       "elementName" in elementState &&
       "options" in elementState
     ) {
       elementIsGood = true;
       console.log("you are good!");
+    }
+
+    if (
+      elementState.elementType == "Radio" &&
+      "elementName" in elementState &&
+      "options" in elementState
+    ) {
+      elementState.options.forEach((option) => {
+        if (option.optionType == "radio-text") {
+          if ("optionName" in option && "textVariables" in option) {
+            if ("hintText" in option.textVariables) {
+            } else {
+              isRadioCheckboxGood = false;
+            }
+          } else {
+            isRadioCheckboxGood = false;
+          }
+        } else {
+          if ("optionName" in option) {
+            // do nothing
+          } else {
+            isRadioCheckboxGood = false;
+          }
+        }
+      });
+      if (isRadioCheckboxGood) {
+        elementIsGood = true;
+        console.log("you are good!");
+      }
+    }
+
+    if (
+      elementState.elementType == "Checkbox" &&
+      "elementName" in elementState &&
+      "options" in elementState
+    ) {
+      elementState.options.forEach((option) => {
+        if (option.optionType == "Checkbox-text") {
+          if ("optionName" in option && "textVariables" in option) {
+            if ("hintText" in option.textVariables) {
+            } else {
+              isRadioCheckboxGood = false;
+            }
+          } else {
+            isRadioCheckboxGood = false;
+          }
+        } else {
+          if ("optionName" in option) {
+            // do nothing
+          } else {
+            isRadioCheckboxGood = false;
+          }
+        }
+      });
+      if (isRadioCheckboxGood) {
+        elementIsGood = true;
+        console.log("you are good!");
+      }
     }
 
     if (
@@ -618,6 +679,9 @@ appendToOverallState: appends element to selected row as chosen by the user
         } else {
           appendToOverallRowState();
         }
+        setElementType(null); // I want to 'close' the element editor
+        // need code here to change the preview tab to true
+        handleToggleElement(null);
       } catch (error) {
         console.error(error);
       }
@@ -629,7 +693,40 @@ appendToOverallState: appends element to selected row as chosen by the user
   function handleSubmissiontoAdmin() {
     onPressedElement(overallRowState); // same as retrieve elements from section editor
     console.log("Element Editor sends data to Section Editor");
+    alert("Section has been Added!")
   }
+
+  /*
+=============================================================================================
+The code below manages whether save element and save section are enabled or disabled
+=============================================================================================
+*/
+
+  const [canAddElement, setCanAddElement] = useState(false);
+
+  const handleToggleElement = (type) => { // added to handlechange and handleEventSubmission
+    let tempcanAdd = false;
+    if (type != null && type != "Choose an Element") {
+      tempcanAdd = true
+      setCanAddElement(tempcanAdd);
+    } else {
+      setCanAddElement(false);
+    }
+    console.log("The Save Element button is active?: " + tempcanAdd);
+  };
+
+  const [canAddSection, setCanAddSection] = useState(false);
+
+  const handleToggleSection = () => { // added to appendoverall state and handleRowState
+    let tempcanAdd = false;
+    if (overallRowState != []) {
+      tempcanAdd = true;
+      setCanAddSection(tempcanAdd);
+    } else {
+      setCanAddSection(tempcanAdd);
+    }
+    console.log("The Save Section button is active?: " + tempcanAdd)
+  };
 
   /*
 =============================================================================================
@@ -1218,9 +1315,9 @@ Returned Component
           {renderOptionsHeaders("headers", "Header")}
         </>
       )}
-      {elementType && elementType != "Choose an Element" && (
-        <>
-          <Stack
+      {/* {elementType && elementType != "Choose an Element" && (
+        <> */}
+          {/* <Stack
             direction="row"
             alignItems="center"
             spacing={2}
@@ -1236,8 +1333,8 @@ Returned Component
               Save Element&nbsp;&nbsp;
               <SendIcon />
             </Button>
-          </Stack>
-          <Stack
+          </Stack> */}
+          {/* <Stack
             direction="row"
             alignItems="center"
             spacing={2}
@@ -1253,9 +1350,44 @@ Returned Component
               Save Section&nbsp;&nbsp;
               <SendIcon />
             </Button>
-          </Stack>
-        </>
-      )}
+          </Stack> */}
+        {/* </>
+      )} */}
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={2}
+        sx={{ justifyContent: "flex-end" }}
+      >
+        <Button
+          alignItems="center"
+          variant="contained"
+          color="primary"
+          disabled={!canAddElement}
+          onClick={handleEventSubmission}
+          sx={{ marginBottom: "1rem" }}
+        >
+          Save Element&nbsp;&nbsp;
+          <SendIcon />
+        </Button>
+      </Stack> 
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={2}
+        sx={{ justifyContent: "flex-end" }}
+      >
+        <Button
+          alignItems="center"
+          variant="contained"
+          color="success"
+          disabled={!canAddSection}
+          onClick={handleSubmissiontoAdmin}
+        >
+          Save Section&nbsp;&nbsp;
+          <SendIcon />
+        </Button>
+      </Stack>
     </Form>
   );
 };
