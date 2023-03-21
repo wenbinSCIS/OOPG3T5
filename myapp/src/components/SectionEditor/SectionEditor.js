@@ -4,9 +4,9 @@ import { Form, Row, Col } from "react-bootstrap";
 import Stack from "@mui/material/Stack";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
-
-import ElementEditor from "./ElementEditor";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ElementEditor from "./ElementEditor";
+
 
 function SectionEditor({ onPressed }) {
   const [sectionData, setSectionData] = useState({
@@ -59,7 +59,6 @@ function SectionEditor({ onPressed }) {
   };
 
   const [isActive, setIsActive] = useState(true);
-  const [formError, setFormError] = useState(false);
 
   const handleToggle = () => {
     setIsActive(!isActive);
@@ -81,7 +80,6 @@ function SectionEditor({ onPressed }) {
 
   const retrieveFromElementEditor = (rows) => { 
     const newSection = {...sectionData};
-    console.log(newSection)
     newSection.rowElements = rows;
     const rowsLength = rows.length;
     newSection.numRows = String(rowsLength);
@@ -89,17 +87,6 @@ function SectionEditor({ onPressed }) {
     onPressed(newSection); // send info to admin page
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onPressed(sectionData);
-    if (sectionData.sectionName && sectionData.sectionText) {
-      // perform form submission
-      setFormError(false);
-      setSectionCreated(true);
-    } else {
-      setFormError(true);
-    }
-  };
   // the two functions below control the state for showing the element editor
   function sectionIsCreated() {
     if ("sectionName" in sectionData && "sectionText" in sectionData) {
@@ -109,6 +96,7 @@ function SectionEditor({ onPressed }) {
       alert("Please fill up empty section editor fields!");
     }
   }
+
   function sectionNotCreated() {
     const result = window.confirm(
       "Do you want to close element editor? all changed section data will be deleted",
@@ -119,11 +107,10 @@ function SectionEditor({ onPressed }) {
       handleToggle();
     }
   }
-  console.log(sectionData)
   return (
     <div>
       {/* <Form> */}
-      <Form onSubmit={!sectionData.sectionName || !sectionData.sectionText ? undefined : handleSubmit}>
+      <Form>
         <h5>Section Editor</h5>
         <Form.Group controlId="sectionName" className="mb-3">
           <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
@@ -133,12 +120,7 @@ function SectionEditor({ onPressed }) {
             type="sectionName"
             placeholder="Section Name"
             onChange={handleInputChange}
-            isInvalid={formError && !sectionData.sectionName} // show error state
           />
-          {formError && !sectionData.sectionName && (
-            <Form.Control.Feedback type="invalid">
-              Please enter section name.
-            </Form.Control.Feedback>)}
         </Form.Group>
         <Form.Group controlId="sectionText" className="mb-3">
           <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
@@ -148,13 +130,7 @@ function SectionEditor({ onPressed }) {
             type="sectionText"
             placeholder="Section Text"
             onChange={handleInputChange}
-            isInvalid={formError && !sectionData.sectionText} // show error state
           />
-          {formError && !sectionData.sectionText && (
-            <Form.Control.Feedback type="invalid">
-              Please enter section text.
-            </Form.Control.Feedback>
-          )}
         </Form.Group>
         <div className="d-flex">
           {/* <div className="me-3">
@@ -208,7 +184,7 @@ function SectionEditor({ onPressed }) {
             <Button
               color="neutral"
               variant="contained"
-              disabled={isActive }
+              disabled={isActive}
               onClick={sectionNotCreated}
             >
               Close Element Editor
@@ -218,14 +194,13 @@ function SectionEditor({ onPressed }) {
             alignItems="center"
             variant="contained"
             color="primary"
-            type="button"
-            disabled={!isActive || !sectionData.sectionName || !sectionData.sectionText }
+            // type="submit" // no longer submit
+            disabled={!isActive}
             onClick={sectionIsCreated}
           >
             Open Element Editor&nbsp;&nbsp;
             <SendIcon />
           </Button>
-
         </Stack>
       </Form>
       {sectionCreated && (
