@@ -1,7 +1,7 @@
 
-import React from 'react';
+import React,{useState} from 'react';
 import {
-  
+  MDBBtn,
   MDBContainer,
   MDBRow,
   MDBCol,
@@ -9,11 +9,10 @@ import {
 }
 
 from 'mdb-react-ui-kit';
-
-import Button from '@mui/material/Button';
 import logo from "../assets/img/log.jpg";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import backgroundVideo from '../assets/video/videofile2.mp4';
+import axios from "axios";
 
 
 export default function Login() {
@@ -23,6 +22,62 @@ export default function Login() {
 
       navigate('/home');
     };
+
+    function useInput({ type }) {
+      const [value, setValue] = useState("");
+      const input = <MDBInput wrapperClass='mb-4' value={value} onChange={e => setValue(e.target.value)} type={type} />;
+      return [value, input];
+    }
+
+    const [username, usernameInput] = useInput({ type: "email" });
+    const [password, passwordInput] = useInput({ type: "password" });
+    const [errorMessage,setErrorMessage] = useState("")
+
+    async function tryLogIn() {
+      // fetch
+      let formJson = {
+        username: username,
+        passwordString: password,
+      };
+      await axios
+        .put("http://localhost:8080/user/userLogIn", formJson)
+        .then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            let curUsername = response.data.username;
+            sessionStorage.setItem("username",curUsername);
+
+            let userType = response.data.userType;
+            sessionStorage.setItem("userType",response.data.userType);
+
+            if (userType==="Vendor")
+            {
+              navigate("/home")
+            }
+            else if (userType==="AdministrativePersonnel")
+            {
+              navigate("/AdminApprovalList")
+            }
+            else if(userType==="Approver")
+            {
+              navigate("/ApprovalList")
+            }
+          }
+        }).catch(function(error){
+          if (error.response.status<500 && error.response.status>=400)
+          {
+            setErrorMessage("Login failed. Please check if you username and password are correct.")
+          }
+          else if (error.response.status >= 500)
+          {
+            setErrorMessage("A connection error has occured. Please try again later.")
+          }
+          else
+          {
+            setErrorMessage("An unknown error has occured. Please try again later.")
+          }
+        });
+      }
+
     return (
         
 
@@ -46,16 +101,15 @@ export default function Login() {
             <p>Please login to your account</p>
             <br/>  
             <label htmlFor='form1'>Email address</label>
-            <MDBInput wrapperClass='mb-4' id='form1' type='email'/>
+            {usernameInput}
 
             <label htmlFor='form2'>Password</label>
-            <MDBInput wrapperClass='mb-4' id='form2' type='password'/>
+            {passwordInput}
+            <p style={{color:"red",fontStyle: "italic"}}>{errorMessage}</p>
 
 
             <div className="text-center pt-1 mb-5 pb-1">
-              <Button onClick={navigateToHome} variant="outlined">Sign in</Button>
-              <br/>
-              <br/>
+              <MDBBtn onClick={tryLogIn} className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
               <a className="text-muted" href="#!">Forgot password?</a>
             </div>
 
