@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Form } from "react-bootstrap";
+import PreviewTab from "./PreviewTab";
 
 import Stack from "@mui/material/Stack";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 
-const ElementEditor = ({ onPressedElement }) => {
+const ElementEditor = ({ onPressedElement, sectionState }) => {
   const [elementType, setElementType] = useState(null); // element type
 
   const [overallRowState, setOverallRowState] = useState([]);
@@ -16,7 +17,7 @@ const ElementEditor = ({ onPressedElement }) => {
 
   const [optionState, setOptionState] = useState({}); // this is for elements who have the ability to select options, for example dropdowns, checkboxes, etc, will be a dictionary initially then converted to a list
 
-  // need to add save and close button in addition to add element
+  const [sectionData, setSectionData] = useState(sectionState); // retrieving current section Data from sectionData to be passed to Preview Tab
 
   /*
 =============================================================================================
@@ -552,6 +553,7 @@ appendToOverallState: appends element to selected row as chosen by the user
     );
     // console.log(updatedOverallState); // this should be pushed to the admin page
     handleToggleSection();
+    handleSectionChanges(updatedOverallState); // for the preview tab
   };
 
   const appendToOverallRowState = () => {
@@ -563,6 +565,7 @@ appendToOverallState: appends element to selected row as chosen by the user
     setOverallRowState(currentRowState);
     // console.log(currentRowState); // should be pushed to admin
     handleToggleSection();
+    handleSectionChanges(currentRowState); // for the preview tab
   };
 
   function handleEventSubmission() {
@@ -693,21 +696,24 @@ appendToOverallState: appends element to selected row as chosen by the user
   function handleSubmissiontoAdmin() {
     onPressedElement(overallRowState); // same as retrieve elements from section editor
     console.log("Element Editor sends data to Section Editor");
-    alert("Section has been Added!")
+    alert("Section has been Added!");
   }
 
   /*
 =============================================================================================
 The code below manages whether save element and save section are enabled or disabled
+
+it also handles changes to the preview tab
 =============================================================================================
 */
 
   const [canAddElement, setCanAddElement] = useState(false);
 
-  const handleToggleElement = (type) => { // added to handlechange and handleEventSubmission
+  const handleToggleElement = (type) => {
+    // added to handlechange and handleEventSubmission
     let tempcanAdd = false;
     if (type != null && type != "Choose an Element") {
-      tempcanAdd = true
+      tempcanAdd = true;
       setCanAddElement(tempcanAdd);
     } else {
       setCanAddElement(false);
@@ -717,7 +723,8 @@ The code below manages whether save element and save section are enabled or disa
 
   const [canAddSection, setCanAddSection] = useState(false);
 
-  const handleToggleSection = () => { // added to appendoverall state and handleRowState
+  const handleToggleSection = () => {
+    // added to appendoverall state and handleRowState
     let tempcanAdd = false;
     if (overallRowState != []) {
       tempcanAdd = true;
@@ -725,9 +732,17 @@ The code below manages whether save element and save section are enabled or disa
     } else {
       setCanAddSection(tempcanAdd);
     }
-    console.log("The Save Section button is active?: " + tempcanAdd)
+    console.log("The Save Section button is active?: " + tempcanAdd);
   };
 
+  const handleSectionChanges = (rowData) => { // will be added in appendoverall state and handleRowState
+    const newSection = { ...sectionData };
+    newSection.rowElements = rowData;
+    const rowsLength = rowData.length;
+    newSection.numRows = String(rowsLength);
+    setSectionData(newSection);
+    console.log("The new section data for the preview tab is: ", newSection);
+  };
   /*
 =============================================================================================
 Code to be Deprecated
@@ -1317,7 +1332,7 @@ Returned Component
       )}
       {/* {elementType && elementType != "Choose an Element" && (
         <> */}
-          {/* <Stack
+      {/* <Stack
             direction="row"
             alignItems="center"
             spacing={2}
@@ -1334,7 +1349,7 @@ Returned Component
               <SendIcon />
             </Button>
           </Stack> */}
-          {/* <Stack
+      {/* <Stack
             direction="row"
             alignItems="center"
             spacing={2}
@@ -1351,7 +1366,7 @@ Returned Component
               <SendIcon />
             </Button>
           </Stack> */}
-        {/* </>
+      {/* </>
       )} */}
       <Stack
         direction="row"
@@ -1370,7 +1385,8 @@ Returned Component
           Save Element&nbsp;&nbsp;
           <SendIcon />
         </Button>
-      </Stack> 
+      </Stack>
+      <PreviewTab sectionState={sectionData} />
       <Stack
         direction="row"
         alignItems="center"
