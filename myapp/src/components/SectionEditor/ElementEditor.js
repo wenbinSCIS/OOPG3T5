@@ -443,7 +443,7 @@ handleTypeChosen: handles changes to format input for radio / checkbox
               <div className="me-3">
                 <Form.Group controlId="header">
                   <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-                    Header Value (optional)
+                    Header (optional)
                   </Form.Label>
                   <Form.Control
                     // style={{ width: "80%", margin: 0 }}
