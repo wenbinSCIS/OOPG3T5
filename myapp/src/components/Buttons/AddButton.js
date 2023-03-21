@@ -10,7 +10,7 @@ import Preview from '../Preview';
 import "../AdminPage.css"
 
 
-const AddButton = ({Add,formComponents,setFormComponents}) => {
+const AddButton = ({Add,formComponents,setFormComponents,allData,setallData}) => {
 const [showModal, setShowModal] = useState(false);
 const [showModal2, setShowModal2] = useState(false);
 const [sectionName, setSectionName] = useState("");
@@ -24,6 +24,8 @@ const [infoComponents, setInfoComponents] = useState([]);
 const [selectedOption, setSelectedOption] = useState(null);
 const [textInput, setTextInput] = useState('');
 
+console.log(allData)
+console.log(setallData)
 const handleInputChange = (event) => {
     setTextInput(event.target.value);
   };
@@ -62,7 +64,7 @@ function handleAddElement({ target }) {
   console.log(target);
   setFormComponents([
     ...formComponents,
-    <GenerateSection section={target}></GenerateSection>,
+    <GenerateSection section={target} allData = {allData} setAllData = {setallData}></GenerateSection>,
   ]);
   console.log(formComponents);
   setInfoComponents([...infoComponents, target]);

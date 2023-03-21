@@ -9,10 +9,10 @@ import Text from './Text';
 
 function GenerateRow(props) {
   var info = props.info
-
+  console.log(props)
   var allData = props.allData //useState prop from main
   var setallData = props.setallData //setState prop from main
-
+  console.log(allData)
   useEffect(() => {
     const newElements = {};
     for(let i=0; i<info.length; i++){

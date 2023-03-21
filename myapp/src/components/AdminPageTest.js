@@ -292,6 +292,7 @@ userobject, setdata and set all data new paramater for generate section
     if (userObject !== undefined) {
       setallData((prevData) => ({ ...prevData, ...userObject }));
     }
+    console.log(allData);
   }, []); // empty dependency array to run the effect only once
 
   /*
@@ -544,7 +545,7 @@ handleAddComponent is deprecated
       </div>
         <div style={{ position: "absolute", bottom: 50, width: "100%" }}>
         <div style={{ textAlign: 'center' }}>
-          <AddButton Add={() => handleAddSection()} formComponents={formComponents} setFormComponents={setFormComponents} />
+          <AddButton Add={() => handleAddSection()} formComponents={formComponents} setFormComponents={setFormComponents} allData={allData} setallData={setallData} />
         </div>
     </div>
     </section>

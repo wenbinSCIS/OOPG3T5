@@ -7,8 +7,8 @@ import GenerateRow from './RowGeneration';
 function GenerateSection(props) {
 
     var allData = props.allData //useState prop from main
-    var setallData = props.setallData //setState prop from main
-
+    var setallData = props.setAllData //setState prop from main
+    console.log(setallData)
    
     const rows = props['section']["numRows"]
     const rowElements = props['section']["rowElements"]
