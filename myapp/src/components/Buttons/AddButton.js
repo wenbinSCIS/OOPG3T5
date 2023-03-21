@@ -64,7 +64,7 @@ function handleAddElement({ target }) {
   console.log(target);
   setFormComponents([
     ...formComponents,
-    <GenerateSection section={target} allData = {allData} setAllData = {setallData}></GenerateSection>,
+    <GenerateSection section={target} allData = {allData} setallData = {setallData}></GenerateSection>,
   ]);
   console.log(formComponents);
   setInfoComponents([...infoComponents, target]);
