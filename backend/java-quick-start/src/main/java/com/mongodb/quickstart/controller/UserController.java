@@ -492,7 +492,7 @@ public class UserController {
                     }
                 }
 
-                return new ResponseEntity<>(isCorrectPassword, HttpStatus.OK);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
