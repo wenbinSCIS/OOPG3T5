@@ -17,6 +17,7 @@ export default function VendorAssessmentFormApprover() {
   //var user = sessionStorage.getItem('user') || "";
 
 
+
   async function getData(formName, formVersion) {
     try {
       console.log('Sending request...');
@@ -29,8 +30,10 @@ export default function VendorAssessmentFormApprover() {
   }
 
   useEffect(() => {
+
     getData(formName, formVersion);
     loadUserInput(formName, formVersion, company);
+
   }, []); // empty dependency array to run the effect only once
 
   async function loadUserInput(formName, formVersion, company) {
@@ -137,7 +140,6 @@ export default function VendorAssessmentFormApprover() {
   }
   
   const to_return = []
-  console.log(remarks)
 
   if (formData) {
     var sections = formData['sections']
@@ -152,8 +154,10 @@ export default function VendorAssessmentFormApprover() {
         <Sidebar></Sidebar>
       <div className="container">
       {to_return}
+
       <Button style={{margin: 1 + 'em'}} variant="danger" onClick={()=> reject(formName, formVersion, company)}>Reject</Button>
       <Button variant="success" onClick={()=> approve(formName, formVersion, company)}>Approve</Button>
+
       </div>
       </section>
     );

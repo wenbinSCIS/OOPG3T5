@@ -23,14 +23,14 @@ function GenerateSection(props) {
         <div className='row mb-3'>
             <h5>{sectionText}</h5>
             {to_return}
-            {/* {
+            { 
                 props['comments'][props.section.sectionName] &&
                 <div>
                     <br></br>
                     Approver Feedback:<p style={{color:"red"}}>{props['comments'][props.section.sectionName]}</p>
                 </div>
                 
-            } */}
+            } 
         </div>
     );
   }

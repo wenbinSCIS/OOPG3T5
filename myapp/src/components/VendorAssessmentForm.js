@@ -11,9 +11,11 @@ export default function VendorAssessmentFormApprover() {
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
 
+
   var formName = sessionStorage.getItem('formName') || "";
   var formVersion = sessionStorage.getItem('formVersion') || "";
   var user = sessionStorage.getItem('username') || "";
+
 
   async function getData(formName) {
     try {
@@ -131,7 +133,6 @@ export default function VendorAssessmentFormApprover() {
           console.log(response.data);
         });
   }
-
   const to_return = []
   console.log(remarks)
 

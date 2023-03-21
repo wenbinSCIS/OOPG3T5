@@ -63,7 +63,6 @@ function GenerateRow(props) {
       };
     });
   };
-  
   const to_return = [];
   var false_header=false;
   for(let i=0;i<info.length;i++){
@@ -90,6 +89,7 @@ function GenerateRow(props) {
           false_header={false_header}
           onChange={handleInputChange}
           text={text}
+          generateFor = {props.generateFor}
         />
       );
     }
