@@ -442,6 +442,7 @@ handleAddComponent is deprecated
     <section className="d-flex">
       <Sidebar></Sidebar>
       <div className="container">
+        
         <FormSelector
           forms={availableForms}
           onChange={handleLoadForm}
@@ -455,14 +456,27 @@ handleAddComponent is deprecated
             color="lightgreen"
           />
         </div>
-        <SectionEditor  onPressed={handleFormSubmit} />
-        <div className="button-container">
-          <AddComponent
-            className="centered-button"
-            onAdd={() => setShowAddComponent(!showAddComponent)}
-            showAdd={showAddComponent}
-          />
-        </div>
+        <SectionEditor onPressed={handleFormSubmit} />
+<div className="button-container" style={{ display: 'block' }}>
+  <div style={{ textAlign: 'center', display: 'block' }}>
+    <AddButton
+      Add={() => handleAddSection()}
+      formComponents={formComponents}
+      setFormComponents={setFormComponents}
+      allData={allData}
+      setallData={setallData}
+    />
+  </div>
+  <div style={{ textAlign: 'center', display: 'block' }}>
+    <AddComponent
+      className="centered-button"
+      onAdd={() => setShowAddComponent(!showAddComponent)}
+      showAdd={showAddComponent}
+    />
+  </div>
+</div>
+
+        
         <div id='previewSection'>
           {formComponents.map((component, index) => (
             <div key={index}>
@@ -544,9 +558,7 @@ handleAddComponent is deprecated
         )} */}
       </div>
         <div style={{ position: "absolute", bottom: 50, width: "100%" }}>
-        <div style={{ textAlign: 'center' }}>
-          <AddButton Add={() => handleAddSection()} formComponents={formComponents} setFormComponents={setFormComponents} allData={allData} setallData={setallData} />
-        </div>
+
     </div>
     </section>
     
