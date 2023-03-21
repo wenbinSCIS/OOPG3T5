@@ -78,7 +78,7 @@ export default function VendorAssessmentForm() {
     }
   }
   const to_return = []
-
+  //test
   if (formData) {
     var sections = formData['sections']
     console.log(sections)
