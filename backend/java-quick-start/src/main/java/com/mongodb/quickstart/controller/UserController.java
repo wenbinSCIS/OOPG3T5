@@ -23,7 +23,6 @@ import com.mongodb.quickstart.models.Approver;
 import com.mongodb.quickstart.models.TempUser;
 import com.mongodb.quickstart.models.User;
 import com.mongodb.quickstart.models.Vendor;
-import com.mongodb.quickstart.models.Vendor.AssignedForm;
 import com.mongodb.quickstart.repository.UserRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -87,7 +86,7 @@ public class UserController {
         }
         else if (userType.equals("Vendor"))
         {
-            Vendor newVendor = new Vendor(tempUser.getUsername(), tempUser.getPasswordString(), tempUser.getAssignedForms());
+            Vendor newVendor = new Vendor(tempUser.getUsername(), tempUser.getPasswordString(), tempUser.getProject());
             Vendor _user = userRepository.save(newVendor);
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
         }
@@ -105,7 +104,7 @@ public class UserController {
 
             if (userData.isPresent()) {
                 Vendor existingUser = userData.get();
-                existingUser.setAssignedForms(vendor.getAssignedForms());
+                existingUser.setProject(vendor.getProject());
                 userRepository.save(existingUser);
                 return new ResponseEntity<>(existingUser, HttpStatus.OK);
             } else {

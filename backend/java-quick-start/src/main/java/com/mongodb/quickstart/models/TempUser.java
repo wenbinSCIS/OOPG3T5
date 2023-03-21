@@ -4,13 +4,12 @@ import java.util.ArrayList;
 
 import com.mongodb.quickstart.models.AdministrativePersonnel.CreatedForm;
 import com.mongodb.quickstart.models.AdministrativePersonnel.VendorForm;
-import com.mongodb.quickstart.models.Vendor.AssignedForm;
 
 public class TempUser{
     private String username;
     private String passwordString;
     private String userType;
-    private ArrayList<AssignedForm> assignedForms;
+    private ArrayList<Project> project;
     private ArrayList<CreatedForm> createdForm;
     private ArrayList<VendorForm> vendorForm;
 
@@ -23,17 +22,17 @@ public class TempUser{
         this.username = username;
         this.passwordString = passwordString;
         this.userType = userType;
-        this.assignedForms = null;
+        this.project = null;
         this.createdForm = null;
         this.vendorForm = null;
     }
 
-    public TempUser(String username,String passwordString,String userType,ArrayList<AssignedForm> assignedForms,ArrayList<CreatedForm> createdForm,ArrayList<VendorForm> vendorForm)
+    public TempUser(String username,String passwordString,String userType,ArrayList<Project> project,ArrayList<CreatedForm> createdForm,ArrayList<VendorForm> vendorForm)
     {
         this.username = username;
         this.passwordString = passwordString;
         this.userType = userType;
-        this.assignedForms = assignedForms;
+        this.project = project;
         this.createdForm = createdForm;
         this.vendorForm = vendorForm;
     }
@@ -53,8 +52,8 @@ public class TempUser{
         return userType;
     }
 
-    public ArrayList<AssignedForm> getAssignedForms() {
-        return assignedForms;
+    public ArrayList<Project> getProject() {
+        return project;
     }
     public ArrayList<VendorForm> getVendorForm() {
         return vendorForm;
