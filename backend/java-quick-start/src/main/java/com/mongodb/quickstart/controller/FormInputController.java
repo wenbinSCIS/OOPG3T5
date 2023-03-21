@@ -187,16 +187,19 @@ public class FormInputController {
         }
     }
 
-    @PutMapping("/updateFormStatus")
-    public ResponseEntity<FormInput> updateFormStatus(@RequestBody FormInput tempFormInput) {
+    @PutMapping("/updateFormInputDataAndStatus")
+    public ResponseEntity<FormInput> updateFormInputDataAndStatus(@RequestBody FormInput tempFormInput) {
         String formName = tempFormInput.getFormName();
         String username = tempFormInput.getUsername();
         double formVersion = tempFormInput.getFormVersion();
+        String status = tempFormInput.getStatus();
         Optional<FormInput> formData = formInputRepository.findByFormNameAndUsernameAndFormVersion(formName, username,
                 formVersion);
+
         if (formData.isPresent()) {
             FormInput existingFormInput = formData.get();
-            existingFormInput.setStatus(tempFormInput.getStatus());;
+            existingFormInput.setFormInputData(tempFormInput.getFormInputData());
+            existingFormInput.setStatus(status);
             FormInput updatedForm = formInputRepository.save(existingFormInput);
             return new ResponseEntity<>(updatedForm, HttpStatus.OK);
         } else {
