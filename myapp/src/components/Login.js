@@ -43,29 +43,37 @@ export default function Login() {
         .put("http://localhost:8080/user/userLogIn", formJson)
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
-            let curUsername = response.data.username;
-            sessionStorage.setItem("username",curUsername);
-
-            let userType = response.data.userType;
-            sessionStorage.setItem("userType",response.data.userType);
-
-            if (userType==="Vendor")
+            let isCorrectPassword = response.data;
+            if(isCorrectPassword==false)
             {
-              navigate("/home")
+              setErrorMessage("Login failed. Please check if you password is correct.")
             }
-            else if (userType==="AdministrativePersonnel")
+            else
             {
-              navigate("/AdminApprovalList")
-            }
-            else if(userType==="Approver")
-            {
-              navigate("/ApprovalList")
+              let curUsername = response.data.username;
+              sessionStorage.setItem("username",curUsername);
+  
+              let userType = response.data.userType;
+              sessionStorage.setItem("userType",response.data.userType);
+  
+              if (userType==="Vendor")
+              {
+                navigate("/home")
+              }
+              else if (userType==="AdministrativePersonnel")
+              {
+                navigate("/AdminApprovalList")
+              }
+              else if(userType==="Approver")
+              {
+                navigate("/ApprovalList")
+              }
             }
           }
         }).catch(function(error){
           if (error.response.status<500 && error.response.status>=400)
           {
-            setErrorMessage("Login failed. Please check if you username and password are correct.")
+            setErrorMessage("Login failed. Please check if you username is correct.")
           }
           else if (error.response.status >= 500)
           {
