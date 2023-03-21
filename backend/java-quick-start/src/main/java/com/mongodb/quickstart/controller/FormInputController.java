@@ -50,7 +50,28 @@ public class FormInputController {
         }
     }
 
-    @GetMapping("/getFormInputByFormName")
+    @PostMapping("/getFormByStatus")
+    public ResponseEntity<List<FormInput>> getFormByStatus(@RequestBody FormInput tempFormInput) {
+        try {
+            String status = tempFormInput.getStatus();
+            List<FormInput> formInput = new ArrayList<FormInput>();
+
+            if (status == null)
+                formInputRepository.findAll().forEach(formInput::add);
+            else
+                formInputRepository.findByStatus(status).forEach(formInput::add);
+
+            if (formInput.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(formInput, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/getFormInputByFormName")
     public ResponseEntity<List<FormInput>> getFormInputByFormName(@RequestBody FormInput tempFormInput) {
         try {
             String formName = tempFormInput.getFormName();
@@ -138,7 +159,7 @@ public class FormInputController {
         }
         try {
             FormInput _formInput = formInputRepository.save(new FormInput(formInput.getFormName(),
-                    formInput.getUsername(), formInput.getFormVersion(), formInput.getFormInputData()));
+                    formInput.getUsername(), formInput.getFormVersion(), "In Progress", formInput.getFormInputData()));
             return new ResponseEntity<>(_formInput, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -159,6 +180,23 @@ public class FormInputController {
         if (formData.isPresent()) {
             FormInput existingFormInput = formData.get();
             existingFormInput.setFormInputData(tempFormInput.getFormInputData());
+            FormInput updatedForm = formInputRepository.save(existingFormInput);
+            return new ResponseEntity<>(updatedForm, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/updateFormStatus")
+    public ResponseEntity<FormInput> updateFormStatus(@RequestBody FormInput tempFormInput) {
+        String formName = tempFormInput.getFormName();
+        String username = tempFormInput.getUsername();
+        double formVersion = tempFormInput.getFormVersion();
+        Optional<FormInput> formData = formInputRepository.findByFormNameAndUsernameAndFormVersion(formName, username,
+                formVersion);
+        if (formData.isPresent()) {
+            FormInput existingFormInput = formData.get();
+            existingFormInput.setStatus(tempFormInput.getStatus());;
             FormInput updatedForm = formInputRepository.save(existingFormInput);
             return new ResponseEntity<>(updatedForm, HttpStatus.OK);
         } else {

@@ -14,20 +14,24 @@ public class FormInput {
     private String formName;
     private String username;
     private double formVersion;
+    private String status;
     private ArrayList<Object> formInputData;
 
     public FormInput()
     {
         super();
     }
-
-    public FormInput(String formName, String username, double formVersion, ArrayList<Object> formInputData)
-    {
+    
+    public FormInput(String formName, String username, double formVersion, String status,
+        ArrayList<Object> formInputData) {
         this.formName = formName;
         this.username = username;
         this.formVersion = formVersion;
+        this.status = status;
         this.formInputData = formInputData;
     }
+
+
     public String getUsername() {
         return username;
     }
@@ -53,5 +57,12 @@ public class FormInput {
         this.formInputData = formInputData;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
     
 }

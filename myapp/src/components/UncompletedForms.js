@@ -24,7 +24,20 @@ export default function CompletedForms() {
           username: "Company A" //get from session storage
         });
         sessionStorage.setItem('username',response.data.username)
+
+        //Get list of formnames and another list of form versions
+        var formNames = []
+        var formVersions = []
+        var formStatuses = []
+        for (const i=0 ;i<response.data.username.length;i++){
+          formNames += response.data.username[i].formName
+          formVersions += response.data.username[i].formVersions
+        }
+        
+        //Use list of formNames and formVersions to get corresponding formStatuses from formInput
         var apiResponse = response.data.assignedForms
+
+        console.log(apiResponse)
         var forms = []
         for (let i=0;i<apiResponse.length;i++){
           if (apiResponse[i].status=="Not Started"||apiResponse[i].status=="In Progress"){
