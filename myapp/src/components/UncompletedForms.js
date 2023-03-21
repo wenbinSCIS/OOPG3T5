@@ -21,9 +21,9 @@ export default function CompletedForms() {
     const fetchData = async () => {
       try {
         const response = await axios.post("http://localhost:8080/user/getUserByName", {
-          username: "Company A" //get from session storage
+          username: "Nico" //get from session storage
         });
-        sessionStorage.setItem('username',response.data.username)
+        
         var apiResponse = response.data.assignedForms
         var forms = []
         for (let i=0;i<apiResponse.length;i++){

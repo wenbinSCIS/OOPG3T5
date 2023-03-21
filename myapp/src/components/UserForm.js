@@ -17,7 +17,6 @@ export default function UserForm() {
 });
 
   var url = window.location.href;
-
   var formVersion = localStorage.getItem('formVersion') || 1;
   var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
   var username = localStorage.getItem('username') || "Nico";
@@ -35,7 +34,6 @@ export default function UserForm() {
       console.error(error);
     }
   }
-
 
   useEffect(() => {
     if(!isUserFormLoaded){

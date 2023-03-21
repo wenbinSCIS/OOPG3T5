@@ -16,15 +16,13 @@ export default function ApprovalList() {
     setSearchText(event.target.value);
   };
 
-  //var user = sessionStorage.getItem('user') || "";
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.post(
           'http://localhost:8080/user/getUserByName',
           {
-            username: 'Dew',//session storage
+            username: 'Dew',
           }
         );
 
