@@ -54,6 +54,8 @@ handleNewRowAddElement: sets the elementType value as the one that we have selec
 The code below manages the state for element type, 
 
 handleChange: sets the elementType value as the one that we have selected
+
+handleInputChangeImproved: Handles changes to written input for all elements before submission
 =============================================================================================
 */
   useEffect(
@@ -85,7 +87,11 @@ handleChange: sets the elementType value as the one that we have selected
     setElementState({ elementType: chosenElementType });
 
     if (chosenElementType === "Text") {
-      setElementState({ elementType: chosenElementType, textSize: "12" });
+      setElementState({
+        elementType: chosenElementType,
+        textSize: "12",
+        alignment: "center",
+      });
     }
 
     if (chosenElementType === "Textarea") {
@@ -136,8 +142,6 @@ handleChange: sets the elementType value as the one that we have selected
     // if I do not do as above the number of options and the default value shown will not be consistent
   };
 
-  // This function handles changes when admin edits parameters on the form
-
   const handleInputChangeImproved = (
     event,
     isOption = false,
@@ -145,7 +149,6 @@ handleChange: sets the elementType value as the one that we have selected
     eKey = "options",
     index = null
   ) => {
-    // I need to add additonal logic if isOption == True, this includes updating the option State
     if (!isOption && !isHeader) {
       const { id, value } = event.target;
       setElementState((elementState) => ({
@@ -172,7 +175,7 @@ handleChange: sets the elementType value as the one that we have selected
       }));
     } else if (isOption) {
       const { id, value } = event.target;
-      console.log(id, value, index);
+      // console.log(id, value, index);
       const updatedOptionState = { ...optionState };
       let optionObject = {};
 
@@ -192,7 +195,7 @@ handleChange: sets the elementType value as the one that we have selected
       }
 
       updatedOptionState[index] = optionObject;
-      console.log(updatedOptionState);
+      // console.log(updatedOptionState);
       setOptionState(updatedOptionState);
 
       const myList = Object.keys(updatedOptionState)
@@ -212,14 +215,25 @@ The code below manages the state for the Dropdown,Radio,Checkbox and Table eleme
 
 numOptionsHeaders: How many headers/options we want
 
-handleOptionsHeadersSelect: takes the input from the elements and sets the numOptionsHeaders accordingly
+optionTypeList: handles display for radio , checkbox dropdown button for each option
+-> "Choose a Type", "Normal", "Text"
 
-renderOptionsHeaders: renders the options/headers on the front end
+handleOptionsHeadersSelect: takes the input from the elements and sets the numOptionsHeaders accordingly
+-> also removes previous options in the option state if the selection number decreases
+-> also removes previous option types from optionTypeList if selection number decreases
+
+renderOptionsHeaders: renders the options/headers on the front end for table / dropdown
+
+renderOptions: renders options for radio / checkbox
+
+handleTypeChosen: handles changes to format input for radio / checkbox 
 =============================================================================================
 */
   const [numOptionsHeaders, setNumOptionsHeaders] = useState(3); // dropdown select, default number of options is 3
 
-  const handleOptionsHeadersSelect = (event) => {
+  const [optionTypeList, setOptionTypeList] = useState([]); // Controls what is currently seen for the user in the dropdown for each option
+
+  const handleOptionsHeadersSelect = (event, isRadioCheckbox = false) => {
     const selectedValue = parseInt(event.target.value, 10);
     setNumOptionsHeaders(selectedValue);
 
@@ -227,15 +241,24 @@ renderOptionsHeaders: renders the options/headers on the front end
 
     const newOptionState = {};
 
-    const compareValue = selectedValue - 1; // basically we want to compare value to remove any residual options from the option state beyond the number of options selected. i,e if I filled out option 6 but now I only want 3 options, I will remove option 6
+    const compareValue = selectedValue - 1; // basically we want to compare value to remove any residual options from the option state beyond the number of options selected. i,e if I filled out option 6 but now I only want 3 options and select that from the dropdown, I will remove option 6
 
     for (const [key, value] of Object.entries(tempOptionState)) {
       if (key <= compareValue) {
         newOptionState[key] = value;
       }
     }
-    
+
     setOptionState(newOptionState);
+
+    if (isRadioCheckbox) {
+      const tempOptionTypeList = [...optionTypeList];
+      if (tempOptionTypeList.length > selectedValue) {
+        // what am I doing here? I want to remove option types in the list if the person changes the number of checkbox values to a smaller one, that way the excess data will be trimmed off
+        tempOptionTypeList.splice(selectedValue);
+      } // I need to add this to the onchange of selecting the number of checkbox values, if not it won't work.
+      setOptionTypeList(tempOptionTypeList);
+    }
   };
 
   function renderOptionsHeaders(elementKey = "options", label = "Option") {
@@ -282,38 +305,6 @@ renderOptionsHeaders: renders the options/headers on the front end
 
     return optionsOrHeaders;
   }
-
-  /* we are updating the rending function from here onwards (WIP) */
-
-  const [optionTypeList, setOptionTypeList] = useState([]); // Controls what is currently seen for the user in the dropdown for each option
-
-  const handleOptionsSelect = (event) => {
-    const selectedValue = parseInt(event.target.value, 10);
-    console.log(selectedValue);
-    setNumOptionsHeaders(selectedValue);
-
-    const tempOptionTypeList = [...optionTypeList];
-    if (tempOptionTypeList.length > selectedValue) {
-      // what am I doing here? I want to remove option types in the list if the person changes the number of checkbox values to a smaller one, that way the excess data will be trimmed off
-      tempOptionTypeList.splice(selectedValue);
-    } // I need to add this to the onchange of selecting the number of checkbox values, if not it won't work.
-
-    const tempOptionState = { ...optionState };
-
-    const newOptionState = {};
-
-    const compareValue = selectedValue - 1; // basically we want to compare value to remove any residual options from the option state beyond the number of options selected. i,e if I filled out option 6 but now I only want 3 options, I will remove option 6
-
-    for (const [key, value] of Object.entries(tempOptionState)) {
-      if (key <= compareValue) {
-        newOptionState[key] = value;
-      }
-    }
-
-    setOptionTypeList(tempOptionTypeList);
-    setOptionState(newOptionState);
-    // console.log(tempOptionTypeList);
-  };
 
   function renderOptions(elementKey = "options", label = "Option") {
     // elementKey is either options or headers, but can be expanded. Label for now just Header or Option, need to pass elementKey into ekey in handleOptionChange
@@ -526,33 +517,6 @@ renderOptionsHeaders: renders the options/headers on the front end
     console.log(updatedOptionState);
   };
 
-  // const handleOptionChange = (event, index, eKey = "options") => {
-  //   const { id, value } = event.target;
-  //   const updatedOptionState = { ...optionState };
-  //   if (index in updatedOptionState) {
-  //     const optionObject = { ...updatedOptionState[index] };
-  //     if (id == "optionName") {
-  //       optionObject[id] = value;
-  //       optionObject["optionValue"] = value;
-  //     } else {
-  //       // text variables is a nested dict for each option
-  //       optionObject.textVariables[id] = value;
-  //     }
-  //     updatedOptionState[index] = optionObject;
-  //   }
-
-  //   setOptionState(updatedOptionState);
-
-  //   const myList = Object.keys(updatedOptionState)
-  //     .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)) // smaller index over bigger index
-  //     .map((key) => updatedOptionState[key]);
-
-  //   setElementState((elementState) => ({
-  //     ...elementState,
-  //     [eKey]: myList, // the default value of key is options from the parameter, but it will have to be changed to headers if Table is selected
-  //   }));
-  // };
-
   /*
 =============================================================================================
 The code below manages the submission of the event
@@ -702,6 +666,61 @@ Code to be Deprecated
     }
   };
 
+  const handleOptionsSelect = (event) => {
+    const selectedValue = parseInt(event.target.value, 10);
+    console.log(selectedValue);
+    setNumOptionsHeaders(selectedValue);
+
+    const tempOptionTypeList = [...optionTypeList];
+    if (tempOptionTypeList.length > selectedValue) {
+      // what am I doing here? I want to remove option types in the list if the person changes the number of checkbox values to a smaller one, that way the excess data will be trimmed off
+      tempOptionTypeList.splice(selectedValue);
+    } // I need to add this to the onchange of selecting the number of checkbox values, if not it won't work.
+
+    const tempOptionState = { ...optionState };
+
+    const newOptionState = {};
+
+    const compareValue = selectedValue - 1; // basically we want to compare value to remove any residual options from the option state beyond the number of options selected. i,e if I filled out option 6 but now I only want 3 options, I will remove option 6
+
+    for (const [key, value] of Object.entries(tempOptionState)) {
+      if (key <= compareValue) {
+        newOptionState[key] = value;
+      }
+    }
+
+    setOptionTypeList(tempOptionTypeList);
+    setOptionState(newOptionState);
+    // console.log(tempOptionTypeList);
+  };
+
+  const handleOptionChange = (event, index, eKey = "options") => {
+    const { id, value } = event.target;
+    const updatedOptionState = { ...optionState };
+    if (index in updatedOptionState) {
+      const optionObject = { ...updatedOptionState[index] };
+      if (id == "optionName") {
+        optionObject[id] = value;
+        optionObject["optionValue"] = value;
+      } else {
+        // text variables is a nested dict for each option
+        optionObject.textVariables[id] = value;
+      }
+      updatedOptionState[index] = optionObject;
+    }
+
+    setOptionState(updatedOptionState);
+
+    const myList = Object.keys(updatedOptionState)
+      .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)) // smaller index over bigger index
+      .map((key) => updatedOptionState[key]);
+
+    setElementState((elementState) => ({
+      ...elementState,
+      [eKey]: myList, // the default value of key is options from the parameter, but it will have to be changed to headers if Table is selected
+    }));
+  };
+
   /*
 =============================================================================================
 Returned Component
@@ -818,6 +837,30 @@ Returned Component
               placeholder="Insert Text that you want to display"
               onChange={(event) => handleInputChangeImproved(event)}
             />
+          </Form.Group>
+          <Form.Group
+            controlId="alignment"
+            className="mb-3"
+            style={{ width: "32%" }}
+          >
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Alignment (Optional)
+            </Form.Label>
+            <Form.Select
+              className="custom-select"
+              defaultValue="Center"
+              onChange={(event) => handleInputChangeImproved(event)}
+            >
+              <option key="center" value="center">
+                Center
+              </option>
+              <option key="left" value="left">
+                Left
+              </option>
+              <option key="right" value="right">
+                Right
+              </option>
+            </Form.Select>
           </Form.Group>
           <Form.Group
             controlId="textSize"
@@ -1010,7 +1053,7 @@ Returned Component
             <Form.Control
               type="text"
               className="mb-3"
-              placeholder="Insert Element Header (To be displayed above Radio)"
+              placeholder="Insert Element Header (To be displayed to the left of Radio)"
               onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
@@ -1037,7 +1080,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="3"
-              onChange={handleOptionsSelect}
+              onChange={(event) => handleOptionsHeadersSelect(event, true)}
             >
               {Array.from({ length: 10 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
@@ -1069,7 +1112,7 @@ Returned Component
             <Form.Control
               type="text"
               className="mb-3"
-              placeholder="Insert Element Header (To be displayed above Checkbox)"
+              placeholder="Insert Element Header (To be displayed to the left of Checkbox)"
               onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
@@ -1096,7 +1139,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="3"
-              onChange={handleOptionsSelect}
+              onChange={(event) => handleOptionsHeadersSelect(event, true)}
             >
               {Array.from({ length: 10 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
@@ -1128,7 +1171,7 @@ Returned Component
             <Form.Control
               type="text"
               className="mb-3"
-              placeholder="Insert Element Header (To be displayed above Checkbox)"
+              placeholder="Insert Element Header (To be displayed above Table)"
               onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
