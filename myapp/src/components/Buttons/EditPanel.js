@@ -125,56 +125,8 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete,formComponents,setFormCompon
         </Button>
         <Modal show={showModal} onHide={() => setShowModal(false)}>
           <Modal.Header closeButton>
-            <Modal.Title>Section Editor</Modal.Title>
+            <Modal.Title>Edit</Modal.Title>
           </Modal.Header>
-          <Modal.Body><Form>
-            <Form.Group controlId="form">
-              <Form.Label style={{ color: 'deepskyblue' }}>Section Name*</Form.Label>
-              <Form.Control className="mb-3" type="text" placeholder="Section_name" />
-            </Form.Group>
-            <Form.Group controlId="form">
-              <Form.Label style={{ color: 'deepskyblue' }}>Section Text</Form.Label>
-              <Form.Control className="mb-3" type="text" placeholder="Section_text" />
-            </Form.Group>
-            <Form.Group controlId="form">
-              <Form.Label style={{ color: 'deepskyblue' }}>Element Name</Form.Label>
-              <Form.Control className="mb-3" type="text" placeholder="Element_name" />
-            </Form.Group>
-            <Form.Group controlId="form">
-            <Form.Label style={{ color: 'deepskyblue' }}>Section Font (optional)</Form.Label>
-            <Form.Select className="mb-3">
-              <option>Select font</option>
-              {Array.from({ length: 24 }, (_, i) => (
-                <option key={i} value={i + 1}>{i + 1}</option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-          <Form.Group controlId="form">
-            <Form.Label style={{ color: 'deepskyblue' }}>Font Size</Form.Label>
-            <Form.Select className="mb-3">
-              <option>Select a font size</option>
-              {Array.from({ length: 24 }, (_, i) => (
-                <option key={i} value={i + 1}>{i + 1}</option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-          </Form></Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>
-              Cancel
-            </Button>
-            <Button variant="primary" className="btn-primary" onClick={() => console.log('Save changes')}>
-              Save 
-            </Button>
-          </Modal.Footer>
-          <style>{`
-            .modal-content {
-              border: 2px solid black;
-            }
-            .fade.modal-backdrop.show{
-              z-index:1039;
-            }
-          `}</style>
         </Modal>
         <Button
           display="flex"
