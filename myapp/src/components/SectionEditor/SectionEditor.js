@@ -35,7 +35,7 @@ function SectionEditor({ onPressed }) {
   });
 
   useEffect(
-    () => console.log("The element State is: ", sectionData),
+    () => console.log("The Section State is: ", sectionData),
     [sectionData]
   ); // add this to log all changes to elementState
 
@@ -205,7 +205,7 @@ function SectionEditor({ onPressed }) {
         </Stack>
       </Form>
       {sectionCreated && (
-        <ElementEditor onPressedElement={retrieveFromElementEditor} /> // onPressedElement - need to add handle submit here? -> need to be at Save and Close as submit button within element editor
+        <ElementEditor onPressedElement={retrieveFromElementEditor} sectionState={sectionData}/> // onPressedElement - need to add handle submit here? -> need to be at Save and Close as submit button within element editor
       )}
     </div>
     // preview tab taking section data should be last item here
