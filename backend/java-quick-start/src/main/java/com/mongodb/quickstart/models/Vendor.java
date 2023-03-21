@@ -37,16 +37,20 @@ public class Vendor extends User{
         private String status;
         private String description;
         private double formVersion;
+        private ArrayList<String> adminName;
+        private ArrayList<String> approverName;
 
         public AssignedForm() {
             super();
         }
 
-        public AssignedForm(String formName, String status, String description, double formVersion) {
+        public AssignedForm(String formName, String status, String description, double formVersion,ArrayList<String> adminName,ArrayList<String> approverName) {
             this.formName = formName;
             this.status = status;
             this.description = description;
             this.formVersion = formVersion;
+            this.adminName = adminName;
+            this.approverName = approverName;
         }
 
         public String getFormName() {
@@ -79,6 +83,22 @@ public class Vendor extends User{
     
         public void setFormVersion(double formVersion) {
             this.formVersion = formVersion;
+        }
+
+        public ArrayList<String> getAdminName() {
+            return adminName;
+        }
+
+        public void setAdminName(ArrayList<String> adminName) {
+            this.adminName = adminName;
+        }
+
+        public ArrayList<String> getApproverName() {
+            return approverName;
+        }
+
+        public void setApproverName(ArrayList<String> approverName) {
+            this.approverName = approverName;
         }
     }
 }

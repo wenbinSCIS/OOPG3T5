@@ -42,14 +42,18 @@ public class AdministrativePersonnel extends User{
     public static class CreatedForm {
         private String formName;
         private double formVersion;
+        private ArrayList<String> adminName;
+        private ArrayList<String> approverName;
 
         public CreatedForm() {
             super();
         }
 
-        public CreatedForm(String formName, double formVersion) {
+        public CreatedForm(String formName, double formVersion,ArrayList<String> adminName,ArrayList<String> approverName) {
             this.formName = formName;
             this.formVersion = formVersion;
+            this.adminName = adminName;
+            this.approverName = approverName;
         }
 
         public String getFormName() {
@@ -67,6 +71,22 @@ public class AdministrativePersonnel extends User{
         public void setFormVersion(double formVersion) {
             this.formVersion = formVersion;
         }
+
+        public ArrayList<String> getAdminName() {
+            return adminName;
+        }
+
+        public void setAdminName(ArrayList<String> adminName) {
+            this.adminName = adminName;
+        }
+
+        public ArrayList<String> getApproverName() {
+            return approverName;
+        }
+
+        public void setApproverName(ArrayList<String> approverName) {
+            this.approverName = approverName;
+        }
     }
 
     public static class VendorForm {
@@ -74,16 +94,20 @@ public class AdministrativePersonnel extends User{
         private String status;
         private double formVersion;
         private String vendorName;
+        private ArrayList<String> adminName;
+        private ArrayList<String> approverName;
 
         public VendorForm() {
             super();
         }
 
-        public VendorForm(String formName, String status, double formVersion,String vendorName) {
+        public VendorForm(String formName, String status, double formVersion,String vendorName,ArrayList<String> adminName,ArrayList<String> approverName) {
             this.formName = formName;
             this.status = status;
             this.formVersion = formVersion;
             this.vendorName = vendorName;
+            this.adminName = adminName;
+            this.approverName = approverName;
         }
 
         public String getFormName() {
@@ -116,6 +140,22 @@ public class AdministrativePersonnel extends User{
 
         public void setFormVersion(double formVersion) {
             this.formVersion = formVersion;
+        }
+
+        public ArrayList<String> getAdminName() {
+            return adminName;
+        }
+
+        public void setAdminName(ArrayList<String> adminName) {
+            this.adminName = adminName;
+        }
+
+        public ArrayList<String> getApproverName() {
+            return approverName;
+        }
+
+        public void setApproverName(ArrayList<String> approverName) {
+            this.approverName = approverName;
         }
     }
 }
