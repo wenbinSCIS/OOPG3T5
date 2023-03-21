@@ -548,8 +548,8 @@ appendToOverallState: appends element to selected row as chosen by the user
 
   const handleOverallRowState = (updatedState) => {
     const updatedOverallState = [...overallRowState, updatedState]; // updatedOverallState should be sent over to the overallRowState -> takes a while to update
-    setOverallRowState((overallRowState) =>
-      addItem(overallRowState, updatedState)
+    setOverallRowState((overallRowState) => 
+      addItem(overallRowState, updatedState)    
     );
     // console.log(updatedOverallState); // this should be pushed to the admin page
     handleToggleSection();
