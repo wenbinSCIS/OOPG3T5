@@ -4,9 +4,9 @@ import { Form, Row, Col } from "react-bootstrap";
 import Stack from "@mui/material/Stack";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ElementEditor from "./ElementEditor";
+
 
 function SectionEditor({ onPressed }) {
   const [sectionData, setSectionData] = useState({
@@ -65,7 +65,7 @@ function SectionEditor({ onPressed }) {
   };
 
   // This function helps to set the sectionData state within the admin page
-  // const handleSubmit = (event) => { // function is deprecated
+  // const handleSubmit = (event) => {
   //   // should only be applied for event editor
   //   event.preventDefault();
   //   onPressed(sectionData); // onPressed is the same as handleFormSubmit, we are setting the sectionData in the admin page to the one residing here
@@ -78,8 +78,8 @@ function SectionEditor({ onPressed }) {
 
   // importan function here!! - is sent to element editor to retrieve rows, need to also set numrows by counting the number of rows here
 
-  const retrieveFromElementEditor = (rows) => {
-    const newSection = { ...sectionData };
+  const retrieveFromElementEditor = (rows) => { 
+    const newSection = {...sectionData};
     newSection.rowElements = rows;
     const rowsLength = rows.length;
     newSection.numRows = String(rowsLength);
@@ -107,7 +107,6 @@ function SectionEditor({ onPressed }) {
       handleToggle();
     }
   }
-
   return (
     <div>
       {/* <Form> */}
