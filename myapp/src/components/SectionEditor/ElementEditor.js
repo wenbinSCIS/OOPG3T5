@@ -54,6 +54,8 @@ handleNewRowAddElement: sets the elementType value as the one that we have selec
 The code below manages the state for element type, 
 
 handleChange: sets the elementType value as the one that we have selected
+
+handleInputChangeImproved: Handles changes to written input for all elements before submission
 =============================================================================================
 */
   useEffect(
@@ -71,6 +73,8 @@ handleChange: sets the elementType value as the one that we have selected
   const handleChange = (event) => {
     setElementType(event.target.value);
 
+    handleToggleElement(event.target.value); // this is for the save element button so that it is updated in real time, if a new element is picked will not be greyed out
+
     setNumOptionsHeaders(3); // the reason why I do this is because everytime I rotate between headers/options I would like the 3 headers /options to be displayed only
 
     setOptionState({}); // want to revert option state everytime we select a new element
@@ -85,7 +89,11 @@ handleChange: sets the elementType value as the one that we have selected
     setElementState({ elementType: chosenElementType });
 
     if (chosenElementType === "Text") {
-      setElementState({ elementType: chosenElementType, textSize: "12" });
+      setElementState({
+        elementType: chosenElementType,
+        textSize: "12",
+        alignment: "center",
+      });
     }
 
     if (chosenElementType === "Textarea") {
@@ -136,8 +144,6 @@ handleChange: sets the elementType value as the one that we have selected
     // if I do not do as above the number of options and the default value shown will not be consistent
   };
 
-  // This function handles changes when admin edits parameters on the form
-
   const handleInputChangeImproved = (
     event,
     isOption = false,
@@ -145,7 +151,6 @@ handleChange: sets the elementType value as the one that we have selected
     eKey = "options",
     index = null
   ) => {
-    // I need to add additonal logic if isOption == True, this includes updating the option State
     if (!isOption && !isHeader) {
       const { id, value } = event.target;
       setElementState((elementState) => ({
@@ -172,7 +177,7 @@ handleChange: sets the elementType value as the one that we have selected
       }));
     } else if (isOption) {
       const { id, value } = event.target;
-      console.log(id, value, index);
+      // console.log(id, value, index);
       const updatedOptionState = { ...optionState };
       let optionObject = {};
 
@@ -192,7 +197,7 @@ handleChange: sets the elementType value as the one that we have selected
       }
 
       updatedOptionState[index] = optionObject;
-      console.log(updatedOptionState);
+      // console.log(updatedOptionState);
       setOptionState(updatedOptionState);
 
       const myList = Object.keys(updatedOptionState)
@@ -212,14 +217,25 @@ The code below manages the state for the Dropdown,Radio,Checkbox and Table eleme
 
 numOptionsHeaders: How many headers/options we want
 
-handleOptionsHeadersSelect: takes the input from the elements and sets the numOptionsHeaders accordingly
+optionTypeList: handles display for radio , checkbox dropdown button for each option
+-> "Choose a Type", "Normal", "Text"
 
-renderOptionsHeaders: renders the options/headers on the front end
+handleOptionsHeadersSelect: takes the input from the elements and sets the numOptionsHeaders accordingly
+-> also removes previous options in the option state if the selection number decreases
+-> also removes previous option types from optionTypeList if selection number decreases
+
+renderOptionsHeaders: renders the options/headers on the front end for table / dropdown
+
+renderOptions: renders options for radio / checkbox
+
+handleTypeChosen: handles changes to format input for radio / checkbox 
 =============================================================================================
 */
   const [numOptionsHeaders, setNumOptionsHeaders] = useState(3); // dropdown select, default number of options is 3
 
-  const handleOptionsHeadersSelect = (event) => {
+  const [optionTypeList, setOptionTypeList] = useState([]); // Controls what is currently seen for the user in the dropdown for each option
+
+  const handleOptionsHeadersSelect = (event, isRadioCheckbox = false) => {
     const selectedValue = parseInt(event.target.value, 10);
     setNumOptionsHeaders(selectedValue);
 
@@ -227,15 +243,24 @@ renderOptionsHeaders: renders the options/headers on the front end
 
     const newOptionState = {};
 
-    const compareValue = selectedValue - 1; // basically we want to compare value to remove any residual options from the option state beyond the number of options selected. i,e if I filled out option 6 but now I only want 3 options, I will remove option 6
+    const compareValue = selectedValue - 1; // basically we want to compare value to remove any residual options from the option state beyond the number of options selected. i,e if I filled out option 6 but now I only want 3 options and select that from the dropdown, I will remove option 6
 
     for (const [key, value] of Object.entries(tempOptionState)) {
       if (key <= compareValue) {
         newOptionState[key] = value;
       }
     }
-    
+
     setOptionState(newOptionState);
+
+    if (isRadioCheckbox) {
+      const tempOptionTypeList = [...optionTypeList];
+      if (tempOptionTypeList.length > selectedValue) {
+        // what am I doing here? I want to remove option types in the list if the person changes the number of checkbox values to a smaller one, that way the excess data will be trimmed off
+        tempOptionTypeList.splice(selectedValue);
+      } // I need to add this to the onchange of selecting the number of checkbox values, if not it won't work.
+      setOptionTypeList(tempOptionTypeList);
+    }
   };
 
   function renderOptionsHeaders(elementKey = "options", label = "Option") {
@@ -282,38 +307,6 @@ renderOptionsHeaders: renders the options/headers on the front end
 
     return optionsOrHeaders;
   }
-
-  /* we are updating the rending function from here onwards (WIP) */
-
-  const [optionTypeList, setOptionTypeList] = useState([]); // Controls what is currently seen for the user in the dropdown for each option
-
-  const handleOptionsSelect = (event) => {
-    const selectedValue = parseInt(event.target.value, 10);
-    console.log(selectedValue);
-    setNumOptionsHeaders(selectedValue);
-
-    const tempOptionTypeList = [...optionTypeList];
-    if (tempOptionTypeList.length > selectedValue) {
-      // what am I doing here? I want to remove option types in the list if the person changes the number of checkbox values to a smaller one, that way the excess data will be trimmed off
-      tempOptionTypeList.splice(selectedValue);
-    } // I need to add this to the onchange of selecting the number of checkbox values, if not it won't work.
-
-    const tempOptionState = { ...optionState };
-
-    const newOptionState = {};
-
-    const compareValue = selectedValue - 1; // basically we want to compare value to remove any residual options from the option state beyond the number of options selected. i,e if I filled out option 6 but now I only want 3 options, I will remove option 6
-
-    for (const [key, value] of Object.entries(tempOptionState)) {
-      if (key <= compareValue) {
-        newOptionState[key] = value;
-      }
-    }
-
-    setOptionTypeList(tempOptionTypeList);
-    setOptionState(newOptionState);
-    // console.log(tempOptionTypeList);
-  };
 
   function renderOptions(elementKey = "options", label = "Option") {
     // elementKey is either options or headers, but can be expanded. Label for now just Header or Option, need to pass elementKey into ekey in handleOptionChange
@@ -526,33 +519,6 @@ renderOptionsHeaders: renders the options/headers on the front end
     console.log(updatedOptionState);
   };
 
-  // const handleOptionChange = (event, index, eKey = "options") => {
-  //   const { id, value } = event.target;
-  //   const updatedOptionState = { ...optionState };
-  //   if (index in updatedOptionState) {
-  //     const optionObject = { ...updatedOptionState[index] };
-  //     if (id == "optionName") {
-  //       optionObject[id] = value;
-  //       optionObject["optionValue"] = value;
-  //     } else {
-  //       // text variables is a nested dict for each option
-  //       optionObject.textVariables[id] = value;
-  //     }
-  //     updatedOptionState[index] = optionObject;
-  //   }
-
-  //   setOptionState(updatedOptionState);
-
-  //   const myList = Object.keys(updatedOptionState)
-  //     .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)) // smaller index over bigger index
-  //     .map((key) => updatedOptionState[key]);
-
-  //   setElementState((elementState) => ({
-  //     ...elementState,
-  //     [eKey]: myList, // the default value of key is options from the parameter, but it will have to be changed to headers if Table is selected
-  //   }));
-  // };
-
   /*
 =============================================================================================
 The code below manages the submission of the event
@@ -585,6 +551,7 @@ appendToOverallState: appends element to selected row as chosen by the user
       addItem(overallRowState, updatedState)    
     );
     // console.log(updatedOverallState); // this should be pushed to the admin page
+    handleToggleSection();
   };
 
   const appendToOverallRowState = () => {
@@ -595,10 +562,12 @@ appendToOverallState: appends element to selected row as chosen by the user
     currentRowState[rowIndex] = row; // replace the old row with the new one
     setOverallRowState(currentRowState);
     // console.log(currentRowState); // should be pushed to admin
+    handleToggleSection();
   };
 
   function handleEventSubmission() {
     let elementIsGood = false;
+    let isRadioCheckboxGood = true;
 
     if (
       elementState.elementType == "Text" &&
@@ -627,14 +596,70 @@ appendToOverallState: appends element to selected row as chosen by the user
     }
 
     if (
-      (elementState.elementType == "Dropdown" ||
-        elementState.elementType == "Checkbox" ||
-        elementState.elementType == "Radio") &&
+      elementState.elementType == "Dropdown" &&
       "elementName" in elementState &&
       "options" in elementState
     ) {
       elementIsGood = true;
       console.log("you are good!");
+    }
+
+    if (
+      elementState.elementType == "Radio" &&
+      "elementName" in elementState &&
+      "options" in elementState
+    ) {
+      elementState.options.forEach((option) => {
+        if (option.optionType == "radio-text") {
+          if ("optionName" in option && "textVariables" in option) {
+            if ("hintText" in option.textVariables) {
+            } else {
+              isRadioCheckboxGood = false;
+            }
+          } else {
+            isRadioCheckboxGood = false;
+          }
+        } else {
+          if ("optionName" in option) {
+            // do nothing
+          } else {
+            isRadioCheckboxGood = false;
+          }
+        }
+      });
+      if (isRadioCheckboxGood) {
+        elementIsGood = true;
+        console.log("you are good!");
+      }
+    }
+
+    if (
+      elementState.elementType == "Checkbox" &&
+      "elementName" in elementState &&
+      "options" in elementState
+    ) {
+      elementState.options.forEach((option) => {
+        if (option.optionType == "Checkbox-text") {
+          if ("optionName" in option && "textVariables" in option) {
+            if ("hintText" in option.textVariables) {
+            } else {
+              isRadioCheckboxGood = false;
+            }
+          } else {
+            isRadioCheckboxGood = false;
+          }
+        } else {
+          if ("optionName" in option) {
+            // do nothing
+          } else {
+            isRadioCheckboxGood = false;
+          }
+        }
+      });
+      if (isRadioCheckboxGood) {
+        elementIsGood = true;
+        console.log("you are good!");
+      }
     }
 
     if (
@@ -654,6 +679,9 @@ appendToOverallState: appends element to selected row as chosen by the user
         } else {
           appendToOverallRowState();
         }
+        setElementType(null); // I want to 'close' the element editor
+        // need code here to change the preview tab to true
+        handleToggleElement(null);
       } catch (error) {
         console.error(error);
       }
@@ -665,7 +693,40 @@ appendToOverallState: appends element to selected row as chosen by the user
   function handleSubmissiontoAdmin() {
     onPressedElement(overallRowState); // same as retrieve elements from section editor
     console.log("Element Editor sends data to Section Editor");
+    alert("Section has been Added!")
   }
+
+  /*
+=============================================================================================
+The code below manages whether save element and save section are enabled or disabled
+=============================================================================================
+*/
+
+  const [canAddElement, setCanAddElement] = useState(false);
+
+  const handleToggleElement = (type) => { // added to handlechange and handleEventSubmission
+    let tempcanAdd = false;
+    if (type != null && type != "Choose an Element") {
+      tempcanAdd = true
+      setCanAddElement(tempcanAdd);
+    } else {
+      setCanAddElement(false);
+    }
+    console.log("The Save Element button is active?: " + tempcanAdd);
+  };
+
+  const [canAddSection, setCanAddSection] = useState(false);
+
+  const handleToggleSection = () => { // added to appendoverall state and handleRowState
+    let tempcanAdd = false;
+    if (overallRowState != []) {
+      tempcanAdd = true;
+      setCanAddSection(tempcanAdd);
+    } else {
+      setCanAddSection(tempcanAdd);
+    }
+    console.log("The Save Section button is active?: " + tempcanAdd)
+  };
 
   /*
 =============================================================================================
@@ -700,6 +761,61 @@ Code to be Deprecated
         [eKey]: myList, // the default value of key is options from the parameter, but it will have to be changed to headers if Table is selected
       }));
     }
+  };
+
+  const handleOptionsSelect = (event) => {
+    const selectedValue = parseInt(event.target.value, 10);
+    console.log(selectedValue);
+    setNumOptionsHeaders(selectedValue);
+
+    const tempOptionTypeList = [...optionTypeList];
+    if (tempOptionTypeList.length > selectedValue) {
+      // what am I doing here? I want to remove option types in the list if the person changes the number of checkbox values to a smaller one, that way the excess data will be trimmed off
+      tempOptionTypeList.splice(selectedValue);
+    } // I need to add this to the onchange of selecting the number of checkbox values, if not it won't work.
+
+    const tempOptionState = { ...optionState };
+
+    const newOptionState = {};
+
+    const compareValue = selectedValue - 1; // basically we want to compare value to remove any residual options from the option state beyond the number of options selected. i,e if I filled out option 6 but now I only want 3 options, I will remove option 6
+
+    for (const [key, value] of Object.entries(tempOptionState)) {
+      if (key <= compareValue) {
+        newOptionState[key] = value;
+      }
+    }
+
+    setOptionTypeList(tempOptionTypeList);
+    setOptionState(newOptionState);
+    // console.log(tempOptionTypeList);
+  };
+
+  const handleOptionChange = (event, index, eKey = "options") => {
+    const { id, value } = event.target;
+    const updatedOptionState = { ...optionState };
+    if (index in updatedOptionState) {
+      const optionObject = { ...updatedOptionState[index] };
+      if (id == "optionName") {
+        optionObject[id] = value;
+        optionObject["optionValue"] = value;
+      } else {
+        // text variables is a nested dict for each option
+        optionObject.textVariables[id] = value;
+      }
+      updatedOptionState[index] = optionObject;
+    }
+
+    setOptionState(updatedOptionState);
+
+    const myList = Object.keys(updatedOptionState)
+      .sort((a, b) => parseInt(a, 10) - parseInt(b, 10)) // smaller index over bigger index
+      .map((key) => updatedOptionState[key]);
+
+    setElementState((elementState) => ({
+      ...elementState,
+      [eKey]: myList, // the default value of key is options from the parameter, but it will have to be changed to headers if Table is selected
+    }));
   };
 
   /*
@@ -818,6 +934,30 @@ Returned Component
               placeholder="Insert Text that you want to display"
               onChange={(event) => handleInputChangeImproved(event)}
             />
+          </Form.Group>
+          <Form.Group
+            controlId="alignment"
+            className="mb-3"
+            style={{ width: "32%" }}
+          >
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Alignment (Optional)
+            </Form.Label>
+            <Form.Select
+              className="custom-select"
+              defaultValue="Center"
+              onChange={(event) => handleInputChangeImproved(event)}
+            >
+              <option key="center" value="center">
+                Center
+              </option>
+              <option key="left" value="left">
+                Left
+              </option>
+              <option key="right" value="right">
+                Right
+              </option>
+            </Form.Select>
           </Form.Group>
           <Form.Group
             controlId="textSize"
@@ -1010,7 +1150,7 @@ Returned Component
             <Form.Control
               type="text"
               className="mb-3"
-              placeholder="Insert Element Header (To be displayed above Radio)"
+              placeholder="Insert Element Header (To be displayed to the left of Radio)"
               onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
@@ -1037,7 +1177,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="3"
-              onChange={handleOptionsSelect}
+              onChange={(event) => handleOptionsHeadersSelect(event, true)}
             >
               {Array.from({ length: 10 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
@@ -1069,7 +1209,7 @@ Returned Component
             <Form.Control
               type="text"
               className="mb-3"
-              placeholder="Insert Element Header (To be displayed above Checkbox)"
+              placeholder="Insert Element Header (To be displayed to the left of Checkbox)"
               onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
@@ -1096,7 +1236,7 @@ Returned Component
             <Form.Select
               className="custom-select"
               defaultValue="3"
-              onChange={handleOptionsSelect}
+              onChange={(event) => handleOptionsHeadersSelect(event, true)}
             >
               {Array.from({ length: 10 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
@@ -1128,7 +1268,7 @@ Returned Component
             <Form.Control
               type="text"
               className="mb-3"
-              placeholder="Insert Element Header (To be displayed above Checkbox)"
+              placeholder="Insert Element Header (To be displayed above Table)"
               onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
@@ -1175,9 +1315,9 @@ Returned Component
           {renderOptionsHeaders("headers", "Header")}
         </>
       )}
-      {elementType && elementType != "Choose an Element" && (
-        <>
-          <Stack
+      {/* {elementType && elementType != "Choose an Element" && (
+        <> */}
+          {/* <Stack
             direction="row"
             alignItems="center"
             spacing={2}
@@ -1193,8 +1333,8 @@ Returned Component
               Save Element&nbsp;&nbsp;
               <SendIcon />
             </Button>
-          </Stack>
-          <Stack
+          </Stack> */}
+          {/* <Stack
             direction="row"
             alignItems="center"
             spacing={2}
@@ -1210,9 +1350,44 @@ Returned Component
               Save Section&nbsp;&nbsp;
               <SendIcon />
             </Button>
-          </Stack>
-        </>
-      )}
+          </Stack> */}
+        {/* </>
+      )} */}
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={2}
+        sx={{ justifyContent: "flex-end" }}
+      >
+        <Button
+          alignItems="center"
+          variant="contained"
+          color="primary"
+          disabled={!canAddElement}
+          onClick={handleEventSubmission}
+          sx={{ marginBottom: "1rem" }}
+        >
+          Save Element&nbsp;&nbsp;
+          <SendIcon />
+        </Button>
+      </Stack> 
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={2}
+        sx={{ justifyContent: "flex-end" }}
+      >
+        <Button
+          alignItems="center"
+          variant="contained"
+          color="success"
+          disabled={!canAddSection}
+          onClick={handleSubmissiontoAdmin}
+        >
+          Save Section&nbsp;&nbsp;
+          <SendIcon />
+        </Button>
+      </Stack>
     </Form>
   );
 };
