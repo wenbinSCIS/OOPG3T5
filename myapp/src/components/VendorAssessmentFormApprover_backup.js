@@ -11,11 +11,9 @@ export default function VendorAssessmentFormApprover() {
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
 
-
-  var formName = sessionStorage.getItem('formName') || "";
-  var formVersion = sessionStorage.getItem('formVersion') || "";
-  var user = sessionStorage.getItem('username') || "";
-
+  var formName = "VendorAssessment" //Get from session storage instead
+  var formVersion = 1 //Get from session storage instead
+  var user = 'Nico' //Get from session storage instead
 
   async function getData(formName) {
     try {
@@ -34,7 +32,6 @@ export default function VendorAssessmentFormApprover() {
   }, []); // empty dependency array to run the effect only once
 
   async function loadUserInput(formName, formVersion, username) {
-    console.log(formName, formVersion, username)
     var inputJson = {
       "formName": formName,
       "username": username,
@@ -59,16 +56,6 @@ export default function VendorAssessmentFormApprover() {
       "formVersion": formVersion,
       "formInputData": [allData]
     }
-    var statusInputJSON={
-      "username":username,
-      "assignedForms": [
-        {
-            "formName": formName,
-            "status": "In Progress",
-            "formVersion": formVersion
-        }
-      ]
-    }
     console.log('isLoaded', isLoaded)
     if (!isLoaded) {
       await axios
@@ -86,53 +73,8 @@ export default function VendorAssessmentFormApprover() {
           console.log(response.data);
         });
     }
-    await axios
-        .put(`http://localhost:8080/user/updateVendorAssignedFormStatus`, statusInputJSON)
-        .then((response) => {
-          console.log(response.data);
-        });
   }
 
-  async function submit(formName, formVersion, username) {
-    var inputJson = {
-      "formName": formName,
-      "username": username,
-      "formVersion": formVersion,
-      "formInputData": [allData]
-    }
-    var statusInputJSON={
-      "username":username,
-      "assignedForms": [
-        {
-            "formName": formName,
-            "status": "Pending Review",
-            "formVersion": formVersion
-        }
-      ]
-    }
-    console.log('isLoaded', isLoaded)
-    if (!isLoaded) {
-      await axios
-        .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
-        .then((response) => {
-          alert("Saved new input data!");
-          setIsLoaded(true);
-          console.log(response.data);
-        });
-    } else {
-      await axios
-        .put(`http://localhost:8080/formInput/updateFormInputData`, inputJson)
-        .then((response) => {
-          alert("Resaved input data!");
-          console.log(response.data);
-        });
-    }
-    await axios
-        .put(`http://localhost:8080/user/updateVendorAssignedFormStatus`, statusInputJSON)
-        .then((response) => {
-          console.log(response.data);
-        });
-  }
   const to_return = []
   console.log(remarks)
 
@@ -150,7 +92,7 @@ export default function VendorAssessmentFormApprover() {
       <div className="container">
       {to_return}
       <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, user)}>Save</Button>
-      <Button variant="dark" onClick={()=> submit(formName, formVersion, user)}>Submit Form</Button>
+      <Button variant="dark">Submit Form</Button>
       </div>
       </section>
     );

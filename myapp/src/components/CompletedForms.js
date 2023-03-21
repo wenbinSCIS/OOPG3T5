@@ -21,13 +21,13 @@ export default function CompletedForms() {
     const fetchData = async () => {
       try {
         const response = await axios.post("http://localhost:8080/user/getUserByName", {
-          username: "Nico" //get from session storage
+          username: "Company A" //get from session storage
         });
         
         var apiResponse = response.data.assignedForms
         var forms = []
         for (let i=0;i<apiResponse.length;i++){
-          if (apiResponse[i].status=="Pending Review"||apiResponse[i].status=="Approved"){
+          if (apiResponse[i].status=="Pending Review"||apiResponse[i].status=="Approved"||apiResponse[i].status=="Pending Approval"){
             forms.push(apiResponse[i])
           }
         }
@@ -88,6 +88,13 @@ export default function CompletedForms() {
             sx={{ mr: 1, mb: 1 }}
           >
             Pending Review
+          </Button>
+          <Button
+            variant={selectedTag === "Pending Approval" ? "contained" : "outlined"}
+            onClick={() => setSelectedTag("Pending Approval")}
+            sx={{ mr: 1, mb: 1 }}
+          >
+            Pending Approval
           </Button>
           <Button
             variant={selectedTag === "Approved" ? "contained" : "outlined"}

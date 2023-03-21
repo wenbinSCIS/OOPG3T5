@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBCol, MDBBtn } from 'mdb-react-ui-kit';
-
+import { MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 function AdminTable({ data }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
@@ -41,7 +42,9 @@ function AdminTable({ data }) {
               <td>{item.formName}</td>
               <td>{item.version}</td>
               <td>
-              <MDBBtn outline rounded color='success'>Start</MDBBtn>
+              <Link to={`/vendorApprover`} className='btn btn-link' onClick={()=>{sessionStorage.setItem('companyName', item.companyName);sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.version)}}>
+                Start
+              </Link>
               </td>
             </tr>
           ))}
@@ -50,14 +53,13 @@ function AdminTable({ data }) {
       <MDBRow className="justify-content-center">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <MDBCol key={page} size="1">
-            <MDBBtn 
+            <Button variant="outlined"
               color={currentPage === page ? 'primary' : 'secondary'}
               onClick={() => handlePageChange(page)}
               size="sm"
-         
             >
               {page}
-            </MDBBtn>
+            </Button>
           </MDBCol>
         ))}
       </MDBRow>
