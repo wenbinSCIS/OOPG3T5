@@ -86,7 +86,7 @@ public class UserController {
         }
         else if (userType.equals("Vendor"))
         {
-            Vendor newVendor = new Vendor(tempUser.getUsername(), tempUser.getPasswordString(), tempUser.getProject());
+            Vendor newVendor = new Vendor(tempUser.getUsername(), tempUser.getPasswordString(), tempUser.getProject(),tempUser.getCompanyName());
             Vendor _user = userRepository.save(newVendor);
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
         }
@@ -111,7 +111,7 @@ public class UserController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         }
-
+/*
         @PutMapping("/appendVendorAssignedForm")
         public ResponseEntity<?> appendVendorAssignedForm(@RequestBody Vendor vendor) {
             Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
@@ -197,6 +197,7 @@ public class UserController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         }
+ */
 
 //update created form for admin and approver
     @PutMapping("/updateCreatedForm")
@@ -474,7 +475,7 @@ public class UserController {
                     if (existingUser instanceof Vendor)
                     {
                         Vendor existingVendor = (Vendor) existingUser;
-                        Vendor logInUser = new Vendor(existingVendor.getUsername(),existingVendor.getAssignedForms());
+                        Vendor logInUser = new Vendor(existingVendor.getUsername());
                         return new ResponseEntity<>(logInUser,HttpStatus.OK);
                     }
                     else if(existingUser instanceof Approver)
