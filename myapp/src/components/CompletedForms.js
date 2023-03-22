@@ -24,13 +24,50 @@ export default function CompletedForms() {
           username: "Company A" //get from session storage
         });
         
-        var apiResponse = response.data.assignedForms
+
+        //Get list of formnames and another list of form versions
+        var formNames = []
+        var formVersions = []
+        var formStatuses = []
+        var formDescriptions = []
+        for (let i=0 ;i<response.data.assignedForms.length;i++){
+          formNames.push(response.data.assignedForms[i].formName)
+          formVersions.push(response.data.assignedForms[i].formVersion)
+          formDescriptions.push(response.data.assignedForms[i].description)
+        }
+
+        //Use list of formNames and formVersions to get corresponding formStatuses from formInput
+        
+        for (let i=0 ;i<formNames.length;i++){
+          var inputJson = {
+            "formName":formNames[i],
+            "username":"Company A",//get from session storage
+            "formVersion":formVersions[i]
+          }
+          await axios
+          .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
+          .then((response) => {
+              if (response.status === 200) {
+                formStatuses.push(response.data.status)
+              } else {
+                formStatuses.push("Not Started")
+              }
+            });
+        }
+        
         var forms = []
-        for (let i=0;i<apiResponse.length;i++){
-          if (apiResponse[i].status=="Pending Review"||apiResponse[i].status=="Approved"||apiResponse[i].status=="Pending Approval"){
-            forms.push(apiResponse[i])
+
+        for (let i=0;i<formNames.length;i++){
+          if (formStatuses[i]=="Pending Approval"||formStatuses[i]=="Approved"){
+            forms.push({
+              formName:formNames[i],
+              status: formStatuses[i],
+              description: formDescriptions[i],
+              formVersion : formVersions[i],
+            })
           }
         }
+        
         setFormCards(forms);
       } catch (error) {
         console.log(error);

@@ -13,13 +13,14 @@ export default function VendorAssessmentFormApprover() {
 
   var formName = sessionStorage.getItem('formName') || "";
   var formVersion = sessionStorage.getItem('formVersion') || "";
+  sessionStorage.setItem('username','Company A') //Comment out on use
   var user = sessionStorage.getItem('username') || "";
 
   async function getData(formName) {
     try {
       console.log('Sending request...');
       const response = await axios.get(`http://localhost:8080/api/getFormByName/${formName}`);
-      console.log('Response received:', response.data);
+      //console.log('Response received:', response.data);
       setFormData(response.data);
     } catch (error) {
       console.error(error);
@@ -32,16 +33,17 @@ export default function VendorAssessmentFormApprover() {
   }, []); // empty dependency array to run the effect only once
 
   async function loadUserInput(formName, formVersion, username) {
-    console.log(formName, formVersion, username)
+    
     var inputJson = {
       "formName": formName,
       "username": username,
       "formVersion": formVersion,
     }
+    //console.log(inputJson)
     await axios
       .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
       .then((response) => {
-        console.log(response.data);
+        
         if (response.status === 200) {
           setallData(response.data.formInputData[0])
           setIsLoaded(true);
@@ -55,18 +57,10 @@ export default function VendorAssessmentFormApprover() {
       "formName": formName,
       "username": username,
       "formVersion": formVersion,
+      "status":"In Progress",
       "formInputData": [allData]
     }
-    var statusInputJSON={
-      "username":username,
-      "assignedForms": [
-        {
-            "formName": formName,
-            "status": "In Progress",
-            "formVersion": formVersion
-        }
-      ]
-    }
+
     console.log('isLoaded', isLoaded)
     if (!isLoaded) {
       await axios
@@ -74,21 +68,16 @@ export default function VendorAssessmentFormApprover() {
         .then((response) => {
           alert("Saved new input data!");
           setIsLoaded(true);
-          console.log(response.data);
+          console.log(response.data)
         });
     } else {
       await axios
-        .put(`http://localhost:8080/formInput/updateFormInputData`, inputJson)
+        .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
         .then((response) => {
           alert("Resaved input data!");
           console.log(response.data);
         });
     }
-    await axios
-        .put(`http://localhost:8080/user/updateVendorAssignedFormStatus`, statusInputJSON)
-        .then((response) => {
-          console.log(response.data);
-        });
   }
 
   async function submit(formName, formVersion, username) {
@@ -96,17 +85,8 @@ export default function VendorAssessmentFormApprover() {
       "formName": formName,
       "username": username,
       "formVersion": formVersion,
+      "status":"Pending Approval",
       "formInputData": [allData]
-    }
-    var statusInputJSON={
-      "username":username,
-      "assignedForms": [
-        {
-            "formName": formName,
-            "status": "Pending Review",
-            "formVersion": formVersion
-        }
-      ]
     }
     console.log('isLoaded', isLoaded)
     if (!isLoaded) {
@@ -119,25 +99,20 @@ export default function VendorAssessmentFormApprover() {
         });
     } else {
       await axios
-        .put(`http://localhost:8080/formInput/updateFormInputData`, inputJson)
+        .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
         .then((response) => {
           alert("Resaved input data!");
           console.log(response.data);
         });
     }
-    await axios
-        .put(`http://localhost:8080/user/updateVendorAssignedFormStatus`, statusInputJSON)
-        .then((response) => {
-          console.log(response.data);
-        });
   }
 
   const to_return = []
-  console.log(remarks)
+  
 
   if (formData) {
     var sections = formData['sections']
-    console.log(sections)
+    
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
       to_return.push(<GenerateSectionApproval remarks = {remarks} setRemarks = {setRemarks} section={each_section} allData = {allData} setallData = {setallData}></GenerateSectionApproval>)
