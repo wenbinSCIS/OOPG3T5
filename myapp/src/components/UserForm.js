@@ -23,11 +23,11 @@ export default function UserForm() {
   useEffect(() => {
     if(!isUserFormLoaded){
       var to_return = []
-      console.log('useeffect?')
+      //console.log('useeffect?')
       var urlGet = `http://localhost:8080/api/getFormByNameAndVersion/${formName}/${formVersion}`;
-      console.log('urlGet',urlGet)
+      //console.log('urlGet',urlGet)
       axios.get(urlGet).then((response)=>{
-        console.log('response.data',response.data);
+        //console.log('response.data',response.data);
         setFormData(response.data);
         var sections = response.data['sections']
         for(let i=0;i<sections.length;i++){
@@ -40,7 +40,7 @@ export default function UserForm() {
         }
     });
     }
-    loadUserInput("testFormName2", 1, "testUsername1");
+    loadUserInput(formName, formVersion, "Company A");//Get username from sessionStorage
   }, []); // empty dependency array to run the effect only once
   
   // async function fetchFormData() {
@@ -61,6 +61,7 @@ export default function UserForm() {
       "username":username,
       "formVersion":formVersion,
     }
+    //console.log(inputJson)
     await axios
       .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
       .then((response) => {

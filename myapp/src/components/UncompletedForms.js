@@ -21,19 +21,21 @@ export default function CompletedForms() {
     const fetchData = async () => {
       try {
         const response = await axios.post("http://localhost:8080/user/getUserByName", {
-          username: "Company A" //get from session storage
+          username: "abc@gmail.com" //get from session storage
         });
         
-
+        console.log(response)
         //Get list of formnames and another list of form versions
         var formNames = []
         var formVersions = []
         var formStatuses = []
         var formDescriptions = []
-        for (let i=0 ;i<response.data.assignedForms.length;i++){
-          formNames.push(response.data.assignedForms[i].formName)
-          formVersions.push(response.data.assignedForms[i].formVersion)
-          formDescriptions.push(response.data.assignedForms[i].description)
+        for (let i=0 ;i<response.data.project.length;i++){
+          for(let j=0 ;j<response.data.project[i].assignedForm.length;j++){
+            formNames.push(response.data.project[i].assignedForm[j].formName)
+            formVersions.push(response.data.project[i].assignedForm[j].formVersion)
+            formDescriptions.push(response.data.project[i].assignedForm[j].description)
+          }
         }
 
         //Use list of formNames and formVersions to get corresponding formStatuses from formInput
@@ -41,18 +43,22 @@ export default function CompletedForms() {
         for (let i=0 ;i<formNames.length;i++){
           var inputJson = {
             "formName":formNames[i],
-            "username":"Company A",//get from session storage
+            "username":"abc@gmail.com",//get from session storage
             "formVersion":formVersions[i]
           }
-          await axios
-          .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
-          .then((response) => {
-              if (response.status === 200) {
-                formStatuses.push(response.data.status)
-              } else {
-                formStatuses.push("Not Started")
-              }
-            });
+          console.log(inputJson)
+          try {
+            const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
+            if (response.status === 200) {
+              formStatuses.push(response.data.status)
+            }
+          } catch (error) {
+            if (error.response && error.response.status === 404) {
+              formStatuses.push("Not Started")
+            } else {
+              console.log(error)
+            }
+          }
         }
         
         var forms = []
