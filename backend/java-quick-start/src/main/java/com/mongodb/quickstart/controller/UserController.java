@@ -86,7 +86,7 @@ public class UserController {
         }
         else if (userType.equals("Vendor"))
         {
-            Vendor newVendor = new Vendor(tempUser.getUsername(), tempUser.getPasswordString(), tempUser.getProject(),tempUser.getCompanyName());
+            Vendor newVendor = new Vendor(tempUser.getUsername(), tempUser.getPasswordString(), tempUser.getProject(),tempUser.getCompanyInfo());
             Vendor _user = userRepository.save(newVendor);
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
         }

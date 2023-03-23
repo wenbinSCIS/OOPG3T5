@@ -4,21 +4,21 @@ import java.util.ArrayList;
 
 public class Vendor extends User{
     private ArrayList<Project> project;
-    private String companyName;
+    private CompanyInfo companyInfo;
     public Vendor(){}
 
-    public Vendor(String username,String password,ArrayList<Project> project,String companyName)
+    public Vendor(String username,String password,ArrayList<Project> project,CompanyInfo companyInfo)
     {
         super(username,password,"Vendor");
         this.project = project;
-        this.companyName = companyName;
+        this.companyInfo = companyInfo;
     }
 
-    public Vendor(String username,String hashedPassword,byte[] passwordSalt,ArrayList<Project> project,String companyName)
+    public Vendor(String username,String hashedPassword,byte[] passwordSalt,ArrayList<Project> project,CompanyInfo companyInfo)
     {
         super(username,hashedPassword,passwordSalt,"Vendor");
         this.project = project;
-        this.companyName = companyName;
+        this.companyInfo = companyInfo;
     }
 
     public Vendor(String username)
@@ -34,13 +34,12 @@ public class Vendor extends User{
         this.project = project;
     }
 
-    public String getCompanyName()
-    {
-        return companyName;
+    public CompanyInfo getCompanyInfo() {
+        return companyInfo;
     }
 
-    public void setCompanyName(String companyName)
-    {
-        this.companyName = companyName;
+    public void setCompanyInfo(CompanyInfo companyInfo) {
+        this.companyInfo = companyInfo;
     }
+
 }
