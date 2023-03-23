@@ -1,6 +1,5 @@
 package com.mongodb.quickstart.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mongodb.quickstart.models.AdministrativePersonnel;
-import com.mongodb.quickstart.models.AdministrativePersonnel.CreatedForm;
-import com.mongodb.quickstart.models.AdministrativePersonnel.VendorForm;
 import com.mongodb.quickstart.models.Approver;
 import com.mongodb.quickstart.models.TempUser;
 import com.mongodb.quickstart.models.User;
