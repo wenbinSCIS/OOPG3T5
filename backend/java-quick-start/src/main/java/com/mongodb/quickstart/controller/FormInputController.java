@@ -159,7 +159,7 @@ public class FormInputController {
         }
         try {
             FormInput _formInput = formInputRepository.save(new FormInput(formInput.getFormName(),
-                    formInput.getUsername(), formInput.getFormVersion(), "In Progress", formInput.getFormInputData()));
+                    formInput.getUsername(), formInput.getFormVersion(), formInput.getStatus(), formInput.getFormInputData(), formInput.getCompanyInfo()));
             return new ResponseEntity<>(_formInput, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

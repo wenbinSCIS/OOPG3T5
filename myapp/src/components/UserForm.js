@@ -40,7 +40,7 @@ export default function UserForm() {
         }
     });
     }
-    loadUserInput(formName, formVersion, "Company A");//Get username from sessionStorage
+    loadUserInput(formName, formVersion, "abc@gmail.com");//Get username from sessionStorage
   }, []); // empty dependency array to run the effect only once
   
   // async function fetchFormData() {

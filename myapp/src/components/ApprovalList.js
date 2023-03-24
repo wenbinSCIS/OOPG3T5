@@ -22,15 +22,15 @@ export default function ApprovalList() {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          'http://localhost:8080/user/getUserByName',
+          'http://localhost:8080/formInput/getFormByStatus',
           {
-            username: 'Dew',//session storage
+            "status":"Pending Approval",//Approver only cares about pending approval forms
           }
         );
 
-        const apiResponse = response.data.vendorForm;
-        const forms = apiResponse.map((item) => ({
-          companyName: item.vendorName,
+        
+        const forms = response.data.map((item) => ({
+          companyName: item.companyInfo.companyName,
           formName: item.formName,
           version: item.formVersion,
         }));
