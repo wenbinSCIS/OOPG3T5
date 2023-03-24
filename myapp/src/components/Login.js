@@ -50,7 +50,7 @@ export default function Login() {
             }
             else
             {
-              console.log(response)
+              //console.log(response)
               let curUsername = response.data.username;
               sessionStorage.setItem("username",curUsername);
   

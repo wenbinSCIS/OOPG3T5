@@ -24,7 +24,7 @@ export default function CompletedForms() {
           username: "abc@gmail.com" //get from session storage
         });
         
-        console.log(response)
+        //console.log(response)
         //Get list of formnames and another list of form versions
         var formNames = []
         var formVersions = []
@@ -46,7 +46,7 @@ export default function CompletedForms() {
             "username":"abc@gmail.com",//get from session storage
             "formVersion":formVersions[i]
           }
-          console.log(inputJson)
+          //console.log(inputJson)
           try {
             const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
             if (response.status === 200) {
