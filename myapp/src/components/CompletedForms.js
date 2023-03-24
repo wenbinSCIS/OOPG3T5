@@ -21,7 +21,7 @@ export default function CompletedForms() {
     const fetchData = async () => {
       try {
         const response = await axios.post("http://localhost:8080/user/getUserByName", {
-          username: "abc@gmail.com" //get from session storage
+          username: sessionStorage.getItem("username")
         });
         
         //console.log(response)
@@ -43,7 +43,7 @@ export default function CompletedForms() {
         for (let i=0 ;i<formNames.length;i++){
           var inputJson = {
             "formName":formNames[i],
-            "username":"abc@gmail.com",//get from session storage
+            "username":sessionStorage.getItem("username"),
             "formVersion":formVersions[i]
           }
           //console.log(inputJson)

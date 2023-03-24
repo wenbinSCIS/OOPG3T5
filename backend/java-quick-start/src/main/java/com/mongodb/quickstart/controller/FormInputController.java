@@ -93,7 +93,7 @@ public class FormInputController {
         }
     }
 
-    @GetMapping("/getFormInputByUsername")
+    @PostMapping("/getFormInputByUsername")
     public ResponseEntity<List<FormInput>> getFormInputByUsername(@RequestBody FormInput tempFormInput) {
         try {
             String username = tempFormInput.getUsername();
