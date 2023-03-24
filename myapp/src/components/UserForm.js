@@ -3,7 +3,9 @@ import GenerateSection from './SectionGeneration.js';
 import Sidebar from "./Sidebar/Sidebar.js";
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 export default function UserForm() {
+  const navigate = useNavigate();
   var [allData , setallData] = useState({}); //All data to save for user
   var [isUserInputLoaded , setIsUserInputLoaded] = useState(false);
   var [isUserFormLoaded , setIsUserFormLoaded] = useState(false);
@@ -133,14 +135,15 @@ export default function UserForm() {
   
   
   
-    return (
-      <section className='d-flex'>
-        <Sidebar></Sidebar>
+  return (
+    <section className='d-flex'>
+      <Sidebar></Sidebar>
       <div className="container">
-      {toReturn}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, username, companyInfo)}>Save</Button>
-      <Button variant="dark" onClick={()=> submit(formName, formVersion, username, companyInfo)}>Submit Form</Button>
+        {toReturn}
+        <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
+        <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo); navigate("/CompletedForms")}}>Submit Form</Button>
       </div>
-      </section>
-    );
+    </section>
+  );
+  
 }
