@@ -21,10 +21,12 @@ public class Vendor extends User{
         this.companyInfo = companyInfo;
     }
 
-    public Vendor(String username)
+    public Vendor(String username, CompanyInfo companyInfo)
     {
         super(username,null,null,"Vendor");
+        this.companyInfo = companyInfo;
     }
+
 
     public ArrayList<Project> getProject() {
         return project;

@@ -16,20 +16,34 @@ export default function ApprovalList() {
     setSearchText(event.target.value);
   };
 
-  //var user = sessionStorage.getItem('user') || "";
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(
+        var allApproverForms = []
+
+        const pendingApprovalResponse = await axios.post(
           'http://localhost:8080/formInput/getFormByStatus',
           {
-            "status":"Pending Approval",//Approver only cares about pending approval forms
+            "status":"Pending Approval"
           }
         );
 
-        
-        const forms = response.data.map((item) => ({
+        for (let i=0;i<pendingApprovalResponse.data.length;i++){
+          allApproverForms.push(pendingApprovalResponse.data[i])
+        }
+
+        const approvedResponse = await axios.post(
+          'http://localhost:8080/formInput/getFormByStatus',
+          {
+            "status":"Approved"
+          }
+        );
+
+        for (let i=0;i<approvedResponse.data.length;i++){
+          allApproverForms.push(approvedResponse.data[i])
+        }
+
+        const forms = allApproverForms.map((item) => ({
           companyName: item.companyInfo.companyName,
           formName: item.formName,
           version: item.formVersion,

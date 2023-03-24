@@ -11,10 +11,10 @@ export default function VendorAssessmentFormApprover() {
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
 
-  var formName = sessionStorage.getItem('formName') || "";
-  var formVersion = sessionStorage.getItem('formVersion') || "";
-  sessionStorage.setItem('username','Company A') //Comment out on use
-  var user = sessionStorage.getItem('username') || "";
+  var formName = sessionStorage.getItem("formName") || "";
+  var formVersion = sessionStorage.getItem("formVersion") || "";
+  sessionStorage.setItem("username","abc@gmail.com") //Comment out on use
+  var user = sessionStorage.getItem("username") || "";
 
   async function getData(formName) {
     try {

@@ -174,7 +174,7 @@ public class UserController {
                     if (existingUser instanceof Vendor)
                     {
                         Vendor existingVendor = (Vendor) existingUser;
-                        Vendor logInUser = new Vendor(existingVendor.getUsername());
+                        Vendor logInUser = new Vendor(existingVendor.getUsername(), existingVendor.getCompanyInfo());
                         return new ResponseEntity<>(logInUser,HttpStatus.OK);
                     }
                     else if(existingUser instanceof Approver)

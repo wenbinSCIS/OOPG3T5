@@ -50,6 +50,7 @@ export default function Login() {
             }
             else
             {
+              console.log(response)
               let curUsername = response.data.username;
               sessionStorage.setItem("username",curUsername);
   
@@ -58,6 +59,7 @@ export default function Login() {
   
               if (userType==="Vendor")
               {
+                sessionStorage.setItem("companyInfo",JSON.stringify(response.data.companyInfo))
                 navigate("/home")
               }
               else if (userType==="AdministrativePersonnel")

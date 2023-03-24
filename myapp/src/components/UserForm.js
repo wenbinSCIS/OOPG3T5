@@ -16,8 +16,11 @@ export default function UserForm() {
   //var formVersion = localStorage.getItem('formVersion') || "";
   //var formName = localStorage.getItem('formName') || "";
 
-  var formVersion = sessionStorage.getItem('formVersion') || "";
-  var formName = sessionStorage.getItem('formName') || "";
+  var formVersion = sessionStorage.getItem("formVersion") || "";
+  var formName = sessionStorage.getItem("formName") || "";
+  var username = sessionStorage.getItem("username") || "";
+  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "";
+  //console.log(companyInfo)
 
   
   useEffect(() => {
@@ -55,7 +58,7 @@ export default function UserForm() {
   //   });
   // };
   // fetchFormData()
-  async function loadUserInput(formName, formVersion, username){
+  async function loadUserInput(formName, formVersion, username, companyInfo){
     var inputJson = {
       "formName":formName,
       "username":username,
@@ -74,14 +77,17 @@ export default function UserForm() {
     return null
   } 
 
-  async function saveUserInput(formName, formVersion, username){
+  async function saveUserInput(formName, formVersion, username, companyInfo){
+    console.log(companyInfo)
     var inputJson = {
       "formName":formName,
       "username":username,
       "formVersion":formVersion,
-      "formInputData": [allData]
+      "status":"In Progress",
+      "formInputData": [allData],
+      "companyInfo": companyInfo
     }
-    console.log('isUserInputLoaded', isUserInputLoaded)
+
     if (!isUserInputLoaded){
       await axios
       .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
@@ -90,10 +96,38 @@ export default function UserForm() {
       });
     }else{
       await axios
-      .put(`http://localhost:8080/formInput/updateFormInputData`, inputJson)
+      .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
       .then((response) => {
         console.log(response.data);
       });
+    }
+  }
+
+  async function submit(formName, formVersion, username) {
+    var inputJson = {
+      "formName": formName,
+      "username": username,
+      "formVersion": formVersion,
+      "status":"Pending Approval",
+      "formInputData": [allData],
+      "companyInfo": companyInfo
+    }
+
+    if (!isUserInputLoaded) {
+      await axios
+        .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
+        .then((response) => {
+          alert("Saved new input data!");
+          setIsUserFormLoaded(true);
+          console.log(response.data);
+        });
+    } else {
+      await axios
+        .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
+        .then((response) => {
+          alert("Resaved input data!");
+          console.log(response.data);
+        });
     }
   }
   
@@ -104,8 +138,8 @@ export default function UserForm() {
         <Sidebar></Sidebar>
       <div className="container">
       {toReturn}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, "Nico")}>Save</Button>
-      <Button variant="dark">Submit Form</Button>
+      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, username, companyInfo)}>Save</Button>
+      <Button variant="dark" onClick={()=> submit(formName, formVersion, username, companyInfo)}>Submit Form</Button>
       </div>
       </section>
     );
