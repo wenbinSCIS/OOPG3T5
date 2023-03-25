@@ -13,6 +13,8 @@ export default function VendorAssessmentForm() {
   var [isUserInputLoaded , setIsUserInputLoaded] = useState(false);
   var [isUserFormLoaded , setIsUserFormLoaded] = useState(false);
 
+  var isUserFormLoaded = false;
+
   var [formData, setFormData] = useState(null);
   //var [toReturn, setToReturn] = useState([]);
 
@@ -39,8 +41,20 @@ export default function VendorAssessmentForm() {
   }
 
   useEffect(() => {
-    getData(formName);
-    loadUserInput(formName, formVersion, username);
+    try{
+      getData(formName);
+    }
+    catch(error){ 
+      console.log(error)
+    }
+    
+    try{
+      loadUserInput(formName, formVersion, username);
+      setIsUserInputLoaded(true);
+    }
+    catch(error){
+      console.log(error)
+    }
   }, []); // empty dependency array to run the effect only once
 
   async function loadUserInput(formName, formVersion, username) {
@@ -51,19 +65,16 @@ export default function VendorAssessmentForm() {
     }
     //console.log(inputJson)
     await axios
-      .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
-      .then((response) => {
-        if (response.status === 200) {
-          setallData(response.data.formInputData[0])
-          console.log(response.data)
-          if(response.data.approverComments[0]!=null){
-          
-            setApproverComments(response.data.approverComments[0])
-          }
-          setIsUserInputLoaded(true);
+    try{
+      const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
+      setallData(response.data.formInputData[0])
+        if(response.data.approverComments[0]){
+          setApproverComments(response.data.approverComments[0])
         }
-      });
-    return null
+    }
+    catch(error){
+      console.log(error)
+    }
   }
 
   //console.log(approverComments)
@@ -97,6 +108,7 @@ export default function VendorAssessmentForm() {
     }
   }
 
+
   async function submit(formName, formVersion, username) {
     var inputJson = {
       "formName": formName,
@@ -106,7 +118,6 @@ export default function VendorAssessmentForm() {
       "formInputData": [allData],
       "companyInfo": companyInfo
     }
-
     if (!isUserInputLoaded) {
       await axios
         .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
@@ -125,6 +136,8 @@ export default function VendorAssessmentForm() {
     }
   }
   const to_return = []
+  console.log(isUserFormLoaded)
+  console.log(isUserInputLoaded)
   //test
   if (formData) {
     var sections = formData['sections']
@@ -140,8 +153,9 @@ export default function VendorAssessmentForm() {
       <div className="container">
       {to_return}
       <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
-      <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo); navigate("/CompletedForms")}}>Submit Form</Button>
+      <Button variant="dark" onClick={() => submit(formName, formVersion, username, companyInfo)}>Submit Form</Button>
       </div>
       </section>
     );
 }
+// ; navigate("/CompletedForms")}

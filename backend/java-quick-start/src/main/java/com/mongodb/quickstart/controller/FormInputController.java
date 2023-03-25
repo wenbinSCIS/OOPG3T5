@@ -207,6 +207,8 @@ public class FormInputController {
             FormInput existingFormInput = formData.get();
             existingFormInput.setFormInputData(tempFormInput.getFormInputData());
             existingFormInput.setStatus(status);
+            if(tempFormInput.getApproverComments() != null)
+                existingFormInput.setApproverComments(tempFormInput.getApproverComments());
             FormInput updatedForm = formInputRepository.save(existingFormInput);
             return new ResponseEntity<>(updatedForm, HttpStatus.OK);
         } else {

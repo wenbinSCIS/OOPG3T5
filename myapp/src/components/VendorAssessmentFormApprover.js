@@ -13,7 +13,8 @@ export default function VendorAssessmentFormApprover() {
 
   var formVersion = localStorage.getItem('formVersion') || 1;
   var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
-  var vendor = localStorage.getItem('vendor') || "Nico";
+  var vendor = localStorage.getItem('vendor') || "abc@gmail.com";
+  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "";
 
   async function getData(formName) {
     try {
@@ -55,14 +56,18 @@ export default function VendorAssessmentFormApprover() {
   async function saveRemarks(formName, formVersion, username, remarks) {
     
      var inputJson = {
-      "formName": formName,
-      "username": username,
-      "formVersion": formVersion,
+      "formName":formName,
+      "username":username,
+      "formVersion":formVersion,
+      "status":"Rejected",
       "formInputData": [allData],
+      "companyInfo": companyInfo,
       "approverComments":[remarks]
     }  
+
+    console.log(inputJson)
     await axios
-      .put(`http://localhost:8080/formInput/updateFormInputData`, inputJson)
+      .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
       .then((response) => {
         alert("Resaved input data!");
         console.log(response.data);
@@ -87,7 +92,7 @@ export default function VendorAssessmentFormApprover() {
         <Sidebar></Sidebar>
       <div className="container">
       {to_return}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveRemarks(formName, formVersion, vendor, remarks)}>Save</Button>
+      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveRemarks(formName, formVersion, vendor, remarks)}>Reject</Button>
       <Button variant="dark">Submit Form</Button>
       </div>
       </section>
