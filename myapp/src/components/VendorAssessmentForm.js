@@ -31,7 +31,7 @@ export default function VendorAssessmentForm() {
   async function getData(formName) {
     try {
       console.log('Sending request...');
-      const response = await axios.get(`http://localhost:8080/api/getFormByName/${formName}`);
+      const response = await axios.get(`http://localhost:8080/api/getFormByNameAndVersion/${formName}/${formVersion}`);
       //console.log('Response received:', response.data);
       setFormData(response.data);
       setIsUserFormLoaded(true)
