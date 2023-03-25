@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import GenerateSectionApproval from './SectionGenerationApprover.js';
+import GenerateSection from './SectionGeneration.js';
 import Sidebar from "./Sidebar/Sidebar.js";
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
-export default function VendorAssessmentFormApprover() {
+export default function VendorAssessmentForm() {
 
   var [allData, setallData] = useState({}); //All data to save for user
   var [isLoaded, setIsLoaded] = useState(false);
   var [formData, setFormData] = useState(null);
-  const [remarks, setRemarks] = useState({})
+  var [approverComments, setApproverComments] = useState({});
 
   var formName = sessionStorage.getItem("formName") || "";
   var formVersion = sessionStorage.getItem("formVersion") || "";
@@ -33,7 +33,6 @@ export default function VendorAssessmentFormApprover() {
   }, []); // empty dependency array to run the effect only once
 
   async function loadUserInput(formName, formVersion, username) {
-    
     var inputJson = {
       "formName": formName,
       "username": username,
@@ -46,11 +45,16 @@ export default function VendorAssessmentFormApprover() {
         
         if (response.status === 200) {
           setallData(response.data.formInputData[0])
+          if(response.data.approverComments[0]){
+            setApproverComments(response.data.approverComments[0])
+          }
           setIsLoaded(true);
         }
       });
     return null
   }
+
+  console.log(approverComments)
 
   async function saveUserInput(formName, formVersion, username) {
     var inputJson = {
@@ -60,7 +64,6 @@ export default function VendorAssessmentFormApprover() {
       "status":"In Progress",
       "formInputData": [allData]
     }
-
     console.log('isLoaded', isLoaded)
     if (!isLoaded) {
       await axios
@@ -79,43 +82,14 @@ export default function VendorAssessmentFormApprover() {
         });
     }
   }
-
-  async function submit(formName, formVersion, username) {
-    var inputJson = {
-      "formName": formName,
-      "username": username,
-      "formVersion": formVersion,
-      "status":"Pending Approval",
-      "formInputData": [allData]
-    }
-    console.log('isLoaded', isLoaded)
-    if (!isLoaded) {
-      await axios
-        .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
-        .then((response) => {
-          alert("Saved new input data!");
-          setIsLoaded(true);
-          console.log(response.data);
-        });
-    } else {
-      await axios
-        .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
-        .then((response) => {
-          alert("Resaved input data!");
-          console.log(response.data);
-        });
-    }
-  }
-
   const to_return = []
-  
-
+  //test
   if (formData) {
     var sections = formData['sections']
     
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
-      to_return.push(<GenerateSectionApproval remarks = {remarks} setRemarks = {setRemarks} section={each_section} allData = {allData} setallData = {setallData}></GenerateSectionApproval>)
+      to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
     }}
   
     return (
@@ -124,7 +98,7 @@ export default function VendorAssessmentFormApprover() {
       <div className="container">
       {to_return}
       <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, user)}>Save</Button>
-      <Button variant="dark" onClick={()=> submit(formName, formVersion, user)}>Submit Form</Button>
+      <Button variant="dark">Submit Form</Button>
       </div>
       </section>
     );

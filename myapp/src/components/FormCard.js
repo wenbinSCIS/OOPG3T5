@@ -24,9 +24,6 @@ const FormCard = ({ formItems }) => {
           case "In Progress":
             pillClass = "bg-warning";
             break;
-            case "Pending Approval":
-            pillClass = "bg-primary";
-            break;
           case "Approved":
             pillClass = "bg-success";
             break;

@@ -182,7 +182,6 @@ public class FormInputController {
         double formVersion = tempFormInput.getFormVersion();
         Optional<FormInput> formData = formInputRepository.findByFormNameAndUsernameAndFormVersion(formName, username,
                 formVersion);
-
         if (formData.isPresent()) {
             FormInput existingFormInput = formData.get();
             existingFormInput.setFormInputData(tempFormInput.getFormInputData());

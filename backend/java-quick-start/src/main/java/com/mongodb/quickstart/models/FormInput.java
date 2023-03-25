@@ -19,19 +19,14 @@ public class FormInput {
     private CompanyInfo companyInfo;
     private ArrayList<Object> approverComments;
 
-    public ArrayList<Object> getApproverComments() {
-        return approverComments;
-    }
+   
 
     public FormInput()
     {
         super();
     }
     
-    public void setApproverComments(ArrayList<Object> approverComments) {
-        this.approverComments = approverComments;
-    }
-
+    
     public FormInput(String formName, String username, double formVersion, String status,
         ArrayList<Object> formInputData, CompanyInfo companyInfo) {
         this.formName = formName;
@@ -72,6 +67,14 @@ public class FormInput {
     public void setFormVersion(double formVersion) {
         this.formVersion = formVersion;
     }
+    public ArrayList<Object> getApproverComments() {
+        return approverComments;
+    }
+
+    public void setApproverComments(ArrayList<Object> approverComments) {
+        this.approverComments = approverComments;
+    }
+
     public ArrayList<Object> getFormInputData() {
         return formInputData;
     }
