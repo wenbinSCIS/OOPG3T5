@@ -9,10 +9,7 @@ export default function VendorAssessmentForm() {
   var [allData, setallData] = useState({}); //All data to save for user
   var [isLoaded, setIsLoaded] = useState(false);
   var [formData, setFormData] = useState(null);
-  var [approverComments, setApproverComments] = useState({ //get from API Future
-    "'Company Info'": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-    "Evaluation": "this sucks"
-});
+  var [approverComments, setApproverComments] = useState({});
 
   var formName = "QLI-QHSP-10-F01 New Vendor Assessment Form" //Get from session storage instead
   var formVersion = 1 //Get from session storage instead
@@ -46,11 +43,16 @@ export default function VendorAssessmentForm() {
         console.log(response.data);
         if (response.status === 200) {
           setallData(response.data.formInputData[0])
+          if(response.data.approverComments[0]){
+            setApproverComments(response.data.approverComments[0])
+          }
           setIsLoaded(true);
         }
       });
     return null
   }
+
+  console.log(approverComments)
 
   async function saveUserInput(formName, formVersion, username) {
     var inputJson = {

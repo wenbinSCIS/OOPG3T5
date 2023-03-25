@@ -43,36 +43,31 @@ export default function VendorAssessmentFormApprover() {
         console.log(response.data);
         if (response.status === 200) {
           setallData(response.data.formInputData[0])
+          if(response.data.approverComments[0]){
+            setRemarks(response.data.approverComments[0])
+          }
           setIsLoaded(true);
         }
       });
     return null
   }
 
-  async function saveUserInput(formName, formVersion, username) {
-    var inputJson = {
+  async function saveRemarks(formName, formVersion, username, remarks) {
+    
+     var inputJson = {
       "formName": formName,
       "username": username,
       "formVersion": formVersion,
-      "formInputData": [allData]
-    }
-    console.log('isLoaded', isLoaded)
-    if (!isLoaded) {
-      await axios
-        .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
-        .then((response) => {
-          alert("Saved new input data!");
-          setIsLoaded(true);
-          console.log(response.data);
-        });
-    } else {
-      await axios
-        .put(`http://localhost:8080/formInput/updateFormInputData`, inputJson)
-        .then((response) => {
-          alert("Resaved input data!");
-          console.log(response.data);
-        });
-    }
+      "formInputData": [allData],
+      "approverComments":[remarks]
+    }  
+    await axios
+      .put(`http://localhost:8080/formInput/updateFormInputData`, inputJson)
+      .then((response) => {
+        alert("Resaved input data!");
+        console.log(response.data);
+      });
+    
   }
 
   const to_return = []
@@ -92,7 +87,7 @@ export default function VendorAssessmentFormApprover() {
         <Sidebar></Sidebar>
       <div className="container">
       {to_return}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, vendor)}>Save</Button>
+      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveRemarks(formName, formVersion, vendor, remarks)}>Save</Button>
       <Button variant="dark">Submit Form</Button>
       </div>
       </section>

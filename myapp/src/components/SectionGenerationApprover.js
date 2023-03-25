@@ -44,6 +44,7 @@ function GenerateSectionApproval(props) {
           rows="4"
           cols="50"
         >
+          {props.remarks[props.section.sectionName]}
         </textarea>
         </div>
         

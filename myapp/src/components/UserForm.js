@@ -11,10 +11,13 @@ export default function UserForm() {
   var [formData, setFormData] = useState(null);
   //var [toReturn, setToReturn] = useState([]);
 
-  var [approverComments, setApproverComments] = useState({ //get from API Future
-    "'Company Info'": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-    "Evaluation": "this sucks"
-});
+  var [approverComments, setApproverComments] = useState({});
+
+// "'Company Info'": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+//     "Evaluation": "this sucks"
+
+
+
 
   var url = window.location.href;
   var formVersion = localStorage.getItem('formVersion') || 1;
@@ -67,11 +70,16 @@ export default function UserForm() {
         console.log(response.data);
         if (response.status === 200){ 
           setallData(response.data.formInputData[0]) 
+          if(response.data.formInputData[0].approverComments){
+            setApproverComments(response.data.formInputData[0].approverComments)
+          }
           setIsUserInputLoaded(true);
         }
       });
     return null
   } 
+
+  console.log(approverComments)
 
   async function saveUserInput(formName, formVersion, username){
     var inputJson = {

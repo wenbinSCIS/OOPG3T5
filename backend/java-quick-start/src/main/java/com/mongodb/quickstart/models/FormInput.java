@@ -15,10 +15,20 @@ public class FormInput {
     private String username;
     private double formVersion;
     private ArrayList<Object> formInputData;
+    private ArrayList<Object> approverComments;
 
     public FormInput()
     {
         super();
+    }
+
+    public FormInput(String formName, String username, double formVersion, ArrayList<Object> formInputData, ArrayList<Object> approverComments)
+    {
+        this.formName = formName;
+        this.username = username;
+        this.formVersion = formVersion;
+        this.formInputData = formInputData;
+        this.approverComments = approverComments;
     }
 
     public FormInput(String formName, String username, double formVersion, ArrayList<Object> formInputData)
@@ -46,6 +56,14 @@ public class FormInput {
     public void setFormVersion(double formVersion) {
         this.formVersion = formVersion;
     }
+    public ArrayList<Object> getApproverComments() {
+        return approverComments;
+    }
+
+    public void setApproverComments(ArrayList<Object> approverComments) {
+        this.approverComments = approverComments;
+    }
+
     public ArrayList<Object> getFormInputData() {
         return formInputData;
     }
