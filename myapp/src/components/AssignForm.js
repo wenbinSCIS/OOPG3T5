@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdb-react-ui-kit';
 import AdminSidebar from './Sidebar/AdminSidebar';
 import Header from './Header';
@@ -6,16 +6,16 @@ import Button from '@mui/material/Button';
 
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 const mockUsers = [
-  { id: 1, username: 'user1', email: 'user1@example.com' },
-  { id: 2, username: 'user2', email: 'user2@example.com' },
-  { id: 3, username: 'user3', email: 'user3@example.com' },
-  { id: 4, username: 'user4', email: 'user4@example.com' },
-  { id: 5, username: 'user5', email: 'user5@example.com' },
-  { id: 6, username: 'user6', email: 'user6@example.com' },
-  { id: 7, username: 'user7', email: 'user7@example.com' },
-  { id: 8, username: 'user8', email: 'user8@example.com' },
-  { id: 9, username: 'user9', email: 'user9@example.com' },
-  
+  { id: 1, username: 'user1', email: 'user1@example.com', projects: [
+    { id: 1, forms: [1, 2, 3] },
+    { id: 2, forms: [1, 5] },
+  ]},
+  { id: 2, username: 'user2', email: 'user2@example.com', projects: [
+    { id: 1, forms: [2, 3] },
+  ]},
+  { id: 3, username: 'user3', email: 'user3@example.com', projects: [
+    { id: 2, forms: [2, 6] },
+  ]},
 ];
 
 const mockProjects = [
@@ -38,19 +38,39 @@ const AssignForm = () => {
     const [selectedForms, setSelectedForms] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [filteredUsers, setFilteredUsers] = useState(mockUsers);
+
+    useEffect(() => {
+      if (selectedUser) {
+        const userProjects = selectedUser.projects;
+        const userForms = userProjects.flatMap(project => project.forms.map(formId => mockForms.find(f => f.id === formId)));
+        setSelectedForms(userForms);
+      } else {
+        setSelectedForms([]);
+      }
+    }, [selectedUser]);
   const handleProjectChange = (event) => {
     const projectId = event.target.value;
     const project = mockProjects.find((p) => p.id === parseInt(projectId));
     setSelectedProject(project);
-    setSelectedForms([]);
+
   };
 
   const handleFormChange = (event) => {
-    const formId = event.target.value;
-    const form = mockForms.find((f) => f.id === parseInt(formId));
-    if (!selectedForms.find((f) => f.id === form.id)) {
-      setSelectedForms((forms) => forms.concat(form));
-    }
+    const formId = parseInt(event.target.value);
+    if (!selectedUser) return;
+  
+    const updatedProjects = selectedUser.projects.map((project) => {
+      if (project.id === selectedProject.id) {
+        if (project.forms.includes(formId)) return project; // Skip if the form is already assigned
+        return {
+          ...project,
+          forms: [...project.forms, formId],
+        };
+      }
+      return project;
+    });
+  
+    setSelectedUser({ ...selectedUser, projects: updatedProjects });
   };
 
   const handleSearchInputChange = (event) => {
@@ -59,8 +79,18 @@ const AssignForm = () => {
     setFilteredUsers(filteredUsers);
   };
 
-  const handleRemoveForm = (formId) => {
-    setSelectedForms((forms) => forms.filter((f) => f.id !== formId));
+  const handleRemoveForm = (projectId, formId) => {
+    const updatedProjects = selectedUser.projects.map((project) => {
+      if (project.id === projectId) {
+        return {
+          ...project,
+          forms: project.forms.filter((id) => id !== formId),
+        };
+      }
+      return project;
+    });
+  
+    setSelectedUser({ ...selectedUser, projects: updatedProjects });
   };
 
   const handleUserFormSubmit = (event) => {
@@ -82,16 +112,27 @@ const AssignForm = () => {
     ));
   };
   const renderSelectedForms = () => {
-    return selectedForms.map((form) => (
-      <div key={form.id} className="selected-form">
-        {form.name}
-        <HighlightOffIcon aria-label="delete" onClick={() => handleRemoveForm(form.id)}/>
-       
-
-      </div>
-    ));
-  };
+    if (!selectedUser || !selectedUser.projects) return null;
   
+    return selectedUser.projects.map((project) => {
+      const projectName = mockProjects.find((p) => p.id === project.id).name;
+      const userForms = project.forms.map(formId => mockForms.find(f => f.id === formId));
+  
+      return (
+        <div key={project.id} className="project-forms">
+          <h4>{projectName}:</h4>
+          {userForms.map((form) => (
+            <div key={form.id} className="selected-form">
+              {form.name}
+              <HighlightOffIcon aria-label="delete" onClick={() => handleRemoveForm(project.id,form.id)} />
+            </div>
+          ))}
+        </div>
+      );
+    });
+  };
+
+
   const tableStyles = {
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
     borderRadius: '10px',
@@ -171,6 +212,7 @@ const AssignForm = () => {
   <div className="d-flex flex-column flex-grow-1">
     <h3>Selected User: {selectedUser.username}</h3>
     <form onSubmit={handleUserFormSubmit} className="assign-form">
+      
       <div className="form-group">
         <label htmlFor="project">Project:</label>
         <select id="project" value={selectedProject ? selectedProject.id : ''} onChange={handleProjectChange} className="form-control">
