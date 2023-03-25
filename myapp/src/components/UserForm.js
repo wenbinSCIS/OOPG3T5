@@ -11,7 +11,7 @@ export default function UserForm() {
   var [isUserFormLoaded , setIsUserFormLoaded] = useState(false);
 
   var [formData, setFormData] = useState(null);
-  //var [toReturn, setToReturn] = useState([]);
+  var [toReturn, setToReturn] = useState([]);
 
   var [approverComments, setApproverComments] = useState({});
 

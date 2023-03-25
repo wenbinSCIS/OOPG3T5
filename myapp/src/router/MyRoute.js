@@ -27,7 +27,7 @@ export default function MyRoute() {
         <Route exact path="/vendor" element={<VendorAssessmentForm/>} />
         <Route exact path="/vendorApprover" element={<VendorAssessmentFormApprover/>} />
         <Route exact path="/testadmin" element={<MyForm/>}/> 
-        <Route exact path="/UserForm" element={<UserForm/>}/> 
+        {/* <Route exact path="/UserForm" element={<UserForm/>}/>  */}
         <Route component={Error} />
       </Routes>
     </>

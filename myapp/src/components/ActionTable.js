@@ -27,7 +27,7 @@ export default function ActionTable({actions }) {
               </MDBBadge>
             </td>
             <td style={{ display: 'flex', flexDirection: 'row-reverse', paddingRight:100 }}>
-              <Link to={`/UserForm`} className='btn btn-link' onClick={()=>{sessionStorage.setItem('formName',action.formName);sessionStorage.setItem('formVersion',action.formVersion)}}>
+              <Link to={`/Vendor`} className='btn btn-link' onClick={()=>{sessionStorage.setItem('formName',action.formName);sessionStorage.setItem('formVersion',action.formVersion)}}>
                 Start
               </Link>
             </td>
