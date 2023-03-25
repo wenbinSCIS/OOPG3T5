@@ -158,12 +158,13 @@ public class FormInputController {
             return new ResponseEntity<>("Form with the given name and version already exists", HttpStatus.CONFLICT);
         }
         try {
-            FormInput _formInput = formInputRepository.save(new FormInput(formInput.getFormName(),
-                    formInput.getUsername(), formInput.getFormVersion(), formInput.getStatus(), formInput.getFormInputData(), formInput.getCompanyInfo()));
-
             if(formInput.getApproverComments() != null){
             _formInput = formInputRepository.save(new FormInput(formInput.getFormName(),
             formInput.getUsername(), formInput.getFormVersion(), formInput.getStatus(), formInput.getFormInputData(), formInput.getCompanyInfo(),formInput.getApproverComments()));
+            }
+            else{
+                FormInput _formInput = formInputRepository.save(new FormInput(formInput.getFormName(),
+                formInput.getUsername(), formInput.getFormVersion(), formInput.getStatus(), formInput.getFormInputData(), formInput.getCompanyInfo()));
             }
             return new ResponseEntity<>(_formInput, HttpStatus.CREATED);
         } catch (Exception e) {
