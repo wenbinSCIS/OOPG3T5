@@ -11,7 +11,7 @@ export default function VendorAssessmentFormApprover() {
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
 
-  var formVersion = localStorage.getItem('formVersion') || 1;
+  var formVersion = localStorage.getItem('formVersion') || "1.1";
   var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
   var vendor = localStorage.getItem('vendor') || "abc@gmail.com";
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "";

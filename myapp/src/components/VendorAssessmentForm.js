@@ -22,10 +22,10 @@ export default function VendorAssessmentForm() {
 
   var url = window.location.href;
 
-  var formVersion = sessionStorage.getItem("formVersion") || "";
-  var formName = sessionStorage.getItem("formName") || "";
-  var username = sessionStorage.getItem("username") || "";
-  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "";
+  var formVersion = sessionStorage.getItem("formVersion") || "1.1";
+  var formName = sessionStorage.getItem("formName") || "QLI-QHSP-10-F01 New Vendor Assessment Form";
+  var username = sessionStorage.getItem("username") || "abc@gmail.com";
+  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "Company A";
   //console.log(companyInfo)
 
   async function getData(formName) {
@@ -153,9 +153,8 @@ export default function VendorAssessmentForm() {
       <div className="container">
       {to_return}
       <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
-      <Button variant="dark" onClick={() => submit(formName, formVersion, username, companyInfo)}>Submit Form</Button>
+      <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo); navigate("/CompletedForms")}}>Submit Form</Button>
       </div>
       </section>
     );
 }
-// ; navigate("/CompletedForms")}

@@ -49,7 +49,7 @@ const FormCard = ({ formItems }) => {
               <MDBListGroupItem>Status : <span className={`badge rounded-pill ${pillClass}`}>{item.status}</span></MDBListGroupItem>
             </MDBListGroup>
             <MDBCardBody>
-              <MDBCardLink href={`/UserForm`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion)}}>Get Started</MDBCardLink>
+              <MDBCardLink href={`/VendorApprover`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion)}}>Get Started</MDBCardLink>
           
             </MDBCardBody>
           </MDBCard>
