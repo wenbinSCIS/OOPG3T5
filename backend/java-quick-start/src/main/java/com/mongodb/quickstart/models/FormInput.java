@@ -17,12 +17,21 @@ public class FormInput {
     private String status;
     private ArrayList<Object> formInputData;
     private CompanyInfo companyInfo;
+    private ArrayList<Object> approverComments;
+
+    public ArrayList<Object> getApproverComments() {
+        return approverComments;
+    }
 
     public FormInput()
     {
         super();
     }
     
+    public void setApproverComments(ArrayList<Object> approverComments) {
+        this.approverComments = approverComments;
+    }
+
     public FormInput(String formName, String username, double formVersion, String status,
         ArrayList<Object> formInputData, CompanyInfo companyInfo) {
         this.formName = formName;
@@ -31,6 +40,17 @@ public class FormInput {
         this.status = status;
         this.formInputData = formInputData;
         this.companyInfo = companyInfo;
+    }
+
+    public FormInput(String formName, String username, double formVersion, String status,
+        ArrayList<Object> formInputData, CompanyInfo companyInfo, ArrayList<Object> approverComments) {
+        this.formName = formName;
+        this.username = username;
+        this.formVersion = formVersion;
+        this.status = status;
+        this.formInputData = formInputData;
+        this.companyInfo = companyInfo;
+        this.approverComments = approverComments;
     }
 
 
