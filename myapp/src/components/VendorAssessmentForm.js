@@ -24,7 +24,7 @@ export default function VendorAssessmentForm() {
   var formName = sessionStorage.getItem("formName") || "";
   var username = sessionStorage.getItem("username") || "";
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "";
-  console.log(companyInfo)
+  //console.log(companyInfo)
 
   async function getData(formName) {
     try {
@@ -55,7 +55,9 @@ export default function VendorAssessmentForm() {
       .then((response) => {
         if (response.status === 200) {
           setallData(response.data.formInputData[0])
-          if(response.data.approverComments[0]){
+          console.log(response.data)
+          if(response.data.approverComments[0]!=null){
+          
             setApproverComments(response.data.approverComments[0])
           }
           setIsUserInputLoaded(true);
@@ -64,7 +66,7 @@ export default function VendorAssessmentForm() {
     return null
   }
 
-  console.log(approverComments)
+  //console.log(approverComments)
 
   async function saveUserInput(formName, formVersion, username, companyInfo){
     console.log(companyInfo)
@@ -83,7 +85,7 @@ export default function VendorAssessmentForm() {
       .then((response) => {
         setIsUserInputLoaded(true);
         alert("Saved new input data!");
-        console.log(response.data);
+        //console.log(response.data);
       });
     }else{
       await axios

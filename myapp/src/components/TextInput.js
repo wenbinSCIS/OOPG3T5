@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Text from './Text';
 
 function TextInput(props) {
-  console.log(props)
+  //console.log(props)
   var number = `form-group col-md-${props.size} mb-1 mt-1`
 
   if (props.size == undefined){
