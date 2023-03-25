@@ -26,14 +26,11 @@ function TextInput(props) {
         <InputGroup >
         {
           props.hintPosition == "front" &&
-          <InputGroup.Text >{props.hint}</InputGroup.Text>
+          <InputGroup.Text style={{
+            backgroundColor: props.generateFor === "Approver" ? "#f4dcb7" : "#fff",
+          }}>{props.hint}</InputGroup.Text>
         }
         {
-          props.generateFor == "Approver" ?
-          <Form.Control style={{display:'inline',alignItems:'center'}}
-          placeholder= "test"
-          plaintext
-          readOnly/>:
           <Form.Control
                     id={props.name}
                     name={props.name}
@@ -42,6 +39,11 @@ function TextInput(props) {
                     onChange={props.onChange}
                     data-format="textinput"
                     disabled={props.disabled !== null ? props.disabled : false}
+                    style={{
+                      backgroundColor: props.generateFor === "Approver" ? "#fdf9f3" : "#fff",
+                      cursor: props.generateFor === "Approver" ? "not-allowed" : "auto",
+                      pointerEvents: props.generateFor === "Approver" ? "none" : "auto"
+                    }}
                   />
         }
         

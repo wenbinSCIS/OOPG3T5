@@ -1,0 +1,15 @@
+com\mongodb\quickstart\models\AdministrativePersonnel.class
+com\mongodb\quickstart\repository\UserRepository.class
+com\mongodb\quickstart\models\AdministrativePersonnel$VendorForm.class
+com\mongodb\quickstart\models\Vendor.class
+com\mongodb\quickstart\models\Vendor$AssignedForm.class
+com\mongodb\quickstart\models\AdministrativePersonnel$CreatedForm.class
+com\mongodb\quickstart\models\TempUser.class
+com\mongodb\quickstart\controller\UserController.class
+com\mongodb\quickstart\models\Form$Section$RowElement$OptionObject.class
+com\mongodb\quickstart\controller\FormInputController.class
+com\mongodb\quickstart\models\Approver.class
+com\mongodb\quickstart\models\Form$Section$RowElement$OptionObject$textVariables.class
+com\mongodb\quickstart\models\User.class
+com\mongodb\quickstart\repository\FormInputRepository.class
+com\mongodb\quickstart\models\FormInput.class

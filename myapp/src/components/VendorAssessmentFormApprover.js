@@ -13,7 +13,7 @@ export default function VendorAssessmentFormApprover() {
 
   var formVersion = localStorage.getItem('formVersion') || 1;
   var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
-  var username = localStorage.getItem('username') || "Nico";
+  var vendor = localStorage.getItem('vendor') || "Nico";
 
   async function getData(formName) {
     try {
@@ -28,13 +28,13 @@ export default function VendorAssessmentFormApprover() {
 
   useEffect(() => {
     getData(formName);
-    loadUserInput(formName, formVersion, username);
+    loadUserInput(formName, formVersion, vendor);
   }, []); // empty dependency array to run the effect only once
 
-  async function loadUserInput(formName, formVersion, username) {
+  async function loadUserInput(formName, formVersion, vendor) {
     var inputJson = {
       "formName": formName,
-      "username": username,
+      "username": vendor,
       "formVersion": formVersion,
     }
     await axios
@@ -77,6 +77,8 @@ export default function VendorAssessmentFormApprover() {
 
   const to_return = []
 
+  console.log(remarks)
+
   if (formData) {
     var sections = formData['sections']
     console.log(sections)
@@ -90,7 +92,7 @@ export default function VendorAssessmentFormApprover() {
         <Sidebar></Sidebar>
       <div className="container">
       {to_return}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, username)}>Save</Button>
+      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveUserInput(formName, formVersion, vendor)}>Save</Button>
       <Button variant="dark">Submit Form</Button>
       </div>
       </section>

@@ -13,7 +13,7 @@ function Textarea(props) {
     
     return (
       <div className={number} style={{margin:0}}>
-        <label style={{margin:0,color:'deepskyblue'}}>{props.title}</label>
+        <label style={{margin:0,color: props.generateFor === "Approver" ? "#d5b17a" : "deepskyblue"}}>{props.title}</label>
         <br></br>
         <textarea
           name={props.name}
@@ -24,6 +24,12 @@ function Textarea(props) {
           onChange={props.onChange}
           rows="4"
           cols="50"
+          style={{
+            backgroundColor: props.generateFor === "Approver" ? "#fdf9f3" : "#fff",
+            cursor: props.generateFor === "Approver" ? "not-allowed" : "auto",
+            pointerEvents: props.generateFor === "Approver" ? "none" : "auto"
+          }}
+          
         >
         </textarea>
       </div>

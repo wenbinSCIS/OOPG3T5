@@ -4,7 +4,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
 
 
-function Radio({ data, onChange, options, title, size, false_header, name, orientation}) {
+function Radio({ data, onChange, options, title, size, false_header, name, orientation, generateFor}) {
 
   var [selectedOption, setSelectedOption] = useState('');
   // var [disabled, setDisabled] = useState(true);
@@ -44,7 +44,7 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
   return (
     <div className={number} style={{ margin: 0 }}>
       {title.length > 0 && (
-        <InputGroup.Text style={{ paddingTop: 2, paddingBottom:2,marginBottom:2 }}>{title}</InputGroup.Text>
+        <InputGroup.Text style={{ paddingTop: 2, paddingBottom:2,marginBottom:2 ,backgroundColor: generateFor === "Approver" ? "#f4dcb7" : "#fff"}}>{title}</InputGroup.Text>
       )}
       {false_header && <br />}
       {options.map((option,index) => option.optionType === "radio-text" ? (
@@ -57,12 +57,21 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
             key={index}
             value = {option.optionValue}
             onChange={(e) => {handleRadioChange(e); }}
-            style={{ margin: 7 }}
+            style={
+              generateFor == "Approver" ?{
+                margin: '7px',
+                cursor: 'not-allowed',
+                pointerEvents: 'none',
+              }:
+              {
+                margin: '7px',
+            }}
             data-format="radio-text"
           />
             <TextInput title={option.textVariables.header} hint={option.textVariables.hintText} hintPosition={option.textVariables.hintPosition} name = {option.optionName + "_text"} false_header={false_header} disabled={data != null && data.name == option.optionValue ? false : true} 
             onChange={(e) => handleTextinChange(name,option.optionValue, e)}
             text={data!==undefined?data.text:''}
+            generateFor={generateFor}
             /> 
             
           </div>
@@ -78,7 +87,15 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
             key={index}
             value = {option.optionValue}
             onChange={(e) => handleRadioChange(e)}
-            style={{ margin: 7 }}
+            style={
+              generateFor == "Approver" ?{
+                margin: '7px',
+                cursor: 'not-allowed',
+                pointerEvents: 'none',
+              }:
+              {
+                margin: '7px',
+            }}
           />
           </div>
       )
