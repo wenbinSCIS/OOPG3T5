@@ -19,19 +19,17 @@ export default function VendorAssessmentForm() {
   var [approverComments, setApproverComments] = useState({});
 
   var url = window.location.href;
-  var formVersion = localStorage.getItem('formVersion') || 1;
-  var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
-  var username = localStorage.getItem('username') || "Nico";
 
   var formVersion = sessionStorage.getItem("formVersion") || "";
   var formName = sessionStorage.getItem("formName") || "";
   var username = sessionStorage.getItem("username") || "";
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "";
+  console.log(companyInfo)
 
   async function getData(formName) {
     try {
       console.log('Sending request...');
-      const response = await axios.get(`http://localhost:8080/api/getFormByName/${formName}`);
+      const response = await axios.get(`http://localhost:8080/api/getFormByNameAndVersion/${formName}/${formVersion}`);
       //console.log('Response received:', response.data);
       setFormData(response.data);
       setIsUserFormLoaded(true)
