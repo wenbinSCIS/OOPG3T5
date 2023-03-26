@@ -31,7 +31,6 @@ class Mailer {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
 
@@ -41,6 +40,5 @@ public class SendEmail {
         Mailer.send("OOPG3T5@gmail.com", "livmeituhepihmrm", "kruisetog@gmail.com", "test msg",
                 "would u be surprised if this works?");
     }
-    
-
 }
+
