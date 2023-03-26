@@ -13,7 +13,7 @@ import axios from "axios";
 import Sidebar from "./Sidebar/Sidebar";
 import AddButton from "./Buttons/AddButton";
 
-import SectionEditor from "./SectionEditor/SectionEditor";
+// import SectionEditor from "./SectionEditor/SectionEditor";
 
 function MyForm() {
   const [showAddComponent, setShowAddComponent] = useState(false);
@@ -120,7 +120,18 @@ function MyForm() {
           elementHeader: "",
           elementType: "Dropdown",
           size: "4",
-          options: ["Selection A", "Selection B", "Selection C"],
+          options: [
+            {
+              optionType: "Dropdown",
+              optionName: "Yes",
+              optionValue: "Yes",
+            },
+            {
+              optionType: "Dropdown",
+              optionName: "No",
+              optionValue: "No",
+            },
+          ],
         },
       ],
     ],
@@ -261,20 +272,20 @@ handleAddComponent is deprecated
 =============================================================================================
 */
 
-  function handleAddElement({ target }) {
-    console.log(target);
-    setFormComponents([
-      ...formComponents,
-      <GenerateSection
-        section={target}
-        allData={allData}
-        setallData={setallData}
-      ></GenerateSection>,
-    ]);
-    console.log(formComponents);
-    setInfoComponents([...infoComponents, target]);
-    setSaveStatus(false);
-  }
+  // function handleAddElement({ target }) {
+  //   console.log(target);
+  //   setFormComponents([
+  //     ...formComponents,
+  //     <GenerateSection
+  //       section={target}
+  //       allData={allData}
+  //       setallData={setallData}
+  //     ></GenerateSection>,
+  //   ]);
+  //   console.log(formComponents);
+  //   setInfoComponents([...infoComponents, target]);
+  //   setSaveStatus(false);
+  // }
 
   function handleAddComponent({ name }) {
     // we should specific add components for each type
