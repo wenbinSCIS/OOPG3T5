@@ -1,0 +1,1 @@
+javac SendEmail.java -cp mail.jar;activation.jar
