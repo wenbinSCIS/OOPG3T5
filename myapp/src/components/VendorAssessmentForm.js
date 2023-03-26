@@ -40,13 +40,14 @@ export default function VendorAssessmentForm() {
     await axios
       .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
       .then((response) => {
-        console.log(response.data);
+        console.log('userinput ',response.data);
         if (response.status === 200) {
-          setallData(response.data.formInputData[0])
+          console.log('response 200')
+          setIsLoaded(true);
+          setallData(response.data.formInputData[0]) //this may not work, take note
           if(response.data.approverComments[0]){
             setApproverComments(response.data.approverComments[0])
           }
-          setIsLoaded(true);
         }
       });
     return null
