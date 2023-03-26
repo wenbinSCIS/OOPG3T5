@@ -11,7 +11,7 @@ import SaveComponent from "./SaveComponent";
 import FormSelector from "./FormSelector";
 import axios from "axios";
 import Sidebar from "./Sidebar/Sidebar";
-import AddButton from './Buttons/AddButton';
+import AddButton from "./Buttons/AddButton";
 
 import SectionEditor from "./SectionEditor/SectionEditor";
 
@@ -36,19 +36,19 @@ function MyForm() {
     "Add TextArea",
     "Add Checkbox",
     "Add Radio",
-    "Add Table"
+    "Add Table",
   ]);
 
   // const handleInputChange = (event) => {
   //   setElementName(event.target.value);
   // };
 
-  const handleFormSubmit = (data) => {
-    console.log(data)
-    setSectionData(data);
-    handleAddElement({ target: data });
-    console.log(data);
-  };
+  // const handleFormSubmit = (data) => {
+  //   console.log(data)
+  //   setSectionData(data);
+  //   handleAddElement({ target: data });
+  //   console.log(data);
+  // };
 
   function handleOptionChange(event) {
     setSelectedOption(event.target.value);
@@ -241,48 +241,6 @@ userobject, setdata and set all data new paramater for generate section
 =============================================================================================
 */
 
-  // var userObject =
-  //   //this object will be called from API
-  //   {
-  //     CompanyName: "Write",
-  //     CompanyRegistrationNo: "Anything",
-  //     OfficeAddress: "SMU",
-  //     Telephone: "123456",
-  //     Fax: "123123",
-  //     Contacts: [
-  //       {
-  //         Name: "123456",
-  //         Tel: "123",
-  //       },
-  //       {
-  //         Tel: "123",
-  //         Designation: "asdadad",
-  //       },
-  //       {
-  //         Designation: "asdasdad",
-  //       },
-  //     ],
-  //     How: "Selection B",
-  //     Like: {
-  //       name: "Others",
-  //       type: "radio-text",
-  //       text: "here as well",
-  //     },
-  //     Licenses: [
-  //       {
-  //         name: "b. Limited Company",
-  //         type: "Checkbox",
-  //         text: "",
-  //       },
-  //       {
-  //         name: "Others",
-  //         type: "Checkbox-text",
-  //         text: "asdas",
-  //       },
-  //     ],
-  //     Feedback: "asdasdadad",
-  //   };
-
   var [allData, setallData] = useState({}); //All data to save for user
 
   if (userObject === undefined) {
@@ -343,11 +301,12 @@ handleAddComponent is deprecated
     }
     setFormComponents([
       ...formComponents,
-      <GenerateSection
-        section={target}
-        allData={allData}
-        setallData={setallData}
-      ></GenerateSection>,
+      target,
+      // <GenerateSection
+      //   section={target}
+      //   allData={allData}
+      //   setallData={setallData}
+      // ></GenerateSection>,
     ]);
     setInfoComponents([...infoComponents, target]);
     setSaveStatus(false);
@@ -379,9 +338,8 @@ handleAddComponent is deprecated
     updatedComponents[index + 1] = temp;
     setFormComponents(updatedComponents);
   }
-  function handleAddSection(index){
 
-  }
+  function handleAddSection(index) {}
 
   /* Below is functions connecting to MongoDB (APIs) */
   async function saveComponents() {
@@ -434,7 +392,7 @@ handleAddComponent is deprecated
         );
       });
   }
-  console.log(formComponents)
+  console.log(formComponents);
   // setInterval(loadExistingForms, 5000);
 
   /* returning the Page */
@@ -442,7 +400,6 @@ handleAddComponent is deprecated
     <section className="d-flex">
       <Sidebar></Sidebar>
       <div className="container">
-        
         <FormSelector
           forms={availableForms}
           onChange={handleLoadForm}
@@ -456,28 +413,27 @@ handleAddComponent is deprecated
             color="lightgreen"
           />
         </div>
-        <SectionEditor onPressed={handleFormSubmit} />
-<div className="button-container" style={{ display: 'block' }}>
-  <div style={{ textAlign: 'center', display: 'block' }}>
-    <AddButton
-      Add={() => handleAddSection()}
-      formComponents={formComponents}
-      setFormComponents={setFormComponents}
-      allData={allData}
-      setallData={setallData}
-    />
-  </div>
-  <div style={{ textAlign: 'center', display: 'block' }}>
-    <AddComponent
-      className="centered-button"
-      onAdd={() => setShowAddComponent(!showAddComponent)}
-      showAdd={showAddComponent}
-    />
-  </div>
-</div>
+        {/* <SectionEditor onPressed={handleFormSubmit} /> */}
+        <div className="button-container" style={{ display: "block" }}>
+          <div style={{ textAlign: "center", display: "block" }}>
+            <AddButton
+              // Add={() => handleAddSection()}
+              formComponents={formComponents}
+              setFormComponents={setFormComponents}
+              allData={allData}
+              setallData={setallData}
+            />
+          </div>
+          <div style={{ textAlign: "center", display: "block" }}>
+            <AddComponent
+              className="centered-button"
+              onAdd={() => setShowAddComponent(!showAddComponent)}
+              showAdd={showAddComponent}
+            />
+          </div>
+        </div>
 
-        
-        <div id='previewSection'>
+        <div>
           {formComponents.map((component, index) => (
             <div key={index}>
               <hr />
@@ -490,7 +446,11 @@ handleAddComponent is deprecated
                 formComponents={formComponents}
                 setFormComponents={setFormComponents}
               />
-              {component}
+              <GenerateSection
+                section={component}
+                allData={allData}
+                setallData={setallData}
+              ></GenerateSection>
               <hr />
             </div>
           ))}
@@ -522,7 +482,9 @@ handleAddComponent is deprecated
                     {" "}
                     <button
                       className="centered-button"
-                      onClick={() => handleAddComponent({ name: selectedOption })}
+                      onClick={() =>
+                        handleAddComponent({ name: selectedOption })
+                      }
                     >
                       Add Element
                     </button>
@@ -557,11 +519,8 @@ handleAddComponent is deprecated
           <GenerateSection section={sectionData}></GenerateSection>
         )} */}
       </div>
-        <div style={{ position: "absolute", bottom: 50, width: "100%" }}>
-
-    </div>
+      <div style={{ position: "absolute", bottom: 50, width: "100%" }}></div>
     </section>
-    
   );
 }
 
