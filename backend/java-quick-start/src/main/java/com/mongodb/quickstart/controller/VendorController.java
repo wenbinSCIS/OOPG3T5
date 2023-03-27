@@ -117,6 +117,32 @@ public class VendorController {
         }
 
 //update assigned form list of a project of a vendor
+    @PutMapping("/updateAssignedFormList")
+        public ResponseEntity<?> updateAssignedFormList(@RequestBody Vendor vendor) {
+            Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
+
+            if (userData.isPresent()) {
+                Vendor existingUser = userData.get();
+                ArrayList<Project> projectList = existingUser.getProject();
+                Project newProject = vendor.getProject().get(0);
+
+                for(int i=0;i<projectList.size();i++)
+                {
+                    Project curProject = projectList.get(i);
+
+                    if (curProject.getProjectId().equals(newProject.getProjectId())&&curProject.getProjectName().equals(newProject.getProjectName()))
+                    {
+                        curProject.setAssignedForm(newProject.getAssignedForm());;
+                        userRepository.save(existingUser);
+                        return new ResponseEntity<>(existingUser, HttpStatus.OK);
+                    }
+                }
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
     @PutMapping("/appendAssignedForm")
         public ResponseEntity<?> appendAssignedForm(@RequestBody Vendor vendor) {
             Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
