@@ -3,6 +3,8 @@ package com.mongodb.quickstart.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +23,13 @@ import com.mongodb.quickstart.models.TempUser;
 import com.mongodb.quickstart.models.User;
 import com.mongodb.quickstart.models.Vendor;
 import com.mongodb.quickstart.repository.UserRepository;
+import com.mongodb.quickstart.service.email.SendEmail;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    
     @Autowired
     UserRepository userRepository;
 
@@ -40,14 +42,13 @@ public class UserController {
     @PostMapping("/getUserByName")
     public ResponseEntity<User> getUserByName(@RequestBody TempUser tempUser) {
         Optional<User> userData = userRepository.findByUsername(tempUser.getUsername());
-    
+
         if (userData.isPresent()) {
             return new ResponseEntity<>(userData.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
 
     @PostMapping("/getUserByUserType")
     public ResponseEntity<List<User>> getUserByUserType(@RequestBody TempUser tempUser) {
@@ -67,86 +68,90 @@ public class UserController {
             return new ResponseEntity<>("User with the given username already exists", HttpStatus.CONFLICT);
         }
         try {
-        String userType = tempUser.getUserType();
-
-        if (userType.equals("AdministrativePersonnel"))
-        {
-            AdministrativePersonnel newAdmin = new AdministrativePersonnel(tempUser.getUsername(), tempUser.getPasswordString(),tempUser.getCreatedForm(),tempUser.getVendorForm());
-            AdministrativePersonnel _user = userRepository.save(newAdmin);
-            return new ResponseEntity<>(_user, HttpStatus.CREATED);
+            SendEmail.emailAccountCreation(tempUser);
+        } catch (RuntimeException e) {
+            System.out.println("email failed");
+            e.printStackTrace();
         }
-        else if (userType.equals("Approver"))
-        {
-            Approver newApprover = new Approver(tempUser.getUsername(), tempUser.getPasswordString(),tempUser.getCreatedForm(),tempUser.getVendorForm());
-            Approver _user = userRepository.save(newApprover);
-            return new ResponseEntity<>(_user, HttpStatus.CREATED);
-        }
-        else if (userType.equals("Vendor"))
-        {
-            Vendor newVendor = new Vendor(tempUser.getUsername(), tempUser.getPasswordString(), tempUser.getProject(),tempUser.getCompanyInfo());
-            Vendor _user = userRepository.save(newVendor);
-            return new ResponseEntity<>(_user, HttpStatus.CREATED);
-        }
+        try {
+            String userType = tempUser.getUserType();
+            if (userType.equals("AdministrativePersonnel")) {
+                AdministrativePersonnel newAdmin = new AdministrativePersonnel(tempUser.getUsername(),
+                        tempUser.getPasswordString(), tempUser.getCreatedForm(), tempUser.getVendorForm());
+                AdministrativePersonnel _user = userRepository.save(newAdmin);
+                return new ResponseEntity<>(_user, HttpStatus.CREATED);
+            } else if (userType.equals("Approver")) {
+                Approver newApprover = new Approver(tempUser.getUsername(), tempUser.getPasswordString(),
+                        tempUser.getCreatedForm(), tempUser.getVendorForm());
+                Approver _user = userRepository.save(newApprover);
+                return new ResponseEntity<>(_user, HttpStatus.CREATED);
+            } else if (userType.equals("Vendor")) {
+                Vendor newVendor = new Vendor(tempUser.getUsername(), tempUser.getPasswordString(),
+                        tempUser.getProject(), tempUser.getCompanyInfo());
+                Vendor _user = userRepository.save(newVendor);
+                return new ResponseEntity<>(_user, HttpStatus.CREATED);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
 
     @PutMapping("/updateUsername/{username}")
-        public ResponseEntity<?> updateUsername(@PathVariable("username") String username, @RequestBody TempUser tempUser) {
-            Optional<User> userData = userRepository.findByUsername(username);
+    public ResponseEntity<?> updateUsername(@PathVariable("username") String username, @RequestBody TempUser tempUser) {
+        Optional<User> userData = userRepository.findByUsername(username);
 
-            if (userData.isPresent()) {
-                User existingUser = userData.get();
+        if (userData.isPresent()) {
+            User existingUser = userData.get();
 
-                Optional<User> userDataCheck = userRepository.findByUsername(tempUser.getUsername());
+            Optional<User> userDataCheck = userRepository.findByUsername(tempUser.getUsername());
 
-                if (userDataCheck.isPresent()) {
-                    return new ResponseEntity<>("User with the given username already exists", HttpStatus.CONFLICT);
-                }
-
-              // check if the username in the request body matches the username in the URL path parameter
-
-                existingUser.setUsername(tempUser.getUsername());
-                userRepository.save(existingUser);
-
-                return new ResponseEntity<>(existingUser, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if (userDataCheck.isPresent()) {
+                return new ResponseEntity<>("User with the given username already exists", HttpStatus.CONFLICT);
             }
+
+            // check if the username in the request body matches the username in the URL
+            // path parameter
+
+            existingUser.setUsername(tempUser.getUsername());
+            userRepository.save(existingUser);
+
+            return new ResponseEntity<>(existingUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
 
     @PutMapping("/updateUserPassword")
-        public ResponseEntity<?> updateUserPassword( @RequestBody TempUser tempUser) {
-            Optional<User> userData = userRepository.findByUsername(tempUser.getUsername());
+    public ResponseEntity<?> updateUserPassword(@RequestBody TempUser tempUser) {
+        Optional<User> userData = userRepository.findByUsername(tempUser.getUsername());
 
-            if (userData.isPresent()) {
-                User existingUser = userData.get();
-            
-              // check if the username in the request body matches the username in the URL path parameter
-                if (!existingUser.getUsername().equals(tempUser.getUsername())) {
-                    return new ResponseEntity<>("Username in URL path parameter does not match username in request body", HttpStatus.BAD_REQUEST);
-                }
+        if (userData.isPresent()) {
+            User existingUser = userData.get();
 
-                //create a new user object with input password string to 
-                //get new hashed password and salt
-
-                User placeholderUser = new User(tempUser.getUsername(), tempUser.getPasswordString(), null);
-                String newHashedPassword = placeholderUser.getHashedPassword();
-                byte[] newPasswordSalt = placeholderUser.getPasswordSalt();
-
-                existingUser.setHashedPassword(newHashedPassword);
-                existingUser.setPasswordSalt(newPasswordSalt);
-                userRepository.save(existingUser);
-
-                return new ResponseEntity<>(existingUser, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            // check if the username in the request body matches the username in the URL
+            // path parameter
+            if (!existingUser.getUsername().equals(tempUser.getUsername())) {
+                return new ResponseEntity<>("Username in URL path parameter does not match username in request body",
+                        HttpStatus.BAD_REQUEST);
             }
-        }
 
+            // create a new user object with input password string to
+            // get new hashed password and salt
+
+            User placeholderUser = new User(tempUser.getUsername(), tempUser.getPasswordString(), null);
+            String newHashedPassword = placeholderUser.getHashedPassword();
+            byte[] newPasswordSalt = placeholderUser.getPasswordSalt();
+
+            existingUser.setHashedPassword(newHashedPassword);
+            existingUser.setPasswordSalt(newPasswordSalt);
+            userRepository.save(existingUser);
+
+            return new ResponseEntity<>(existingUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @DeleteMapping("/deleteUser")
     public ResponseEntity<HttpStatus> deleteUser(@RequestBody TempUser tempUser) {
@@ -159,41 +164,40 @@ public class UserController {
     }
 
     @PutMapping("/userLogIn")
-        public ResponseEntity<?> userLogIn(@RequestBody TempUser tempUser) {
-            String username = tempUser.getUsername();
-            Optional<User> userData = userRepository.findByUsername(username);
+    public ResponseEntity<?> userLogIn(@RequestBody TempUser tempUser) {
+        String username = tempUser.getUsername();
+        Optional<User> userData = userRepository.findByUsername(username);
 
-            if (userData.isPresent()) {
-                User existingUser = userData.get();
+        if (userData.isPresent()) {
+            User existingUser = userData.get();
 
-              // check if the username in the request body matches the username in the URL path parameter
+            // check if the username in the request body matches the username in the URL
+            // path parameter
 
-                Boolean isCorrectPassword = existingUser.comparePassword(tempUser.getPasswordString());
-                if (isCorrectPassword)
-                {
-                    if (existingUser instanceof Vendor)
-                    {
-                        Vendor existingVendor = (Vendor) existingUser;
-                        Vendor logInUser = new Vendor(existingVendor.getUsername(), existingVendor.getCompanyInfo());
-                        return new ResponseEntity<>(logInUser,HttpStatus.OK);
-                    }
-                    else if(existingUser instanceof Approver)
-                    {
-                        Approver existingApprover = (Approver) existingUser;
-                        Approver logInUser = new Approver(existingApprover.getUsername(),existingApprover.getCreatedForm(),existingApprover.getVendorForm());
-                        return new ResponseEntity<>(logInUser,HttpStatus.OK);
-                    }
-                    else if(existingUser instanceof AdministrativePersonnel)
-                    {
-                        AdministrativePersonnel existingAdministrativePersonnel = (AdministrativePersonnel) existingUser;
-                        AdministrativePersonnel logInUser = new AdministrativePersonnel(existingAdministrativePersonnel.getUsername(),existingAdministrativePersonnel.getCreatedForm(),existingAdministrativePersonnel.getVendorForm());
-                        return new ResponseEntity<>(logInUser,HttpStatus.OK);
-                    }
+            Boolean isCorrectPassword = existingUser.comparePassword(tempUser.getPasswordString());
+            if (isCorrectPassword) {
+                if (existingUser instanceof Vendor) {
+                    Vendor existingVendor = (Vendor) existingUser;
+                    Vendor logInUser = new Vendor(existingVendor.getUsername(), existingVendor.getCompanyInfo());
+                    return new ResponseEntity<>(logInUser, HttpStatus.OK);
+                } else if (existingUser instanceof Approver) {
+                    Approver existingApprover = (Approver) existingUser;
+                    Approver logInUser = new Approver(existingApprover.getUsername(), existingApprover.getCreatedForm(),
+                            existingApprover.getVendorForm());
+                    return new ResponseEntity<>(logInUser, HttpStatus.OK);
+                } else if (existingUser instanceof AdministrativePersonnel) {
+                    AdministrativePersonnel existingAdministrativePersonnel = (AdministrativePersonnel) existingUser;
+                    AdministrativePersonnel logInUser = new AdministrativePersonnel(
+                            existingAdministrativePersonnel.getUsername(),
+                            existingAdministrativePersonnel.getCreatedForm(),
+                            existingAdministrativePersonnel.getVendorForm());
+                    return new ResponseEntity<>(logInUser, HttpStatus.OK);
                 }
-
-                return new ResponseEntity<>(isCorrectPassword, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
+
+            return new ResponseEntity<>(isCorrectPassword, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
 }
