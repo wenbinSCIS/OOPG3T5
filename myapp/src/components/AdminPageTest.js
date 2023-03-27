@@ -12,8 +12,9 @@ import FormSelector from "./FormSelector";
 import axios from "axios";
 import Sidebar from "./Sidebar/Sidebar";
 import AddButton from "./Buttons/AddButton";
-
+import Button from '@mui/material/Button';
 import SectionEditor from "./SectionEditor/SectionEditor";
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 function MyForm() {
   const [showAddComponent, setShowAddComponent] = useState(false);
@@ -633,9 +634,11 @@ handleAddComponent is deprecated
         console.log(response);
         if (response.status == 201) {
           setSaveStatus(true);
-          setSaveText("Form saved successfully");
+          //setSaveText("Form saved successfully");
+          alert("Form saved successfully");
         } else {
-          setSaveText("Error saving form");
+          //setSaveText("Error saving form");
+          alert("Error saving form");
         }
       });
   }
@@ -683,12 +686,21 @@ handleAddComponent is deprecated
           loadForms={loadExistingForms}
         />
         <div className="button-container">
-          <Creator
+          {/* <Creator
             className="centered-button"
             onClick={() => loadSelectedForm(selectedForm, selectedVersion)}
             text={"Load Form"}
             color="lightgreen"
-          />
+          /> */}
+          <Button
+          alignItems="center"
+          variant="outlined"
+          
+           onClick={() => loadSelectedForm(selectedForm, selectedVersion)}
+          >
+        <AutorenewIcon />
+        &nbsp;Load Form
+      </Button>
         </div>
         {/* <SectionEditor
           onPressed={handleFormSubmit}
@@ -777,24 +789,40 @@ handleAddComponent is deprecated
             )}
           </>
           <div className="button-container">
-            <SaveComponent
-              className="centered-button"
-              saveComponents={() => saveComponents()}
-              isSaved={isSaved}
-              text={saveText}
-            />
+
             <input
               type="text"
               className="centered-textbox"
               placeholder="Form name"
               onChange={handleNameSaveAs}
-              style={{ margin: 1 + "em" }}
+              style={{
+                width: "180px",
+                height: "30px",
+                padding: "12px",
+                border: "1px solid #ccc",
+                borderRadius: "7px",
+                
+              }}
             />
             <input
               type="text"
               className="centered-textbox"
               placeholder="Version number"
               onChange={handleVersionSaveAs}
+              style={{
+                width: "180px",
+                height: "30px",
+                padding: "12px",
+                border: "1px solid #ccc",
+                borderRadius: "7px",
+                margin: "1em"
+              }}
+            />
+            <SaveComponent
+              className="centered-button"
+              saveComponents={() => saveComponents()}
+              isSaved={isSaved}
+              text={saveText}
             />
           </div>
         </div>

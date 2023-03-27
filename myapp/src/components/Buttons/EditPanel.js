@@ -63,7 +63,7 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete,formComponents,setFormCompon
         <Button
           alignItems="center"
           variant="contained"
-          color="primary"
+          color="info"
           onClick={() => setShowModal(true)}
         >
           <BuildIcon />

@@ -87,14 +87,14 @@ const AddButton = ({
     setElementNames(elementNamesList);
   }, [sectionNamesList, elementNamesList]);
 
-  const handlePreviewClick = () => {
-    const newWindow = window.open("", "Preview", "width=600,height=400");
-    newWindow.document.write("<html><head><title>Preview</title></head><body>");
-    newWindow.document.write("<div>");
-    newWindow.document.write(<SectionEditor onPressed={handleFormSubmit} />);
-    newWindow.document.write("</div>");
-    newWindow.document.write("</body></html>");
-  };
+  // const handlePreviewClick = () => {
+  //   const newWindow = window.open("", "Preview", "width=600,height=400");
+  //   newWindow.document.write("<html><head><title>Preview</title></head><body>");
+  //   newWindow.document.write("<div>");
+  //   newWindow.document.write(<SectionEditor onPressed={handleFormSubmit} />);
+  //   newWindow.document.write("</div>");
+  //   newWindow.document.write("</body></html>");
+  // };
 
   return (
     <>
@@ -120,14 +120,7 @@ const AddButton = ({
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-          <Button
-            variant="secondary"
-            onChange={handleInputChange}
-            onClick={handlePreviewClick}
-          >
-            Preview
+            Cancel
           </Button>
         </Modal.Footer>
       </Modal>
