@@ -27,6 +27,21 @@ public class VendorController {
     UserRepository userRepository;
 
 //update project list for vendor
+    @PutMapping("/updateProjectList")
+        public ResponseEntity<?> updateProjectList(@RequestBody Vendor vendor) {
+            Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
+
+            if (userData.isPresent()) {
+                Vendor existingUser = userData.get();
+                ArrayList<Project> newProjectList = vendor.getProject();
+
+                existingUser.setProject(newProjectList);
+                userRepository.save(existingUser);
+                return new ResponseEntity<>(existingUser, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
     @PutMapping("/appendProject")
         public ResponseEntity<?> appendProject(@RequestBody Vendor vendor) {
             Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
@@ -150,7 +165,7 @@ public class VendorController {
                         {
                             AssignedForm curAssignedForm = curProject.getAssignedForm().get(j);
 
-                            if(curAssignedForm.getFormName().equals(newAssignedForm.getFormName())&&curAssignedForm.getFormVersion()==newAssignedForm.getFormVersion())
+                            if(curAssignedForm.getFormName().equals(newAssignedForm.getFormName()))
                             {
                                 curProject.getAssignedForm().set(j, newAssignedForm);
                                 existingUser.setProject(projectList);

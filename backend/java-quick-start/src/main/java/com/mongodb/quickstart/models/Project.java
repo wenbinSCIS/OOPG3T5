@@ -14,9 +14,9 @@ public class Project {
         this.assignedForm = assignedForm;
         this.status = status;
 
-        if(projectName.length()<4)
+        if(projectName.length()>5)
         {
-            this.projectId = projectName.substring(0, 3);
+            this.projectId = projectName.substring(0, 4);
         }
         else
         {
