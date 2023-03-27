@@ -6,7 +6,11 @@ import Stack from "@mui/material/Stack";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 
-const ElementEditor = ({ onPressedElement, sectionState }) => {
+const ElementEditor = ({
+  onPressedElement,
+  sectionState,
+  elementNamesList,
+}) => {
   const [elementType, setElementType] = useState(null); // element type
 
   const [overallRowState, setOverallRowState] = useState([]);
@@ -18,6 +22,12 @@ const ElementEditor = ({ onPressedElement, sectionState }) => {
   const [optionState, setOptionState] = useState({}); // this is for elements who have the ability to select options, for example dropdowns, checkboxes, etc, will be a dictionary initially then converted to a list
 
   const [sectionData, setSectionData] = useState(sectionState); // retrieving current section Data from sectionData to be passed to Preview Tab
+
+  const [elementNames, setElementNames] = useState(elementNamesList);
+
+  useEffect(() => {
+    setElementNames(elementNamesList);
+  }, elementNamesList);
 
   /*
 =============================================================================================
@@ -548,8 +558,8 @@ appendToOverallState: appends element to selected row as chosen by the user
 
   const handleOverallRowState = (updatedState) => {
     const updatedOverallState = [...overallRowState, updatedState]; // updatedOverallState should be sent over to the overallRowState -> takes a while to update
-    setOverallRowState((overallRowState) => 
-      addItem(overallRowState, updatedState)    
+    setOverallRowState((overallRowState) =>
+      addItem(overallRowState, updatedState)
     );
     // console.log(updatedOverallState); // this should be pushed to the admin page
     handleToggleSection();
@@ -675,18 +685,22 @@ appendToOverallState: appends element to selected row as chosen by the user
     }
 
     if (elementIsGood) {
-      try {
-        if (selectedOption === "new row") {
-          //basically we can just do normal functions like append to a new row behind
-          handleRowState();
-        } else {
-          appendToOverallRowState();
+      if (elementNames.includes(elementState.elementName)) {
+        alert("Element Name is already being used, please try another one");
+      } else {
+        try {
+          if (selectedOption === "new row") {
+            //basically we can just do normal functions like append to a new row behind
+            handleRowState();
+          } else {
+            appendToOverallRowState();
+          }
+          setElementType(null); // I want to 'close' the element editor
+          // need code here to change the preview tab to true
+          handleToggleElement(null);
+        } catch (error) {
+          console.error(error);
         }
-        setElementType(null); // I want to 'close' the element editor
-        // need code here to change the preview tab to true
-        handleToggleElement(null);
-      } catch (error) {
-        console.error(error);
       }
     } else {
       alert("Please fill up empty element editor fields!");
@@ -695,6 +709,7 @@ appendToOverallState: appends element to selected row as chosen by the user
 
   function handleSubmissiontoAdmin() {
     onPressedElement(overallRowState); // same as retrieve elements from section editor
+    setSectionData({});
     console.log("Element Editor sends data to Section Editor");
     alert("Section has been Added!");
   }
@@ -735,7 +750,8 @@ it also handles changes to the preview tab
     console.log("The Save Section button is active?: " + tempcanAdd);
   };
 
-  const handleSectionChanges = (rowData) => { // will be added in appendoverall state and handleRowState
+  const handleSectionChanges = (rowData) => {
+    // will be added in appendoverall state and handleRowState
     const newSection = { ...sectionData };
     newSection.rowElements = rowData;
     const rowsLength = rowData.length;
