@@ -3,6 +3,7 @@ package com.mongodb.quickstart.models;
 import java.util.ArrayList;
 
 public class Project {
+    private String projectId;
     private String projectName;
     private ArrayList<AssignedForm> assignedForm;
     private String status;
@@ -12,6 +13,15 @@ public class Project {
         this.projectName = projectName;
         this.assignedForm = assignedForm;
         this.status = status;
+
+        if(projectName.length()<4)
+        {
+            this.projectId = projectName.substring(0, 3);
+        }
+        else
+        {
+            this.projectId = projectName;
+        }
     }
 
     public String getProjectName() {
@@ -37,4 +47,13 @@ public class Project {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+    
 }

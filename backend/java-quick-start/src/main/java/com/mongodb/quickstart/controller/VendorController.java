@@ -1,5 +1,6 @@
 package com.mongodb.quickstart.controller;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mongodb.quickstart.models.AssignedForm;
+import com.mongodb.quickstart.models.Project;
 import com.mongodb.quickstart.models.Vendor;
 import com.mongodb.quickstart.repository.UserRepository;
 
@@ -23,16 +26,177 @@ public class VendorController {
     @Autowired
     UserRepository userRepository;
 
-//update vendor form for vendor object
-    @PutMapping("/updateVendorAssignedForm")
-        public ResponseEntity<?> updateVendorAssignedForm(@RequestBody Vendor vendor) {
+//update project list for vendor
+    @PutMapping("/appendProject")
+        public ResponseEntity<?> appendProject(@RequestBody Vendor vendor) {
             Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
 
             if (userData.isPresent()) {
                 Vendor existingUser = userData.get();
-                existingUser.setProject(vendor.getProject());
+                ArrayList<Project> projectList = existingUser.getProject();
+                Project newProject = vendor.getProject().get(0);
+                Project addProject = new Project(newProject.getProjectName(), newProject.getAssignedForm(), newProject.getStatus());
+                projectList.add(addProject);
+                existingUser.setProject(projectList);
                 userRepository.save(existingUser);
                 return new ResponseEntity<>(existingUser, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+        @PutMapping("/updateProject")
+        public ResponseEntity<?> updateProject(@RequestBody Vendor vendor) {
+            Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
+
+            if (userData.isPresent()) {
+                Vendor existingUser = userData.get();
+                ArrayList<Project> projectList = existingUser.getProject();
+                Project newProject = vendor.getProject().get(0);
+
+                for(int i=0;i<projectList.size();i++)
+                {
+                    Project curProject = projectList.get(i);
+
+                    if (curProject.getProjectId().equals(newProject.getProjectId())&&curProject.getProjectName().equals(newProject.getProjectName()))
+                    {
+                        projectList.set(i, newProject);
+                        existingUser.setProject(projectList);
+                        userRepository.save(existingUser);
+                        return new ResponseEntity<>(existingUser, HttpStatus.OK);
+                    }
+                }
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+        @PutMapping("/deleteProject")
+        public ResponseEntity<?> deleteProject(@RequestBody Vendor vendor) {
+            Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
+
+            if (userData.isPresent()) {
+                Vendor existingUser = userData.get();
+                ArrayList<Project> projectList = existingUser.getProject();
+                Project newProject = vendor.getProject().get(0);
+
+                for(int i=0;i<projectList.size();i++)
+                {
+                    Project curProject = projectList.get(i);
+
+                    if (curProject.getProjectId().equals(newProject.getProjectId())&&curProject.getProjectName().equals(newProject.getProjectName()))
+                    {
+                        projectList.remove(i);
+                        existingUser.setProject(projectList);
+                        userRepository.save(existingUser);
+                        return new ResponseEntity<>(existingUser, HttpStatus.OK);
+                    }
+                }
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+//update assigned form list of a project of a vendor
+    @PutMapping("/appendAssignedForm")
+        public ResponseEntity<?> appendAssignedForm(@RequestBody Vendor vendor) {
+            Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
+
+            if (userData.isPresent()) {
+                Vendor existingUser = userData.get();
+                ArrayList<Project> projectList = existingUser.getProject();
+                Project newProject = vendor.getProject().get(0);
+                AssignedForm newAssignedForm = newProject.getAssignedForm().get(0);
+
+                for(int i=0;i<projectList.size();i++)
+                {
+                    Project curProject = projectList.get(i);
+
+                    if (curProject.getProjectId().equals(newProject.getProjectId())&&curProject.getProjectName().equals(newProject.getProjectName()))
+                    {
+                        curProject.getAssignedForm().add(newAssignedForm);
+                        existingUser.setProject(projectList);
+                        userRepository.save(existingUser);
+                        return new ResponseEntity<>(existingUser, HttpStatus.OK);
+                    }
+                }
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+        @PutMapping("/updateAssignedForm")
+        public ResponseEntity<?> updateAssignedForm(@RequestBody Vendor vendor) {
+            Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
+
+            if (userData.isPresent()) {
+                Vendor existingUser = userData.get();
+                ArrayList<Project> projectList = existingUser.getProject();
+                Project newProject = vendor.getProject().get(0);
+                AssignedForm newAssignedForm = newProject.getAssignedForm().get(0);
+
+                for(int i=0;i<projectList.size();i++)
+                {
+                    Project curProject = projectList.get(i);
+
+                    if (curProject.getProjectId().equals(newProject.getProjectId())&&curProject.getProjectName().equals(newProject.getProjectName()))
+                    {
+                        for(int j=0;j<curProject.getAssignedForm().size();j++)
+                        {
+                            AssignedForm curAssignedForm = curProject.getAssignedForm().get(j);
+
+                            if(curAssignedForm.getFormName().equals(newAssignedForm.getFormName())&&curAssignedForm.getFormVersion()==newAssignedForm.getFormVersion())
+                            {
+                                curProject.getAssignedForm().set(j, newAssignedForm);
+                                existingUser.setProject(projectList);
+                                userRepository.save(existingUser);
+                                return new ResponseEntity<>(existingUser, HttpStatus.OK);
+                            }
+                        }
+                    }
+                }
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+        @PutMapping("/deleteAssignedForm")
+        public ResponseEntity<?> deleteAssignedForm(@RequestBody Vendor vendor) {
+            Optional<Vendor> userData = userRepository.findVendorByUsername(vendor.getUsername(),"Vendor");
+
+            if (userData.isPresent()) {
+                Vendor existingUser = userData.get();
+                ArrayList<Project> projectList = existingUser.getProject();
+                Project newProject = vendor.getProject().get(0);
+                AssignedForm newAssignedForm = newProject.getAssignedForm().get(0);
+
+                for(int i=0;i<projectList.size();i++)
+                {
+                    Project curProject = projectList.get(i);
+
+                    if (curProject.getProjectId().equals(newProject.getProjectId())&&curProject.getProjectName().equals(newProject.getProjectName()))
+                    {
+                        for(int j=0;j<curProject.getAssignedForm().size();j++)
+                        {
+                            AssignedForm curAssignedForm = curProject.getAssignedForm().get(j);
+
+                            if(curAssignedForm.getFormName().equals(newAssignedForm.getFormName())&&curAssignedForm.getFormVersion()==newAssignedForm.getFormVersion())
+                            {
+                                curProject.getAssignedForm().remove(j);
+                                existingUser.setProject(projectList);
+                                userRepository.save(existingUser);
+                                return new ResponseEntity<>(existingUser, HttpStatus.OK);
+                            }
+                        }
+                    }
+                }
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
