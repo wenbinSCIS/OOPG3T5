@@ -85,7 +85,7 @@ export default function Home() {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  console.log(forms)
+  //onsole.log(forms)
   /*
   const tempUserJSON = {
     "username": "Nico",

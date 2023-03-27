@@ -159,14 +159,16 @@ public class FormInputController {
         }
         try {
             if(formInput.getApproverComments() != null){
-            _formInput = formInputRepository.save(new FormInput(formInput.getFormName(),
+            FormInput _formInput = formInputRepository.save(new FormInput(formInput.getFormName(),
             formInput.getUsername(), formInput.getFormVersion(), formInput.getStatus(), formInput.getFormInputData(), formInput.getCompanyInfo(),formInput.getApproverComments()));
+            return new ResponseEntity<>(_formInput, HttpStatus.CREATED);
             }
             else{
                 FormInput _formInput = formInputRepository.save(new FormInput(formInput.getFormName(),
                 formInput.getUsername(), formInput.getFormVersion(), formInput.getStatus(), formInput.getFormInputData(), formInput.getCompanyInfo()));
+                return new ResponseEntity<>(_formInput, HttpStatus.CREATED);
             }
-            return new ResponseEntity<>(_formInput, HttpStatus.CREATED);
+            
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
