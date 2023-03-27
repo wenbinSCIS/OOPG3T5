@@ -138,13 +138,15 @@ export default function VendorAssessmentForm() {
   const to_return = []
   console.log(isUserFormLoaded)
   console.log(isUserInputLoaded)
+
+  console.log(formData)
   //test
   if (formData) {
     var sections = formData['sections']
     
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
-      to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
+      to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData} status={formData["status"]}></GenerateSection>)
     }}
   
     return (
