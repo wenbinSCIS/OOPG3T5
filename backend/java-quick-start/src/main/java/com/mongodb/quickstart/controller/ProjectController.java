@@ -20,7 +20,7 @@ import com.mongodb.quickstart.repository.UserRepository;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/user")
-public class VendorController {
+public class ProjectController {
 
     
     @Autowired
