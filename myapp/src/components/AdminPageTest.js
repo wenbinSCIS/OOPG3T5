@@ -6,12 +6,15 @@ import AddComponent from "./AddComponent";
 import Creator from "./Buttons/Creator";
 
 import EditPanel from "./Buttons/EditPanel";
-
-import SaveComponent from "./SaveComponent";
-import FormSelector from "./FormSelector";
-import axios from "axios";
-import Sidebar from "./Sidebar/Sidebar";
 import AddButton from "./Buttons/AddButton";
+
+import SaveComponent from "./AdminPageComponents/SaveComponent";
+import FormSelector from "./AdminPageComponents/FormSelector";
+
+import axios from "axios";
+
+import Sidebar from "./Sidebar/Sidebar";
+
 import Button from '@mui/material/Button';
 import SectionEditor from "./SectionEditor/SectionEditor";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
@@ -257,215 +260,215 @@ for testing purposes
     ],
   };
 
-  var response_temp = {
-    // demo response
-    formName: "Vendor Assessment",
-    formTitle: "Quantum Leap Incorporation PTE LTD",
-    titleSize: "20",
-    sections: [
-      {
-        sectionName: "Company Info",
-        sectionText: "Fill in your name",
-        sectionFont: "12",
-        numRows: "4",
-        rowElements: [
-          [
-            {
-              elementName: "CompanyName",
-              elementHeader: "",
-              placeholder: "Company's Name: ",
-              placeholderPosition: "front", //either hint or under or front
-              elementType: "Textinput",
-            },
-            {
-              elementName: "CompanyRegistrationNo",
-              elementHeader: "",
-              placeholder: "Company Registration No:",
-              placeholderPosition: "front", //either hint or under or front
-              elementType: "Textinput",
-            },
-          ],
-          [
-            {
-              elementName: "Like",
-              elementHeader: "Like",
-              elementType: "Radio",
-              size: "12",
-              elementOrientation: "horizontal",
-              options: [
-                {
-                  optionType: "radio",
-                  optionName: "Yes",
-                  optionValue: "Yes",
-                },
-                {
-                  optionType: "radio",
-                  optionName: "No",
-                  optionValue: "No",
-                },
-                {
-                  optionType: "radio-text",
-                  optionName: "others",
-                  optionValue: "Others",
-                  textVariables: {
-                    //textID will inherit radio optionName + "_text"
-                    header: "",
-                    hintPosition: "front",
-                    hintText: "Please specify",
-                    // false_header:null,
-                  },
-                },
-              ],
-            },
-          ],
-          [
-            {
-              elementName: "OfficeAddress",
-              elementHeader: "",
-              placeholder: "Office Address: ",
-              placeholderPosition: "front", //either hint or under or front
-              elementType: "Textinput",
-            },
-          ],
-          [
-            {
-              elementName: "Telephone",
-              elementHeader: "",
-              placeholder: "Tel: ",
-              placeholderPosition: "front", //either hint or under or front
-              elementType: "Textinput",
-            },
-            {
-              elementName: "Fax",
-              elementHeader: "",
-              placeholder: "Fax: ",
-              placeholderPosition: "front", //either hint or under or front
-              elementType: "Textinput",
-            },
-          ],
-        ],
-      }, //section 1
-      {
-        sectionName: "Evaluation",
-        sectionText: "Evaluation",
-        sectionFont: "12",
-        numRows: "1",
-        rowElements: [
-          [
-            {
-              elementName: "Licenses",
-              elementHeader: "",
-              elementType: "Checkbox",
-              elementOrientation: "horizontal",
-              options: [
-                {
-                  optionType: "Checkbox",
-                  optionName: "a. Sole proprietorship",
-                  optionValue: "a. Sole proprietorship",
-                },
-                {
-                  optionType: "Checkbox",
-                  optionName: "b. Limited Company",
-                  optionValue: "b. Limited Company",
-                },
-                {
-                  optionType: "Checkbox",
-                  optionName: "c. Partnership Agreement",
-                  optionValue: "c. Partnership Agreement",
-                },
-                {
-                  optionType: "Checkbox-text",
-                  optionName: "others",
-                  optionValue: "Others",
-                  textVariables: {
-                    //textname will inherit radio optionName + "_text"
-                    header: "",
-                    hintPosition: "front",
-                    hintText: "Please specify",
-                  },
-                },
-              ],
-            },
-          ],
-        ],
-      }, // section 2 done
-      {
-        sectionName: "Evaluation-TextArea",
-        sectionText: "Evaluation",
-        sectionFont: "12",
-        numRows: "1",
-        rowElements: [
-          [
-            {
-              elementName: "Feedback",
-              elementHeader: "Feedback About us:",
-              elementType: "Textarea",
-            },
-          ],
-        ],
-      }, // section 3 done
-      {
-        sectionName: "How-Dropdown",
-        sectionText: "Please make a Selection",
-        sectionFont: "12",
-        numRows: "1",
-        rowElements: [
-          [
-            {
-              elementName: "How-Dropdown",
-              elementHeader: "",
-              elementType: "Dropdown",
-              size: "4",
-              options: [
-                {
-                  optionType: "Dropdown",
-                  optionName: "Yes",
-                  optionValue: "Yes",
-                },
-                {
-                  optionType: "Dropdown",
-                  optionName: "No",
-                  optionValue: "No",
-                },
-              ],
-            },
-          ],
-        ],
-      }, // section 4 table
-      {
-        sectionName: "Contact Information",
-        sectionText: "Contact Person:",
-        sectionFont: "12",
-        numRows: "1",
-        rowElements: [
-          [
-            {
-              elementName: "How-Table",
-              elementHeader: "How did you hear about us?*",
-              elementType: "Dropdown",
-              size: "4",
-              options: ["Selection A", "Selection B", "Selection C"],
-            },
-          ],
-          [
-            {
-              elementName: "Contacts2",
-              elementHeader: "",
-              elementType: "Table",
-              noRows: "3",
-              noColumns: "2",
-              headers: ["Name", "Tel", "Designation"],
-            },
-          ],
-        ],
-      },
-    ],
-  };
+  // var response_temp = {
+  //   // demo response
+  //   formName: "Vendor Assessment",
+  //   formTitle: "Quantum Leap Incorporation PTE LTD",
+  //   titleSize: "20",
+  //   sections: [
+  //     {
+  //       sectionName: "Company Info",
+  //       sectionText: "Fill in your name",
+  //       sectionFont: "12",
+  //       numRows: "4",
+  //       rowElements: [
+  //         [
+  //           {
+  //             elementName: "CompanyName",
+  //             elementHeader: "",
+  //             placeholder: "Company's Name: ",
+  //             placeholderPosition: "front", //either hint or under or front
+  //             elementType: "Textinput",
+  //           },
+  //           {
+  //             elementName: "CompanyRegistrationNo",
+  //             elementHeader: "",
+  //             placeholder: "Company Registration No:",
+  //             placeholderPosition: "front", //either hint or under or front
+  //             elementType: "Textinput",
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             elementName: "Like",
+  //             elementHeader: "Like",
+  //             elementType: "Radio",
+  //             size: "12",
+  //             elementOrientation: "horizontal",
+  //             options: [
+  //               {
+  //                 optionType: "radio",
+  //                 optionName: "Yes",
+  //                 optionValue: "Yes",
+  //               },
+  //               {
+  //                 optionType: "radio",
+  //                 optionName: "No",
+  //                 optionValue: "No",
+  //               },
+  //               {
+  //                 optionType: "radio-text",
+  //                 optionName: "others",
+  //                 optionValue: "Others",
+  //                 textVariables: {
+  //                   //textID will inherit radio optionName + "_text"
+  //                   header: "",
+  //                   hintPosition: "front",
+  //                   hintText: "Please specify",
+  //                   // false_header:null,
+  //                 },
+  //               },
+  //             ],
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             elementName: "OfficeAddress",
+  //             elementHeader: "",
+  //             placeholder: "Office Address: ",
+  //             placeholderPosition: "front", //either hint or under or front
+  //             elementType: "Textinput",
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             elementName: "Telephone",
+  //             elementHeader: "",
+  //             placeholder: "Tel: ",
+  //             placeholderPosition: "front", //either hint or under or front
+  //             elementType: "Textinput",
+  //           },
+  //           {
+  //             elementName: "Fax",
+  //             elementHeader: "",
+  //             placeholder: "Fax: ",
+  //             placeholderPosition: "front", //either hint or under or front
+  //             elementType: "Textinput",
+  //           },
+  //         ],
+  //       ],
+  //     }, //section 1
+  //     {
+  //       sectionName: "Evaluation",
+  //       sectionText: "Evaluation",
+  //       sectionFont: "12",
+  //       numRows: "1",
+  //       rowElements: [
+  //         [
+  //           {
+  //             elementName: "Licenses",
+  //             elementHeader: "",
+  //             elementType: "Checkbox",
+  //             elementOrientation: "horizontal",
+  //             options: [
+  //               {
+  //                 optionType: "Checkbox",
+  //                 optionName: "a. Sole proprietorship",
+  //                 optionValue: "a. Sole proprietorship",
+  //               },
+  //               {
+  //                 optionType: "Checkbox",
+  //                 optionName: "b. Limited Company",
+  //                 optionValue: "b. Limited Company",
+  //               },
+  //               {
+  //                 optionType: "Checkbox",
+  //                 optionName: "c. Partnership Agreement",
+  //                 optionValue: "c. Partnership Agreement",
+  //               },
+  //               {
+  //                 optionType: "Checkbox-text",
+  //                 optionName: "others",
+  //                 optionValue: "Others",
+  //                 textVariables: {
+  //                   //textname will inherit radio optionName + "_text"
+  //                   header: "",
+  //                   hintPosition: "front",
+  //                   hintText: "Please specify",
+  //                 },
+  //               },
+  //             ],
+  //           },
+  //         ],
+  //       ],
+  //     }, // section 2 done
+  //     {
+  //       sectionName: "Evaluation-TextArea",
+  //       sectionText: "Evaluation",
+  //       sectionFont: "12",
+  //       numRows: "1",
+  //       rowElements: [
+  //         [
+  //           {
+  //             elementName: "Feedback",
+  //             elementHeader: "Feedback About us:",
+  //             elementType: "Textarea",
+  //           },
+  //         ],
+  //       ],
+  //     }, // section 3 done
+  //     {
+  //       sectionName: "How-Dropdown",
+  //       sectionText: "Please make a Selection",
+  //       sectionFont: "12",
+  //       numRows: "1",
+  //       rowElements: [
+  //         [
+  //           {
+  //             elementName: "How-Dropdown",
+  //             elementHeader: "",
+  //             elementType: "Dropdown",
+  //             size: "4",
+  //             options: [
+  //               {
+  //                 optionType: "Dropdown",
+  //                 optionName: "Yes",
+  //                 optionValue: "Yes",
+  //               },
+  //               {
+  //                 optionType: "Dropdown",
+  //                 optionName: "No",
+  //                 optionValue: "No",
+  //               },
+  //             ],
+  //           },
+  //         ],
+  //       ],
+  //     }, // section 4 table
+  //     {
+  //       sectionName: "Contact Information",
+  //       sectionText: "Contact Person:",
+  //       sectionFont: "12",
+  //       numRows: "1",
+  //       rowElements: [
+  //         [
+  //           {
+  //             elementName: "How-Table",
+  //             elementHeader: "How did you hear about us?*",
+  //             elementType: "Dropdown",
+  //             size: "4",
+  //             options: ["Selection A", "Selection B", "Selection C"],
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             elementName: "Contacts2",
+  //             elementHeader: "",
+  //             elementType: "Table",
+  //             noRows: "3",
+  //             noColumns: "2",
+  //             headers: ["Name", "Tel", "Designation"],
+  //           },
+  //         ],
+  //       ],
+  //     },
+  //   ],
+  // };
 
-  useEffect(() => {
-    let components = response_temp.sections;
-    setFormComponents(components);
-  }, []);
+  // useEffect(() => {
+  //   let components = response_temp.sections;
+  //   setFormComponents(components);
+  // }, []);
 
   /*
 =============================================================================================
@@ -478,28 +481,17 @@ I need to pass in section names and element names to ensure that there are no du
 
   useEffect(() => {
     let sectionNamesTemp = [];
-    // let elementNamesTemp = [];
     formComponents.forEach((section) => {
       const sectionName = section.sectionName;
       sectionNamesTemp.push(sectionName);
-      // section.rowElements.forEach((elementRow) => {
-      //   elementRow.forEach((element) => {
-      //     const elementName = element.elementName;
-      //     elementNamesTemp = [...elementNamesTemp, elementName];
-      //   });
-      // });
     });
     setSectionNames(sectionNamesTemp);
-    // setElementNames(elementNamesTemp);
     console.log("section Names are currently: ", sectionNamesTemp);
   },[formComponents]);
 
   useEffect(() => {
-    // let sectionNamesTemp = [];
     let elementNamesTemp = [];
     formComponents.forEach((section) => {
-      // const sectionName = section.sectionName;
-      // sectionNamesTemp = [...sectionNamesTemp,...sectionName]
       section.rowElements.forEach((elementRow) => {
         elementRow.forEach((element) => {
           const elementName = element.elementName;
@@ -507,7 +499,6 @@ I need to pass in section names and element names to ensure that there are no du
         });
       });
     });
-    // setSectionNames(sectionNamesTemp);
     setElementNames(elementNamesTemp);
     console.log("element Names are currently: ", elementNamesTemp);
   }, [formComponents]);
@@ -666,9 +657,10 @@ handleAddComponent is deprecated
         let data = response.data;
         setInfoComponents(data.sections);
         setFormComponents(
-          data.sections.map((target) => (
-            <GenerateSection section={target}></GenerateSection>
-          ))
+          // data.sections.map((target) => (
+          //   <GenerateSection section={target}></GenerateSection>
+          // ))
+          data.sections
         );
       });
   }
@@ -715,7 +707,7 @@ handleAddComponent is deprecated
               <EditPanel
                 MoveDown={() => handleMoveComponentDown(index)}
                 MoveUp={() => handleMoveComponentUp(index)}
-                Add={() => handleAddSection(index)}
+                // Add={() => handleAddSection(index)}
                 // Edit={() => handleMoveComponentUp(index)}
                 Delete={() => handleRemoveComponent(index)}
                 formComponents={formComponents}
@@ -741,13 +733,13 @@ handleAddComponent is deprecated
                 setallData={setallData}
               />
             </div>
-            <div style={{ textAlign: "center", display: "block" }}>
+            {/* <div style={{ textAlign: "center", display: "block" }}>
               <AddComponent
                 className="centered-button"
                 onAdd={() => setShowAddComponent(!showAddComponent)}
                 showAdd={showAddComponent}
               />
-            </div>
+            </div> */}
           </div>
           <>
             {showAddComponent && (
