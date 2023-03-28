@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 export default function ActionTable({actions }) {
 
+  console.log(actions)
+
   return (
     <MDBTable align='middle' style={{ width: '100%' }}>
       <MDBTableHead>

@@ -5,57 +5,45 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import { TroubleshootSharp } from '@mui/icons-material';
+import { AiOutlineConsoleSql } from 'react-icons/ai';
 
 export default function VendorAssessmentForm() {
 
+  console.log(localStorage)
+
   const navigate = useNavigate();
-  var [allData , setallData] = useState({}); //All data to save for user
-  var [isUserInputLoaded , setIsUserInputLoaded] = useState(false);
-  var [isUserFormLoaded , setIsUserFormLoaded] = useState(false);
 
-  var isUserFormLoaded = false;
-
+  var [allData, setallData] = useState({}); //All data to save for user
+  var [isUserInputLoaded, setIsUserInputLoaded] = useState(false);
   var [formData, setFormData] = useState(null);
-  //var [toReturn, setToReturn] = useState([]);
+  const [remarks, setRemarks] = useState({})
+
+  var formVersion =  localStorage.getItem('formVersion')|| 1.1;
+  var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
+  var username = localStorage.getItem('username') || "abc@gmail.com";
+  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "Company A";
 
   var [approverComments, setApproverComments] = useState({});
 
   var url = window.location.href;
 
-  var formVersion = sessionStorage.getItem("formVersion") || "1.1";
-  var formName = sessionStorage.getItem("formName") || "QLI-QHSP-10-F01 New Vendor Assessment Form";
-  var username = sessionStorage.getItem("username") || "abc@gmail.com";
-  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "Company A";
-  //console.log(companyInfo)
-
   async function getData(formName) {
     try {
       console.log('Sending request...');
       const response = await axios.get(`http://localhost:8080/api/getFormByNameAndVersion/${formName}/${formVersion}`);
-      //console.log('Response received:', response.data);
+      console.log('Response received:', response.data);
       setFormData(response.data);
-      setIsUserFormLoaded(true)
     } catch (error) {
       console.error(error);
     }
   }
 
   useEffect(() => {
-    try{
-      getData(formName);
-    }
-    catch(error){ 
-      console.log(error)
-    }
-    
-    try{
-      loadUserInput(formName, formVersion, username);
-      setIsUserInputLoaded(true);
-    }
-    catch(error){
-      console.log(error)
-    }
+    getData(formName);
+    loadUserInput(formName, formVersion, username);
   }, []); // empty dependency array to run the effect only once
+
+
 
   async function loadUserInput(formName, formVersion, username) {
     var inputJson = {
@@ -63,21 +51,21 @@ export default function VendorAssessmentForm() {
       "username": username,
       "formVersion": formVersion,
     }
-    //console.log(inputJson)
+    console.log(inputJson)
     await axios
-    try{
-      const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
-      setallData(response.data.formInputData[0])
-        if(response.data.approverComments[0]){
-          setApproverComments(response.data.approverComments[0])
+      .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
+      .then((response) => {
+        if (response.status === 200) {
+          setallData(response.data.formInputData[0])
+          if(response.data.approverComments[0]){
+            setRemarks(response.data.approverComments[0])
+          }
+          setIsUserInputLoaded(true);
         }
-    }
-    catch(error){
-      console.log(error)
-    }
+      });
+    return null
   }
 
-  //console.log(approverComments)
 
   async function saveUserInput(formName, formVersion, username, companyInfo){
     console.log(companyInfo)
@@ -123,7 +111,7 @@ export default function VendorAssessmentForm() {
         .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
         .then((response) => {
           alert("Saved new input data!");
-          setIsUserFormLoaded(true);
+          setIsUserInputLoaded(true);
           console.log(response.data);
         });
     } else {
@@ -136,12 +124,10 @@ export default function VendorAssessmentForm() {
     }
   }
   const to_return = []
-  console.log(isUserFormLoaded)
-  console.log(isUserInputLoaded)
   //test
-  if (formData) {
+
+  if (formData && isUserInputLoaded!=null) {
     var sections = formData['sections']
-    
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
       to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
@@ -152,9 +138,11 @@ export default function VendorAssessmentForm() {
         <Sidebar></Sidebar>
       <div className="container">
       {to_return}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
-      <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo); navigate("/CompletedForms")}}>Submit Form</Button>
+      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo)}}>Save</Button>
+      <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
       </div>
       </section>
     );
 }
+//; navigate("/CompletedForms")
+//; navigate("/UncompletedForms")

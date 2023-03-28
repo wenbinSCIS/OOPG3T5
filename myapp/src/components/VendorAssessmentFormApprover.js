@@ -11,7 +11,7 @@ export default function VendorAssessmentFormApprover() {
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
 
-  var formVersion = localStorage.getItem('formVersion') || "1.1";
+  var formVersion =  1.1;
   var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
   var vendor = localStorage.getItem('vendor') || "abc@gmail.com";
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "";
@@ -38,10 +38,10 @@ export default function VendorAssessmentFormApprover() {
       "username": vendor,
       "formVersion": formVersion,
     }
+    console.log(inputJson)
     await axios
       .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
       .then((response) => {
-        console.log(response.data);
         if (response.status === 200) {
           setallData(response.data.formInputData[0])
           if(response.data.approverComments[0]){
