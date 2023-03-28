@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 
 import Stack from "@mui/material/Stack";
@@ -28,7 +28,7 @@ function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
     },
   });
 
-// sectionNames and elementNames used for validation to ensure that there are no duplicate sectionNames or elementNames
+  // sectionNames and elementNames used for validation to ensure that there are no duplicate sectionNames or elementNames
   const [sectionNames, setSectionNames] = useState(sectionNamesList);
   const [elementNames, setElementNames] = useState(elementNamesList);
 
@@ -65,27 +65,28 @@ function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
 
   // importan function here!! - is sent to element editor to retrieve rows, need to also set numrows by counting the number of rows here
 
+  const formRef = useRef(null); // this is used so that the form is reset everytime someone saves a new section -i.e, no more fields present
+
   const retrieveFromElementEditor = (rows) => {
     const newSection = { ...sectionData };
     newSection.rowElements = rows;
     const rowsLength = rows.length;
     newSection.numRows = String(rowsLength);
-    setSectionData(newSection);
+    // setSectionData(newSection);
     onPressed(newSection); // send info to admin page
     setSectionCreated(false); // closes element editor when save section is initiated
     setIsActive(true); // closes element editor and sets active state for open element editor
-    setSectionData({ // I need to do this if not there is residual data on the section when on save, which will be viewed in the preview tab
+    setSectionData({
+      // I need to do this if not there is residual data on the section when on save, which will be viewed in the preview tab
       sectionFont: "12",
     });
+    formRef.current.reset();
   };
 
   // the two functions below control the state for showing the element editor
   function sectionIsCreated() {
     if ("sectionName" in sectionData && "sectionText" in sectionData) {
-      console.log(
-        "printing out sectionName in sectionEditor",
-        sectionNames
-      );
+      console.log("printing out sectionName in sectionEditor", sectionNames);
       if (sectionNames.includes(sectionData.sectionName)) {
         alert("Section Name is already used, please try another one");
       } else {
@@ -110,7 +111,7 @@ function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
   return (
     <div>
       {/* <Form> */}
-      <Form>
+      <Form ref={formRef}>
         <h5>Section Editor</h5>
         <Form.Group controlId="sectionName" className="mb-3">
           <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
