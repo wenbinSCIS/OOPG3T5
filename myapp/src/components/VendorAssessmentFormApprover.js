@@ -11,10 +11,10 @@ export default function VendorAssessmentFormApprover() {
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
 
-  var formVersion = "1.1";
-  var formName = "QLI-QHSP-10-F01 New Vendor Assessment Form";
-  var vendor = "abc@gmail.com";
-  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "Company A";
+  var formVersion = localStorage.getItem('formVersion') || "1.1";
+  var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
+  var vendor = localStorage.getItem('vendor') || "abc@gmail.com";
+  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "";
 
   async function getData(formName) {
     try {
@@ -59,8 +59,9 @@ export default function VendorAssessmentFormApprover() {
       "formName":formName,
       "username":username,
       "formVersion":formVersion,
-      "status":"Pending Approval",
+      "status":"Rejected",
       "formInputData": [allData],
+      "companyInfo": companyInfo,
       "approverComments":[remarks]
     }  
 
