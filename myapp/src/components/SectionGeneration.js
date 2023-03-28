@@ -15,6 +15,8 @@ function GenerateSection(props) {
     const to_return = []
     var sectionText = props['section']['sectionText']
 
+    console.log(props['comments'])
+
     for(let i=0;i<rows;i++){
         var curr_row = rowElements[i]
         to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} ></GenerateRow>)

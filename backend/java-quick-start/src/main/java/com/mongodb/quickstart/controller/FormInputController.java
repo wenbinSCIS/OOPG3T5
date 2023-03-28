@@ -150,6 +150,21 @@ public class FormInputController {
         }
     }
 
+    @PostMapping("/checkIfFormExists")
+    public ResponseEntity<Boolean> checkIfFormExists(@RequestBody FormInput tempFormInput) {
+        String formName = tempFormInput.getFormName();
+        String username = tempFormInput.getUsername();
+        double formVersion = tempFormInput.getFormVersion();
+        Optional<FormInput> formInputData = formInputRepository.findByFormNameAndUsernameAndFormVersion(formName,
+                username, formVersion);
+        if (formInputData.isPresent()) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+    }
+
+
     @PostMapping("/createFormInput")
     public ResponseEntity<?> createForm(@RequestBody FormInput formInput) {
         Optional<FormInput> existingForm = formInputRepository.findByFormNameAndUsernameAndFormVersion(

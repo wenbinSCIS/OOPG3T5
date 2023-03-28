@@ -6,6 +6,7 @@ import axios from 'axios';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import { TroubleshootSharp } from '@mui/icons-material';
 import { AiOutlineConsoleSql } from 'react-icons/ai';
+import { BsFillArrowLeftSquareFill } from 'react-icons/bs';
 
 export default function VendorAssessmentForm() {
 
@@ -18,7 +19,7 @@ export default function VendorAssessmentForm() {
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
 
-  var formVersion =  localStorage.getItem('formVersion')|| 1.1;
+  var formVersion =   1.1; //localStorage.getItem('formVersion')||
   var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
   var username = localStorage.getItem('username') || "abc@gmail.com";
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "Company A";
@@ -38,33 +39,107 @@ export default function VendorAssessmentForm() {
     }
   }
 
+  // useEffect(() => {
+  //   getData(formName); 
+  //   async function loadUserInput(formName, formVersion, username) {
+  //   var inputJson = {
+  //     "formName": formName,
+  //     "username": username,
+  //     "formVersion": formVersion,
+  //   }
+  //     await axios
+  //     .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         setallData(response.data.formInputData[0])
+  //         if(response.data.approverComments[0]){
+  //           setRemarks(response.data.approverComments[0])
+  //         }
+  //         setIsUserInputLoaded(true)
+  //       }
+  //     });
+  //   }
+  //   await loadUserInput(formName,formVersion,username)
+     
+  // }, []); // empty dependency array to run the effect only once
+
+  // async function checkUserInputExists(formName, formVersion, username) {
+  //   var inputJson = {
+  //     "formName": formName,
+  //     "username": username,
+  //     "formVersion": formVersion,
+  //   }
+  //     await axios
+  //     .post(`http://localhost:8080/formInput/checkIfFormExists`, inputJson)
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         axios
+  //         .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
+  //         .then((response) => {
+  //           if (response.status === 200) {
+  //             setallData(response.data.formInputData[0])
+  //             if(response.data.approverComments[0]){
+  //               setRemarks(response.data.approverComments[0])
+  //             }
+  //           }
+  //         });
+  //       }
+  //     });
+  //   }
+
+
+
+  // async function loadUserInput(formName, formVersion, username) {
+  //   var inputJson = {
+  //     "formName": formName,
+  //     "username": username,
+  //     "formVersion": formVersion,
+  //   }
+  //     await axios
+  //     .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         setallData(response.data.formInputData[0])
+  //         if(response.data.approverComments[0]){
+  //           setRemarks(response.data.approverComments[0])
+  //         }
+  //       }
+  //     });
+  //   }
+
+
+
+
   useEffect(() => {
-    getData(formName);
-    loadUserInput(formName, formVersion, username);
-  }, []); // empty dependency array to run the effect only once
-
-
-
-  async function loadUserInput(formName, formVersion, username) {
-    var inputJson = {
-      "formName": formName,
-      "username": username,
-      "formVersion": formVersion,
-    }
-    console.log(inputJson)
-    await axios
-      .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
-      .then((response) => {
-        if (response.status === 200) {
-          setallData(response.data.formInputData[0])
-          if(response.data.approverComments[0]){
-            setRemarks(response.data.approverComments[0])
+    async function fetchData() {
+      try {
+          getData(formName);
+          var inputJson = {
+                "formName": formName,
+                "username": username,
+                "formVersion": formVersion,
+              }
+          const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
+          if(response.status == 200){
+            setallData(response.data.formInputData[0]);
+            setIsUserInputLoaded(true);
+            console.log(response.data.hasOwnProperty("approverComments"))
+            if (response.data.hasOwnProperty("approverComments")) {
+              setApproverComments(response.data.approverComments[0]);
+            }
+          } else {
+            setIsUserInputLoaded(false);
           }
-          setIsUserInputLoaded(true);
+        } catch (error) {
+          console.log(error);
+          setIsUserInputLoaded(false);
         }
-      });
-    return null
-  }
+          }   
+    fetchData();
+  }, []); // empty dependency array to run the effect only once
+  
+    
+  
 
 
   async function saveUserInput(formName, formVersion, username, companyInfo){
@@ -125,7 +200,7 @@ export default function VendorAssessmentForm() {
   }
   const to_return = []
   //test
-
+  console.log(isUserInputLoaded)
   if (formData && isUserInputLoaded!=null) {
     var sections = formData['sections']
     for (let i = 0; i < sections.length; i++) {
@@ -138,11 +213,9 @@ export default function VendorAssessmentForm() {
         <Sidebar></Sidebar>
       <div className="container">
       {to_return}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo)}}>Save</Button>
-      <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
+      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
+      <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo); navigate("/CompletedForms")}}>Submit Form</Button>
       </div>
       </section>
     );
 }
-//; navigate("/CompletedForms")
-//; navigate("/UncompletedForms")
