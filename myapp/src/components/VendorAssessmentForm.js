@@ -10,18 +10,18 @@ import { BsFillArrowLeftSquareFill } from 'react-icons/bs';
 
 export default function VendorAssessmentForm() {
 
-  console.log(localStorage)
+  console.log(sessionStorage)
 
   const navigate = useNavigate();
 
   var [allData, setallData] = useState({}); //All data to save for user
-  var [isUserInputLoaded, setIsUserInputLoaded] = useState(false);
+  var [isUserInputLoaded, setIsUserInputLoaded] = useState(null);
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
 
-  var formVersion =   1.1; //localStorage.getItem('formVersion')||
-  var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
-  var username = localStorage.getItem('username') || "abc@gmail.com";
+  var formVersion =   sessionStorage.getItem('formVersion')||1.1; 
+  var formName = sessionStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
+  var username = sessionStorage.getItem('username') || "abc@gmail.com";
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "Company A";
 
   var [approverComments, setApproverComments] = useState({});
@@ -122,17 +122,19 @@ export default function VendorAssessmentForm() {
           const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
           if(response.status == 200){
             setallData(response.data.formInputData[0]);
-            setIsUserInputLoaded(true);
-            console.log(response.data.hasOwnProperty("approverComments"))
+            setIsUserInputLoaded(true);            
+            console.log("User data found")
             if (response.data.hasOwnProperty("approverComments")) {
               setApproverComments(response.data.approverComments[0]);
             }
           } else {
             setIsUserInputLoaded(false);
+            console.log("here1")
           }
         } catch (error) {
           console.log(error);
-          setIsUserInputLoaded(false);
+          //setIsUserInputLoaded(false);
+          console.log("here2")
         }
           }   
     fetchData();
@@ -143,7 +145,6 @@ export default function VendorAssessmentForm() {
 
 
   async function saveUserInput(formName, formVersion, username, companyInfo){
-    console.log(companyInfo)
     var inputJson = {
       "formName":formName,
       "username":username,
