@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
 
-function Checkbox({data,onChange, options,title,size,false_header,name,orientation}) {
+function Checkbox({data,onChange, options,title,size,false_header,name,orientation, generateFor}) {
 
 
  var [selectedItems, setSelectedItems] = useState([]);
@@ -79,7 +79,16 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
             id={index}
             value = {option.optionValue}
             onChange={(e) => handleCheckboxChange(e)}
-            style={{ margin: 5}}
+            style={
+              generateFor == "Approver" ?{
+                margin: '5px',
+                cursor: 'not-allowed',
+                pointerEvents: 'none',
+              }:
+              {
+                margin: '5px',
+            }}
+            
           />
             <TextInput
             key="test"
@@ -91,9 +100,9 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
             onChange={(e) => handleTextinChange(name,option.optionValue, e)}
             text={data != null && data.find(item => item.name === option.optionValue && item.type === "Checkbox-text") ? data.find(item => item.name === option.optionValue && item.type === "Checkbox-text").text : ""}
             disabled={data != null && data.find(item => item.name === option.optionValue) ? false : true}
+            generateFor={generateFor}
       />
         </div>
-        
       ) : (
         <div style={{ display: 'flex', alignItems: 'center' }}>
         <Form.Check
@@ -106,7 +115,16 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
             id={index}
             value = {option.optionValue}
             onChange={(e) => handleCheckboxChange(e)}
-            style={{ margin: 5 }}
+            style={
+              generateFor == "Approver" ?{
+                margin: '5px',
+                cursor: 'not-allowed',
+                pointerEvents: 'none',
+              }:
+              {
+                margin: '5px',
+            }}
+            
           />
           </div>
           )

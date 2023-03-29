@@ -195,7 +195,7 @@ function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
             alignItems="center"
             variant="contained"
             color="primary"
-            // type="submit" // no longer submit
+            type="submit" // no longer submit
             disabled={!isActive}
             onClick={sectionIsCreated}
           >

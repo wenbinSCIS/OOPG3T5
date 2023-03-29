@@ -11,31 +11,101 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowForwardIos } from '@mui/icons-material';
-import React, { useState } from "react";
-export default function UncompletedForms() {
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+export default function CompletedForms() {
   const [selectedTag, setSelectedTag] = useState(null);
+  const [formCards, setFormCards] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post("http://localhost:8080/user/getUserByName", {
+          username: sessionStorage.getItem("username")
+        });
+        
+        //console.log(response)
+        //Get list of formnames and another list of form versions
+        var formNames = []
+        var formVersions = []
+        var formStatuses = []
+        var formDescriptions = []
+        for (let i=0 ;i<response.data.project.length;i++){
+          for(let j=0 ;j<response.data.project[i].assignedForm.length;j++){
+            formNames.push(response.data.project[i].assignedForm[j].formName)
+            formVersions.push(response.data.project[i].assignedForm[j].formVersion)
+            formDescriptions.push(response.data.project[i].assignedForm[j].description)
+          }
+        }
+
+        //Use list of formNames and formVersions to get corresponding formStatuses from formInput
+        
+        for (let i=0 ;i<formNames.length;i++){
+          var inputJson = {
+            "formName":formNames[i],
+            "username":sessionStorage.getItem("username"),
+            "formVersion":formVersions[i]
+          }
+          //console.log(inputJson)
+          try {
+            const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
+            if (response.status === 200) {
+              formStatuses.push(response.data.status)
+            }
+          } catch (error) {
+            if (error.response && error.response.status === 404) {
+              formStatuses.push("Not Started")
+            } else {
+              console.log(error)
+            }
+          }
+        }
+        
+        var forms = []
+
+        for (let i=0;i<formNames.length;i++){
+          if (formStatuses[i]=="Not Started"||formStatuses[i]=="In Progress"){
+            forms.push({
+              formName:formNames[i],
+              status: formStatuses[i],
+              description: formDescriptions[i],
+              formVersion : formVersions[i],
+            })
+          }
+        }
+        
+        setFormCards(forms);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
   
+  /*
   const formCards = [
     {
-      title: "QLI-QHSP-10-F01 New Vendor Assessment Form",
+      formName: "QLI-QHSP-10-F01 New Vendor Assessment Form",
       status: "Not Started",
       description: "Required to complete",
-      formid : 1,
+      formVersion : 1,
     },
     {
-      title: "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
+      formName: "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
       status: "In Progress",
       description: "Required to complete",
-      formid : 2,
+      formVersion : 2,
     },
     {
-      title: "QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation",
+      formName: "QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation",
       status: "Not Started",
       description: "Required to complete",
-      formid : 3,
+      formVersion : 3,
     },
   ];
-
+  */
+  
   const filteredFormCards = selectedTag
   ? formCards.filter((card) => card.status === selectedTag)
   : formCards;

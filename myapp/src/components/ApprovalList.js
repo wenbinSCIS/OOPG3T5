@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from './Footer';
 import Totop from './Totop';
 import AdminSidebar from './Sidebar/AdminSidebar';
@@ -6,26 +6,57 @@ import Header from './Header';
 import ApproverTable from './ApproverTable';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
 
 export default function ApprovalList() {
   const [searchText, setSearchText] = useState('');
+  const [data, setData] = useState([]);
 
   const handleSearch = (event) => {
     setSearchText(event.target.value);
   };
 
-  const data = [
-    { companyName: 'ABC Inc.', formName: 'Form 1', requestDate: '2022-01-01' },
-    { companyName: 'XYZ Corp.', formName: 'Form 2', requestDate: '2022-02-01' },
-    { companyName: '123 Ltd.', formName: 'Form 3', requestDate: '2022-03-01' },
-    { companyName: '456 Co.', formName: 'Form 4', requestDate: '2022-04-01' },
-    { companyName: '789 LLC', formName: 'Form 5', requestDate: '2022-05-01' },
-    { companyName: 'DEF Ltd.', formName: 'Form 6', requestDate: '2022-06-01' },
-    { companyName: 'GHI Inc.', formName: 'Form 7', requestDate: '2022-07-01' },
-    { companyName: 'JKL Corp.', formName: 'Form 8', requestDate: '2022-08-01' },
-    { companyName: 'MNO Ltd.', formName: 'Form 9', requestDate: '2022-09-01' },
-    { companyName: 'ABC Inc.', formName: 'Form 10', requestDate: '2022-10-01' },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        var allApproverForms = []
+
+        const pendingApprovalResponse = await axios.post(
+          'http://localhost:8080/formInput/getFormByStatus',
+          {
+            "status":"Pending Approval"
+          }
+        );
+
+        for (let i=0;i<pendingApprovalResponse.data.length;i++){
+          allApproverForms.push(pendingApprovalResponse.data[i])
+        }
+
+        const approvedResponse = await axios.post(
+          'http://localhost:8080/formInput/getFormByStatus',
+          {
+            "status":"Approved"
+          }
+        );
+
+        for (let i=0;i<approvedResponse.data.length;i++){
+          allApproverForms.push(approvedResponse.data[i])
+        }
+
+        const forms = allApproverForms.map((item) => ({
+          companyName: item.companyInfo.companyName,
+          formName: item.formName,
+          version: item.formVersion,
+        }));
+
+        setData(forms);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const filteredData = searchText
     ? data.filter((item) =>

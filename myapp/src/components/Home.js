@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../theme";
 import Footer from "./Footer";
@@ -12,15 +12,111 @@ import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import PendingIcon from '@mui/icons-material/Pending';
 import ActionTable from './ActionTable';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+// import React, { useState, useEffect } from 'react';
+
 export default function Home() {
+  const [forms, setForms] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post("http://localhost:8080/user/getUserByName", {
+          username: sessionStorage.getItem("username")
+        });
+        
+        //console.log(response)
+        //Get list of formnames and another list of form versions
+        var formNames = []
+        var formVersions = []
+        var formStatuses = []
+        var formDescriptions = []
+        for (let i=0 ;i<response.data.project.length;i++){
+          for(let j=0 ;j<response.data.project[i].assignedForm.length;j++){
+            formNames.push(response.data.project[i].assignedForm[j].formName)
+            formVersions.push(response.data.project[i].assignedForm[j].formVersion)
+            formDescriptions.push(response.data.project[i].assignedForm[j].description)
+          }
+        }
+
+        //Use list of formNames and formVersions to get corresponding formStatuses from formInput
+        
+        for (let i=0 ;i<formNames.length;i++){
+          var inputJson = {
+            "formName":formNames[i],
+            "username":sessionStorage.getItem("username"),
+            "formVersion":formVersions[i]
+          }
+          //console.log(inputJson)
+          try {
+            const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
+            if (response.status === 200) {
+              formStatuses.push(response.data.status)
+            }
+          } catch (error) {
+            if (error.response && error.response.status === 404) {
+              formStatuses.push("Not Started")
+            } else {
+              console.log(error)
+            }
+          }
+        }
+
+        const formList = [];
+        for (let i = 0; i < formNames.length; i++) {
+          if (formStatuses[i] === "Not Started" || formStatuses[i] === "In Progress") {
+            formList.push({
+              formName: formNames[i],
+              status: formStatuses[i],
+              description: formDescriptions[i],
+              formVersion: formVersions[i],
+            });
+          }
+        }
+        setForms(formList);
+      } catch (error) {
+        console.log(error)
+      }
+      
+    };
+    fetchData()
+  }, []);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  const actions = [
-    { formid: 1,status:"Inactive", formName: 'Form A' },
-    { formid: 2,status:"Inactive", formName: 'Form B' }
-  ];
+  //onsole.log(forms)
+  /*
+  const tempUserJSON = {
+    "username": "Nico",
+    "hashedPassword": "c1e7a8cf4fdb873ceac220d3f76fefdce2540e8aae816f2e3f3476b51a48ecdb",
+    "passwordSalt": "nLgv+NsawHfAgujc/QTU0xM3gfD6cJuDG6h5d7yhp+4=",
+    "userType": "Vendor",
+    "assignedForms": [
+        {
+            "formName": "QLI-QHSP-10-F01 New Vendor Assessment Form",
+            "status": "Not Started",
+            "description": "Required to complete",
+            "formVersion": 1.0
+        },
+        {
+            "formName": "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
+            "status": "In Progress",
+            "description": "Required to complete",
+            "formVersion": 2.0
+        },
+        {
+            "formName": "QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation",
+            "status": "Not Started",
+            "description": "Required to complete",
+            "formVersion": 3.0
+        }
+    ]
+  }
+  const userObject = localStorage.getItem("userObject") || tempUserJSON;
+  */
+  
+  const actions = forms;
   return (
     <>
     

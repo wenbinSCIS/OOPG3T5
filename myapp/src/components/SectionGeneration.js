@@ -15,6 +15,8 @@ function GenerateSection(props) {
     const to_return = []
     var sectionText = props['section']['sectionText']
 
+    console.log(props['comments'])
+
     for(let i=0;i<rows;i++){
         var curr_row = rowElements[i]
         to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} ></GenerateRow>)
@@ -23,8 +25,15 @@ function GenerateSection(props) {
         <div className='row mb-3'>
             <h5>{sectionText}</h5>
             {to_return}
+            { 
+                props['comments'][props.section.sectionName] &&
+                <div>
+                    <br></br>
+                    Approver Feedback:<p style={{color:"red"}}>{props['comments'][props.section.sectionName]}</p>
+                </div>
+                
+            } 
         </div>
-        
     );
   }
   

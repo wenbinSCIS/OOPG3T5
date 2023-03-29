@@ -71,7 +71,6 @@ public class FormController {
     }
   }
 
-
   @GetMapping("/getAllFormsByVersion/{version}")
   public ResponseEntity<List<Form>> findByVersion(@PathVariable("version") double version) {
     try {
@@ -89,7 +88,7 @@ public class FormController {
   @PostMapping("/forceCreateForm")
     public ResponseEntity<Form> forceCreateForm(@RequestBody Form form) {
     try {
-        Form _form = formRepository.save(new Form(form.getFormName(), form.getSections(), form.getVersion()));
+        Form _form = formRepository.save(new Form(form.getFormName(), form.getSections(), form.getVersion(), form.getFormTitle(), form.getTitleSize()));
         return new ResponseEntity<>(_form, HttpStatus.CREATED);
     } catch (Exception e) {
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -103,7 +102,7 @@ public class FormController {
           return new ResponseEntity<>("Form with the given name and version already exists", HttpStatus.CONFLICT);
       }
       try {
-          Form _form = formRepository.save(new Form(form.getFormName(), form.getSections(), form.getVersion()));
+          Form _form = formRepository.save(new Form(form.getFormName(), form.getSections(), form.getVersion(), form.getFormTitle(), form.getTitleSize()));
           return new ResponseEntity<>(_form, HttpStatus.CREATED);
       } catch (Exception e) {
           return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -122,6 +121,8 @@ public class FormController {
           existingForm.setFormName(form.getFormName());
           existingForm.setSections(form.getSections());
           existingForm.setVersion(form.getVersion());
+          existingForm.setFormTitle(form.getFormTitle());
+          existingForm.setTitleSize(form.getTitleSize());
           Form updatedForm = formRepository.save(existingForm);
           return new ResponseEntity<>(updatedForm, HttpStatus.OK);
       } else {

@@ -32,7 +32,10 @@ const Sidebar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const { pathname } = useLocation();
 
-
+    const handleLogout = () => {
+      sessionStorage.clear();
+      // You can also do additional clean up or state updates here.
+    }
 
     return (
         <SSidebar isOpen={sidebarOpen}>
@@ -61,9 +64,9 @@ const Sidebar = () => {
                 </SLinkContainer>
             ))}
             <SDivider />
-            {secondaryLinksArray.map(({ icon, label }) => (
+            {secondaryLinksArray.map(({ icon, label, to }) => (
                 <SLinkContainer key={label}>
-                    <SLink to="/" style={!sidebarOpen ? { width: `fit-content` } : {}}>
+                    <SLink to={to} style={!sidebarOpen ? { width: `fit-content` } : {}} onClick={label === "Logout" ? handleLogout : null}>
                         <SLinkIcon>{icon}</SLinkIcon>
                         {sidebarOpen && <SLinkLabel>{label}</SLinkLabel>}
                     </SLink>
@@ -106,6 +109,7 @@ const secondaryLinksArray = [
     {
         label: "Settings",
         icon: <AiOutlineSetting />,
+        to: "/settings",
     },
     {
         label: "Logout",

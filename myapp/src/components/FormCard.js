@@ -24,6 +24,9 @@ const FormCard = ({ formItems }) => {
           case "In Progress":
             pillClass = "bg-warning";
             break;
+            case "Pending Approval":
+            pillClass = "bg-primary";
+            break;
           case "Approved":
             pillClass = "bg-success";
             break;
@@ -34,10 +37,10 @@ const FormCard = ({ formItems }) => {
             break;
         }
         return (
-          <MDBCard key={item.formid}>
+          <MDBCard key={item.formName + item.formVersion}>
             <MDBCardImage position='top' alt='...' src={placeholder} />
             <MDBCardBody>
-              <MDBCardTitle>{item.title}</MDBCardTitle>
+              <MDBCardTitle>{item.formName}</MDBCardTitle>
               <MDBCardText>
                 {item.description}
               </MDBCardText>
@@ -46,7 +49,7 @@ const FormCard = ({ formItems }) => {
               <MDBListGroupItem>Status : <span className={`badge rounded-pill ${pillClass}`}>{item.status}</span></MDBListGroupItem>
             </MDBListGroup>
             <MDBCardBody>
-              <MDBCardLink href='#'>Get Started</MDBCardLink>
+              <MDBCardLink href={`/Vendor`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion)}}>Get Started</MDBCardLink>
           
             </MDBCardBody>
           </MDBCard>

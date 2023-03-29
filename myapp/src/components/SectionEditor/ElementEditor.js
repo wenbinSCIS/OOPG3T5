@@ -1329,7 +1329,7 @@ Returned Component
             style={{ width: "32%" }}
           >
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Select Number of Headers / Columns
+              Select Number of Headers
             </Form.Label>
             <Form.Select
               className="custom-select"

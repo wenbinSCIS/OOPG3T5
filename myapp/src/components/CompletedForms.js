@@ -11,30 +11,77 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ArrowForwardIos } from '@mui/icons-material';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 export default function CompletedForms() {
   const [selectedTag, setSelectedTag] = useState(null);
-  
-  const formCards = [
-    {
-      title: "QLI-QHSP-10-F01 New Vendor Assessment Form",
-      status: "Pending Review",
-      description: "Completed",
-      formid : 1,
-    },
-    {
-      title: "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
-      status: "Approved",
-      description: "Completed",
-      formid : 2,
-    },
-    {
-      title: "QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation",
-      status: "Approved",
-      description: "Completed",
-      formid : 3,
-    },
-  ];
+  const [formCards, setFormCards] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post("http://localhost:8080/user/getUserByName", {
+          username: sessionStorage.getItem("username")
+        });
+        
+        //console.log(response)
+        //Get list of formnames and another list of form versions
+        var formNames = []
+        var formVersions = []
+        var formStatuses = []
+        var formDescriptions = []
+        for (let i=0 ;i<response.data.project.length;i++){
+          for(let j=0 ;j<response.data.project[i].assignedForm.length;j++){
+            formNames.push(response.data.project[i].assignedForm[j].formName)
+            formVersions.push(response.data.project[i].assignedForm[j].formVersion)
+            formDescriptions.push(response.data.project[i].assignedForm[j].description)
+          }
+        }
+
+        //Use list of formNames and formVersions to get corresponding formStatuses from formInput
+        
+        for (let i=0 ;i<formNames.length;i++){
+          var inputJson = {
+            "formName":formNames[i],
+            "username":sessionStorage.getItem("username"),
+            "formVersion":formVersions[i]
+          }
+          //console.log(inputJson)
+          try {
+            const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
+            if (response.status === 200) {
+              formStatuses.push(response.data.status)
+            }
+          } catch (error) {
+            if (error.response && error.response.status === 404) {
+              formStatuses.push("Not Started")
+            } else {
+              console.log(error)
+            }
+          }
+        }
+        
+        var forms = []
+
+        for (let i=0;i<formNames.length;i++){
+          if (formStatuses[i]=="Pending Approval"||formStatuses[i]=="Approved"){
+            forms.push({
+              formName:formNames[i],
+              status: formStatuses[i],
+              description: formDescriptions[i],
+              formVersion : formVersions[i],
+            })
+          }
+        }
+        
+        setFormCards(forms);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const filteredFormCards = selectedTag
   ? formCards.filter((card) => card.status === selectedTag)
@@ -79,11 +126,11 @@ export default function CompletedForms() {
             All
           </Button>
           <Button
-            variant={selectedTag === "Pending Review" ? "contained" : "outlined"}
-            onClick={() => setSelectedTag("Pending Review")}
+            variant={selectedTag === "Pending Approval" ? "contained" : "outlined"}
+            onClick={() => setSelectedTag("Pending Approval")}
             sx={{ mr: 1, mb: 1 }}
           >
-            Pending Review
+            Pending Approval
           </Button>
           <Button
             variant={selectedTag === "Approved" ? "contained" : "outlined"}

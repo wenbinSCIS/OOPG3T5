@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import GenerateSection from "./SectionGeneration";
 import "./AdminPage.css";
@@ -157,39 +157,35 @@ for testing purposes
     sectionText: "Recommend",
     sectionFont: "12",
     numRows: "1",
-    rowElements: [
-      [
+    rowElements: [[
         {
           elementName: "Recommend",
           elementType: "Checkbox",
           elementHeader: "",
           size: "4",
-          options: [
-            {
+          options: [{
               optionType: "checkbox",
-              optionName: "Yes",
-              optionValue: "Yes",
+              optionName:"Yes",
+              optionValue:"Yes",
             },
             {
               optionType: "checkbox",
-              optionName: "No",
-              optionValue: "No",
+              optionName:"No",
+              optionValue:"No",
             },
             {
               optionType: "checkbox-text",
-              optionName: "others",
-              optionValue: "Others",
-              textVariables: {
-                //textname will inherit radio optionName + "_text"
-                header: "others",
-                hintPosition: "front",
-                hintText: "Please specify",
-              },
-            },
-          ],
-        },
-      ],
-    ],
+              optionName:"others",
+              optionValue:"Others",
+              textVariables:{
+                //textname will inherit radio optionName + "_text" 
+                header:"others",
+                hintPosition:"front",
+                hintText:"Please specify"
+              }
+            }]
+        }],
+      ]
   };
 
   var radio_section = {
@@ -204,30 +200,30 @@ for testing purposes
           elementHeader: "RadioTest",
           elementType: "Radio",
           size: "4",
-          //["yes","no","others"]
-          options: [
+          options: //["yes","no","others"]
+          [
             {
               optionType: "radio",
-              optionName: "Yes",
-              optionValue: "Yes",
+              optionName:"Yes",
+              optionValue:"Yes",
             },
             {
               optionType: "radio",
-              optionName: "No",
-              optionValue: "No",
+              optionName:"No",
+              optionValue:"No",
             },
             {
               optionType: "radio-text",
-              optionName: "others",
-              optionValue: "Others",
-              textVariables: {
-                //textID will inherit radio optionName + "_text"
-                header: "others",
-                hintPosition: "front",
-                hintText: "Please specify",
+              optionName:"others",
+              optionValue:"Others",
+              textVariables:{
+                //textID will inherit radio optionName + "_text" 
+                header:"others",
+                hintPosition:"front",
+                hintText:"Please specify",
                 // false_header:null,
-              },
-            },
+              }
+            }
           ],
         },
       ],
@@ -564,9 +560,6 @@ handleAddComponent is deprecated
     }
     if (name == "Add Radio") {
       target = radio_section;
-    }
-    if (name == "Add Table") {
-      target = table_section;
     }
     setFormComponents([
       ...formComponents,
