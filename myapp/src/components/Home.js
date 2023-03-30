@@ -26,7 +26,7 @@ export default function Home() {
           username: sessionStorage.getItem("username")
         });
         
-        //console.log(response)
+        console.log(response)
         //Get list of formnames and another list of form versions
         var formNames = []
         var formVersions = []
@@ -62,10 +62,11 @@ export default function Home() {
             }
           }
         }
-
+        //console.log(formNames)
+        console.log(formStatuses)
         const formList = [];
         for (let i = 0; i < formNames.length; i++) {
-          if (formStatuses[i] === "Not Started" || formStatuses[i] === "In Progress") {
+          if (formStatuses[i] == "Not Started" || formStatuses[i] == "In Progress") {
             formList.push({
               formName: formNames[i],
               status: formStatuses[i],
@@ -74,7 +75,9 @@ export default function Home() {
             });
           }
         }
+        //console.log(formList)
         setForms(formList);
+        //console.log(formList)
       } catch (error) {
         console.log(error)
       }

@@ -4,14 +4,9 @@ import Sidebar from "./Sidebar/Sidebar.js";
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import { TroubleshootSharp } from '@mui/icons-material';
-import { AiOutlineConsoleSql } from 'react-icons/ai';
-import { BsFillArrowLeftSquareFill } from 'react-icons/bs';
+import Text from './Text.js';
 
 export default function VendorAssessmentForm() {
-
-  console.log(sessionStorage)
-
   const navigate = useNavigate();
 
   var [allData, setallData] = useState({}); //All data to save for user
@@ -171,8 +166,35 @@ export default function VendorAssessmentForm() {
       });
     }
   }
-
-
+  var alerts = []
+  function checkMandatory(formData){
+    var returnAlerts = []
+    var sections = formData['sections']
+    for(let i=0;i<sections.length;i++){
+      var aSection = sections[i]["rowElements"]
+      for(let j=0;j<aSection.length;j++){
+        var elements = aSection[j]
+        for(let element of elements){
+          if(element["compulsory"]){
+            if(element["elementName"] in allData==false){
+              returnAlerts.push(element["elementName"]+" is mandatory")
+            }
+          }
+        }
+        
+      }
+    }
+    alerts = []
+    if(returnAlerts.length>0){
+      for(let i=0;i<returnAlerts.length;i++){
+        alerts.push(<Text text = {returnAlerts[i]} textSize = {12} id={i}></Text>)
+      }
+      alerts.push(<p>test</p>)
+      console.log(alerts)
+    }
+    return null
+  }
+  
   async function submit(formName, formVersion, username) {
     var inputJson = {
       "formName": formName,
@@ -182,6 +204,11 @@ export default function VendorAssessmentForm() {
       "formInputData": [allData],
       "companyInfo": companyInfo
     }
+    //var results = checkMandatory(formData)
+    
+    
+
+    
     if (!isUserInputLoaded) {
       await axios
         .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
@@ -198,25 +225,33 @@ export default function VendorAssessmentForm() {
           console.log(response.data);
         });
     }
+    
+    
   }
+
   const to_return = []
-  //test
-  console.log(isUserInputLoaded)
   if (formData && isUserInputLoaded!=null) {
     var sections = formData['sections']
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
       to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
     }}
-  
+    console.log(to_return)
     return (
       <section className='d-flex'>
         <Sidebar></Sidebar>
-      <div className="container">
-      {to_return}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
-      <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo); navigate("/CompletedForms")}}>Submit Form</Button>
-      </div>
+        <div className="container">
+          {to_return}
+          <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
+          <Button variant="dark" onClick={() => {
+  submit(formName, formVersion, username, companyInfo);
+  checkMandatory(formData);
+}}>Submit Form</Button>
+        </div>
+        <div>{alerts}</div>
       </section>
     );
+    
 }
+
+// ; navigate("/CompletedForms")
