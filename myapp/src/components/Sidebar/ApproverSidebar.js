@@ -79,35 +79,17 @@ const linksArray = [
     {
         label: "Home",
         icon: <AiOutlineHome />,
-        to: "/AdminApprovalList",
+        to: "/ApprovalList",
    
     },
     {
         label: "View Forms",
         icon: <MdOutlineAnalytics />,
-        to: "/AdminApprovalList",
+        to: "/ApprovalList",
       
-    },
-    {
-        label: "Assign Forms",
-        icon: <MdAssignment />,
-        to: "/AssignForm",
-      
-    },
-    {
-        label: "Create Forms",
-        icon: <MdBuild />,
-        to: "./AdminPageComponents/FormSelector",
-      
-    },
-    {
-        label: "Create Vendor",
-        icon: <BsPeople />,
-        to: "/AdminCreation",
-       
-    },
+    }
+]
 
-];
 
 const secondaryLinksArray = [
 
