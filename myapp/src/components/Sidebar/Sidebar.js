@@ -45,8 +45,11 @@ const Sidebar = () => {
                 </SSidebarButton>
             </>
             <SLogo>
+            <a href="/home">
                 <img src={logoSVG} alt="logo" />
-            </SLogo>
+            </a>
+        </SLogo>
+
 
             <SDivider />
             {linksArray.map(({ icon, label, to }) => (
@@ -97,20 +100,11 @@ const linksArray = [
         to: "/CompletedForms",
    
     },
-    {
-        label: "Form results",
-        icon: <AiOutlineApartment />,
-        to: "/formresults",
-   
-    },
+
 ];
 
 const secondaryLinksArray = [
-    {
-        label: "Settings",
-        icon: <AiOutlineSetting />,
-        to: "/settings",
-    },
+
     {
         label: "Logout",
         to: "/",
