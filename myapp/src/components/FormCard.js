@@ -10,8 +10,12 @@ import {
   MDBListGroupItem
 } from 'mdb-react-ui-kit';
 import  placeholder  from "../assets/img/placeholder2.jpg";
+import styled from 'styled-components';
 
 const FormCard = ({ formItems }) => {
+  const StyledMDBCardTitle = styled(MDBCardTitle)`
+  height: 50px; // Adjust this value to set a fixed height, e.g., 300px
+`;
 
   return (
     <>
@@ -40,7 +44,7 @@ const FormCard = ({ formItems }) => {
           <MDBCard key={item.formName + item.formVersion}>
             <MDBCardImage position='top' alt='...' src={placeholder} />
             <MDBCardBody>
-              <MDBCardTitle>{item.formName}</MDBCardTitle>
+              <StyledMDBCardTitle>{item.formName}</StyledMDBCardTitle>
               <MDBCardText>
                 {item.description}
               </MDBCardText>

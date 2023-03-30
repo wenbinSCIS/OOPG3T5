@@ -88,20 +88,12 @@ export default function CompletedForms() {
   : formCards;
 
 
-  const GridContainer = styled(Slider)`
-  display: grid;
-  grid-template-columns: repeat(3, 1000px);
-  grid-gap: 1rem;
-
-  .slick-next {
-    right: 0;
-    z-index: 1;
-  }
-
-  .slick-slide > div {
-    padding: 0 10px;
-    margin: 1rem;
-  }
+  const FormCardsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 1rem;
 `;
 
 
@@ -143,20 +135,13 @@ export default function CompletedForms() {
               </div>
             </div>
           </div>
-          <GridContainer
-            dots={false}
-            infinite={false}
-            speed={500}
-            slidesToShow={2}
-            slidesToScroll={2}
-            nextArrow={<IconButton><ArrowForwardIos /></IconButton>}
-          >
-            {filteredFormCards.map((formItem) => (
-              <div key={formItem.formid}>
-                <FormCard formItems={[formItem]} style={{ width: '700px' }} />
-              </div>
-            ))}
-          </GridContainer>
+          <FormCardsContainer singleForm={filteredFormCards.length === 1}>
+  {filteredFormCards.map((formItem) => (
+    <div key={formItem.formid} style={{ width: '500px' }}>
+      <FormCard formItems={[formItem]} />
+    </div>
+  ))}
+</FormCardsContainer>
         </div>
       </section>
       <Footer />
