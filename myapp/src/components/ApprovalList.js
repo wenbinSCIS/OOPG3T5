@@ -42,12 +42,24 @@ export default function ApprovalList() {
         for (let i=0;i<approvedResponse.data.length;i++){
           allApproverForms.push(approvedResponse.data[i])
         }
+
+        const rejectedResponse = await axios.post(
+          'http://localhost:8080/formInput/getFormByStatus',
+          {
+            "status":"Rejected"
+          }
+        );
+
+        for (let i=0;i<rejectedResponse.data.length;i++){
+          allApproverForms.push(rejectedResponse.data[i])
+        }
         
         const forms = allApproverForms.map((item) => ({
           companyName: item.companyInfo.companyName,
           formName: item.formName,
           formVersion: item.formVersion,
           companyInfo:item.companyInfo,
+          formStatus:item.status,
           vendorUsername:item.username
         }));
         console.log(forms)
