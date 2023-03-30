@@ -10,17 +10,17 @@ export default function VendorAssessmentFormApprover() {
   var [isLoaded, setIsLoaded] = useState(false);
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
-
-  var formVersion =  1.1;
-  var formName = localStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
-  var vendor = localStorage.getItem('vendor') || "abc@gmail.com";
+  //console.log(sessionStorage)
+  var formVersion =  sessionStorage.getItem('formVersion')
+  var formName = sessionStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
+  var vendor = sessionStorage.getItem('vendorUsername') || "abc@gmail.com";
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "";
 
   async function getData(formName) {
     try {
       console.log('Sending request...');
       const response = await axios.get(`http://localhost:8080/api/getFormByNameAndVersion/${formName}/${formVersion}`);
-      console.log('Response received:', response.data);
+      //console.log('Response received:', response.data);
       setFormData(response.data);
     } catch (error) {
       console.error(error);
@@ -38,7 +38,7 @@ export default function VendorAssessmentFormApprover() {
       "username": vendor,
       "formVersion": formVersion,
     }
-    console.log(inputJson)
+    //console.log(inputJson)
     await axios
       .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
       .then((response) => {
@@ -76,11 +76,11 @@ export default function VendorAssessmentFormApprover() {
 
   const to_return = []
 
-  console.log(remarks)
+  //console.log(remarks)
 
   if (formData) {
     var sections = formData['sections']
-    console.log(sections)
+    //console.log(sections)
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
       to_return.push(<GenerateSectionApproval remarks = {remarks} setRemarks = {setRemarks} section={each_section} allData = {allData} setallData = {setallData}></GenerateSectionApproval>)
@@ -92,7 +92,7 @@ export default function VendorAssessmentFormApprover() {
       <div className="container">
       {to_return}
       <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> saveRemarks(formName, formVersion, vendor, remarks)}>Reject</Button>
-      <Button variant="dark">Submit Form</Button>
+      <Button variant="dark">Approve</Button>
       </div>
       </section>
     );

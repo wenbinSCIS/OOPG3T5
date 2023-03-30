@@ -41,7 +41,7 @@ function ApproverTable({ data }) {
               <td>{item.formName}</td>
               <td>{item.formVersion}</td>
               <td>
-              <Button variant="outlined" outline rounded color='success' href={`/vendorApprover`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion);sessionStorage.setItem('companyName', item.companyName)}}>Start</Button>
+              <Button variant="outlined" outline rounded color='success' href={`/vendorApprover`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion);sessionStorage.setItem('companyName', item.companyName);sessionStorage.setItem('companyInfo', JSON.stringify(item.companyInfo));sessionStorage.setItem('vendorUsername', item.vendorUsername)}}>Start</Button>
               </td>
             </tr>
           ))}

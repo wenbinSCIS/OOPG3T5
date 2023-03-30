@@ -47,6 +47,8 @@ export default function ApprovalList() {
           companyName: item.companyInfo.companyName,
           formName: item.formName,
           formVersion: item.formVersion,
+          companyInfo:item.companyInfo,
+          vendorUsername:item.username
         }));
         console.log(forms)
         setData(forms);
