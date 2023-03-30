@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 
 function TableComponent(props) {
     const number = `col-md-${props.size}`
-    var column_headers = props.columnHeaders
-
+    let column_headers = props.columnHeaders || ['Default header'];
+    //currently not able to render if column header is null, added default
     const data = props.data
 
     

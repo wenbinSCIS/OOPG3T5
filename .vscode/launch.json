@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SpringBootDataMongoDBApplication<java-quick-start>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mongodb.quickstart.SpringBootDataMongoDBApplication",
+            "projectName": "java-quick-start",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

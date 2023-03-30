@@ -15,14 +15,19 @@ import AddButton from './Buttons/AddButton';
 
 import SectionEditor from "./SectionEditor/SectionEditor";
 
+
 function MyForm() {
   const [showAddComponent, setShowAddComponent] = useState(false);
   const [formComponents, setFormComponents] = useState([]);
   const [infoComponents, setInfoComponents] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  // the above has to be removed
-  const [sectionData, setSectionData] = useState(null);
 
+  // the above has to be removed
+  const [isVersionNumberEmpty, setIsVersionNumberEmpty] = useState(true);
+  const [isFormNameEmpty, setIsFormNameEmpty] = useState(true);
+  const [sectionData, setSectionData] = useState(null);
+  const [isLoadButtonDisabled, setIsLoadButtonDisabled] = useState(false);
+  const [formsAvailable, setFormsAvailable] = useState(false);
   const [isSaved, setSaveStatus] = useState(true);
   const [nameSaveAs, setNameSaveAs] = useState("");
   const [versionSaveAs, setVersionSaveAs] = useState("");
@@ -58,15 +63,42 @@ function MyForm() {
     let version = event.target.value
       .split(" ")
       [event.target.value.split(" ").length - 1].substring(1);
-    setSelectedVersion(version);
+      setSelectedVersion(version);
     setSelectedForm(formName);
   }
+<<<<<<< Updated upstream
   function handleNameSaveAs(event) {
     setNameSaveAs(event.target.value);
   }
   function handleVersionSaveAs(event) {
     setVersionSaveAs(event.target.value);
   }
+=======
+  // function handleNameSaveAs(event) {
+  //   setNameSaveAs(event.target.value);
+  // }
+  const handleVersionSaveAs = (event) => {
+    const versionNumber = event.target.value;
+    setIsVersionNumberEmpty(versionNumber === '');
+    setVersionNumber(versionNumber);
+  };
+  const handleNameSaveAs = (event) => {
+    const formName = event.target.value;
+    setIsFormNameEmpty(formName === '');
+    setFormName(formName);
+  };
+
+  /*
+=============================================================================================
+The code below contains the parametersfor sections 
+using the old elemenent editor (deprecated)
+
+It also contains a dummy response from vendor to be used
+for testing purposes
+=============================================================================================
+*/
+
+>>>>>>> Stashed changes
   var name_section = {
     sectionName: "Name",
     sectionText: "Fill in your name",
@@ -405,6 +437,7 @@ handleAddComponent is deprecated
       });
   }
   async function loadExistingForms() {
+    
     await axios
       .get("http://localhost:8080/api/getAllForms")
       .then((response) => {
@@ -413,6 +446,7 @@ handleAddComponent is deprecated
         setAvailableForms(
           data.map((form) => form.formName + " v" + form.version)
         );
+        setFormsAvailable(data.length > 0);
       });
   }
   async function loadSelectedForm(formName, version) {
@@ -434,12 +468,21 @@ handleAddComponent is deprecated
         );
       });
   }
+<<<<<<< Updated upstream
   console.log(formComponents)
   // setInterval(loadExistingForms, 5000);
+=======
+  console.log("the current components of the form are: ", formComponents);  // setInterval(loadExistingForms, 5000);
+
+    const [formName, setFormName] = useState("");
+    const [versionNumber, setVersionNumber] = useState("");
+
+>>>>>>> Stashed changes
 
   /* returning the Page */
   return (
     <section className="d-flex">
+<<<<<<< Updated upstream
       <Sidebar></Sidebar>
       <div className="container">
         
@@ -455,6 +498,25 @@ handleAddComponent is deprecated
             text={"Load Form"}
             color="lightgreen"
           />
+=======
+  <Sidebar></Sidebar>
+  <div className="container">
+    <FormSelector
+      forms={availableForms}
+      onChange={handleLoadForm}
+      loadForms={loadExistingForms}
+      formsAvailable={formsAvailable}
+    />
+    <div className="button-container">
+      <Button
+        alignItems="center"
+        variant="outlined"
+        onClick={() => loadSelectedForm(selectedForm, selectedVersion)}
+      >
+        <AutorenewIcon />
+        &nbsp;Load Form
+      </Button>
+>>>>>>> Stashed changes
         </div>
         <SectionEditor onPressed={handleFormSubmit} />
 <div className="button-container" style={{ display: 'block' }}>
@@ -550,7 +612,30 @@ handleAddComponent is deprecated
               className="centered-textbox"
               placeholder="Version number"
               onChange={handleVersionSaveAs}
+<<<<<<< Updated upstream
             />
+=======
+              //value={versionNumber}
+              style={{
+                width: "180px",
+                height: "30px",
+                padding: "12px",
+                border: "1px solid #ccc",
+                borderRadius: "7px",
+                margin: "1em"
+              }}
+            />
+            <SaveComponent
+              className="centered-button"
+              saveComponents={() => saveComponents()}
+              isSaved={isSaved}
+              text={saveText}
+              formName={formName}
+              versionNumber={versionNumber}
+              formsAvailable={formsAvailable}
+              isVersionNumberEmpty={isVersionNumberEmpty}
+      />
+>>>>>>> Stashed changes
           </div>
         </div>
         {/* {sectionData && (
