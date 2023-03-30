@@ -65,7 +65,6 @@ export default function VendorAssessmentFormApprover() {
       "approverComments":[remarks]
     }  
 
-    console.log(inputJson)
     await axios
       .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
       .then((response) => {

@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 
 export default function ActionTable({actions }) {
 
-  console.log(actions)
 
   return (
     <MDBTable align='middle' style={{ width: '100%' }}>
