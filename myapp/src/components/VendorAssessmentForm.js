@@ -98,6 +98,7 @@ export default function VendorAssessmentForm() {
   }
 
   function checkMandatory(formData){
+    console.log(formData)
     var returnAlerts = []
     var sections = formData['sections']
     for(let i=0;i<sections.length;i++){
@@ -106,8 +107,14 @@ export default function VendorAssessmentForm() {
         var elements = aSection[j]
         for(let element of elements){
           if(element["compulsory"]){
-            if(element["elementName"] in allData==false){
+            console.log(allData)
+            if(element["elementName"] in allData==false ){
               returnAlerts.push("*"+element["elementName"]+" is compulsory, please fill it in")
+              returnAlerts.push(<br/>)
+            }
+            else if(allData[element["elementName"]]=="" || allData[element["elementName"]]==null){
+              returnAlerts.push("*"+element["elementName"]+" is compulsory, please fill it in")
+              returnAlerts.push(<br/>)
             }
           }
         }
@@ -130,7 +137,7 @@ export default function VendorAssessmentForm() {
     }else{
       return true
   }}
-  
+  console.log(allData)
   async function submit(formName, formVersion, username) {
     var inputJson = {
       "formName": formName,
@@ -147,6 +154,7 @@ export default function VendorAssessmentForm() {
           .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
           .then((response) => {
             alert("Saved new input data!");
+            navigate("/CompletedForms")
             setIsUserInputLoaded(true);
             console.log(response.data);
           });
@@ -155,6 +163,7 @@ export default function VendorAssessmentForm() {
           .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
           .then((response) => {
             alert("Resaved input data!");
+            navigate("/CompletedForms")
             console.log(response.data);
           });
       }
@@ -183,5 +192,3 @@ export default function VendorAssessmentForm() {
   );
   
 }
-
-// ; navigate("/CompletedForms")
