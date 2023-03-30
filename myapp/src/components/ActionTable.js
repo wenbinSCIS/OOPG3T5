@@ -30,9 +30,15 @@ export default function ActionTable({actions }) {
               </MDBBadge>
             </td>
             <td style={{ display: 'flex', flexDirection: 'row-reverse', paddingRight:100 }}>
-              <Button variant="outlined" to={`/Vendor`} className='btn btn-link' onClick={()=>{sessionStorage.setItem('formName',action.formName);sessionStorage.setItem('formVersion',action.formVersion)}}>
-                Start
-              </Button>
+
+                <Link to="/Vendor" onClick={() => {
+                  sessionStorage.setItem('formName', action.formName);
+                  sessionStorage.setItem('formVersion', action.formVersion);
+                }}>
+                  <Button variant="outlined">
+                    Start
+                  </Button>
+                </Link>
             </td>
           </tr>
         ))}
