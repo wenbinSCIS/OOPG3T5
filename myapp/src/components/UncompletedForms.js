@@ -114,14 +114,25 @@ export default function CompletedForms() {
   ? formCards.filter((card) => card.status === selectedTag)
   : formCards;
 
-
-
-const FormCardsContainer = styled.div`
+  const FormCardsContainer = styled(Slider)`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: stretch;
   gap: 1rem;
+`;
+
+const sliderSettings = {
+  dots: true,
+  infinite: false,
+
+  slidesToShow: 2,
+  slidesToScroll: 1,
+};
+
+const FormCardWrapper = styled.div`
+  width: 550px !important;
+  padding: 0 10px;
 `;
 
 
@@ -165,14 +176,19 @@ const FormCardsContainer = styled.div`
               </div>
             </div>
           </div>
-          <FormCardsContainer singleForm={filteredFormCards.length === 1}>
-  {filteredFormCards.map((formItem) => (
-    <div key={formItem.formid} style={{ width: '500px' }}>
-      <FormCard formItems={[formItem]} />
-    </div>
-  ))}
-</FormCardsContainer>
-
+          {filteredFormCards.length === 1 ? (
+  <FormCardWrapper>
+    <FormCard formItems={[filteredFormCards[0]]} />
+  </FormCardWrapper>
+) : (
+  <FormCardsContainer {...sliderSettings}>
+    {filteredFormCards.map((formItem) => (
+      <FormCardWrapper key={formItem.formid}>
+        <FormCard formItems={[formItem]} />
+      </FormCardWrapper>
+    ))}
+  </FormCardsContainer>
+)}
 
         </div>
       </section>
