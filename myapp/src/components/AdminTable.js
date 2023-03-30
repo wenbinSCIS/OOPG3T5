@@ -56,7 +56,6 @@ function AdminTable({ data }) {
               color={currentPage === page ? 'primary' : 'secondary'}
               onClick={() => handlePageChange(page)}
               size="sm"
-              
             >
               {page}
             </Button>

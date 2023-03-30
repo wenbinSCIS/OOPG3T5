@@ -55,26 +55,29 @@ const AssignForm = () => {
     useEffect(() => {
       if (selectedUser) {
         const userProjects = selectedUser.project;
-        const userForms = userProjects.flatMap(project => project.forms.map(formId => mockForms.find(f => f.id === formId)));
+        const userForms = userProjects.assignedForms
         setSelectedForms(userForms);
       } else {
         setSelectedForms([]);
       }
     }, [selectedUser]);
   const handleProjectChange = (event) => {
-    const projectId = event.target.value;
-    const project = mockProjects.find((p) => p.id === parseInt(projectId));
+    const projectName = event.target.value;
+    const project = userProjects.find((p) => p.projectName === projectName);
     setSelectedProject(project);
-
   };
 
   const handleFormChange = (event) => {
-    const formId = parseInt(event.target.value);
+    const formNameVersion = event.target.value;
     if (!selectedUser) return;
-  
     const updatedProjects = selectedUser.projects.map((project) => {
-      if (project.id === selectedProject.id) {
-        if (project.forms.includes(formId)) return project; // Skip if the form is already assigned
+      if (project.projectName === selectedProject.projectName) {
+        var formAlreadyExist = false;
+        userForms.map(form => {
+        if(form.formName == formNameVersion) {
+          formAlreadyExist = true
+        }})
+        if (formAlreadyExist) return project; // Skip if the form is already assigned
         return {
           ...project,
           forms: [...project.forms, formId],
@@ -88,12 +91,12 @@ const AssignForm = () => {
 
   const handleSearchInputChange = (event) => {
     const searchTerm = event.target.value;
-    const filteredUsers = mockUsers.filter(user => user.username.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredUsers = vendorUsers.filter(user => user.companyName.toLowerCase().includes(searchTerm.toLowerCase()));
     setFilteredUsers(filteredUsers);
   };
 
   const handleRemoveForm = (projectId, formId) => {
-    const updatedProjects = selectedUser.projects.map((project) => {
+    const updatedProjects = selectedUser.project.map((project) => {
       if (project.id === projectId) {
         return {
           ...project,

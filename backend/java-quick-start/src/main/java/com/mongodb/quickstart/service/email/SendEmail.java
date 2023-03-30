@@ -57,6 +57,6 @@ public class SendEmail {
     }
 
     public static void emailAssignForm(String toEmail) {
-        Mailer.send("OOPG3T5@gmail.com", "livmeituhepihmrm", toEmail, "Account creation", "account created");
+        Mailer.send("OOPG3T5@gmail.com", "livmeituhepihmrm", toEmail, "Form assigned for ", "account created");
     }
 }

@@ -15,15 +15,15 @@ export default function AdminApprovalList() {
       setSearchText(event.target.value);
     };
   const data = [
-    { companyName: 'ABC Inc.', formName: 'Form 1', status : 'In progress' },
+    { companyName: 'ABC Inc.', formName: 'Form 1', status : 'In Progress' },
     { companyName: 'XYZ Corp.', formName: 'Form 2', status : 'Not Started' },
     { companyName: '123 Ltd.', formName: 'Form 3',status : 'Pending Review'},
     { companyName: '456 Co.', formName: 'Form 4',status : 'Pending Approval' },
-    { companyName: '789 LLC', formName: 'Form 5',status : 'In progress' },
+    { companyName: '789 LLC', formName: 'Form 5',status : 'In Progress' },
     { companyName: 'DEF Ltd.', formName: 'Form 6', status : 'Rejected' },
-    { companyName: 'GHI Inc.', formName: 'Form 7',status : 'In progress' },
+    { companyName: 'GHI Inc.', formName: 'Form 7',status : 'In Progress' },
     { companyName: 'JKL Corp.', formName: 'Form 8',status : 'Approved' },
-    { companyName: 'MNO Ltd.', formName: 'Form 9',status : 'In progress'},
+    { companyName: 'MNO Ltd.', formName: 'Form 9',status : 'In Progress'},
     { companyName: 'ABC Inc.', formName: 'Form 10', status : 'Approved' },
   ];
 
