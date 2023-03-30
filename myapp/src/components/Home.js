@@ -66,7 +66,7 @@ export default function Home() {
         console.log(formStatuses)
         const formList = [];
         for (let i = 0; i < formNames.length; i++) {
-          if (formStatuses[i] == "Not Started" || formStatuses[i] == "In Progress") {
+          if (formStatuses[i] == "Not Started" || formStatuses[i] == "In Progress" || formStatuses[i]=="Rejected") {
             formList.push({
               formName: formNames[i],
               status: formStatuses[i],

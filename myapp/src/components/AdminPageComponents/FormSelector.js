@@ -1,8 +1,20 @@
 import { useLocation } from "react-router-dom";
 import { Form } from "react-bootstrap";
+import React, {useState} from "react";
 
-const FormSelector = ({ forms, loadForms , onChange}) => {
+const FormSelector = ({ forms, loadForms , onChange, selectedForm, setSelectedForm, loadFormDisabled, setLoadFormDisabled}) => {
   const location = useLocation();
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    setSelectedForm(value);
+    
+    // Enable the Load Form button if a valid option is selected
+    if (value == "Select a form to Load") {
+      setLoadFormDisabled(true);
+    } else {
+      setLoadFormDisabled(false);
+    }
+  };
 
   return (
     <header className="header">

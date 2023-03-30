@@ -4,23 +4,19 @@ import { useLocation } from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
 import Button from '@mui/material/Button';
 
-const SaveComponent = ({ isSaved, saveComponents, text }) => {
+const SaveComponent = ({ isSaved, saveComponents, text, formsAvailable, isVersionNumberEmpty, isFormNameEmpty}) => {
   const location = useLocation();
 
   return (
     <header className="header">
       {location.pathname === "/testadmin" && (
         <div>
-          {/* <Button
-            color={isSaved ? "lightgrey" : "lightblue"}
-            text="Save as "
-            onClick={saveComponents}
-          /> */}
           <Button
           alignItems="center"
           variant="contained"
           color="primary"
           onClick={saveComponents}
+          disabled={!formsAvailable || isVersionNumberEmpty || isFormNameEmpty}
         >
           <SaveIcon />
           &nbsp; Save Form 
@@ -34,3 +30,4 @@ const SaveComponent = ({ isSaved, saveComponents, text }) => {
 };
 
 export default SaveComponent;
+

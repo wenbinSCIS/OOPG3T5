@@ -17,25 +17,36 @@ const FormCard = ({ formItems }) => {
   height: 50px; // Adjust this value to set a fixed height, e.g., 300px
 `;
 
+var actionWord = "Get Started"
+
   return (
     <>
       {formItems.map(item => {
         let pillClass = "";
         switch (item.status) {
           case "Not Started":
-            pillClass = "bg-danger";
+            pillClass = "bg-info";  //turquoise
+            actionWord = "Get Started";
             break;
           case "In Progress":
-            pillClass = "bg-warning";
+            pillClass = "bg-warning"; //yellow
+            actionWord = "Continue";
             break;
-            case "Pending Approval":
+          case "Pending Approval": //blue
             pillClass = "bg-primary";
+            actionWord = "View Submitted Form";
             break;
-          case "Approved":
+          case "Approved": //green
             pillClass = "bg-success";
+            actionWord = "View Submitted Form";
             break;
-          case "Pending Review":
-            pillClass = "bg-primary";
+          case "Pending Review"  : //grey
+            pillClass = "bg-secondary";
+            actionWord = "View Submitted Form";
+            break;
+          case "Rejected": // red
+            pillClass = "bg-danger";
+            actionWord = "Amend Form";
             break;
           default:
             break;
@@ -53,8 +64,7 @@ const FormCard = ({ formItems }) => {
               <MDBListGroupItem>Status : <span className={`badge rounded-pill ${pillClass}`}>{item.status}</span></MDBListGroupItem>
             </MDBListGroup>
             <MDBCardBody>
-              <MDBCardLink href={`/Vendor`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion)}}>Get Started</MDBCardLink>
-          
+              <MDBCardLink href={`/Vendor`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion)}}>{actionWord}</MDBCardLink>
             </MDBCardBody>
           </MDBCard>
         )

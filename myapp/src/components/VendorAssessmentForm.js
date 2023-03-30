@@ -13,6 +13,7 @@ export default function VendorAssessmentForm() {
   var [isUserInputLoaded, setIsUserInputLoaded] = useState(false);
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
+  const [status, setStatus] = useState(null)
 
   var formVersion =   sessionStorage.getItem('formVersion')||1.1; 
   var formName = sessionStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
@@ -47,9 +48,10 @@ export default function VendorAssessmentForm() {
           const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
           if(response.status == 200){
             setallData(response.data.formInputData[0]);
+            setStatus(response.data.status);
             setIsUserInputLoaded(true);            
             console.log("User data found")
-            if (response.data.hasOwnProperty("approverComments")) {
+            if (response.data.status=="Rejected") {
               setApproverComments(response.data.approverComments[0]);
             }
           } else {
@@ -113,6 +115,19 @@ console.log(isUserInputLoaded)
               returnAlerts.push(<a style={{color:"red", fontSize:"15px", fontStyle: "italic"}}>{"*"+element["elementName"]+" is compulsory, please fill it in"}</a>)
               returnAlerts.push(<br/>)
             }
+            else{
+              let counter = 0;
+              for(let x=0;x<element["elementName"].length;x++){
+                if (element["elementName"][x] == {}){
+                  console.log("here")
+                  counter+=1
+                }
+              }
+              if(counter==element["elementName"].length){
+                returnAlerts.push(<a style={{color:"red", fontSize:"15px", fontStyle: "italic"}}>{"*"+element["elementName"]+" is compulsory, please fill it in"}</a>)
+                returnAlerts.push(<br/>)
+              }
+            }
           }
         }
         
@@ -173,8 +188,16 @@ console.log(isUserInputLoaded)
       <Header/>
         {to_return}
         {alerts}
-        <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
-        <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
+        {status === "Pending Approval" || status === "Approved" ? (
+  <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {navigate("/completedForms")}}>Exit</Button>
+) : (
+  <>
+    <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
+    <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
+  </>
+)}
+
+
         
       </div>
       

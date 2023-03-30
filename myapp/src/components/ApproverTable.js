@@ -26,22 +26,23 @@ function ApproverTable({ data }) {
       <MDBTable>
         <MDBTableHead>
           <tr>
-          <th className="gray-th">Index</th>
     <th className="gray-th">Company Name</th>
     <th className="gray-th">Form Name</th>
-    <th className="gray-th">Request Date</th>
+    <th className="gray-th">Version</th>
+    <th className="gray-th">Status</th>
     <th className="gray-th">Action</th>
           </tr>
         </MDBTableHead>
         <MDBTableBody>
           {currentItems.map((item, index) => (
             <tr key={index} className="hover-bg">
-              <td>{startIndex + index + 1}</td>
+              
               <td>{item.companyName}</td>
               <td>{item.formName}</td>
-              <td>{item.requestDate}</td>
+              <td>{item.formVersion}</td>
+              <td>{item.formStatus}</td>
               <td>
-              <Button variant="outlined" outline rounded color='success' >Start</Button>
+              <Button variant="outlined" outline rounded color='success' href={`/vendorApprover`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion);sessionStorage.setItem('companyName', item.companyName);sessionStorage.setItem('companyInfo', JSON.stringify(item.companyInfo));sessionStorage.setItem('vendorUsername', item.vendorUsername)}}>Start</Button>
               </td>
             </tr>
           ))}
