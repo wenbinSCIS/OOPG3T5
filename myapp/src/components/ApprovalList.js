@@ -42,13 +42,13 @@ export default function ApprovalList() {
         for (let i=0;i<approvedResponse.data.length;i++){
           allApproverForms.push(approvedResponse.data[i])
         }
-
+        
         const forms = allApproverForms.map((item) => ({
           companyName: item.companyInfo.companyName,
           formName: item.formName,
-          version: item.formVersion,
+          formVersion: item.formVersion,
         }));
-
+        console.log(forms)
         setData(forms);
       } catch (error) {
         console.log(error);
