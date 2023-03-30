@@ -20,6 +20,7 @@ export default function VendorAssessmentForm() {
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "Company A";
 
   var [approverComments, setApproverComments] = useState({});
+  const [alerts, setAlerts] = useState([]);
 
   var url = window.location.href;
 
@@ -34,78 +35,7 @@ export default function VendorAssessmentForm() {
     }
   }
 
-  // useEffect(() => {
-  //   getData(formName); 
-  //   async function loadUserInput(formName, formVersion, username) {
-  //   var inputJson = {
-  //     "formName": formName,
-  //     "username": username,
-  //     "formVersion": formVersion,
-  //   }
-  //     await axios
-  //     .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         setallData(response.data.formInputData[0])
-  //         if(response.data.approverComments[0]){
-  //           setRemarks(response.data.approverComments[0])
-  //         }
-  //         setIsUserInputLoaded(true)
-  //       }
-  //     });
-  //   }
-  //   await loadUserInput(formName,formVersion,username)
-     
-  // }, []); // empty dependency array to run the effect only once
-
-  // async function checkUserInputExists(formName, formVersion, username) {
-  //   var inputJson = {
-  //     "formName": formName,
-  //     "username": username,
-  //     "formVersion": formVersion,
-  //   }
-  //     await axios
-  //     .post(`http://localhost:8080/formInput/checkIfFormExists`, inputJson)
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         axios
-  //         .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
-  //         .then((response) => {
-  //           if (response.status === 200) {
-  //             setallData(response.data.formInputData[0])
-  //             if(response.data.approverComments[0]){
-  //               setRemarks(response.data.approverComments[0])
-  //             }
-  //           }
-  //         });
-  //       }
-  //     });
-  //   }
-
-
-
-  // async function loadUserInput(formName, formVersion, username) {
-  //   var inputJson = {
-  //     "formName": formName,
-  //     "username": username,
-  //     "formVersion": formVersion,
-  //   }
-  //     await axios
-  //     .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         setallData(response.data.formInputData[0])
-  //         if(response.data.approverComments[0]){
-  //           setRemarks(response.data.approverComments[0])
-  //         }
-  //       }
-  //     });
-  //   }
-
-
-
-
-  useEffect(() => {
+   useEffect(() => {
     async function fetchData() {
       try {
           getData(formName);
@@ -166,7 +96,7 @@ export default function VendorAssessmentForm() {
       });
     }
   }
-  var alerts = []
+
   function checkMandatory(formData){
     var returnAlerts = []
     var sections = formData['sections']
@@ -177,23 +107,29 @@ export default function VendorAssessmentForm() {
         for(let element of elements){
           if(element["compulsory"]){
             if(element["elementName"] in allData==false){
-              returnAlerts.push(element["elementName"]+" is mandatory")
+              returnAlerts.push("*"+element["elementName"]+" is compulsory, please fill it in")
             }
           }
         }
         
       }
     }
-    alerts = []
+    var returns = []
     if(returnAlerts.length>0){
       for(let i=0;i<returnAlerts.length;i++){
-        alerts.push(<Text text = {returnAlerts[i]} textSize = {12} id={i}></Text>)
+        returns.push(<a style={{color:"red", fontSize:"15px", fontStyle: "italic"}}>{returnAlerts[i]}</a>)
       }
-      alerts.push(<p>test</p>)
-      console.log(alerts)
+      returns.push(<br/>)
+      setAlerts(returns)
     }
-    return null
-  }
+    else{
+      setAlerts(returns)
+    }
+    if(returnAlerts.length>0){
+      return false
+    }else{
+      return true
+  }}
   
   async function submit(formName, formVersion, username) {
     var inputJson = {
@@ -204,29 +140,25 @@ export default function VendorAssessmentForm() {
       "formInputData": [allData],
       "companyInfo": companyInfo
     }
-    //var results = checkMandatory(formData)
-    
-    
-
-    
-    if (!isUserInputLoaded) {
-      await axios
-        .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
-        .then((response) => {
-          alert("Saved new input data!");
-          setIsUserInputLoaded(true);
-          console.log(response.data);
-        });
-    } else {
-      await axios
-        .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
-        .then((response) => {
-          alert("Resaved input data!");
-          console.log(response.data);
-        });
-    }
-    
-    
+    var result = checkMandatory(formData);
+    if(result) {
+      if (!isUserInputLoaded) {
+        await axios
+          .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
+          .then((response) => {
+            alert("Saved new input data!");
+            setIsUserInputLoaded(true);
+            console.log(response.data);
+          });
+      } else {
+        await axios
+          .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
+          .then((response) => {
+            alert("Resaved input data!");
+            console.log(response.data);
+          });
+      }
+    }    
   }
 
   const to_return = []
@@ -236,22 +168,20 @@ export default function VendorAssessmentForm() {
       const each_section = sections[i]
       to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
     }}
-    console.log(to_return)
-    return (
-      <section className='d-flex'>
-        <Sidebar></Sidebar>
-        <div className="container">
-          {to_return}
-          <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
-          <Button variant="dark" onClick={() => {
-  submit(formName, formVersion, username, companyInfo);
-  checkMandatory(formData);
-}}>Submit Form</Button>
-        </div>
-        <div>{alerts}</div>
-      </section>
-    );
-    
+  return (
+    <section className='d-flex'>
+      <Sidebar></Sidebar>
+      <div className="container">
+        {to_return}
+        {alerts}
+        <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
+        <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
+        
+      </div>
+      
+    </section>
+  );
+  
 }
 
 // ; navigate("/CompletedForms")
