@@ -1,6 +1,7 @@
 import React from 'react';
 import { MDBBadge, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 export default function ActionTable({actions }) {
 
@@ -29,9 +30,9 @@ export default function ActionTable({actions }) {
               </MDBBadge>
             </td>
             <td style={{ display: 'flex', flexDirection: 'row-reverse', paddingRight:100 }}>
-              <Link to={`/Vendor`} className='btn btn-link' onClick={()=>{sessionStorage.setItem('formName',action.formName);sessionStorage.setItem('formVersion',action.formVersion)}}>
+              <Button variant="outlined" to={`/Vendor`} className='btn btn-link' onClick={()=>{sessionStorage.setItem('formName',action.formName);sessionStorage.setItem('formVersion',action.formVersion)}}>
                 Start
-              </Link>
+              </Button>
             </td>
           </tr>
         ))}
