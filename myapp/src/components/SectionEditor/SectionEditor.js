@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 
 import Stack from "@mui/material/Stack";
@@ -7,37 +7,15 @@ import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ElementEditor from "./ElementEditor";
 
-
-function SectionEditor({ onPressed }) {
+function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
   const [sectionData, setSectionData] = useState({
-    // sectionName: "New Section",
-    // sectionText: "New Section",
-    // numRows: "1",
     sectionFont: "12",
-    // rowElements: [
-    //   [
-    //     {
-    //       elementName: "firstName",
-    //       elementHeader: "Full Name",
-    //       placeholder: "First Name",
-    //       placeholderPosition: "hint", //either hint or under for now
-    //       elementType: "Textinput",
-    //     },
-    //     {
-    //       elementName: "lastName",
-    //       elementHeader: "",
-    //       placeholder: "Last Name",
-    //       placeholderPosition: "hint",
-    //       elementType: "Textinput",
-    //     },
-    //   ],
-    // ],
   });
 
   useEffect(
     () => console.log("The Section State is: ", sectionData),
     [sectionData]
-  ); // add this to log all changes to elementState
+  ); // add this to log all changes to SectionState
 
   const [sectionCreated, setSectionCreated] = useState(false);
 
@@ -49,6 +27,15 @@ function SectionEditor({ onPressed }) {
       },
     },
   });
+
+  // sectionNames and elementNames used for validation to ensure that there are no duplicate sectionNames or elementNames
+  const [sectionNames, setSectionNames] = useState(sectionNamesList);
+  const [elementNames, setElementNames] = useState(elementNamesList);
+
+  useEffect(() => {
+    setSectionNames(sectionNamesList);
+    setElementNames(elementNamesList);
+  }, [sectionNamesList, elementNamesList]);
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
@@ -78,20 +65,34 @@ function SectionEditor({ onPressed }) {
 
   // importan function here!! - is sent to element editor to retrieve rows, need to also set numrows by counting the number of rows here
 
-  const retrieveFromElementEditor = (rows) => { 
-    const newSection = {...sectionData};
+  const formRef = useRef(null); // this is used so that the form is reset everytime someone saves a new section -i.e, no more fields present
+
+  const retrieveFromElementEditor = (rows) => {
+    const newSection = { ...sectionData };
     newSection.rowElements = rows;
     const rowsLength = rows.length;
     newSection.numRows = String(rowsLength);
-    setSectionData(newSection);
+    // setSectionData(newSection);
     onPressed(newSection); // send info to admin page
+    setSectionCreated(false); // closes element editor when save section is initiated
+    setIsActive(true); // closes element editor and sets active state for open element editor
+    setSectionData({
+      // I need to do this if not there is residual data on the section when on save, which will be viewed in the preview tab
+      sectionFont: "12",
+    });
+    formRef.current.reset();
   };
 
   // the two functions below control the state for showing the element editor
   function sectionIsCreated() {
     if ("sectionName" in sectionData && "sectionText" in sectionData) {
-      setSectionCreated(true);
-      handleToggle();
+      console.log("printing out sectionName in sectionEditor", sectionNames);
+      if (sectionNames.includes(sectionData.sectionName)) {
+        alert("Section Name is already used, please try another one");
+      } else {
+        setSectionCreated(true);
+        handleToggle();
+      }
     } else {
       alert("Please fill up empty section editor fields!");
     }
@@ -100,7 +101,7 @@ function SectionEditor({ onPressed }) {
   function sectionNotCreated() {
     const result = window.confirm(
       "Do you want to close element editor? all changed section data will be deleted",
-      "Yes, please close it",
+      "Yes, please close it"
     );
     if (result) {
       setSectionCreated(false);
@@ -110,7 +111,7 @@ function SectionEditor({ onPressed }) {
   return (
     <div>
       {/* <Form> */}
-      <Form>
+      <Form ref={formRef}>
         <h5>Section Editor</h5>
         <Form.Group controlId="sectionName" className="mb-3">
           <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
@@ -204,10 +205,13 @@ function SectionEditor({ onPressed }) {
         </Stack>
       </Form>
       {sectionCreated && (
-        <ElementEditor onPressedElement={retrieveFromElementEditor} sectionState={sectionData}/> // onPressedElement - need to add handle submit here? -> need to be at Save and Close as submit button within element editor
+        <ElementEditor
+          onPressedElement={retrieveFromElementEditor}
+          sectionState={sectionData}
+          elementNamesList={elementNames}
+        /> // onPressedElement - need to add handle submit here? -> need to be at Save and Close as submit button within element editor
       )}
     </div>
-    // preview tab taking section data should be last item here
   );
 }
 

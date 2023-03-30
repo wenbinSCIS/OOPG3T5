@@ -33,45 +33,53 @@ export default function ApprovalList() {
       )
     : data;
 
-  return (
-    <>
-      <section id="hero" className="d-flex">
-        <AdminSidebar />
-        <div className="container">
-          <Header />
-          <div className="row">
-            <div className="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-            <h2 className="text-g" style={{ fontWeight: 'bold', fontSize: 30, color: 'black' }}>
-              Approvals
-            </h2>
-
-          </div>
+    return (
+      <>
+        <section id="hero" className="d-flex">
+          <AdminSidebar />
+          <div className="container">
+            <Header />
+            <div className="row">
+              <div className="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1">
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <h2
+                    className="text-g"
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: 30,
+                      color: 'black',
+                    }}
+                  >
+                    Approvals                  </h2>
+                </div>
+              </div>
+              <div className="col-lg-6 order-1 order-lg-2" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <TextField
+                  id="outlined-basic"
+                  label="Company Name"
+                  variant="outlined"
+                  value={searchText}
+                  onChange={handleSearch}
+                  InputProps={{
+                    startAdornment: (
+                      <SearchIcon sx={{ mr: 1, color: 'grey.500' }} />
+                    ),
+                  }}
+                />
+              </div>
             </div>
-            
-
-            <div className="col-lg-6 order-1 order-lg-2" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <TextField
-                id="outlined-basic"
-                label="Company Name"
-                variant="outlined"
-                value={searchText}
-                onChange={handleSearch}
-                InputProps={{
-                  startAdornment: (
-                    <SearchIcon sx={{ mr: 1, color: 'grey.500' }} />
-                  ),
-                }}
-              />
+            <div className="row">
+              <ApproverTable data={filteredData} />
             </div>
           </div>
-          <div className="row">
-            <ApproverTable data={filteredData} />
-          </div>
-        </div>
-      </section>
-      <Footer />
-      <Totop />
-    </>
-  );
-}
+        </section>
+        <Footer />
+        <Totop />
+      </>
+    );
+  }

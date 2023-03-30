@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import GenerateSection from '../SectionGeneration';
 
-export default function PreviewTab(props) {
-  const sectionState = props.sectionState;
+export default function PreviewTab({sectionState}) {
+  // const sectionState = props.sectionState;
   var [allData, setallData] = useState({}); //All data to save for user
   return (
     <div>
       <h5>Preview Tab</h5>
       {typeof sectionState.rowElements === "undefined" && (
-        <p>The Section is currenlty Empty</p>
+        <p>The Section is currently Empty</p>
       )}
       {typeof sectionState.rowElements !== "undefined" && (
         <GenerateSection
