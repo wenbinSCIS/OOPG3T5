@@ -64,7 +64,7 @@ export default function CompletedForms() {
         var forms = []
 
         for (let i=0;i<formNames.length;i++){
-          if (formStatuses[i]=="Pending Approval"||formStatuses[i]=="Approved"){
+          if (formStatuses[i]=="Pending Approval"||formStatuses[i]=="Approved" || formStatuses[i]=="Rejected"){
             forms.push({
               formName:formNames[i],
               status: formStatuses[i],
@@ -142,6 +142,14 @@ const FormCardWrapper = styled.div`
             sx={{ mr: 1, mb: 1 }}
           >
             Approved
+          </Button>
+
+          <Button
+            variant={selectedTag === "Rejected" ? "contained" : "outlined"}
+            onClick={() => setSelectedTag("Rejected")}
+            sx={{ mr: 1, mb: 1 }}
+          >
+            Rejected
           </Button>
         </div>
               </div>
