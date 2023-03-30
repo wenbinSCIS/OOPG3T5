@@ -188,8 +188,16 @@ console.log(isUserInputLoaded)
       <Header/>
         {to_return}
         {alerts}
-        <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
-        <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
+        {status === "Pending Approval" || status === "Approved" ? (
+  <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {navigate("/completedForms")}}>Exit</Button>
+) : (
+  <>
+    <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
+    <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
+  </>
+)}
+
+
         
       </div>
       
