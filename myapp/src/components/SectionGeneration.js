@@ -24,7 +24,7 @@ function GenerateSection(props) {
             <h5>{sectionText}</h5>
             {to_return}
             { 
-                props['comments'][props.section.sectionName] &&
+                props['comments'][props.section.sectionName] && 
                 <div>
                     <br></br>
                     Approver Feedback:<p style={{color:"red"}}>{props['comments'][props.section.sectionName]}</p>
