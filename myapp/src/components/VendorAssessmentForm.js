@@ -10,7 +10,7 @@ export default function VendorAssessmentForm() {
   const navigate = useNavigate();
 
   var [allData, setallData] = useState({}); //All data to save for user
-  var [isUserInputLoaded, setIsUserInputLoaded] = useState(null);
+  var [isUserInputLoaded, setIsUserInputLoaded] = useState(false);
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
 
@@ -54,12 +54,10 @@ export default function VendorAssessmentForm() {
             }
           } else {
             setIsUserInputLoaded(false);
-            console.log("here1")
           }
         } catch (error) {
-          console.log(error);
-          //setIsUserInputLoaded(false);
-          console.log("here2")
+          if(error == "Error: Request failed with status code 404"){
+          setIsUserInputLoaded(false);}
         }
           }   
     fetchData();
@@ -68,7 +66,7 @@ export default function VendorAssessmentForm() {
     
   
 
-
+console.log(isUserInputLoaded)
   async function saveUserInput(formName, formVersion, username, companyInfo){
     var inputJson = {
       "formName":formName,
@@ -107,13 +105,12 @@ export default function VendorAssessmentForm() {
         var elements = aSection[j]
         for(let element of elements){
           if(element["compulsory"]){
-            console.log(allData)
             if(element["elementName"] in allData==false ){
-              returnAlerts.push("*"+element["elementName"]+" is compulsory, please fill it in")
+              returnAlerts.push(<a style={{color:"red", fontSize:"15px", fontStyle: "italic"}}>{"*"+element["elementName"]+" is compulsory, please fill it in"}</a>)
               returnAlerts.push(<br/>)
             }
             else if(allData[element["elementName"]]=="" || allData[element["elementName"]]==null){
-              returnAlerts.push("*"+element["elementName"]+" is compulsory, please fill it in")
+              returnAlerts.push(<a style={{color:"red", fontSize:"15px", fontStyle: "italic"}}>{"*"+element["elementName"]+" is compulsory, please fill it in"}</a>)
               returnAlerts.push(<br/>)
             }
           }
@@ -121,23 +118,12 @@ export default function VendorAssessmentForm() {
         
       }
     }
-    var returns = []
-    if(returnAlerts.length>0){
-      for(let i=0;i<returnAlerts.length;i++){
-        returns.push(<a style={{color:"red", fontSize:"15px", fontStyle: "italic"}}>{returnAlerts[i]}</a>)
-      }
-      returns.push(<br/>)
-      setAlerts(returns)
-    }
-    else{
-      setAlerts(returns)
-    }
+    setAlerts(returnAlerts)
     if(returnAlerts.length>0){
       return false
     }else{
       return true
   }}
-  console.log(allData)
   async function submit(formName, formVersion, username) {
     var inputJson = {
       "formName": formName,
@@ -169,6 +155,7 @@ export default function VendorAssessmentForm() {
       }
     }    
   }
+  console.log(allData)
 
   const to_return = []
   if (formData && isUserInputLoaded!=null) {
