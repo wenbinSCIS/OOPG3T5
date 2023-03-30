@@ -7,14 +7,14 @@ import Button from '@mui/material/Button';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 const mockUsers = [
   { id: 1, username: 'user1', email: 'user1@example.com', projects: [
-    { id: 1, forms: [1, 2, 3] },
-    { id: 2, forms: [1, 5] },
+    { id: 1, forms: ['Form 1', 'Form 2', 'Form 3'] },
+    { id: 2, forms: ['Form 1', 'Form 5'] },
   ]},
   { id: 2, username: 'user2', email: 'user2@example.com', projects: [
-    { id: 1, forms: [2, 3] },
+    { id: 1, forms: ['Form 2', 'Form 3'] },
   ]},
   { id: 3, username: 'user3', email: 'user3@example.com', projects: [
-    { id: 2, forms: [2, 6] },
+    { id: 2, forms: ['Form 2', 'Form 6'] },
   ]},
 ];
 
@@ -26,12 +26,12 @@ const mockProjects = [
 ];
 
 const mockForms = [
-  { id: 1, name: 'Form 1' },
-  { id: 2, name: 'Form 2' },
-  { id: 3, name: 'Form 3' },
-  { id: 4, name: 'Form 4' },
-  { id: 5, name: 'Form 5' },
-  { id: 6, name: 'Form 6' },
+  { id: 'Form 1'  },
+  { id: 'Form 2'},
+  { id: 'Form 3' },
+  { id: 'Form 4'  },
+  { id: 'Form 5' },
+  { id: 'Form 6' },
 ];
 
 const AssignForm = () => {
@@ -45,6 +45,7 @@ const AssignForm = () => {
       if (selectedUser) {
         const userProjects = selectedUser.projects;
         const userForms = userProjects.flatMap(project => project.forms.map(formId => mockForms.find(f => f.id === formId)));
+
         setSelectedForms(userForms);
       } else {
         setSelectedForms([]);
@@ -58,7 +59,8 @@ const AssignForm = () => {
   };
 
   const handleFormChange = (event) => {
-    const formId = parseInt(event.target.value);
+    const formId = event.target.value;
+
     if (!selectedUser) return;
   
     const updatedProjects = selectedUser.projects.map((project) => {
@@ -109,8 +111,10 @@ const AssignForm = () => {
   const renderFormOptions = () => {
     if (!selectedProject) return null;
     const projectForms = selectedProject.forms.map(formId => mockForms.find(f => f.id === formId));
+
     return projectForms.map(form => (
-      <option key={form.id} value={form.id}>{form.name}</option>
+      <option key={form.id} value={form.id}>{form.id}</option>
+
     ));
   };
   const renderSelectedForms = () => {
@@ -119,13 +123,14 @@ const AssignForm = () => {
     return selectedUser.projects.map((project) => {
       const projectName = mockProjects.find((p) => p.id === project.id).name;
       const userForms = project.forms.map(formId => mockForms.find(f => f.id === formId));
+
   
       return (
         <div key={project.id} className="project-forms">
           <h4>{projectName}:</h4>
           {userForms.map((form) => (
             <div key={form.id} className="selected-form">
-              {form.name}
+              {form.id}
               <HighlightOffIcon aria-label="delete" onClick={() => handleRemoveForm(project.id,form.id)} />
             </div>
           ))}
