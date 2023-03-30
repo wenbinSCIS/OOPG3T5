@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import Text from './Text.js';
-
+import Header from "./Header";
 export default function VendorAssessmentForm() {
   const navigate = useNavigate();
 
@@ -166,8 +166,11 @@ console.log(isUserInputLoaded)
     }}
   return (
     <section className='d-flex'>
+      
       <Sidebar></Sidebar>
+      
       <div className="container">
+      <Header/>
         {to_return}
         {alerts}
         <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
