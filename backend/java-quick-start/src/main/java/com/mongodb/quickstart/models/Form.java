@@ -142,7 +142,7 @@ public class Form {
             private List<OptionObject> options;
             private String noRows;
             private  List<String> headers;
-            private boolean Compulsory;
+            private boolean compulsory;
             
 
             public String getNoRows() {
@@ -164,17 +164,17 @@ public class Form {
                 this.headers = headers;
             }
 
-            public boolean isCompulsory() {
-                return Compulsory;
+            public boolean iscompulsory() {
+                return compulsory;
             }
     
-            public void setCompulsory(boolean compulsory) {
-                Compulsory = compulsory;
+            public void setcompulsory(boolean compulsory) {
+                this.compulsory = compulsory;
             }
 
 
             // getters and setters
-            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, String elementType, String elementOrientation, int size, List<OptionObject> options,String noRows,List<String> headers, boolean Compulsory) {
+            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, String elementType, String elementOrientation, int size, List<OptionObject> options,String noRows,List<String> headers, boolean compulsory) {
             this.elementName = elementName;
             this.elementHeader = elementHeader;
             this.placeholder = placeholder;
@@ -185,31 +185,31 @@ public class Form {
             this.options = options;
             this.noRows = noRows;
             this.headers = headers;
-            this.Compulsory = Compulsory;
+            this.compulsory = compulsory;
             }
                 
 
             public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition,
-                    String elementType, boolean Compulsory) {
+                    String elementType, boolean compulsory) {
                 this.elementName = elementName;
                 this.elementHeader = elementHeader;
                 this.placeholder = placeholder;
                 this.placeholderPosition = placeholderPosition;
                 this.elementType = elementType;
-                this.Compulsory = Compulsory;
+                this.compulsory = compulsory;
             }
 
 
 
             public RowElement(String elementName, String elementHeader, String elementType, String elementOrientation,
-                    int size, List<OptionObject> options, boolean Compulsory) {
+                    int size, List<OptionObject> options, boolean compulsory) {
                 this.elementName = elementName;
                 this.elementHeader = elementHeader;
                 this.elementType = elementType;
                 this.elementOrientation = elementOrientation;
                 this.size = size;
                 this.options = options;
-                this.Compulsory = Compulsory;
+                this.compulsory = compulsory;
             }
 
             public RowElement() {
