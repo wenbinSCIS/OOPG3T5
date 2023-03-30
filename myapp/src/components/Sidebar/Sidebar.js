@@ -20,7 +20,7 @@ import {
     AiOutlineLeft,
     AiOutlineSetting,
 } from "react-icons/ai";
-import { MdLogout, MdOutlineAnalytics } from "react-icons/md";
+import { MdLogout, MdOutlineAnalytics, MdArticle } from "react-icons/md";
 import { BsPeople } from "react-icons/bs";
 
 
@@ -89,14 +89,14 @@ const linksArray = [
      
     },
     {
-        label: "My Form",
+        label: "Uncompleted Forms",
         icon: <MdOutlineAnalytics />,
         to: "/UncompletedForms",
     
     },
     {
         label: "Completed Forms",
-        icon: <BsPeople />,
+        icon: <MdArticle />,
         to: "/CompletedForms",
    
     },
