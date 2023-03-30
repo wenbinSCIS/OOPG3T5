@@ -1,0 +1,28 @@
+@startuml
+class Project {
+    - projectId: String
+    - projectName: String
+    - assignedForm: ArrayList<AssignedForm>
+    - status: String
+    + Project(projectName: String, assignedForm: ArrayList<AssignedForm>, status: String)
+    + getProjectName(): String
+    + setProjectName(projectName: String): void
+    + getAssignedForm(): ArrayList<AssignedForm>
+    + setAssignedForm(assignedForm: ArrayList<AssignedForm>): void
+    + getStatus(): String
+    + setStatus(status: String): void
+    + getProjectId(): String
+    + setProjectId(projectId: String): void
+}
+
+class AssignedForm {
+    - formId: String
+    - formName: String
+    + AssignedForm(formId: String, formName: String)
+    + getFormId(): String
+    + setFormId(formId: String): void
+    + getFormName(): String
+    + setFormName(formName: String): void
+}
+
+@enduml

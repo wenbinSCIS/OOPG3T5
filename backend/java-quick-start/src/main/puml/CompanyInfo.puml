@@ -1,0 +1,23 @@
+@startuml
+class CompanyInfo {
+    - companyName: String
+    - registrationNo: String
+    - contactNo: String
+    - emailAddress: String
+    - natureOfBusiness: String
+    - gSTNo: String
+    
+    + getCompanyName(): String
+    + setCompanyName(companyName: String): void
+    + getRegistrationNo(): String
+    + setRegistrationNo(registrationNo: String): void
+    + getContactNo(): String
+    + setContactNo(contactNo: String): void
+    + getEmailAddress(): String
+    + setEmailAddress(emailAddress: String): void
+    + getNatureOfBusiness(): String
+    + setNatureOfBusiness(natureOfBusiness: String): void
+    + getGSTNo(): String
+    + setGSTNo(gSTNo: String): void
+}
+@enduml

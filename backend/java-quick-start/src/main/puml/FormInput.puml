@@ -1,0 +1,53 @@
+@startuml
+
+class FormInput {
+    - id: String
+    - formName: String
+    - username: String
+    - formVersion: double
+    - status: String
+    - formInputData: ArrayList<Object>
+    - companyInfo: CompanyInfo
+    - approverComments: ArrayList<Object>
+    + FormInput()
+    + FormInput(formName: String, username: String, formVersion: double, status: String, formInputData: ArrayList<Object>, companyInfo: CompanyInfo)
+    + FormInput(formName: String, username: String, formVersion: double, status: String, formInputData: ArrayList<Object>, companyInfo: CompanyInfo, approverComments: ArrayList<Object>)
+    + getUsername(): String
+    + setUsername(username: String): void
+    + getFormName(): String
+    + setFormName(formName: String): void
+    + getFormVersion(): double
+    + setFormVersion(formVersion: double): void
+    + getApproverComments(): ArrayList<Object>
+    + setApproverComments(approverComments: ArrayList<Object>): void
+    + getFormInputData(): ArrayList<Object>
+    + setFormInputData(formInputData: ArrayList<Object>): void
+    + getStatus(): String
+    + setStatus(status: String): void
+    + getCompanyInfo(): CompanyInfo
+    + setCompanyInfo(companyInfo: CompanyInfo): void
+}
+
+class CompanyInfo {
+    - companyName: String
+    - registrationNo: String
+    - contactNo: String
+    - emailAddress: String
+    - natureOfBusiness: String
+    - gSTNo: String
+    + getCompanyName(): String
+    + setCompanyName(companyName: String): void
+    + getRegistrationNo(): String
+    + setRegistrationNo(registrationNo: String): void
+    + getContactNo(): String
+    + setContactNo(contactNo: String): void
+    + getEmailAddress(): String
+    + setEmailAddress(emailAddress: String): void
+    + getNatureOfBusiness(): String
+    + setNatureOfBusiness(natureOfBusiness: String): void
+    + getgSTNo(): String
+    + setGSTNo(gSTNo: String): void
+}
+
+
+@enduml

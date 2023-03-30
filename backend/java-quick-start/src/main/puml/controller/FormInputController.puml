@@ -1,0 +1,29 @@
+@startuml
+
+package com.mongodb.quickstart.controller {
+
+
+class FormInputController {
+- formInputRepository: FormInputRepository
++ getAllFormInput(formName: String = null): ResponseEntity<List<FormInput>>
++ getFormByStatus(tempFormInput: FormInput): ResponseEntity<List<FormInput>>
++ getFormInputByFormName(tempFormInput: FormInput): ResponseEntity<List<FormInput>>
++ getFormInputByUsername(tempFormInput: FormInput): ResponseEntity<List<FormInput>>
++ getFormInputByNameAndVersion(tempFormInput: FormInput): ResponseEntity<List<FormInput>>
++ getFormInputByFormNameUsernameVersion(tempFormInput: FormInput): ResponseEntity<FormInput>
++ checkIfFormExists(tempFormInput: FormInput): ResponseEntity<Boolean>
++ createForm(formInput: FormInput): ResponseEntity<?>
++ updateFormInputData(tempFormInput: FormInput): ResponseEntity<FormInput>
++ updateFormInputDataAndStatus(tempFormInput: FormInput): ResponseEntity<FormInput>
++ updateFormVersion(tempFormInput: FormInput, newFormVersion: double): ResponseEntity<FormInput>
++ deleteForm(tempFormInput: FormInput): ResponseEntity<HttpStatus>
+}
+
+}
+
+FormInputController --> FormInput
+FormInputController --> FormInputRepository
+FormInputController --> ResponseEntity
+FormInputRepository --> FormInput
+
+@enduml

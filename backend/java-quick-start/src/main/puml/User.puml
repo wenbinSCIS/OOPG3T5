@@ -1,0 +1,27 @@
+@startuml
+
+package com.mongodb.quickstart.models {
+    class User {
+        - id: String
+        - username: String
+        - hashedPassword: String
+        - passwordSalt: byte[]
+        - userType: String
+        + User()
+        + User(username: String, passwordString: String, userType: String)
+        + User(username: String, hashedPassword: String, passwordSalt: byte[], userType: String)
+        + setUsername(username: String): void
+        + getUsername(): String
+        + getUserType(): String
+        + setUserType(usertype: String): void
+        + getHashedPassword(): String
+        + setHashedPassword(hashedPassword: String): void
+        + setPasswordSalt(passwordSalt: byte[]): void
+        + getPasswordSalt(): byte[]
+        + comparePassword(inputPassword: String): boolean
+        - getSalt(): byte[]
+        - generatePassword(passwordString: String, salt: byte[]): String
+    }
+}
+
+@enduml

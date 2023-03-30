@@ -1,0 +1,32 @@
+@startuml
+
+package com.mongodb.quickstart.repository {
+
+
+interface FormRepository {
+    +List<Form> findByFormNameContaining(String formName)
+    +List<Form> findByVersion(double version)
+    +Optional<Form> findByFormName(String formName)
+    +void deleteByFormName(String formName)
+    +Optional<Form> findByFormNameAndVersion(String formName, double version)
+}
+
+class MongoRepository {
+    +save(entity: T): T
+    +saveAll(entities: Iterable<S>): Iterable<S>
+    +findById(id: ID): Optional<T>
+    +existsById(id: ID): Boolean
+    +findAll(): Iterable<T>
+    +findAllById(ids: Iterable<ID>): Iterable<T>
+    +count(): Long
+    +deleteById(id: ID): void
+    +delete(entity: T): void
+    +deleteAll(entities: Iterable<S>): void
+    +deleteAll(): void
+}
+}
+
+FormRepository --|> MongoRepository
+FormRepository .. Form
+
+@enduml

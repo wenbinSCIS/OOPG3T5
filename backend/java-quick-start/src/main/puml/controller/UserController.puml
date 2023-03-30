@@ -1,0 +1,71 @@
+@startuml
+
+package com.mongodb.quickstart.controller {
+    class UserController {
+        -userRepository: UserRepository
+        +getAllUsers(): ResponseEntity<List<User>>
+        +getUserByName(tempUser: TempUser): ResponseEntity<User>
+        +getUserByUserType(tempUser: TempUser): ResponseEntity<List<User>>
+        +createUser(tempUser: TempUser): ResponseEntity<?>
+        +updateUsername(username: String, tempUser: TempUser): ResponseEntity<?>
+        +updateUserPassword(tempUser: TempUser): ResponseEntity<?>
+        +deleteUser(tempUser: TempUser): ResponseEntity<HttpStatus>
+        +userLogIn(tempUser: TempUser): ResponseEntity<?>
+    }
+}
+
+class TempUser {
+    -username: String
+    -passwordString: String
+    -userType: String
+    -createdForm: String
+    -vendorForm: String
+    -project: String
+    -companyInfo: String
+}
+
+class User {
+    -username: String
+    -hashedPassword: String
+    -passwordSalt: byte[]
+    +comparePassword(password: String): Boolean
+}
+
+class Vendor {
+    -companyInfo: String
+    +getCompanyInfo(): String
+}
+
+class Approver {
+    -createdForm: String
+    -vendorForm: String
+    +getCreatedForm(): String
+    +getVendorForm(): String
+}
+
+class AdministrativePersonnel {
+    -createdForm: String
+    -vendorForm: String
+    +getCreatedForm(): String
+    +getVendorForm(): String
+}
+
+class UserRepository {
+    +findByUsername(username: String): Optional<User>
+    +findByUserType(userType: String): List<User>
+    +findAll(): List<User>
+    +deleteByUsername(username: String)
+    +save(user: User): User
+}
+
+UserController --> UserRepository
+UserController --> TempUser
+UserController --> ResponseEntity
+User --> Vendor
+User --> Approver
+User --> AdministrativePersonnel
+Vendor --> User
+Approver --> User
+AdministrativePersonnel --> User
+
+@enduml

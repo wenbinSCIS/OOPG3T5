@@ -1,0 +1,15 @@
+@startuml
+class Vendor {
+    - project: ArrayList<Project>
+    - companyInfo: CompanyInfo
+    + Vendor()
+    + Vendor(username: String, password: String, project: ArrayList<Project>, companyInfo: CompanyInfo)
+    + Vendor(username: String, hashedPassword: String, passwordSalt: byte[], project: ArrayList<Project>, companyInfo: CompanyInfo)
+    + Vendor(username: String, companyInfo: CompanyInfo)
+    + getProject(): ArrayList<Project>
+    + setProject(project: ArrayList<Project>): void
+    + getCompanyInfo(): CompanyInfo
+    + setCompanyInfo(companyInfo: CompanyInfo): void
+}
+Vendor --|> User
+@enduml

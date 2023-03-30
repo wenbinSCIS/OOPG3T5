@@ -1,0 +1,9 @@
+@startuml
+!include AdminController.puml
+!include FormController.puml
+!include FormInputController.puml
+!include ProjectController.puml
+!include UserController.puml
+!include VendorController.puml
+
+@enduml

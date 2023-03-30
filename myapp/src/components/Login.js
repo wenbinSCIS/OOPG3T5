@@ -13,7 +13,7 @@ import logo from "../assets/img/log.jpg";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import backgroundVideo from '../assets/video/videofile2.mp4';
 import axios from "axios";
-
+import Button from '@mui/material/Button';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -119,7 +119,9 @@ export default function Login() {
 
 
             <div className="text-center pt-1 mb-5 pb-1">
-              <MDBBtn onClick={tryLogIn} className="mb-4 w-100 gradient-custom-2">Sign in</MDBBtn>
+              <Button onClick={tryLogIn} variant="outlined">Sign in</Button>
+              <br/>
+              <br/>
               <a className="text-muted" href="#!">Forgot password?</a>
             </div>
 

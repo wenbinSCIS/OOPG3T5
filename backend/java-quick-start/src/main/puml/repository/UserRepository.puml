@@ -1,0 +1,37 @@
+@startuml
+
+package com.mongodb.quickstart.repository {
+
+interface UserRepository {
+    +List<User> findByUsernameContaining(String username)
+    +List<User> findByUserType(String userType)
+    +Optional<User> findByUsername(String username)
+    +void deleteByUsername(String userName)
+    +Optional<Vendor> findVendorByUsername(String formName, String userType)
+}
+
+class MongoRepository {
+    +save(entity: T): T
+    +saveAll(entities: Iterable<S>): Iterable<S>
+    +findById(id: ID): Optional<T>
+    +existsById(id: ID): Boolean
+    +findAll(): Iterable<T>
+    +findAllById(ids: Iterable<ID>): Iterable<T>
+    +count(): Long
+    +deleteById(id: ID): void
+    +delete(entity: T): void
+    +deleteAll(entities: Iterable<S>): void
+    +deleteAll(): void
+}
+}
+
+UserRepository --|> MongoRepository
+UserRepository .. User
+UserRepository .. Vendor
+
+@enduml
+
+
+
+
+

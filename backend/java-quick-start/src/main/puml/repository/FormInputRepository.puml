@@ -1,0 +1,41 @@
+
+@startuml
+package com.mongodb.quickstart.repository {
+
+
+interface FormInputRepository {
+    +List<FormInput> findByFormNameContaining(String formName)
+    +List<FormInput> findByFormName(String formName)
+    +List<FormInput> findByStatus(String status)
+    +List<FormInput> findByUsernameContaining(String username)
+    +List<FormInput> findByUsername(String username)
+    +void deleteByFormNameAndUsernameAndFormVersion(String formName,String username,double formVersion)
+    +List<FormInput> findByFormNameAndFormVersion(String formName, double formVersion)
+    +List<FormInput> findByFormNameAndUsername(String formName, String username)
+    +Optional<FormInput> findByFormNameAndUsernameAndFormVersion(String formName, String username,double formVersion)
+}
+
+class MongoRepository {
+    +save(entity: T): T
+    +saveAll(entities: Iterable<S>): Iterable<S>
+    +findById(id: ID): Optional<T>
+    +existsById(id: ID): Boolean
+    +findAll(): Iterable<T>
+    +findAllById(ids: Iterable<ID>): Iterable<T>
+    +count(): Long
+    +deleteById(id: ID): void
+    +delete(entity: T): void
+    +deleteAll(entities: Iterable<S>): void
+    +deleteAll(): void
+}
+}
+
+FormInputRepository --|> MongoRepository
+FormInputRepository .. FormInput
+
+@enduml
+
+
+
+
+

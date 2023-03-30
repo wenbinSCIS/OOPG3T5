@@ -1,0 +1,16 @@
+@startuml
+
+class Log {
+    - userID: String
+    - action: String
+    - objectID: String
+    - database: String
+    + Log(userID: String, action: String, objectID: String, database: String)
+    + getUserID(): String
+    + getAction(): String
+    + getObjectID(): String
+    + getDatabase(): String
+}
+
+
+@enduml

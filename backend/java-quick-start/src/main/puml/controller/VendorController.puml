@@ -1,0 +1,35 @@
+@startuml
+
+package com.mongodb.quickstart.controller {
+    class VendorController {
+        + updateCompanyInfo(Vendor vendor): ResponseEntity<?>
+    }
+}
+
+package com.mongodb.quickstart.models {
+    class AdministrativePersonnel
+    class Approver
+    class TempUser
+    class User {
+        + comparePassword(String password): Boolean
+    }
+    class Vendor {
+        - companyInfo: String
+        + getCompanyInfo(): String
+        + setCompanyInfo(String companyInfo): void
+    }
+}
+
+UserController -> UserRepository
+VendorController -> UserRepository
+
+UserController --> AdministrativePersonnel
+UserController --> Approver
+UserController --> TempUser
+UserController --> User
+UserController --> Vendor
+
+VendorController --> User
+VendorController --> Vendor
+
+@enduml

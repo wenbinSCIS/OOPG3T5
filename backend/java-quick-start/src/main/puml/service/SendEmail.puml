@@ -1,0 +1,18 @@
+@startuml
+
+class Mailer {
+    +send(from: String, password: String, to: String, sub: String, msg: String): void
+}
+
+class SendEmail {
+    +main(args: String[]): void
+    +sendTestEmail(toEmail: String): void
+    +emailAccountCreation(tempUser: TempUser): void
+    +emailAssignForm(toEmail: String): void
+}
+
+Mailer --> "javax.mail.*"
+SendEmail --> Mailer
+SendEmail --> TempUser
+
+@enduml

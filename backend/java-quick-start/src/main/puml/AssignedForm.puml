@@ -1,0 +1,21 @@
+@startuml
+
+class AssignedForm {
+    - formName: String
+    - status: String
+    - description: String
+    - formVersion: double
+
+    + AssignedForm()
+    + AssignedForm(formName: String, status: String, description: String, formVersion: double)
+    + getFormName(): String
+    + setFormName(formName: String): void
+    + getStatus(): String
+    + setStatus(status: String): void
+    + getDescription(): String
+    + setDescription(description: String): void
+    + getFormVersion(): double
+    + setFormVersion(formVersion: double): void
+}
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+
+class Approver {
+    - ArrayList<CreatedForm> createdForm
+    - ArrayList<VendorForm> vendorForm
+    - String userType = "Approver"
+
+    + Approver()
+    + Approver(username: String, password: String, createdForm: ArrayList<CreatedForm>, vendorForm: ArrayList<VendorForm>)
+    + Approver(username: String, hashedPassword: String, passwordSalt: byte[], createdForm: ArrayList<CreatedForm>, vendorForm: ArrayList<VendorForm>)
+    + Approver(username: String, createdForm: ArrayList<CreatedForm>, vendorForm: ArrayList<VendorForm>)
+}
+
+Approver --|> AdministrativePersonnel
+
+@enduml

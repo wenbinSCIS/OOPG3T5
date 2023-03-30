@@ -1,0 +1,59 @@
+@startuml
+
+class AdministrativePersonnel {
+- ArrayList<CreatedForm> createdForm
+- ArrayList<VendorForm> vendorForm
++ AdministrativePersonnel()
++ AdministrativePersonnel(username: String, password: String, createdForm2: ArrayList<com.mongodb.quickstart.models.Approver.CreatedForm>, vendorForm2: ArrayList<com.mongodb.quickstart.models.Approver.VendorForm>)
++ AdministrativePersonnel(username: String, hashedPassword: String, passwordSalt: byte[], createdForm2: ArrayList<com.mongodb.quickstart.models.Approver.CreatedForm>, vendorForm2: ArrayList<com.mongodb.quickstart.models.Approver.VendorForm>)
++ AdministrativePersonnel(username: String, createdForm: ArrayList<CreatedForm>, vendorForm: ArrayList<VendorForm>)
++ getVendorForm(): ArrayList<VendorForm>
++ setVendorForm(vendorForm: ArrayList<VendorForm>): void
++ getCreatedForm(): ArrayList<CreatedForm>
++ setCreatedForm(createdForm: ArrayList<CreatedForm>): void
+}
+
+class AdministrativePersonnel.CreatedForm {
+- String formName
+- double formVersion
+- ArrayList<String> adminName
+- ArrayList<String> approverName
++ CreatedForm()
++ CreatedForm(formName: String, formVersion: double, adminName: ArrayList<String>, approverName: ArrayList<String>)
++ getFormName(): String
++ setFormName(formName: String): void
++ getFormVersion(): double
++ setFormVersion(formVersion: double): void
++ getAdminName(): ArrayList<String>
++ setAdminName(adminName: ArrayList<String>): void
++ getApproverName(): ArrayList<String>
++ setApproverName(approverName: ArrayList<String>): void
+}
+
+class AdministrativePersonnel.VendorForm {
+- String formName
+- String status
+- double formVersion
+- String vendorName
+- ArrayList<String> adminName
+- ArrayList<String> approverName
++ VendorForm()
++ VendorForm(formName: String, status: String, formVersion: double, vendorName: String, adminName: ArrayList<String>, approverName: ArrayList<String>)
++ getFormName(): String
++ setFormName(formName: String): void
++ getStatus(): String
++ setStatus(status: String): void
++ getFormVersion(): double
++ setFormVersion(formVersion: double): void
++ getVendorName(): String
++ setVendorName(vendorName: String): void
++ getAdminName(): ArrayList<String>
++ setAdminName(adminName: ArrayList<String>): void
++ getApproverName(): ArrayList<String>
++ setApproverName(approverName: ArrayList<String>): void
+}
+
+AdministrativePersonnel --> AdministrativePersonnel.CreatedForm
+AdministrativePersonnel --> AdministrativePersonnel.VendorForm
+
+@enduml

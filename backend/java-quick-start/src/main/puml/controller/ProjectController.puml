@@ -1,0 +1,87 @@
+@startuml
+
+package com.mongodb.quickstart.controller {
+    class ProjectController {
+        +updateProjectList(vendor: Vendor): ResponseEntity<?>
+        +appendProject(vendor: Vendor): ResponseEntity<?>
+        +updateProject(vendor: Vendor): ResponseEntity<?>
+        +deleteProject(vendor: Vendor): ResponseEntity<?>
+        +updateAssignedFormList(vendor: Vendor): ResponseEntity<?>
+        +appendAssignedForm(vendor: Vendor): ResponseEntity<?>
+        +updateAssignedForm(vendor: Vendor): ResponseEntity<?>
+        +deleteAssignedForm(vendor: Vendor): ResponseEntity<?>
+    }
+}
+
+package com.mongodb.quickstart.models {
+    class AssignedForm {
+        -formName: String
+        -formVersion: Double
+        -status: String
+        +AssignedForm(formName: String, formVersion: Double, status: String)
+        +getFormName(): String
+        +setFormName(formName: String): void
+        +getFormVersion(): Double
+        +setFormVersion(formVersion: Double): void
+        +getStatus(): String
+        +setStatus(status: String): void
+    }
+
+    class Project {
+        -projectId: String
+        -projectName: String
+        -assignedForm: ArrayList<AssignedForm>
+        -status: String
+        +Project(projectName: String, assignedForm: ArrayList<AssignedForm>, status: String)
+        +getProjectId(): String
+        +setProjectId(projectId: String): void
+        +getProjectName(): String
+        +setProjectName(projectName: String): void
+        +getAssignedForm(): ArrayList<AssignedForm>
+        +setAssignedForm(assignedForm: ArrayList<AssignedForm>): void
+        +getStatus(): String
+        +setStatus(status: String): void
+    }
+
+    abstract class User {
+        -username: String
+        -password: String
+        -role: String
+        +User(username: String, password: String, role: String)
+        +getUsername(): String
+        +setUsername(username: String): void
+        +getPassword(): String
+        +setPassword(password: String): void
+        +getRole(): String
+        +setRole(role: String): void
+    }
+
+    class Vendor extends User {
+        -vendorId: String
+        -assignedForms: ArrayList<AssignedForm>
+        -project: ArrayList<Project>
+        +Vendor(username: String, password: String, role: String)
+        +getVendorId(): String
+        +setVendorId(vendorId: String): void
+        +getAssignedForms(): ArrayList<AssignedForm>
+        +setAssignedForms(assignedForms: ArrayList<AssignedForm>): void
+        +getProject(): ArrayList<Project>
+        +setProject(project: ArrayList<Project>): void
+    }
+}
+
+package com.mongodb.quickstart.repository {
+    interface UserRepository {
+        +findVendorByUsername(username: String, role: String): Optional<Vendor>
+        +save(vendor: Vendor): Vendor
+    }
+}
+
+ProjectController --> UserRepository
+ProjectController -> Vendor
+Vendor -> User
+Vendor --> AssignedForm
+Vendor --> Project
+Project --> AssignedForm
+
+@enduml

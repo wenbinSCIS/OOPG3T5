@@ -1,0 +1,104 @@
+@startuml
+package com.mongodb.quickstart.models {
+    class Form {
+        - id: String
+        - formName: String
+        - sections: List<Section>
+        - version: double
+        - formTitle: String
+        - titleSize: String
+        + Form(formName: String, sections: List<Section>, version: double, formTitle: String, titleSize: String)
+        + getFormTitle(): String
+        + setFormTitle(formTitle: String): void
+        + getTitleSize(): String
+        + setTitleSize(titleSize: String): void
+        + getFormName(): String
+        + setFormName(formName: String): void
+        + getSections(): List<Section>
+        + setSections(sections: List<Section>): void
+        + getVersion(): double
+        + setVersion(version: double): void
+    }
+
+    class Section {
+        - sectionName: String
+        - sectionText: String
+        - sectionFont: String
+        - numRows: int
+        - rowElements: List<List<RowElement>>
+        + Section(sectionName: String, sectionText: String, sectionFont: String, numRows: int, rowElements: List<List<RowElement>>)
+        + getSectionName(): String
+        + setSectionName(sectionName: String): void
+        + getSectionText(): String
+        + setSectionText(sectionText: String): void
+        + getSectionFont(): String
+        + setSectionFont(sectionFont: String): void
+        + getNumRows(): int
+        + setNumRows(numRows: int): void
+        + getRowElements(): List<List<RowElement>>
+        + setRowElements(rowElements: List<List<RowElement>>): void
+    }
+
+    class RowElement {
+        - elementName: String
+        - elementHeader: String
+        - placeholder: String
+        - placeholderPosition: String
+        - elementType: String
+        - elementOrientation: String
+        - size: int
+        - options: List<OptionObject>
+        - noRows: String
+        - headers: List<String>
+        + RowElement(elementName: String, elementHeader: String, placeholder: String, placeholderPosition: String, elementType: String, elementOrientation: String, size: int, options: List<OptionObject>, noRows: String, headers: List<String>)
+        + RowElement(elementName: String, elementHeader: String, placeholder: String, placeholderPosition: String, elementType: String)
+        + RowElement(elementName: String, elementHeader: String, elementType: String, elementOrientation: String, size: int, options: List<OptionObject>)
+        + getElementName(): String
+        + setElementName(elementName: String): void
+        + getElementHeader(): String
+        + setElementHeader(elementHeader: String): void
+        + getPlaceholder(): String
+        + setPlaceholder(placeholder: String): void
+        + getPlaceholderPosition(): String
+        + setPlaceholderPosition(placeholderPosition: String): void
+        + getElementType(): String
+        + setElementType(elementType: String): void
+        + getSize(): int
+        + setSize(size: int): void
+        + getOptions(): List<OptionObject>
+        + setOptions(options: List<OptionObject>): void
+        + getElementOrientation(): String
+        + setElementOrientation(elementOrientation: String): void
+    }
+
+    class OptionObject {
+    - optionType: String
+    - optionName: String
+    - optionValue: String
+    - textVariables: textVariables
+    + OptionObject(optionType: String, optionName: String, optionValue: String, textVariables: textVariables)
+    + OptionObject(optionType: String, optionName: String, optionValue: String)
+    + getOptionType(): String
+    + setOptionType(optionType: String): void
+    + getOptionName(): String
+    + setOptionName(optionName: String): void
+    + getOptionValue(): String
+    + setOptionValue(optionValue: String): void
+    + getTextVariables(): textVariables
+    + setTextVariables(textVariables: textVariables): void
+    
+    class textVariables {
+        - header: String
+        - hintPosition: String
+        - hintText: String
+        + textVariables(header: String, hintPosition: String, hintText: String)
+        + getHeader(): String
+        + setHeader(header: String): void
+        + getHintPosition(): String
+        + setHintPosition(hintPosition: String): void
+        + getHintText(): String
+        + setHintText(hintText: String): void
+    }
+}
+@enduml
+

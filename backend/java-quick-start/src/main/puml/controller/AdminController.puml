@@ -1,0 +1,48 @@
+@startuml
+package com.mongodb.quickstart.controller {
+    
+    class AdminController {
+        +updateCreatedForm(admin: AdministrativePersonnel): ResponseEntity<?>
+        +appendCreatedForm(admin: AdministrativePersonnel): ResponseEntity<?>
+        +deleteSingleCreatedForm(admin: AdministrativePersonnel): ResponseEntity<?>
+        +updateAdminVendorForm(admin: AdministrativePersonnel): ResponseEntity<?>
+        +appendAdminVendorForm(admin: AdministrativePersonnel): ResponseEntity<?>
+        +deleteSingleAdminVendorForm(admin: AdministrativePersonnel): ResponseEntity<?>
+        +updateAdminVendorFormStatus(admin: AdministrativePersonnel): ResponseEntity<?>
+        +updateUserType(tempUser: TempUser): ResponseEntity<?>
+    }
+}
+
+UserController --|> AdminController
+class AdministrativePersonnel {
+    -String username
+    -List<CreatedForm> createdForm
+    -List<VendorForm> vendorForm
+    +getters/setters
+}
+
+class CreatedForm {
+    -String formName
+    -double formVersion
+    +getters/setters
+}
+
+class VendorForm {
+    -String formName
+    -double formVersion
+    -String status
+    -String vendorName
+    +getters/setters
+}
+
+class TempUser {
+    -String username
+    -String userType
+    +getters/setters
+}
+
+UserController -> UserRepository
+UserRepository --> MongoRepository
+
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+
+class TempUser {
+    - username: String
+    - passwordString: String
+    - userType: String
+    - companyInfo: CompanyInfo
+    - project: ArrayList<Project>
+    - createdForm: ArrayList<CreatedForm>
+    - vendorForm: ArrayList<VendorForm>
+
+    + TempUser()
+    + TempUser(username: String, passwordString: String, userType: String)
+    + TempUser(username: String, passwordString: String, userType: String, project: ArrayList<Project>, createdForm: ArrayList<CreatedForm>, vendorForm: ArrayList<VendorForm>, companyInfo: CompanyInfo)
+    + getCreatedForm(): ArrayList<CreatedForm>
+    + getUsername(): String
+    + getPasswordString(): String
+    + getUserType(): String
+    + getProject(): ArrayList<Project>
+    + getVendorForm(): ArrayList<VendorForm>
+    + getCompanyInfo(): CompanyInfo
+}
+
+@enduml

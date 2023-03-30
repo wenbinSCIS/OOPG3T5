@@ -1,0 +1,49 @@
+@startuml
+
+package com.mongodb.quickstart.controller {
+  class FormController {
+    + getAllForms(formName: String): ResponseEntity<List<Form>>
+    + getFormByFormName(formName: String): ResponseEntity<Form>
+    + getFormByNameAndVersion(formName: String, version: double): ResponseEntity<Form>
+    + findByVersion(version: double): ResponseEntity<List<Form>>
+    + forceCreateForm(form: Form): ResponseEntity<Form>
+    + createForm(form: Form): ResponseEntity<?>
+    + updateFormByName(formName: String, form: Form): ResponseEntity<Form>
+    + deleteForm(formName: String): ResponseEntity<HttpStatus>
+  }
+}
+
+package com.mongodb.quickstart.repository {
+  class FormRepository {
+    + findAll(): Iterable<Form>
+    + findByFormNameContaining(formName: String): Iterable<Form>
+    + findByFormName(formName: String): Optional<Form>
+    + findByFormNameAndVersion(formName: String, version: double): Optional<Form>
+    + findByVersion(version: double): List<Form>
+    + save(form: Form): Form
+    + deleteByFormName(formName: String): void
+  }
+}
+
+FormController -> FormRepository : uses
+
+class Form {
+  +formName: String
+  +sections: List<Section>
+  +version: double
+  +formTitle: String
+  +titleSize: int
+}
+
+class Section {
+  +name: String
+  +questions: List<Question>
+}
+
+class Question {
+  +name: String
+  +type: String
+  +options: List<String>
+}
+
+@enduml
