@@ -25,26 +25,26 @@ var actionWord = "Get Started"
         let pillClass = "";
         switch (item.status) {
           case "Not Started":
-            pillClass = "bg-danger";
+            pillClass = "bg-info";  //turquoise
             actionWord = "Get Started";
             break;
           case "In Progress":
-            pillClass = "bg-warning";
+            pillClass = "bg-warning"; //yellow
             actionWord = "Continue";
             break;
-          case "Pending Approval":
+          case "Pending Approval": //blue
             pillClass = "bg-primary";
             actionWord = "View Submitted Form";
             break;
-          case "Approved":
+          case "Approved": //green
             pillClass = "bg-success";
             actionWord = "View Submitted Form";
             break;
-          case "Pending Review":
-            pillClass = "bg-primary";
+          case "Pending Review"  : //grey
+            pillClass = "bg-secondary";
             actionWord = "View Submitted Form";
             break;
-          case "Rejected":
+          case "Rejected": // red
             pillClass = "bg-danger";
             actionWord = "Amend Form";
             break;
