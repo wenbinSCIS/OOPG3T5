@@ -26,7 +26,10 @@ function MyForm() {
   const [selectedOption, setSelectedOption] = useState(null);
   // the above has to be removed
   const [sectionData, setSectionData] = useState(null);
-
+  const [isVersionNumberEmpty, setIsVersionNumberEmpty] = useState(true);
+  const [isFormNameEmpty, setIsFormNameEmpty] = useState(true);
+  //const [isLoadButtonDisabled, setIsLoadButtonDisabled] = useState(true);
+  const [formsAvailable, setFormsAvailable] = useState(false);
   const [isSaved, setSaveStatus] = useState(true);
   const [nameSaveAs, setNameSaveAs] = useState("");
   const [versionSaveAs, setVersionSaveAs] = useState("");
@@ -42,7 +45,9 @@ function MyForm() {
     "Add Radio",
     "Add Table",
   ]);
-
+  const [formName, setFormName] = useState("");
+  const [versionNumber, setVersionNumber] = useState("");
+  const [loadFormDisabled, setLoadFormDisabled] = useState(false);
   // const handleInputChange = (event) => {
   //   setElementName(event.target.value);
   // };
@@ -66,10 +71,16 @@ The code below contains API calls to mongoDB configured by kruise
   }
   function handleNameSaveAs(event) {
     setNameSaveAs(event.target.value);
+    const formName = event.target.value;
+    setIsFormNameEmpty(formName === '');
+    setVersionNumber(versionNumber);
   }
-  function handleVersionSaveAs(event) {
+  const handleVersionSaveAs = (event) => {
     setVersionSaveAs(event.target.value);
-  }
+    const versionNumber = event.target.value;
+    setIsVersionNumberEmpty(versionNumber === '');
+    setVersionNumber(versionNumber);
+  };
 
   /*
 =============================================================================================
@@ -635,6 +646,7 @@ handleAddComponent is deprecated
         setAvailableForms(
           data.map((form) => form.formName + " v" + form.version)
         );
+        setFormsAvailable(data.length > 0);
       });
   }
   async function loadSelectedForm(formName, version) {
@@ -660,6 +672,10 @@ handleAddComponent is deprecated
   console.log("the current components of the form are: ", formComponents);
   // setInterval(loadExistingForms, 5000);
 
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    setSelectedForm(value);}
+
   /* returning the Page */
   return (
     <section className="d-flex">
@@ -671,16 +687,10 @@ handleAddComponent is deprecated
           loadForms={loadExistingForms}
         />
         <div className="button-container">
-          {/* <Creator
-            className="centered-button"
-            onClick={() => loadSelectedForm(selectedForm, selectedVersion)}
-            text={"Load Form"}
-            color="lightgreen"
-          /> */}
           <Button
           alignItems="center"
           variant="outlined"
-          
+          disabled={loadFormDisabled}
            onClick={() => loadSelectedForm(selectedForm, selectedVersion)}
           >
         <AutorenewIcon />
@@ -794,6 +804,7 @@ handleAddComponent is deprecated
               className="centered-textbox"
               placeholder="Version number"
               onChange={handleVersionSaveAs}
+              //value={versionNumber}
               style={{
                 width: "180px",
                 height: "30px",
@@ -808,7 +819,12 @@ handleAddComponent is deprecated
               saveComponents={() => saveComponents()}
               isSaved={isSaved}
               text={saveText}
-            />
+              formName={formName}
+              versionNumber={versionNumber}
+              formsAvailable={formsAvailable}
+              isVersionNumberEmpty={isVersionNumberEmpty}
+              isFormNameEmpty={isFormNameEmpty}
+      />
           </div>
         </div>
         {/* {sectionData && (
