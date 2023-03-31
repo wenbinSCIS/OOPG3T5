@@ -25,6 +25,9 @@ const ElementEditor = ({
 
   const [elementNames, setElementNames] = useState(elementNamesList);
 
+  const [selectedOptionCompulsory, setSelectedOptionCompulsory] =
+    useState(false);
+
   useEffect(() => {
     setElementNames(elementNamesList);
   }, elementNamesList);
@@ -92,6 +95,8 @@ handleInputChangeImproved: Handles changes to written input for all elements bef
 
     setOptionTypeList([]); // want to revert the option type chosen for radio, dropdown and checbox back to default, both normal and text are configured differently
 
+    setSelectedOptionCompulsory(false); // Compulsory field default is false
+
     let chosenElementType = event.target.value;
 
     setRowState([]); // I want individual row state to change when I select a different option - may have to adjust this
@@ -104,11 +109,16 @@ handleInputChangeImproved: Handles changes to written input for all elements bef
         elementType: chosenElementType,
         textSize: "12",
         alignment: "center",
+        compulsory: false,
       });
     }
 
     if (chosenElementType === "Textarea") {
-      setElementState({ elementType: chosenElementType, elementHeader: "" });
+      setElementState({
+        elementType: chosenElementType,
+        elementHeader: "",
+        compulsory: false,
+      });
     }
 
     if (chosenElementType === "Textinput") {
@@ -116,6 +126,7 @@ handleInputChangeImproved: Handles changes to written input for all elements bef
         elementType: chosenElementType,
         elementHeader: "",
         placeholderPosition: "hint",
+        compulsory: false,
       });
     }
 
@@ -124,6 +135,7 @@ handleInputChangeImproved: Handles changes to written input for all elements bef
         elementType: chosenElementType,
         elementHeader: "",
         size: "4",
+        compulsory: false,
       });
     }
 
@@ -132,6 +144,7 @@ handleInputChangeImproved: Handles changes to written input for all elements bef
         elementType: chosenElementType,
         elementHeader: "",
         elementOrientation: "horizontal",
+        compulsory: false,
       });
     }
 
@@ -140,6 +153,7 @@ handleInputChangeImproved: Handles changes to written input for all elements bef
         elementType: chosenElementType,
         elementHeader: "",
         elementOrientation: "horizontal",
+        compulsory: false,
       });
     }
 
@@ -149,6 +163,7 @@ handleInputChangeImproved: Handles changes to written input for all elements bef
         elementHeader: "",
         noRows: "5",
         noColumns: "",
+        compulsory: false,
       });
     }
 
@@ -164,10 +179,25 @@ handleInputChangeImproved: Handles changes to written input for all elements bef
   ) => {
     if (!isOption && !isHeader) {
       const { id, value } = event.target;
-      setElementState((elementState) => ({
-        ...elementState,
-        [id]: value,
-      }));
+      let newValue = "";
+      if (id === "compulsory") {
+        if (value === "true") {
+          newValue = true;
+          setSelectedOptionCompulsory(true);
+        } else {
+          newValue = false;
+          setSelectedOptionCompulsory(false);
+        }
+        setElementState((elementState) => ({
+          ...elementState,
+          [id]: newValue,
+        }));
+      } else {
+        setElementState((elementState) => ({
+          ...elementState,
+          [id]: value,
+        }));
+      }
     } else if (isHeader) {
       const selectedIndex = parseInt(event.target.id, 10);
       const { value } = event.target;
@@ -1037,6 +1067,25 @@ Returned Component
               onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
+          <Form.Group controlId="compulsory" className="mb-3">
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Is this field complusory?
+            </Form.Label>
+            <Form.Check
+              type="radio"
+              label="This field is not Compulsory"
+              value="false"
+              checked={selectedOptionCompulsory === false}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
+            <Form.Check
+              type="radio"
+              label="This field is Compulsory"
+              value="true"
+              checked={selectedOptionCompulsory === true}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
+          </Form.Group>
         </>
       )}
       {elementType === "Textinput" && (
@@ -1091,6 +1140,25 @@ Returned Component
               <option value="front">Front (At the left of Text Input)</option>
             </Form.Select>
           </Form.Group>
+          <Form.Group controlId="compulsory" className="mb-3">
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Is this field complusory?
+            </Form.Label>
+            <Form.Check
+              type="radio"
+              label="This field is not Compulsory"
+              value="false"
+              checked={selectedOptionCompulsory === false}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
+            <Form.Check
+              type="radio"
+              label="This field is Compulsory"
+              value="true"
+              checked={selectedOptionCompulsory === true}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
+          </Form.Group>
         </>
       )}
       {elementType === "Dropdown" && (
@@ -1136,6 +1204,25 @@ Returned Component
                 </option>
               ))}
             </Form.Select>
+          </Form.Group>
+          <Form.Group controlId="compulsory" className="mb-3">
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Is this field complusory?
+            </Form.Label>
+            <Form.Check
+              type="radio"
+              label="This field is not Compulsory"
+              value="false"
+              checked={selectedOptionCompulsory === false}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
+            <Form.Check
+              type="radio"
+              label="This field is Compulsory"
+              value="true"
+              checked={selectedOptionCompulsory === true}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
           </Form.Group>
           <Form.Group
             controlId="options"
@@ -1197,6 +1284,25 @@ Returned Component
               <option value="vertical">Vertical</option>
             </Form.Select>
           </Form.Group>
+          <Form.Group controlId="compulsory" className="mb-3">
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Is this field complusory?
+            </Form.Label>
+            <Form.Check
+              type="radio"
+              label="This field is not Compulsory"
+              value="false"
+              checked={selectedOptionCompulsory === false}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
+            <Form.Check
+              type="radio"
+              label="This field is Compulsory"
+              value="true"
+              checked={selectedOptionCompulsory === true}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
+          </Form.Group>
           <Form.Group
             controlId="options"
             className="mb-3"
@@ -1256,13 +1362,32 @@ Returned Component
               <option value="Vertical">Vertical</option>
             </Form.Select>
           </Form.Group>
+          <Form.Group controlId="compulsory" className="mb-3">
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Is this field complusory?
+            </Form.Label>
+            <Form.Check
+              type="radio"
+              label="This field is not Compulsory"
+              value="false"
+              checked={selectedOptionCompulsory === false}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
+            <Form.Check
+              type="radio"
+              label="This field is Compulsory"
+              value="true"
+              checked={selectedOptionCompulsory === true}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
+          </Form.Group>
           <Form.Group
             controlId="options"
             className="mb-3"
             style={{ width: "32%" }}
           >
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Select Number of Checkbox Values
+              Select Number of Options
             </Form.Label>
             <Form.Select
               className="custom-select"
@@ -1323,13 +1448,32 @@ Returned Component
               ))}
             </Form.Select>
           </Form.Group>
+          <Form.Group controlId="compulsory" className="mb-3">
+            <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+              Is this field complusory?
+            </Form.Label>
+            <Form.Check
+              type="radio"
+              label="This field is not Compulsory"
+              value="false"
+              checked={selectedOptionCompulsory === false}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
+            <Form.Check
+              type="radio"
+              label="This field is Compulsory"
+              value="true"
+              checked={selectedOptionCompulsory === true}
+              onChange={(event) => handleInputChangeImproved(event)}
+            />
+          </Form.Group>
           <Form.Group
             controlId="headers"
             className="mb-3"
             style={{ width: "32%" }}
           >
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
-              Select Number of Headers / Columns
+              Select Number of Headers
             </Form.Label>
             <Form.Select
               className="custom-select"

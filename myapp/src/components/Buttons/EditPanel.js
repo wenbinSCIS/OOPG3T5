@@ -6,11 +6,18 @@ import IconButton from "@mui/material/IconButton";
 import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 // import AddIcon from "@mui/icons-material/Add";
 import BuildIcon from "@mui/icons-material/Build";
-import { Modal }  from 'react-bootstrap';
-import "../AdminPage.css"
+import { Modal } from "react-bootstrap";
+import "../AdminPage.css";
 
-
-const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete,formComponents,setFormComponents}) => {
+const EditPanel = ({
+  MoveDown,
+  MoveUp,
+  Add,
+  Edit,
+  Delete,
+  formComponents,
+  setFormComponents,
+}) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -21,14 +28,10 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete,formComponents,setFormCompon
         spacing={2}
         sx={{ justifyContent: "flex-end" }}
       >
-        <IconButton
-          onClick={MoveDown}
-        >
+        <IconButton onClick={MoveDown}>
           <ExpandCircleDownIcon fontSize="large" />
         </IconButton>
-        <IconButton
-          onClick={MoveUp}
-        >
+        <IconButton onClick={MoveUp}>
           <ExpandCircleDownIcon
             fontSize="large"
             sx={{ transform: "rotate(180deg)" }}
@@ -55,12 +58,12 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete,formComponents,setFormCompon
             <Button variant="secondary" onClick={() => setShowModal2(false)}>
               Cancel
             </Button> */}
-            {/* <Button variant="primary" onClick={handleSave}>
+        {/* <Button variant="primary" onClick={handleSave}>
               Save
             </Button> */}
-          {/* </Modal.Footer>
+        {/* </Modal.Footer>
         </Modal> */}
-        <Button
+        {/* <Button
           alignItems="center"
           variant="contained"
           color="info"
@@ -73,7 +76,7 @@ const EditPanel = ({MoveDown,MoveUp,Add,Edit,Delete,formComponents,setFormCompon
           <Modal.Header closeButton>
             <Modal.Title>Edit</Modal.Title>
           </Modal.Header>
-        </Modal>
+        </Modal> */}
         <Button
           display="flex"
           alignItems="center"

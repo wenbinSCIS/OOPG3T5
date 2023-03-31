@@ -8,6 +8,15 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ElementEditor from "./ElementEditor";
 
 function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
+  /*
+=============================================================================================
+const sectionData: intializes the section with the section font 12
+
+useEffect: logs changes to section data everytime a change is made
+
+theme: provides theme for buttons
+=============================================================================================
+*/
   const [sectionData, setSectionData] = useState({
     sectionFont: "12",
   });
@@ -28,7 +37,20 @@ function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
     },
   });
 
-  // sectionNames and elementNames used for validation to ensure that there are no duplicate sectionNames or elementNames
+  /*
+=============================================================================================
+const sectionNames: used for validation to ensure no duplicate section Names
+
+const elementNames: used for validation to ensure no duplicate element Names
+
+useEffect: is activated if there are new sections, elements added
+
+const Active and handleToggle: handles whether open element editor or close element
+editor is active or disabled
+
+=============================================================================================
+*/
+
   const [sectionNames, setSectionNames] = useState(sectionNamesList);
   const [elementNames, setElementNames] = useState(elementNamesList);
 
@@ -51,19 +73,16 @@ function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
     setIsActive(!isActive);
   };
 
-  // This function helps to set the sectionData state within the admin page
-  // const handleSubmit = (event) => {
-  //   // should only be applied for event editor
-  //   event.preventDefault();
-  //   onPressed(sectionData); // onPressed is the same as handleFormSubmit, we are setting the sectionData in the admin page to the one residing here
-  //   //should not sent the data just yet - need to be under Element Editor onPressedElement
-  //   // only after I press save section at the end
-  //   // setSectionCreated(!sectionCreated);
-  //   // console.log(sectionCreated);
-  //   // console.log(sectionData);
-  // };
+  /*
+=============================================================================================
+const formRef: used to reset form so that it is empty everytime its generated
 
-  // importan function here!! - is sent to element editor to retrieve rows, need to also set numrows by counting the number of rows here
+retrieveFromElementEditor: retrieves section Data from element editor
+
+sectionIsCreated and sectionNotCreated: Controls the state for showing
+the element editor
+=============================================================================================
+*/
 
   const formRef = useRef(null); // this is used so that the form is reset everytime someone saves a new section -i.e, no more fields present
 
@@ -72,7 +91,6 @@ function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
     newSection.rowElements = rows;
     const rowsLength = rows.length;
     newSection.numRows = String(rowsLength);
-    // setSectionData(newSection);
     onPressed(newSection); // send info to admin page
     setSectionCreated(false); // closes element editor when save section is initiated
     setIsActive(true); // closes element editor and sets active state for open element editor
@@ -83,7 +101,6 @@ function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
     formRef.current.reset();
   };
 
-  // the two functions below control the state for showing the element editor
   function sectionIsCreated() {
     if ("sectionName" in sectionData && "sectionText" in sectionData) {
       console.log("printing out sectionName in sectionEditor", sectionNames);
@@ -110,7 +127,6 @@ function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
   }
   return (
     <div>
-      {/* <Form> */}
       <Form ref={formRef}>
         <h5>Section Editor</h5>
         <Form.Group controlId="sectionName" className="mb-3">
