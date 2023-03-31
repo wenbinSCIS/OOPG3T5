@@ -17,8 +17,6 @@ export default function VendorAssessmentFormApprover() {
   var formName = sessionStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
   var vendor = sessionStorage.getItem('vendorUsername') || "abc@gmail.com";
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "";
-  var projectName = sessionStorage.getItem('projectName') 
-  var projectId = sessionStorage.getItem('projectId')
 
   async function getData(formName) {
     try {
@@ -57,41 +55,6 @@ export default function VendorAssessmentFormApprover() {
     return null
   }
 
-  async function setDescription(username,projectId,projectName,formName,formVersion,desc) {
-    try {
-      var inputJson = {
-        "username":username,
-        "userType":"Vendor",
-        "project":[
-            {
-                "projectId":projectId,
-                "projectName":projectName,
-                "assignedForm": [
-                    {
-                    "formName": formName,
-                    "description": desc,
-                    "formVersion" : formVersion,
-                    }
-                ]
-            }
-        ]
-    }
-      const response = await axios.put(`http://localhost:8080/user/updateAssignedForm`, inputJson);
-      if(response.status == 200){
-        console.log("Description updated")
-        return true
-      } else {
-        console.log("Description not updated")
-        return false
-      }
-    } catch (error) {
-      if(error == "Error: Request failed with status code 404"){
-      console.log("Description not updated")}
-      return false
-    }
-  }
-  
-
   async function reject(formName, formVersion, username, remarks) {
     
      var inputJson = {
@@ -110,9 +73,7 @@ export default function VendorAssessmentFormApprover() {
         alert("Resaved input data!");
         console.log(response.data);
       });
-    var desc = "This form has been rejected by the approver. Please make the necessary changes and resubmit the form."
-    setDescription(username,projectId,projectName,formName,formVersion,desc)
-    navigate("/ApprovalList")
+    
   }
 
   async function approve(formName, formVersion, username, remarks) {
@@ -133,9 +94,6 @@ export default function VendorAssessmentFormApprover() {
        alert("Resaved input data!");
        console.log(response.data);
      });
-     var desc = "This form has been approved by the approver."
-     setDescription(username,projectId,projectName,formName,formVersion,desc)
-     navigate("/ApprovalList")
    
  }
 
@@ -156,8 +114,8 @@ export default function VendorAssessmentFormApprover() {
         <AdminSidebar></AdminSidebar>
       <div className="container">
       {to_return}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {reject(formName, formVersion, vendor, remarks)}}>Reject</Button>
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {approve(formName, formVersion, vendor, remarks)}}>Approve</Button>
+      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {reject(formName, formVersion, vendor, remarks);navigate("/ApprovalList")}}>Reject</Button>
+      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {approve(formName, formVersion, vendor, remarks);navigate("/ApprovalList")}}>Approve</Button>
       </div>
       </section>
     );
