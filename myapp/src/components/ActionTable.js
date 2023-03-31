@@ -2,10 +2,27 @@ import React from 'react';
 import { MDBBadge, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import { border } from '@mui/system';
 
-export default function ActionTable({actions }) {
-  console.log(actions)
+export default function ActionTable({ actions }) {
+
+  const getStatusPillColor = (status) => {
+    switch (status) {
+      case "Not Started":
+        return "info"; // turquoise
+      case "In Progress":
+        return "warning"; // yellow
+      case "Pending Approval":
+        return "primary"; // blue
+      case "Approved":
+        return "success"; // green
+      case "Pending Review":
+        return "secondary"; // grey
+      case "Rejected":
+        return "danger"; // red
+      default:
+        return "";
+    }
+  }
 
   return (
     <MDBTable align='middle' style={{ width: '100%' }}>
@@ -15,49 +32,20 @@ export default function ActionTable({actions }) {
           <th scope='col'>Version</th>
           <th scope='col'>Description</th>
           <th scope='col' style={{ paddingLeft: '200px' }}>Status</th>
-          <th scope='col' style={{ paddingRight:100 }}>Actions</th>
+          <th scope='col' style={{ paddingRight: 100 }}>Actions</th>
         </tr>
       </MDBTableHead>
       <MDBTableBody>
         {actions.map((action, index) => {
-          let pillClass;
-          let actionWord;
-
-          switch (action.status) {
-            case "Not Started":
-              pillClass = "info";  //turquoise
-              actionWord = "Get Started";
-              break;
-            case "In Progress":
-              pillClass = "warning"; //yellow
-              actionWord = "Continue";
-              break;
-            case "Pending Approval": //blue
-              pillClass = "primary";
-              actionWord = "View Submitted Form";
-              break;
-            case "Approved": //green
-              pillClass = "success";
-              actionWord = "View Submitted Form";
-              break;
-            case "Pending Review"  : //grey
-              pillClass = "secondary";
-              actionWord = "View Submitted Form";
-              break;
-            case "Rejected": // red
-              pillClass = "danger";
-              actionWord = "Amend Form";
-              break;
-            default:
-              break;
-          }
-
+          const pillClass = getStatusPillColor(action.status);
+          const actionWord =
+            action.status === "Not Started" ? "Get Started" : "View Submitted Form";
           return (
-            <tr key={index}>
-              <td>{action.formName}</td>
+            <tr key={index} >
+              <td style={{ fontWeight:"bold" }}>{action.formName}</td>
               <td>{action.formVersion}</td>
-              <td>{action.description}</td>
-              <td style={{ paddingLeft: '200px' }}>
+              <td style={{ color:"grey" }}>{action.description}</td>
+              <td style={{ paddingLeft: '200px', fontSize: '1.2rem' }}>
                 <MDBBadge color={pillClass}  pill style={{ paddingLeft: '10px' }}>
                   {action.status}
                 </MDBBadge>
@@ -69,7 +57,7 @@ export default function ActionTable({actions }) {
                   sessionStorage.setItem('projectId', action.projectId);
                   sessionStorage.setItem('projectName', action.projectName);
                 }}>
-                  <Button variant="outline-primary" size="sm" padingTop="5px">
+                  <Button variant="outline-primary" size="sm"  padingTop="5px">
                     {actionWord}
                   </Button>
                 </Link>

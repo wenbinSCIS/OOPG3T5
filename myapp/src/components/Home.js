@@ -15,10 +15,12 @@ import ActionTable from './ActionTable';
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CancelIcon from '@mui/icons-material/Cancel';
 // import React, { useState, useEffect } from 'react';
 
 export default function Home() {
   const [forms, setForms] = useState([]);
+  const [formStatus, setFormStatus] = useState({});
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,6 +68,7 @@ export default function Home() {
           }
         }
         const formList = [];
+        const status = {};
         for (let i = 0; i < formNames.length; i++) {
           if (formStatuses[i] == "Not Started" || formStatuses[i] == "In Progress" || formStatuses[i]=="Rejected") {
             formList.push({
@@ -77,8 +80,15 @@ export default function Home() {
               projectName: formProjectNames[i]
             });
           }
+          if(formStatuses[i] in status){
+            status[formStatuses[i]] += 1;
+          }
+          else{
+            status[formStatuses[i]] = 1;
+          }
         }
         setForms(formList);
+        setFormStatus(status);
       } catch (error) {
         console.log(error)
       }
@@ -89,38 +99,13 @@ export default function Home() {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  //onsole.log(forms)
-  /*
-  const tempUserJSON = {
-    "username": "Nico",
-    "hashedPassword": "c1e7a8cf4fdb873ceac220d3f76fefdce2540e8aae816f2e3f3476b51a48ecdb",
-    "passwordSalt": "nLgv+NsawHfAgujc/QTU0xM3gfD6cJuDG6h5d7yhp+4=",
-    "userType": "Vendor",
-    "assignedForms": [
-        {
-            "formName": "QLI-QHSP-10-F01 New Vendor Assessment Form",
-            "status": "Not Started",
-            "description": "Required to complete",
-            "formVersion": 1.0
-        },
-        {
-            "formName": "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
-            "status": "In Progress",
-            "description": "Required to complete",
-            "formVersion": 2.0
-        },
-        {
-            "formName": "QLI-QHSP-10-F05 Subcontractors Safety _ Health Performance Evaluation",
-            "status": "Not Started",
-            "description": "Required to complete",
-            "formVersion": 3.0
-        }
-    ]
-  }
-  const userObject = localStorage.getItem("userObject") || tempUserJSON;
-  */
+
+
+  
   
   const actions = forms;
+
+  console.log(formStatus)
   return (
     <>
     
@@ -160,10 +145,10 @@ export default function Home() {
     justifyContent="center"
   >
     <StatBox
-      title="1"
+      title={formStatus["Not Started"]|| 0}
       subtitle="Not Started"
-      progress="0.75"
-      loc = "./page1"
+      progress={formStatus["Not Started"] / Object.keys(formStatus).length || 0}
+      loc = "./UncompletedForms"
       icon={
         <HourglassEmptyIcon
           sx={{ color: "blue", fontSize: "30px" }}
@@ -179,10 +164,10 @@ export default function Home() {
     justifyContent="center"
   >
     <StatBox
-      title="1"
+      title={formStatus["In Progress"]|| 0}
       subtitle="In Progress"
-      progress="0.50"
-      loc = "./page2"
+      progress={formStatus["Not Started"] / Object.keys(formStatus).length|| 0}
+      loc = "./UncompletedForms"
       icon={
         <HourglassTopIcon
           sx={{ color: "blue", fontSize: "30px" }}
@@ -198,12 +183,12 @@ export default function Home() {
     justifyContent="center"
   >
     <StatBox
-      title="1"
-      subtitle="Completed"
-      progress="0.30"
-      loc = "./page3"
+      title={formStatus["Pending"] || 0}
+      subtitle="Pending"
+      progress={formStatus["Pending"] / Object.keys(formStatus).length|| 0}
+      loc = "./CompletedForms"
       icon={
-        <CheckCircleOutlineIcon
+        <PendingIcon
           sx={{ color: "blue", fontSize: "30px" }}
         />
       }
@@ -217,12 +202,12 @@ export default function Home() {
     justifyContent="center"
   >
     <StatBox
-      title="1"
-      subtitle="Pending"
-      progress="0.80"
-      loc = "/page4"
+      title={formStatus["Rejected"]|| 0}
+      subtitle="Rejected"
+      progress={formStatus["Rejected"] / Object.keys(formStatus).length|| 0}
+      loc = "./CompletedForms"
       icon={
-        <PendingIcon
+        <CancelIcon
           sx={{ color: "blue", fontSize: "30px" }}
         />
       }
