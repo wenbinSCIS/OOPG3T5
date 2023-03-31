@@ -5,18 +5,6 @@ import Header from './Header';
 import Button from '@mui/material/Button';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import axios from 'axios';
-const mockUsers = [
-  { id: 1, username: 'user1', email: 'user1@example.com', project: [
-    { id: 1, forms: [1, 2, 3] },
-    { id: 2, forms: [1, 5] },
-  ]},
-  { id: 2, username: 'user2', email: 'user2@example.com', project: [
-    { id: 1, forms: [2, 3] },
-  ]},
-  { id: 3, username: 'user3', email: 'user3@example.com', project: [
-    { id: 2, forms: [2, 6] },
-  ]},
-];
 
 
 
@@ -33,13 +21,66 @@ const mockForms = [
   { id: 5, name: 'Form 5' },
   { id: 6, name: 'Form 6' },
 ];
-
-const AssignForm = () => {
+// var mockUsers = [{
+//   "username": "abc@gmail.com",
+//   "hashedPassword": "4d09016fe9a256f2a8b731437850f7dcf2278f9b737035172ec92376afcb0c64",
+//   "passwordSalt": "IlW2sNyGVLMdlksRoelRW9KLvXqjYk78Jrmxjvtezpw=",
+//   "userType": "Vendor",
+//   "project": [
+//       {
+//           "projectId": "safe",
+//           "projectName": "safety forms",
+//           "assignedForm": [
+//               {
+//                   "formName": "QLI-QHSP-10-F01 New Vendor Assessment Form",
+//                   "status": "In Progress",
+//                   "description": "Needs to be completed",
+//                   "formVersion": 1.1
+//               },
+//               {
+//                   "formName": "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
+//                   "status": "In Progress",
+//                   "description": "Needs to be completed",
+//                   "formVersion": 1.1
+//               }
+//           ],
+//           "status": "Ongoing"
+//       },
+//       {
+//           "projectId": "Bank",
+//           "projectName": "Bankruptcy Forms",
+//           "assignedForm": [
+//               {
+//                   "formName": "Leave of absence",
+//                   "status": "Pending Approval",
+//                   "description": "Needs to be completed",
+//                   "formVersion": 1.1
+//               },
+//               {
+//                   "formName": "Notice of termination",
+//                   "status": "In Progress",
+//                   "description": "Needs to be completed",
+//                   "formVersion": 1.1
+//               }
+//           ],
+//           "status": "Ongoing"
+//       }
+//   ],
+//   "companyInfo": {
+//       "companyName": "Company A",
+//       "registrationNo": "123456",
+//       "contactNo": "91234567",
+//       "emailAddress": "companyA@gmail.com",
+//       "natureOfBusiness": "Illegal",
+//       "gSTNo": "123"
+//   }
+// }]
+const AssignForm2 = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [selectedProject, setSelectedProject] = useState(null);
     const [selectedForms, setSelectedForms] = useState([]);
     const [searchText, setSearchText] = useState('');
-    const [filteredUsers, setFilteredUsers] = useState(mockUsers);
+    const [filteredUsers, setFilteredUsers] = useState([]);
 
     var vendorUsers = []
     async function loadVendorUsers(){
@@ -47,40 +88,45 @@ const AssignForm = () => {
       await axios.post(url, {"userType": "Vendor"}).then((response) => {
         console.log(response.data);
         vendorUsers = response.data;
+        setFilteredUsers(vendorUsers);
       })
     }
     useEffect(()=>{
       loadVendorUsers();
     },[])
     useEffect(() => {
-      if (selectedUser) {
-        const userProjects = selectedUser.project;
+      if (selectedUser && selectedUser.project.length > 0) {
+        const userProjects = selectedUser.project[0];
         const userForms = userProjects.assignedForms
         setSelectedForms(userForms);
       } else {
         setSelectedForms([]);
       }
     }, [selectedUser]);
+
   const handleProjectChange = (event) => {
     const projectName = event.target.value;
+    const userProjects = selectedUser.project;
     const project = userProjects.find((p) => p.projectName === projectName);
     setSelectedProject(project);
   };
-
+  // const handleFormChange = (event) => { 
+  //   console.log(filteredUsers)
+  //   return }
   const handleFormChange = (event) => {
     const formNameVersion = event.target.value;
     if (!selectedUser) return;
     const updatedProjects = selectedUser.projects.map((project) => {
       if (project.projectName === selectedProject.projectName) {
         var formAlreadyExist = false;
-        userForms.map(form => {
+        selectedForms.map(form => {
         if(form.formName == formNameVersion) {
           formAlreadyExist = true
         }})
         if (formAlreadyExist) return project; // Skip if the form is already assigned
         return {
           ...project,
-          forms: [...project.forms, formId],
+          forms: [...project.forms, formNameVersion],
         };
       }
       return project;
@@ -115,13 +161,16 @@ const AssignForm = () => {
   };
 
   const renderProjectOptions = () => {
-    return mockProjects.map(project => (
+    console.log("renderProjectOptions")
+    console.log("selectedProject", selectedProject)
+    return selectedUser.project.map(project => (
       <option key={project.id} value={project.id}>{project.name}</option>
     ));
   };
 
   const renderFormOptions = () => {
     if (!selectedProject) return null;
+    console.log("renderFormOptions")
     const projectForms = selectedProject.forms.map(formId => mockForms.find(f => f.id === formId));
     return projectForms.map(form => (
       <option key={form.id} value={form.id}>{form.name}</option>
@@ -171,30 +220,32 @@ const AssignForm = () => {
     borderBottom: '1px solid #ccc',
   };
   
-  const renderFilteredUsers = () => {
-    if (filteredUsers.length === 0) {
-      return <div>No users found</div>;
-    }
+  function renderFilteredUsers() {
+    // if (filteredUsers.length === 0) {
+    //   return <div>No users found</div>;
+    // }
   
     return (
       <MDBTable hover style={tableStyles}>
         <MDBTableHead>
           <tr>
-            <th style={thStyles}>ID</th>
-            <th style={thStyles}>Username</th>
+            <th style={thStyles}>Registration No</th>
+            <th style={thStyles}>CompanyName</th>
             <th style={thStyles}>Email</th>
+            <th style={thStyles}>Contact</th>
           </tr>
         </MDBTableHead>
         <MDBTableBody>
           {filteredUsers.map(user => (
             <tr
-              key={user.id}
+              key={user.companyInfo.registrationNo}
               onClick={() => setSelectedUser(user)}
-              className={selectedUser && selectedUser.id === user.id ? 'selected-row' : ''}
+              // className={selectedUser && selectedUser.id === user.id ? 'selected-row' : ''}
             >
-              <td>{user.id}</td>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
+              <td>{user.companyInfo.registrationNo}</td>
+              <td>{user.companyInfo.companyName}</td>
+              <td>{user.companyInfo.emailAddress}</td>
+              <td>{user.companyInfo.contactNo}</td>
             </tr>
           ))}
         </MDBTableBody>
@@ -239,7 +290,7 @@ const AssignForm = () => {
       {selectedProject && (
         <div className="form-group">
           <label htmlFor="forms">Forms:</label>
-          <select id="forms" multiple value={selectedForms.map(f => f.id)} onChange={handleFormChange} className="form-control">
+          <select id="forms" multiple value={selectedForms.map(f => f.formName)} onChange={handleFormChange} className="form-control">
             {renderFormOptions()}
           </select>
         </div>
@@ -260,4 +311,4 @@ const AssignForm = () => {
   );
 };
 
-export default AssignForm
+export default AssignForm2
