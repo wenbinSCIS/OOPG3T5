@@ -26,20 +26,23 @@ export default function Home() {
           username: sessionStorage.getItem("username")
         });
         
-        console.log(response)
+        console.log(response.data.project)
         //Get list of formnames and another list of form versions
         var formNames = []
         var formVersions = []
         var formStatuses = []
         var formDescriptions = []
+        var formProjectIds = []
+        var formProjectNames = []
         for (let i=0 ;i<response.data.project.length;i++){
           for(let j=0 ;j<response.data.project[i].assignedForm.length;j++){
             formNames.push(response.data.project[i].assignedForm[j].formName)
             formVersions.push(response.data.project[i].assignedForm[j].formVersion)
             formDescriptions.push(response.data.project[i].assignedForm[j].description)
+            formProjectIds.push(response.data.project[i].projectId)
+            formProjectNames.push(response.data.project[i].projectName)
           }
         }
-
         //Use list of formNames and formVersions to get corresponding formStatuses from formInput
         
         for (let i=0 ;i<formNames.length;i++){
@@ -62,8 +65,6 @@ export default function Home() {
             }
           }
         }
-        //console.log(formNames)
-        console.log(formStatuses)
         const formList = [];
         for (let i = 0; i < formNames.length; i++) {
           if (formStatuses[i] == "Not Started" || formStatuses[i] == "In Progress" || formStatuses[i]=="Rejected") {
@@ -72,12 +73,12 @@ export default function Home() {
               status: formStatuses[i],
               description: formDescriptions[i],
               formVersion: formVersions[i],
+              projectId: formProjectIds[i],
+              projectName: formProjectNames[i]
             });
           }
         }
-        //console.log(formList)
         setForms(formList);
-        //console.log(formList)
       } catch (error) {
         console.log(error)
       }
