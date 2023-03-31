@@ -4,6 +4,7 @@ import Totop from './Totop';
 import AdminSidebar from './Sidebar/AdminSidebar';
 import Header from './Header';
 import './AdminCreation.css';
+import axios from "axios";
 
 export default function AdminCreation() {
 const [username, setUsername] = useState('');
@@ -52,22 +53,46 @@ const handleGstNumberChange = (event) => {
 setGstNumber(event.target.value);
 };
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
   event.preventDefault();
+  try {
+    await axios.post("http://localhost:8080/user/createUser",{
+      "username": username,
+      "passwordString": password,
+      "userType": role,
+      "project":[],
+      "companyInfo":{
+        "companyName": companyName,
+        "registrationNo": registrationNumber,
+        "contactNo": phoneNumber,
+        "emailAddress":email,
+        "natureOfBusiness": businessNature,
+        "gSTNo": gstNumber
+        }
+      }
+    )
+    alert("Account creation successful")
+    window.location.reload()
+  } catch (error) {
+    alert("Account creation failed")
+    console.log(error.config.data)
+  }
   
-  const formData = {
-    username: username,
-    password: password,
-    role: role,
-    email: email,
-    companyName: companyName,
-    registrationNumber: registrationNumber,
-    businessNature: businessNature,
-    phoneNumber: phoneNumber,
-    gstNumber: gstNumber
-  };
-  console.log(formData)
+  // const formData = {
+  //   username: username,
+  //   password: password,
+  //   role: role,
+  //   email: email,
+  //   companyName: companyName,
+  //   registrationNumber: registrationNumber,
+  //   businessNature: businessNature,
+  //   phoneNumber: phoneNumber,
+  //   gstNumber: gstNumber
+  // };
+  // console.log(formData)
   // use formData to call backend
+  
+  
 };
 
 return (
@@ -140,87 +165,91 @@ return (
       onChange={handleRoleChange}
       >
       <option value="">Select Role</option>
-      <option value="admin">Admin</option>
-      <option value="manager">Manager</option>
-      <option value="vendor">Vendor</option>
+      <option value="AdministrativePersonnel">AdministrativePersonnel</option>
+      <option value="Approver">Approver</option>
+      <option value="Vendor">Vendor</option>
       </select>
       </div>
+      {role === 'Vendor' && (
+   <>
       <div className="form-group input-group">
-      <div className="input-group-prepend">
-      <span className="input-group-text">
-      <i className="fas fa-building"></i>
-      </span>
-      </div>
-      <input
-      type="text"
-      className="form-control"
-      id="companyName"
-      placeholder="Company Name"
-      value={companyName}
-      onChange={handleCompanyNameChange}
-      />
-      </div>
-      <div className="form-group input-group">
-      <div className="input-group-prepend">
-      <span className="input-group-text">
-      <i className="fas fa-id-card"></i>
-      </span>
-      </div>
-      <input
-      type="text"
-      className="form-control"
-      id="registrationNumber"
-      placeholder="Registration Number"
-      value={registrationNumber}
-      onChange={handleRegistrationNumberChange}
-      />
+         <div className="input-group-prepend">
+            <span className="input-group-text">
+               <i className="fas fa-building"></i>
+            </span>
+         </div>
+         <input
+            type="text"
+            className="form-control"
+            id="companyName"
+            placeholder="Company Name"
+            value={companyName}
+            onChange={handleCompanyNameChange}
+         />
       </div>
       <div className="form-group input-group">
-      <div className="input-group-prepend">
-      <span className="input-group-text">
-      <i className="fas fa-clipboard-list"></i>
-      </span>
+         <div className="input-group-prepend">
+            <span className="input-group-text">
+               <i className="fas fa-id-card"></i>
+            </span>
+         </div>
+         <input
+            type="text"
+            className="form-control"
+            id="registrationNumber"
+            placeholder="Registration Number"
+            value={registrationNumber}
+            onChange={handleRegistrationNumberChange}
+         />
       </div>
-      <input
-      type="text"
-      className="form-control"
-      id="businessNature"
-      placeholder="Business Nature"
-      value={businessNature}
-      onChange={handleBusinessNatureChange}
-      />
+      <div className="form-group input-group">
+         <div className="input-group-prepend">
+            <span className="input-group-text">
+               <i className="fas fa-clipboard-list"></i>
+            </span>
+         </div>
+         <input
+            type="text"
+            className="form-control"
+            id="businessNature"
+            placeholder="Business Nature"
+            value={businessNature}
+            onChange={handleBusinessNatureChange}
+         />
+      </div>
+      <div className="form-group input-group">
+         <div className="input-group-prepend">
+            <span className="input-group-text">
+               <i className="fas fa-phone"></i>
+            </span>
+         </div>
+         <input
+            type="text"
+            className="form-control"
+            id="phoneNumber"
+            placeholder="Phone Number"
+            value={phoneNumber}
+            onChange={handlePhoneNumberChange}
+         />
+      </div>
+      <div className="form-group input-group">
+         <div className="input-group-prepend">
+            <span className="input-group-text">
+               <i className="fas fa-file-invoice"></i>
+            </span>
+         </div>
+         <input
+            type="text"
+            className="form-control"
+            id="gstNumber"
+            placeholder="GST Number"
+            value={gstNumber}
+            onChange={handleGstNumberChange}
+         />
+      </div>
+   </>
+)}
 
-      </div>
-      <div className="form-group input-group">
-      <div className="input-group-prepend">
-      <span className="input-group-text">
-      <i className="fas fa-phone"></i>
-      </span>
-      </div>
-      <input
-      type="text"
-      className="form-control"
-      id="phoneNumber"
-      placeholder="Phone Number"
-      value={phoneNumber}
-      onChange={handlePhoneNumberChange}
-      />
-      </div>
-      <div className="form-group input-group">
-      <div className="input-group-prepend">
-      <span className="input-group-text">
-      <i className="fas fa-file-invoice"></i>
-      </span>
-      </div>
-      <input
-      type="text"
-      className="form-control"
-      id="gstNumber"
-      placeholder="GST Number"
-      value={gstNumber}
-      onChange={handleGstNumberChange}
-      />
-      </div>
       <button type="submit" className="btn btn-primary btn-block">Create Account</button>
       </form>
       </div>
