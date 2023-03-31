@@ -10,7 +10,7 @@ const AddComponent = ({ onAdd, showAdd }) => {
       {location.pathname === "/testadmin" && (
         <Button
           color={showAdd ? "red" : "green"}
-          text={showAdd ? "Close Element Creator" : "Open Element Creator"}
+          text={showAdd ? "Close Element Creator (Deprecated)" : "Open Element Creator (Deprecated)"}
           onClick={onAdd}
         />
       )}

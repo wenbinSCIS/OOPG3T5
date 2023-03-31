@@ -6,14 +6,18 @@ import AddComponent from "./AddComponent";
 import Creator from "./Buttons/Creator";
 
 import EditPanel from "./Buttons/EditPanel";
+import AddButton from "./Buttons/AddButton";
 
-import SaveComponent from "./SaveComponent";
-import FormSelector from "./FormSelector";
+import SaveComponent from "./AdminPageComponents/SaveComponent";
+import FormSelector from "./AdminPageComponents/FormSelector";
+
 import axios from "axios";
-import Sidebar from "./Sidebar/Sidebar";
-import AddButton from './Buttons/AddButton';
 
+import Sidebar from "./Sidebar/Sidebar";
+
+import Button from '@mui/material/Button';
 import SectionEditor from "./SectionEditor/SectionEditor";
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 function MyForm() {
   const [showAddComponent, setShowAddComponent] = useState(false);
@@ -36,19 +40,18 @@ function MyForm() {
     "Add TextArea",
     "Add Checkbox",
     "Add Radio",
-    "Add Table"
+    "Add Table",
   ]);
 
   // const handleInputChange = (event) => {
   //   setElementName(event.target.value);
   // };
 
-  const handleFormSubmit = (data) => {
-    console.log(data)
-    setSectionData(data);
-    handleAddElement({ target: data });
-    console.log(data);
-  };
+  /*
+=============================================================================================
+The code below contains API calls to mongoDB configured by kruise
+=============================================================================================
+*/
 
   function handleOptionChange(event) {
     setSelectedOption(event.target.value);
@@ -67,6 +70,17 @@ function MyForm() {
   function handleVersionSaveAs(event) {
     setVersionSaveAs(event.target.value);
   }
+
+  /*
+=============================================================================================
+The code below contains the parametersfor sections 
+using the old elemenent editor (deprecated)
+
+It also contains a dummy response from vendor to be used
+for testing purposes
+=============================================================================================
+*/
+
   var name_section = {
     sectionName: "Name",
     sectionText: "Fill in your name",
@@ -120,7 +134,18 @@ function MyForm() {
           elementHeader: "",
           elementType: "Dropdown",
           size: "4",
-          options: ["Selection A", "Selection B", "Selection C"],
+          options: [
+            {
+              optionType: "Dropdown",
+              optionName: "Yes",
+              optionValue: "Yes",
+            },
+            {
+              optionType: "Dropdown",
+              optionName: "No",
+              optionValue: "No",
+            },
+          ],
         },
       ],
     ],
@@ -235,53 +260,254 @@ function MyForm() {
     ],
   };
 
+  // var response_temp = {
+  //   // demo response
+  //   formName: "Vendor Assessment",
+  //   formTitle: "Quantum Leap Incorporation PTE LTD",
+  //   titleSize: "20",
+  //   sections: [
+  //     {
+  //       sectionName: "Company Info",
+  //       sectionText: "Fill in your name",
+  //       sectionFont: "12",
+  //       numRows: "4",
+  //       rowElements: [
+  //         [
+  //           {
+  //             elementName: "CompanyName",
+  //             elementHeader: "",
+  //             placeholder: "Company's Name: ",
+  //             placeholderPosition: "front", //either hint or under or front
+  //             elementType: "Textinput",
+  //           },
+  //           {
+  //             elementName: "CompanyRegistrationNo",
+  //             elementHeader: "",
+  //             placeholder: "Company Registration No:",
+  //             placeholderPosition: "front", //either hint or under or front
+  //             elementType: "Textinput",
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             elementName: "Like",
+  //             elementHeader: "Like",
+  //             elementType: "Radio",
+  //             size: "12",
+  //             elementOrientation: "horizontal",
+  //             options: [
+  //               {
+  //                 optionType: "radio",
+  //                 optionName: "Yes",
+  //                 optionValue: "Yes",
+  //               },
+  //               {
+  //                 optionType: "radio",
+  //                 optionName: "No",
+  //                 optionValue: "No",
+  //               },
+  //               {
+  //                 optionType: "radio-text",
+  //                 optionName: "others",
+  //                 optionValue: "Others",
+  //                 textVariables: {
+  //                   //textID will inherit radio optionName + "_text"
+  //                   header: "",
+  //                   hintPosition: "front",
+  //                   hintText: "Please specify",
+  //                   // false_header:null,
+  //                 },
+  //               },
+  //             ],
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             elementName: "OfficeAddress",
+  //             elementHeader: "",
+  //             placeholder: "Office Address: ",
+  //             placeholderPosition: "front", //either hint or under or front
+  //             elementType: "Textinput",
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             elementName: "Telephone",
+  //             elementHeader: "",
+  //             placeholder: "Tel: ",
+  //             placeholderPosition: "front", //either hint or under or front
+  //             elementType: "Textinput",
+  //           },
+  //           {
+  //             elementName: "Fax",
+  //             elementHeader: "",
+  //             placeholder: "Fax: ",
+  //             placeholderPosition: "front", //either hint or under or front
+  //             elementType: "Textinput",
+  //           },
+  //         ],
+  //       ],
+  //     }, //section 1
+  //     {
+  //       sectionName: "Evaluation",
+  //       sectionText: "Evaluation",
+  //       sectionFont: "12",
+  //       numRows: "1",
+  //       rowElements: [
+  //         [
+  //           {
+  //             elementName: "Licenses",
+  //             elementHeader: "",
+  //             elementType: "Checkbox",
+  //             elementOrientation: "horizontal",
+  //             options: [
+  //               {
+  //                 optionType: "Checkbox",
+  //                 optionName: "a. Sole proprietorship",
+  //                 optionValue: "a. Sole proprietorship",
+  //               },
+  //               {
+  //                 optionType: "Checkbox",
+  //                 optionName: "b. Limited Company",
+  //                 optionValue: "b. Limited Company",
+  //               },
+  //               {
+  //                 optionType: "Checkbox",
+  //                 optionName: "c. Partnership Agreement",
+  //                 optionValue: "c. Partnership Agreement",
+  //               },
+  //               {
+  //                 optionType: "Checkbox-text",
+  //                 optionName: "others",
+  //                 optionValue: "Others",
+  //                 textVariables: {
+  //                   //textname will inherit radio optionName + "_text"
+  //                   header: "",
+  //                   hintPosition: "front",
+  //                   hintText: "Please specify",
+  //                 },
+  //               },
+  //             ],
+  //           },
+  //         ],
+  //       ],
+  //     }, // section 2 done
+  //     {
+  //       sectionName: "Evaluation-TextArea",
+  //       sectionText: "Evaluation",
+  //       sectionFont: "12",
+  //       numRows: "1",
+  //       rowElements: [
+  //         [
+  //           {
+  //             elementName: "Feedback",
+  //             elementHeader: "Feedback About us:",
+  //             elementType: "Textarea",
+  //           },
+  //         ],
+  //       ],
+  //     }, // section 3 done
+  //     {
+  //       sectionName: "How-Dropdown",
+  //       sectionText: "Please make a Selection",
+  //       sectionFont: "12",
+  //       numRows: "1",
+  //       rowElements: [
+  //         [
+  //           {
+  //             elementName: "How-Dropdown",
+  //             elementHeader: "",
+  //             elementType: "Dropdown",
+  //             size: "4",
+  //             options: [
+  //               {
+  //                 optionType: "Dropdown",
+  //                 optionName: "Yes",
+  //                 optionValue: "Yes",
+  //               },
+  //               {
+  //                 optionType: "Dropdown",
+  //                 optionName: "No",
+  //                 optionValue: "No",
+  //               },
+  //             ],
+  //           },
+  //         ],
+  //       ],
+  //     }, // section 4 table
+  //     {
+  //       sectionName: "Contact Information",
+  //       sectionText: "Contact Person:",
+  //       sectionFont: "12",
+  //       numRows: "1",
+  //       rowElements: [
+  //         [
+  //           {
+  //             elementName: "How-Table",
+  //             elementHeader: "How did you hear about us?*",
+  //             elementType: "Dropdown",
+  //             size: "4",
+  //             options: ["Selection A", "Selection B", "Selection C"],
+  //           },
+  //         ],
+  //         [
+  //           {
+  //             elementName: "Contacts2",
+  //             elementHeader: "",
+  //             elementType: "Table",
+  //             noRows: "3",
+  //             noColumns: "2",
+  //             headers: ["Name", "Tel", "Designation"],
+  //           },
+  //         ],
+  //       ],
+  //     },
+  //   ],
+  // };
+
+  // useEffect(() => {
+  //   let components = response_temp.sections;
+  //   setFormComponents(components);
+  // }, []);
+
   /*
 =============================================================================================
-userobject, setdata and set all data new paramater for generate section
+I need to pass in section names and element names to ensure that there are no duplicates
 =============================================================================================
 */
 
-  // var userObject =
-  //   //this object will be called from API
-  //   {
-  //     CompanyName: "Write",
-  //     CompanyRegistrationNo: "Anything",
-  //     OfficeAddress: "SMU",
-  //     Telephone: "123456",
-  //     Fax: "123123",
-  //     Contacts: [
-  //       {
-  //         Name: "123456",
-  //         Tel: "123",
-  //       },
-  //       {
-  //         Tel: "123",
-  //         Designation: "asdadad",
-  //       },
-  //       {
-  //         Designation: "asdasdad",
-  //       },
-  //     ],
-  //     How: "Selection B",
-  //     Like: {
-  //       name: "Others",
-  //       type: "radio-text",
-  //       text: "here as well",
-  //     },
-  //     Licenses: [
-  //       {
-  //         name: "b. Limited Company",
-  //         type: "Checkbox",
-  //         text: "",
-  //       },
-  //       {
-  //         name: "Others",
-  //         type: "Checkbox-text",
-  //         text: "asdas",
-  //       },
-  //     ],
-  //     Feedback: "asdasdadad",
-  //   };
+  const [sectionNames, setSectionNames] = useState([]);
+  const [elementNames, setElementNames] = useState([]);
+
+  useEffect(() => {
+    let sectionNamesTemp = [];
+    formComponents.forEach((section) => {
+      const sectionName = section.sectionName;
+      sectionNamesTemp.push(sectionName);
+    });
+    setSectionNames(sectionNamesTemp);
+    console.log("section Names are currently: ", sectionNamesTemp);
+  },[formComponents]);
+
+  useEffect(() => {
+    let elementNamesTemp = [];
+    formComponents.forEach((section) => {
+      section.rowElements.forEach((elementRow) => {
+        elementRow.forEach((element) => {
+          const elementName = element.elementName;
+          elementNamesTemp = [...elementNamesTemp, elementName];
+        });
+      });
+    });
+    setElementNames(elementNamesTemp);
+    console.log("element Names are currently: ", elementNamesTemp);
+  }, [formComponents]);
+
+  /*
+=============================================================================================
+userobject, setdata and set all data new paramaters for generate section
+=============================================================================================
+*/
 
   var [allData, setallData] = useState({}); //All data to save for user
 
@@ -292,11 +518,13 @@ userobject, setdata and set all data new paramater for generate section
     if (userObject !== undefined) {
       setallData((prevData) => ({ ...prevData, ...userObject }));
     }
+    console.log("all data is currently: ", allData);
   }, []); // empty dependency array to run the effect only once
 
   /*
 =============================================================================================
-Code below handles the addition of elements, handleAddElement to be built on
+Code below handles the addition of elements, handleAddElement to be built on, however most of these functions should be drepecated,
+particularly handleAddComponent
 
 handleAddComponent is deprecated
 =============================================================================================
@@ -304,18 +532,18 @@ handleAddComponent is deprecated
 
   function handleAddElement({ target }) {
     console.log(target);
-    setFormComponents([
-      ...formComponents,
-      <GenerateSection
-        section={target}
-        allData={allData}
-        setallData={setallData}
-      ></GenerateSection>,
-    ]);
+    setFormComponents([...formComponents, target]);
     console.log(formComponents);
     setInfoComponents([...infoComponents, target]);
     setSaveStatus(false);
   }
+
+  const handleFormSubmit = (data) => {
+    console.log(data);
+    setSectionData(data);
+    handleAddElement({ target: data });
+    console.log(data);
+  };
 
   function handleAddComponent({ name }) {
     // we should specific add components for each type
@@ -342,11 +570,12 @@ handleAddComponent is deprecated
     }
     setFormComponents([
       ...formComponents,
-      <GenerateSection
-        section={target}
-        allData={allData}
-        setallData={setallData}
-      ></GenerateSection>,
+      target,
+      // <GenerateSection
+      //   section={target}
+      //   allData={allData}
+      //   setallData={setallData}
+      // ></GenerateSection>,
     ]);
     setInfoComponents([...infoComponents, target]);
     setSaveStatus(false);
@@ -378,9 +607,8 @@ handleAddComponent is deprecated
     updatedComponents[index + 1] = temp;
     setFormComponents(updatedComponents);
   }
-  function handleAddSection(index){
 
-  }
+  function handleAddSection(index) {}
 
   /* Below is functions connecting to MongoDB (APIs) */
   async function saveComponents() {
@@ -397,9 +625,11 @@ handleAddComponent is deprecated
         console.log(response);
         if (response.status == 201) {
           setSaveStatus(true);
-          setSaveText("Form saved successfully");
+          //setSaveText("Form saved successfully");
+          alert("Form saved successfully");
         } else {
-          setSaveText("Error saving form");
+          //setSaveText("Error saving form");
+          alert("Error saving form");
         }
       });
   }
@@ -427,13 +657,14 @@ handleAddComponent is deprecated
         let data = response.data;
         setInfoComponents(data.sections);
         setFormComponents(
-          data.sections.map((target) => (
-            <GenerateSection section={target}></GenerateSection>
-          ))
+          // data.sections.map((target) => (
+          //   <GenerateSection section={target}></GenerateSection>
+          // ))
+          data.sections
         );
       });
   }
-  console.log(formComponents)
+  console.log("the current components of the form are: ", formComponents);
   // setInterval(loadExistingForms, 5000);
 
   /* returning the Page */
@@ -447,38 +678,69 @@ handleAddComponent is deprecated
           loadForms={loadExistingForms}
         />
         <div className="button-container">
-          <Creator
+          {/* <Creator
             className="centered-button"
             onClick={() => loadSelectedForm(selectedForm, selectedVersion)}
             text={"Load Form"}
             color="lightgreen"
-          />
+          /> */}
+          <Button
+          alignItems="center"
+          variant="outlined"
+          
+           onClick={() => loadSelectedForm(selectedForm, selectedVersion)}
+          >
+        <AutorenewIcon />
+        &nbsp;Load Form
+      </Button>
         </div>
-        <SectionEditor  onPressed={handleFormSubmit} />
-        <div className="button-container">
-          <AddComponent
-            className="centered-button"
-            onAdd={() => setShowAddComponent(!showAddComponent)}
-            showAdd={showAddComponent}
-          />
-        </div>
-        <div id='previewSection'>
+        {/* <SectionEditor
+          onPressed={handleFormSubmit}
+          sectionNamesList={sectionNames}
+          elementNamesList={elementNames}
+        /> */}
+        <hr></hr>
+        <div>
           {formComponents.map((component, index) => (
             <div key={index}>
-              <hr />
+              {/* <hr /> */}
               <EditPanel
                 MoveDown={() => handleMoveComponentDown(index)}
                 MoveUp={() => handleMoveComponentUp(index)}
-                Add={() => handleAddSection(index)}
+                // Add={() => handleAddSection(index)}
                 // Edit={() => handleMoveComponentUp(index)}
                 Delete={() => handleRemoveComponent(index)}
                 formComponents={formComponents}
                 setFormComponents={setFormComponents}
               />
-              {component}
+              <GenerateSection
+                section={component}
+                allData={allData}
+                setallData={setallData}
+              ></GenerateSection>
               <hr />
             </div>
           ))}
+          <div className="button-container" style={{ display: "block" }}>
+            <div style={{ textAlign: "center", display: "block" }}>
+              <AddButton
+                // Add={() => handleAddSection()}
+                sectionNamesList={sectionNames}
+                elementNamesList={elementNames}
+                formComponents={formComponents}
+                setFormComponents={setFormComponents}
+                allData={allData}
+                setallData={setallData}
+              />
+            </div>
+            {/* <div style={{ textAlign: "center", display: "block" }}>
+              <AddComponent
+                className="centered-button"
+                onAdd={() => setShowAddComponent(!showAddComponent)}
+                showAdd={showAddComponent}
+              />
+            </div> */}
+          </div>
           <>
             {showAddComponent && (
               <div>
@@ -507,7 +769,9 @@ handleAddComponent is deprecated
                     {" "}
                     <button
                       className="centered-button"
-                      onClick={() => handleAddComponent({ name: selectedOption })}
+                      onClick={() =>
+                        handleAddComponent({ name: selectedOption })
+                      }
                     >
                       Add Element
                     </button>
@@ -517,24 +781,40 @@ handleAddComponent is deprecated
             )}
           </>
           <div className="button-container">
-            <SaveComponent
-              className="centered-button"
-              saveComponents={() => saveComponents()}
-              isSaved={isSaved}
-              text={saveText}
-            />
+
             <input
               type="text"
               className="centered-textbox"
               placeholder="Form name"
               onChange={handleNameSaveAs}
-              style={{ margin: 1 + "em" }}
+              style={{
+                width: "180px",
+                height: "30px",
+                padding: "12px",
+                border: "1px solid #ccc",
+                borderRadius: "7px",
+                
+              }}
             />
             <input
               type="text"
               className="centered-textbox"
               placeholder="Version number"
               onChange={handleVersionSaveAs}
+              style={{
+                width: "180px",
+                height: "30px",
+                padding: "12px",
+                border: "1px solid #ccc",
+                borderRadius: "7px",
+                margin: "1em"
+              }}
+            />
+            <SaveComponent
+              className="centered-button"
+              saveComponents={() => saveComponents()}
+              isSaved={isSaved}
+              text={saveText}
             />
           </div>
         </div>
@@ -542,13 +822,8 @@ handleAddComponent is deprecated
           <GenerateSection section={sectionData}></GenerateSection>
         )} */}
       </div>
-        <div style={{ position: "absolute", bottom: 50, width: "100%" }}>
-        <div style={{ textAlign: 'center' }}>
-          <AddButton Add={() => handleAddSection()} formComponents={formComponents} setFormComponents={setFormComponents} />
-        </div>
-    </div>
+      <div style={{ position: "absolute", bottom: 50, width: "100%" }}></div>
     </section>
-    
   );
 }
 
