@@ -10,7 +10,6 @@ import AdminApprovalList from "../components/AdminApprovalList";
 import AdminCreation from "../components/AdminCreation";
 import MyForm from "../components/AdminPageTest";
 import AssignForm from "../components/AssignForm";
-import AssignForm2 from "../components/AssignForm copy";
 import VendorAssessmentForm from "../components/VendorAssessmentForm";
 import UncompletedForms from "../components/UncompletedForms";
 import CompletedForms from "../components/CompletedForms";
@@ -27,7 +26,6 @@ export default function MyRoute() {
         <Route exact path="/AdminApprovalList" element={<AdminApprovalList/>} />
         <Route exact path="/ApprovalList" element={<ApprovalList/>} />
         <Route exact path="/AssignForm" element={<AssignForm/>} />
-        <Route exact path="/AssignForm2" element={<AssignForm/>} />
         <Route exact path="/AdminCreation" element={<AdminCreation/>} />
         <Route exact path="/testpage" element={<TestPage/>} /> 
         <Route exact path="/APIFETest" element={<APIFETest/>} /> 

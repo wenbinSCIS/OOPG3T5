@@ -12,13 +12,15 @@ export default function VendorAssessmentForm() {
   var [allData, setallData] = useState({}); //All data to save for user
   var [isUserInputLoaded, setIsUserInputLoaded] = useState(false);
   var [formData, setFormData] = useState(null);
-  const [remarks, setRemarks] = useState({})
   const [status, setStatus] = useState(null)
 
-  var formVersion =   sessionStorage.getItem('formVersion')||1.1; 
-  var formName = sessionStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
-  var username = sessionStorage.getItem('username') || "abc@gmail.com";
-  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "Company A";
+
+  var formVersion =   sessionStorage.getItem('formVersion')
+  var formName = sessionStorage.getItem('formName')
+  var username = sessionStorage.getItem('username') 
+  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) 
+  var projectName = sessionStorage.getItem('projectName') 
+  var projectId = sessionStorage.getItem('projectId') 
 
   var [approverComments, setApproverComments] = useState({});
   const [alerts, setAlerts] = useState([]);
@@ -33,6 +35,40 @@ export default function VendorAssessmentForm() {
       setFormData(response.data);
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async function setDescription(username,projectId,projectName,formName,formVersion,desc) {
+    try {
+      var inputJson = {
+        "username":username,
+        "userType":"Vendor",
+        "project":[
+            {
+                "projectId":projectId,
+                "projectName":projectName,
+                "assignedForm": [
+                    {
+                    "formName": formName,
+                    "description": desc,
+                    "formVersion" : formVersion,
+                    }
+                ]
+            }
+        ]
+    }
+      const response = await axios.put(`http://localhost:8080/user/updateAssignedForm`, inputJson);
+      if(response.status == 200){
+        console.log("Description updated")
+        return true
+      } else {
+        console.log("Description not updated")
+        return false
+      }
+    } catch (error) {
+      if(error == "Error: Request failed with status code 404"){
+      console.log("Description not updated")}
+      return false
     }
   }
 
@@ -70,6 +106,8 @@ export default function VendorAssessmentForm() {
 
 console.log(isUserInputLoaded)
   async function saveUserInput(formName, formVersion, username, companyInfo){
+    var desc = "Form incomplete, please complete the form"
+    setDescription(username,projectId,projectName,formName,formVersion,desc);
     var inputJson = {
       "formName":formName,
       "username":username,
@@ -95,10 +133,10 @@ console.log(isUserInputLoaded)
         console.log(response.data);
       });
     }
+    //navigate("/UncompletedForms")
   }
 
   function checkMandatory(formData){
-    console.log(formData)
     var returnAlerts = []
     var sections = formData['sections']
     for(let i=0;i<sections.length;i++){
@@ -149,24 +187,29 @@ console.log(isUserInputLoaded)
       "companyInfo": companyInfo
     }
     var result = checkMandatory(formData);
-    if(result) {
-      if (!isUserInputLoaded) {
-        await axios
-          .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
-          .then((response) => {
-            alert("Saved new input data!");
-            navigate("/CompletedForms")
-            setIsUserInputLoaded(true);
-            console.log(response.data);
-          });
-      } else {
-        await axios
-          .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
-          .then((response) => {
-            alert("Resaved input data!");
-            navigate("/CompletedForms")
-            console.log(response.data);
-          });
+    
+    if(result){
+      var desc = "Form Submitted for Approval"
+      var updateDes = setDescription(username,projectId,projectName,formName,formVersion,desc);
+      if(updateDes){
+        if (!isUserInputLoaded) {
+          await axios
+            .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
+            .then((response) => {
+              alert("Saved new input data!");
+              navigate("/CompletedForms")
+              setIsUserInputLoaded(true);
+              console.log(response.data);
+            });
+        } else {
+          await axios
+            .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
+            .then((response) => {
+              alert("Resaved input data!");
+              navigate("/CompletedForms")
+              console.log(response.data);
+            });
+        }
       }
     }    
   }
@@ -192,7 +235,7 @@ console.log(isUserInputLoaded)
   <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {navigate("/completedForms")}}>Exit</Button>
 ) : (
   <>
-    <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo); navigate("/UncompletedForms")}}>Save</Button>
+    <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo)}}>Save</Button>
     <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
   </>
 )}

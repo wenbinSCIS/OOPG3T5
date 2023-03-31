@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { border } from '@mui/system';
 
 export default function ActionTable({actions }) {
+  console.log(actions)
 
   return (
     <MDBTable align='middle' style={{ width: '100%' }}>
@@ -65,6 +66,8 @@ export default function ActionTable({actions }) {
                 <Link to="/Vendor" onClick={() => {
                   sessionStorage.setItem('formName', action.formName);
                   sessionStorage.setItem('formVersion', action.formVersion);
+                  sessionStorage.setItem('projectId', action.projectId);
+                  sessionStorage.setItem('projectName', action.projectName);
                 }}>
                   <Button variant="outline-primary" size="sm" padingTop="5px">
                     {actionWord}
