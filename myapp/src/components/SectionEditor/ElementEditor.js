@@ -63,6 +63,9 @@ handleNewRowAddElement: sets the elementType value as the one that we have selec
     console.log("The user selects row: ", e.target.value);
   };
 
+  
+
+
   /*
 =============================================================================================
 The code below manages the state for element type, 
@@ -585,6 +588,37 @@ appendToOverallState: appends element to selected row as chosen by the user
     setRowState((rowState) => addItem(rowState, elementState));
     handleOverallRowState(updatedRowState);
   };
+
+  function delItem(currentList, elementName) {
+    const index = currentList.findIndex(
+      (result) => result.elementName === elementName
+    );
+    const deletedRowState = [...currentList];
+    if (index !== -1) {
+      deletedRowState.splice(index, 1);
+    }
+    return deletedRowState;
+  }
+  
+  const handleDelete = (e) => {
+    const { value } = e.target;
+    console.log(value)
+    const updatedRowState = delItem(rowState, value);
+    setRowState(updatedRowState);
+    handleOverallRowStateDelete(updatedRowState,value);
+  };
+
+  const handleOverallRowStateDelete = (updatedState,elementName) => {
+    const updatedOverallState = [...updatedState]; // updatedOverallState should be sent over to the overallRowState -> takes a while to update
+    // setOverallRowState((overallRowState) =>
+    //   delItem(overallRowState, elementName)
+    // );
+    // console.log(updatedOverallState); // this should be pushed to the admin page
+    setOverallRowState(updatedOverallState)
+    //handleToggleSection();
+    handleSectionChanges(updatedOverallState); // for the preview tab
+  };
+  
 
   const handleOverallRowState = (updatedState) => {
     const updatedOverallState = [...overallRowState, updatedState]; // updatedOverallState should be sent over to the overallRowState -> takes a while to update
@@ -1546,7 +1580,8 @@ Returned Component
           <SendIcon />
         </Button>
       </Stack>
-      <PreviewTab sectionState={sectionData} />
+      {/* delRow={handleDelete()} */}
+      <PreviewTab sectionState={sectionData} handleDelete={handleDelete}/>
       <Stack
         direction="row"
         alignItems="center"

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import GenerateSection from '../SectionGeneration';
 
-export default function PreviewTab({sectionState}) {
-  // const sectionState = props.sectionState;
+export default function PreviewTab({sectionState, handleDelete}) {
+  console.log(sectionState)
   var [allData, setallData] = useState({}); //All data to save for user
   return (
     <div>
@@ -11,11 +11,16 @@ export default function PreviewTab({sectionState}) {
         <p>The Section is currently Empty</p>
       )}
       {typeof sectionState.rowElements !== "undefined" && (
-        <GenerateSection
+        <div>
+          <GenerateSection
           section={sectionState}
           allData={allData}
           setallData={setallData}
-        ></GenerateSection>
+          generateFor = "Admin"
+          handleDelete = {handleDelete}
+          ></GenerateSection>
+        </div>
+        
       )}
     </div>
   );

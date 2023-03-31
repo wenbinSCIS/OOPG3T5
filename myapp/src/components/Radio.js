@@ -2,9 +2,10 @@ import React, { useState,useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
+import Button from 'react-bootstrap/Button';
 
 
-function Radio({ data, onChange, options, title, size, false_header, name, orientation, generateFor}) {
+function Radio({ data, onChange, options, title, size, false_header, name, orientation, generateFor , handleDelete}) {
 
   var [selectedOption, setSelectedOption] = useState('');
   // var [disabled, setDisabled] = useState(true);
@@ -100,6 +101,10 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
           </div>
       )
       )}
+      {
+          generateFor==="Admin" &&
+          <Button onClick={handleDelete} value={name} variant="danger">Delete Element</Button>
+        }
       </div>  
   );
 }

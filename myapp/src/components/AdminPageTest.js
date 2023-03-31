@@ -528,6 +528,8 @@ userobject, setdata and set all data new paramaters for generate section
     console.log("all data is currently: ", allData);
   }, []); // empty dependency array to run the effect only once
 
+
+  console.log(formComponents)
   /*
 =============================================================================================
 Code below handles the addition of elements, handleAddElement to be built on, however most of these functions should be drepecated,
@@ -620,7 +622,7 @@ handleAddComponent is deprecated
     // fetch
     let formJson = {
       formName: nameSaveAs,
-      sections: infoComponents,
+      sections: formComponents,
       version: versionSaveAs,
     };
     await axios
