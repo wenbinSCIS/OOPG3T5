@@ -740,6 +740,7 @@ appendToOverallState: appends element to selected row as chosen by the user
   function handleSubmissiontoAdmin() {
     onPressedElement(overallRowState); // same as retrieve elements from section editor
     setSectionData({});
+    console.log(sectionData)
     console.log("Element Editor sends data to Section Editor");
     alert("Section has been Added!");
   }

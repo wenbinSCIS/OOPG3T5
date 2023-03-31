@@ -623,20 +623,27 @@ handleAddComponent is deprecated
       sections: infoComponents,
       version: versionSaveAs,
     };
-    await axios
-      .post("http://localhost:8080/api/createForm", formJson)
-      .then((response) => {
-        console.log(response);
-        if (response.status == 201) {
-          setSaveStatus(true);
-          //setSaveText("Form saved successfully");
-          alert("Form saved successfully");
-        } else {
-          //setSaveText("Error saving form");
-          alert("Error saving form");
-        }
-      });
-  }
+    await axios.
+    post("http://localhost:8080/api/createForm", formJson)
+    .then((response) => {
+      console.log(response);
+      if (response.status === 201) {
+        setSaveStatus(true);
+        alert("Form saved successfully");
+      } else {
+        alert("Error saving form");
+      }
+    })
+    .catch((error) => {
+      if (error.response.status === 400) {
+        alert("Non-numerical data in Version Number field");
+      } else if (error.response.status === 409) {
+        alert("Duplicate Form Name and Version Number exists");
+      } else {
+        alert("Error saving form");
+      }
+    });
+}
   async function loadExistingForms() {
     await axios
       .get("http://localhost:8080/api/getAllForms")
@@ -824,12 +831,10 @@ handleAddComponent is deprecated
               formsAvailable={formsAvailable}
               isVersionNumberEmpty={isVersionNumberEmpty}
               isFormNameEmpty={isFormNameEmpty}
+              formComponents={formComponents}
       />
           </div>
         </div>
-        {/* {sectionData && (
-          <GenerateSection section={sectionData}></GenerateSection>
-        )} */}
       </div>
       <div style={{ position: "absolute", bottom: 50, width: "100%" }}></div>
     </section>
