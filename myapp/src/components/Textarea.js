@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
 
 function Textarea(props) {
     /* const [value, setValue] = useState('');
@@ -32,6 +33,10 @@ function Textarea(props) {
           
         >
         </textarea>
+        {
+          props.generateFor==="Admin" &&
+          <Button onClick={props.handleDelete} value={props.name} variant="danger">Delete Element</Button>
+        }
       </div>
     );
   }

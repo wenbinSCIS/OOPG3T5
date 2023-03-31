@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Text from './Text';
+import Button from 'react-bootstrap/Button';
 
 function TextInput(props) {
   //console.log(props)
@@ -46,11 +47,15 @@ function TextInput(props) {
                     }}
                   />
         }
-        
+        {
+          props.generateFor==="Admin" &&
+          <Button onClick={props.handleDelete} value={props.name} variant="danger">Delete Element</Button>
+        }
         </InputGroup>
         {props.hintPosition == "under" &&
           <a style={{margin:0,fontSize:'0.8rem',opacity: 0.8}}>{props.hint}</a>
         }
+        
       </div>
     );
   }
