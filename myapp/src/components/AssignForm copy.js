@@ -79,80 +79,119 @@ const AssignForm2 = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [selectedProject, setSelectedProject] = useState(null);
     const [selectedForms, setSelectedForms] = useState([]);
+    const [availableForms, setAvailableForms] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
+    const [formRender, setFormRender] = useState(null)
+    const [allUsers, setAllUsers] = useState(null)
 
     var vendorUsers = []
     async function loadVendorUsers(){
       var url = "http://localhost:8080/user/getUserByUserType" 
       await axios.post(url, {"userType": "Vendor"}).then((response) => {
         console.log(response.data);
-        vendorUsers = response.data;
-        setFilteredUsers(vendorUsers);
+        // vendorUsers = response.data;
+        setAllUsers(response.data);
+        setFilteredUsers(response.data);
       })
+    }
+    async function getAllForms(){
+      var url = "http://localhost:8080/api/getAllForms";
+      await axios.get(url).then((response) => {
+        console.log(response.data);
+        var allFormData = response.data;
+        setAvailableForms(allFormData);
+      })
+    }
+    const assignForm = async () => {
+      var url = "http://localhost:8080/user/updateAssignedFormList";
+      const projectIndex = selectedUser.project.findIndex((project) => project == selectedProject);
+      var tempSelectedUser = selectedUser;
+      tempSelectedUser.project[projectIndex].assignedForm = selectedForms;
+      console.log('tempSelectedUser',tempSelectedUser)
+      await axios.put(url, selectedUser).then((response) => {
+        console.log(response.data);
+        setSelectedUser(tempSelectedUser)
+      })
+      setFormRender(renderSelectedForms())
     }
     useEffect(()=>{
       loadVendorUsers();
+      getAllForms();
     },[])
     useEffect(() => {
-      if (selectedUser && selectedUser.project.length > 0) {
-        const userProjects = selectedUser.project[0];
-        const userForms = userProjects.assignedForms
-        setSelectedForms(userForms);
-      } else {
-        setSelectedForms([]);
-      }
+      setFormRender(renderSelectedForms())
     }, [selectedUser]);
 
   const handleProjectChange = (event) => {
-    const projectName = event.target.value;
+    console.log("handleProjectChange Event",event.target.value)
+    const projectId = event.target.value;
     const userProjects = selectedUser.project;
-    const project = userProjects.find((p) => p.projectName === projectName);
+    const project = userProjects.find((p) => p.projectId === projectId);
     setSelectedProject(project);
+    console.log('project',project)
+    setSelectedForms(project.assignedForm);
   };
-  // const handleFormChange = (event) => { 
-  //   console.log(filteredUsers)
-  //   return }
+
   const handleFormChange = (event) => {
     const formNameVersion = event.target.value;
-    if (!selectedUser) return;
-    const updatedProjects = selectedUser.projects.map((project) => {
-      if (project.projectName === selectedProject.projectName) {
-        var formAlreadyExist = false;
-        selectedForms.map(form => {
-        if(form.formName == formNameVersion) {
-          formAlreadyExist = true
-        }})
-        if (formAlreadyExist) return project; // Skip if the form is already assigned
-        return {
-          ...project,
-          forms: [...project.forms, formNameVersion],
-        };
+
+    if (!selectedProject) return;
+      
+    console.log('check1')
+    const formName = event.target.value.split(" v").slice(0,-1).join("");
+    const formVersion = event.target.value.split(" v").slice(-1) ;
+    //check if form is already assigned
+    var formAlreadyExist = false;
+    selectedForms.map(form => {
+      if(form.formName == formName && form.formVersion == formVersion) {
+        formAlreadyExist = true;
+        return;
       }
-      return project;
-    });
+    })
+    if (!formAlreadyExist) {
+      var newForm = availableForms.find((form) => form.formName == formName && form.version == formVersion)
+      console.log('u picked', newForm)
+      var newAssignedForm = {
+        formName : newForm.formName,
+        formVersion : newForm.version,
+        status : "Not started",
+        description : "xdd",
+      }
+      setSelectedForms([...selectedForms, newAssignedForm])
+      // project.assignedForm.push(newForm)
+    }
+    // return {
+    //   ...project,
+    //   forms: [...project.assignedForm, formNameVersion],
+    // };
+  }
   
-    setSelectedUser({ ...selectedUser, projects: updatedProjects });
-  };
+  //   setSelectedUser({ ...selectedUser, projects: updatedProjects });
+  // };
 
   const handleSearchInputChange = (event) => {
     const searchTerm = event.target.value;
-    const filteredUsers = vendorUsers.filter(user => user.companyName.toLowerCase().includes(searchTerm.toLowerCase()));
+    console.log('searchTerm,',searchTerm)
+    console.log('allUsers', allUsers)
+
+    const filteredUsers = allUsers.filter(user => user.companyInfo.companyName.toLowerCase().includes(searchTerm.toLowerCase()));
     setFilteredUsers(filteredUsers);
   };
-
-  const handleRemoveForm = (projectId, formId) => {
-    const updatedProjects = selectedUser.project.map((project) => {
-      if (project.id === projectId) {
-        return {
-          ...project,
-          forms: project.forms.filter((id) => id !== formId),
-        };
-      }
-      return project;
-    });
-  
-    setSelectedUser({ ...selectedUser, projects: updatedProjects });
+  const handleRemoveForm = async (projectId, formNameVersion) => {
+    const projectIndex = selectedUser.project.findIndex((project) => project.projectId == projectId);
+    const formName = formNameVersion.split(" v").slice(0,-1).join("");
+    const formVersion = formNameVersion.split(" v").slice(-1) ;
+    var tempSelectedUser = selectedUser;
+    var filteredForms = tempSelectedUser.project[projectIndex].assignedForm.filter((form) => form.formName !== formName && form.formVersion !== formVersion)
+    tempSelectedUser.project[projectIndex].assignedForm = filteredForms
+    console.log(tempSelectedUser);
+    var url = "http://localhost:8080/user/deleteAssignedForm";
+    await axios.put(url, selectedUser).then((response) => {
+      console.log(response.data);
+      setSelectedUser(tempSelectedUser)
+    })
+    setFormRender(renderSelectedForms())
   };
 
   const handleUserFormSubmit = (event) => {
@@ -161,42 +200,39 @@ const AssignForm2 = () => {
   };
 
   const renderProjectOptions = () => {
-    console.log("renderProjectOptions")
-    console.log("selectedProject", selectedProject)
     return selectedUser.project.map(project => (
-      <option key={project.id} value={project.id}>{project.name}</option>
+      <option key={project.projectId} value={project.projectId}>{project.projectName}</option>
+    ));
+  };
+  
+  const renderFormOptions = () => {
+    if (!availableForms) return null;
+    const projectForms = availableForms
+    return projectForms.map(form => (
+      <option key={form.formName + " v" + form.version} value={form.formName + " v" + form.version}>{form.formName + " v" + form.version}</option>
     ));
   };
 
-  const renderFormOptions = () => {
-    if (!selectedProject) return null;
-    console.log("renderFormOptions")
-    const projectForms = selectedProject.forms.map(formId => mockForms.find(f => f.id === formId));
-    return projectForms.map(form => (
-      <option key={form.id} value={form.id}>{form.name}</option>
-    ));
-  };
-  const renderSelectedForms = () => {
-    if (!selectedUser || !selectedUser.projects) return null;
-  
-    return selectedUser.projects.map((project) => {
-      const projectName = mockProjects.find((p) => p.id === project.id).name;
-      const userForms = project.forms.map(formId => mockForms.find(f => f.id === formId));
-  
+  function renderSelectedForms() {
+    console.log('renderSelectedForms')
+    if (!selectedUser || !selectedUser.project) return null;
+    return selectedUser.project.map((project) => {
+      console.log("renderSelectedForms")
+      const projectName = project.projectName;
+      const userForms = project.assignedForm;
       return (
-        <div key={project.id} className="project-forms">
+        <div key={project.projectName} className="project-forms">
           <h4>{projectName}:</h4>
           {userForms.map((form) => (
-            <div key={form.id} className="selected-form">
-              {form.name}
-              <HighlightOffIcon aria-label="delete" onClick={() => handleRemoveForm(project.id,form.id)} />
+            <div key={form.formName + " v" + form.formVersion} className="selected-form">
+              {form.formName + " v" + form.formVersion}
+              <HighlightOffIcon aria-label="delete" onClick={() => handleRemoveForm(project.projectId,form.formName + " v" + form.formVersion)} />
             </div>
           ))}
         </div>
       );
     });
   };
-
 
   const tableStyles = {
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
@@ -221,9 +257,9 @@ const AssignForm2 = () => {
   };
   
   function renderFilteredUsers() {
-    // if (filteredUsers.length === 0) {
-    //   return <div>No users found</div>;
-    // }
+    if (filteredUsers.length === 0) {
+      return <div>No users found</div>;
+    }
   
     return (
       <MDBTable hover style={tableStyles}>
@@ -239,8 +275,8 @@ const AssignForm2 = () => {
           {filteredUsers.map(user => (
             <tr
               key={user.companyInfo.registrationNo}
-              onClick={() => setSelectedUser(user)}
-              // className={selectedUser && selectedUser.id === user.id ? 'selected-row' : ''}
+              onClick={() => {setSelectedUser(user);console.log('selected');}}
+              className={selectedUser && selectedUser.id === user.id ? 'selected-row' : ''}
             >
               <td>{user.companyInfo.registrationNo}</td>
               <td>{user.companyInfo.companyName}</td>
@@ -277,12 +313,12 @@ const AssignForm2 = () => {
 
       {selectedUser && (
   <div className="d-flex flex-column flex-grow-1">
-    <h3>Selected User: {selectedUser.username}</h3>
+    <h3>Selected User: {selectedUser.companyName}</h3>
     <form onSubmit={handleUserFormSubmit} className="assign-form">
       
       <div className="form-group">
         <label htmlFor="project">Project:</label>
-        <select id="project" value={selectedProject ? selectedProject.id : ''} onChange={handleProjectChange} className="form-control">
+        <select id="project" value={selectedProject ? selectedProject.registrationNo : ''} onChange={handleProjectChange} className="form-control">
           <option value="">Select a project</option>
           {renderProjectOptions()}
         </select>
@@ -290,18 +326,18 @@ const AssignForm2 = () => {
       {selectedProject && (
         <div className="form-group">
           <label htmlFor="forms">Forms:</label>
-          <select id="forms" multiple value={selectedForms.map(f => f.formName)} onChange={handleFormChange} className="form-control">
+          <select id="forms" multiple value={selectedForms.map(form => form.formName + " v" + form.formVersion)} onChange={handleFormChange} className="form-control">
             {renderFormOptions()}
           </select>
         </div>
       )}
-      {selectedForms.length > 0 && (
+      {(selectedUser !== null && "project" in selectedUser && selectedUser.project.length > 0) && (
         <div className="form-group">
           <h3>Selected Forms:</h3>
-          <div className="selected-forms">{renderSelectedForms()}</div>
+          <div className="selected-forms">{formRender}</div>
         </div>
       )}
-      <Button variant="outlined" type="submit" outline rounded color='success' className="assign-button">Assign</Button>
+      <Button variant="outlined" type="submit" outline="true" rounded="true" color='success' className="assign-button" onClick={assignForm}>Assign</Button>
     </form>
   </div>
 )}
