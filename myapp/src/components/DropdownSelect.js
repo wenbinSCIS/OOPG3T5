@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-
+import CloseButton from 'react-bootstrap/CloseButton';
 
 function Dropdown(props) {
   const [selectedValue, setSelectedValue] = useState(props.options[0]);
@@ -31,6 +30,10 @@ function Dropdown(props) {
   
     return (
       <div className={number} style={selectWrapperStyle}>
+          {
+          props.generateFor==="Admin" &&
+          <CloseButton variant='blue' onClick={props.handleDelete} value={props.name}/>
+          }
         {props.title.length > 0 &&
           <label style={{margin:0,color: props.generateFor === "Approver" ? "#d5b17a" : "deepskyblue"}}>{props.title}</label>
         }
@@ -49,10 +52,6 @@ function Dropdown(props) {
             </option>
           ))}
         </select>
-        {
-          props.generateFor==="Admin" &&
-          <Button onClick={props.handleDelete} value={props.name} variant="danger">Delete Element</Button>
-        }
         <div style={arrowStyle}></div>
       </div>
     );

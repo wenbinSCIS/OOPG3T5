@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
-import Button from 'react-bootstrap/Button';
+import CloseButton from 'react-bootstrap/CloseButton';
 
 
 function Radio({ data, onChange, options, title, size, false_header, name, orientation, generateFor , handleDelete}) {
@@ -44,6 +44,10 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
   }
   return (
     <div className={number} style={{ margin: 0 }}>
+       {
+          generateFor==="Admin" &&
+          <CloseButton variant='blue' onClick={handleDelete} value={name}/>
+          }
       {title.length > 0 && (
         <InputGroup.Text style={{ paddingTop: 2, paddingBottom:2,marginBottom:2 ,backgroundColor: generateFor === "Approver" ? "#f4dcb7" : "#fff"}}>{title}</InputGroup.Text>
       )}
@@ -72,9 +76,10 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
             <TextInput title={option.textVariables.header} hint={option.textVariables.hintText} hintPosition={option.textVariables.hintPosition} name = {option.optionName + "_text"} false_header={false_header} disabled={data != null && data.name == option.optionValue ? false : true} 
             onChange={(e) => handleTextinChange(name,option.optionValue, e)}
             text={data!==undefined?data.text:''}
-            generateFor={generateFor}
+            generateFor={
+              generateFor == "Approver" ? "Approver" : ""
+            }
             /> 
-            
           </div>
         
       ) : (
@@ -101,10 +106,7 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
           </div>
       )
       )}
-      {
-          generateFor==="Admin" &&
-          <Button onClick={handleDelete} value={name} variant="danger">Delete Element</Button>
-        }
+      
       </div>  
   );
 }

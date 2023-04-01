@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Text from './Text';
-import Button from 'react-bootstrap/Button';
+import CloseButton from 'react-bootstrap/CloseButton';
 
 function TextInput(props) {
   //console.log(props)
@@ -17,6 +17,10 @@ function TextInput(props) {
     }
     return (
       <div className={number} style={{margin:0}}>
+        {
+          props.generateFor==="Admin" &&
+          <CloseButton variant='blue' onClick={props.handleDelete} value={props.name}/>
+          }
         {props.title.length>0 &&
         <label style={{margin:0,color:'deepskyblue'}}>{props.title}</label>
         }
@@ -46,10 +50,6 @@ function TextInput(props) {
                       pointerEvents: props.generateFor === "Approver" ? "none" : "auto"
                     }}
                   />
-        }
-        {
-          props.generateFor==="Admin" &&
-          <Button onClick={props.handleDelete} value={props.name} variant="danger">Delete Element</Button>
         }
         </InputGroup>
         {props.hintPosition == "under" &&

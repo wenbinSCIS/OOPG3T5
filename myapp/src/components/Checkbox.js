@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
-import Button from 'react-bootstrap/Button';
+import CloseButton from 'react-bootstrap/CloseButton';
 
 function Checkbox({data,onChange, options,title,size,false_header,name,orientation, generateFor, handleDelete}) {
 
@@ -58,6 +58,10 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
    
   return (
     <div className={number}>
+       {
+          generateFor==="Admin" &&
+          <CloseButton variant='blue' onClick={handleDelete} value={name}/>
+          }
       {title.length>0 &&
        <InputGroup.Text >
        <label style={{margin:1,color:'deepskyblue'}}>{title} </label>
@@ -129,10 +133,6 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
           </div>
           )
       )}
-      {
-          generateFor==="Admin" &&
-          <Button onClick={handleDelete} value={name} variant="danger">Delete Element</Button>
-        }
     </div>  
   );
 }

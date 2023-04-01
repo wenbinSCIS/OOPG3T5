@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import CloseButton from 'react-bootstrap/CloseButton';
 
 function Textarea(props) {
     /* const [value, setValue] = useState('');
@@ -14,6 +14,10 @@ function Textarea(props) {
     
     return (
       <div className={number} style={{margin:0}}>
+         {
+          props.generateFor==="Admin" &&
+          <CloseButton variant='blue' onClick={props.handleDelete} value={props.name}/>
+          }
         <label style={{margin:0,color: props.generateFor === "Approver" ? "#d5b17a" : "deepskyblue"}}>{props.title}</label>
         <br></br>
         <textarea
@@ -33,10 +37,7 @@ function Textarea(props) {
           
         >
         </textarea>
-        {
-          props.generateFor==="Admin" &&
-          <Button onClick={props.handleDelete} value={props.name} variant="danger">Delete Element</Button>
-        }
+        
       </div>
     );
   }
