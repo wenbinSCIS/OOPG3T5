@@ -93,396 +93,6 @@ for testing purposes
 =============================================================================================
 */
 
-  var name_section = {
-    sectionName: "Name",
-    sectionText: "Fill in your name",
-    sectionFont: "12",
-    numRows: "1",
-    rowElements: [
-      [
-        {
-          elementName: "firstName",
-          elementHeader: "Full Name",
-          placeholder: "First Name",
-          placeholderPosition: "hint", //either hint or under for now
-          elementType: "Textinput",
-        },
-        {
-          elementName: "lastName",
-          elementHeader: "",
-          placeholder: "Last Name",
-          placeholderPosition: "hint",
-          elementType: "Textinput",
-        },
-      ],
-    ],
-  };
-  // name_section.rowElements[0][0].elementHeader = elementName;
-  var textarea_section = {
-    sectionName: "Feedback",
-    sectionText: "Feedback",
-    sectionFont: "12",
-    numRows: "1",
-    rowElements: [
-      [
-        {
-          elementName: "Feedback",
-          elementHeader: "",
-          elementType: "Textarea",
-        },
-      ],
-    ],
-  };
-  // textarea_section.rowElements[0][0].elementHeader = elementName;
-  var dropdown_section = {
-    sectionName: "How",
-    sectionText: "Please make a Selection",
-    sectionFont: "12",
-    numRows: "1",
-    rowElements: [
-      [
-        {
-          elementName: "How",
-          elementHeader: "",
-          elementType: "Dropdown",
-          size: "4",
-          options: [
-            {
-              optionType: "Dropdown",
-              optionName: "Yes",
-              optionValue: "Yes",
-            },
-            {
-              optionType: "Dropdown",
-              optionName: "No",
-              optionValue: "No",
-            },
-          ],
-        },
-      ],
-    ],
-  };
-  // dropdown_section.rowElements[0][0].elementHeader = elementName;
-
-  var checkbox_section = {
-    sectionName: "Recommend",
-    sectionText: "Recommend",
-    sectionFont: "12",
-    numRows: "1",
-    rowElements: [[
-        {
-          elementName: "Recommend",
-          elementType: "Checkbox",
-          elementHeader: "",
-          size: "4",
-          options: [{
-              optionType: "checkbox",
-              optionName:"Yes",
-              optionValue:"Yes",
-            },
-            {
-              optionType: "checkbox",
-              optionName:"No",
-              optionValue:"No",
-            },
-            {
-              optionType: "checkbox-text",
-              optionName:"others",
-              optionValue:"Others",
-              textVariables:{
-                //textname will inherit radio optionName + "_text" 
-                header:"others",
-                hintPosition:"front",
-                hintText:"Please specify"
-              }
-            }]
-        }],
-      ]
-  };
-
-  var radio_section = {
-    sectionName: "test",
-    sectionText: "Do you like our service?",
-    sectionFont: "12",
-    numRows: "1",
-    rowElements: [
-      [
-        {
-          elementName: "Select",
-          elementHeader: "RadioTest",
-          elementType: "Radio",
-          size: "4",
-          options: //["yes","no","others"]
-          [
-            {
-              optionType: "radio",
-              optionName:"Yes",
-              optionValue:"Yes",
-            },
-            {
-              optionType: "radio",
-              optionName:"No",
-              optionValue:"No",
-            },
-            {
-              optionType: "radio-text",
-              optionName:"others",
-              optionValue:"Others",
-              textVariables:{
-                //textID will inherit radio optionName + "_text" 
-                header:"others",
-                hintPosition:"front",
-                hintText:"Please specify",
-                // false_header:null,
-              }
-            }
-          ],
-        },
-      ],
-    ],
-  };
-
-  var table_section = {
-    sectionName: "Contact Information",
-    sectionText: "Contact Person:",
-    sectionFont: "12",
-    numRows: "2",
-    rowElements: [
-      [
-        {
-          elementName: "Contacts",
-          elementHeader: "",
-          elementType: "Table",
-          noRows: "3",
-          noColumns: "2",
-          headers: ["Name", "Tel", "Designation"],
-        },
-      ],
-      [
-        {
-          elementName: "Feedback",
-          elementHeader: "Feedback About us:",
-          elementType: "Textarea",
-        },
-      ],
-    ],
-  };
-
-  // var response_temp = {
-  //   // demo response
-  //   formName: "Vendor Assessment",
-  //   formTitle: "Quantum Leap Incorporation PTE LTD",
-  //   titleSize: "20",
-  //   sections: [
-  //     {
-  //       sectionName: "Company Info",
-  //       sectionText: "Fill in your name",
-  //       sectionFont: "12",
-  //       numRows: "4",
-  //       rowElements: [
-  //         [
-  //           {
-  //             elementName: "CompanyName",
-  //             elementHeader: "",
-  //             placeholder: "Company's Name: ",
-  //             placeholderPosition: "front", //either hint or under or front
-  //             elementType: "Textinput",
-  //           },
-  //           {
-  //             elementName: "CompanyRegistrationNo",
-  //             elementHeader: "",
-  //             placeholder: "Company Registration No:",
-  //             placeholderPosition: "front", //either hint or under or front
-  //             elementType: "Textinput",
-  //           },
-  //         ],
-  //         [
-  //           {
-  //             elementName: "Like",
-  //             elementHeader: "Like",
-  //             elementType: "Radio",
-  //             size: "12",
-  //             elementOrientation: "horizontal",
-  //             options: [
-  //               {
-  //                 optionType: "radio",
-  //                 optionName: "Yes",
-  //                 optionValue: "Yes",
-  //               },
-  //               {
-  //                 optionType: "radio",
-  //                 optionName: "No",
-  //                 optionValue: "No",
-  //               },
-  //               {
-  //                 optionType: "radio-text",
-  //                 optionName: "others",
-  //                 optionValue: "Others",
-  //                 textVariables: {
-  //                   //textID will inherit radio optionName + "_text"
-  //                   header: "",
-  //                   hintPosition: "front",
-  //                   hintText: "Please specify",
-  //                   // false_header:null,
-  //                 },
-  //               },
-  //             ],
-  //           },
-  //         ],
-  //         [
-  //           {
-  //             elementName: "OfficeAddress",
-  //             elementHeader: "",
-  //             placeholder: "Office Address: ",
-  //             placeholderPosition: "front", //either hint or under or front
-  //             elementType: "Textinput",
-  //           },
-  //         ],
-  //         [
-  //           {
-  //             elementName: "Telephone",
-  //             elementHeader: "",
-  //             placeholder: "Tel: ",
-  //             placeholderPosition: "front", //either hint or under or front
-  //             elementType: "Textinput",
-  //           },
-  //           {
-  //             elementName: "Fax",
-  //             elementHeader: "",
-  //             placeholder: "Fax: ",
-  //             placeholderPosition: "front", //either hint or under or front
-  //             elementType: "Textinput",
-  //           },
-  //         ],
-  //       ],
-  //     }, //section 1
-  //     {
-  //       sectionName: "Evaluation",
-  //       sectionText: "Evaluation",
-  //       sectionFont: "12",
-  //       numRows: "1",
-  //       rowElements: [
-  //         [
-  //           {
-  //             elementName: "Licenses",
-  //             elementHeader: "",
-  //             elementType: "Checkbox",
-  //             elementOrientation: "horizontal",
-  //             options: [
-  //               {
-  //                 optionType: "Checkbox",
-  //                 optionName: "a. Sole proprietorship",
-  //                 optionValue: "a. Sole proprietorship",
-  //               },
-  //               {
-  //                 optionType: "Checkbox",
-  //                 optionName: "b. Limited Company",
-  //                 optionValue: "b. Limited Company",
-  //               },
-  //               {
-  //                 optionType: "Checkbox",
-  //                 optionName: "c. Partnership Agreement",
-  //                 optionValue: "c. Partnership Agreement",
-  //               },
-  //               {
-  //                 optionType: "Checkbox-text",
-  //                 optionName: "others",
-  //                 optionValue: "Others",
-  //                 textVariables: {
-  //                   //textname will inherit radio optionName + "_text"
-  //                   header: "",
-  //                   hintPosition: "front",
-  //                   hintText: "Please specify",
-  //                 },
-  //               },
-  //             ],
-  //           },
-  //         ],
-  //       ],
-  //     }, // section 2 done
-  //     {
-  //       sectionName: "Evaluation-TextArea",
-  //       sectionText: "Evaluation",
-  //       sectionFont: "12",
-  //       numRows: "1",
-  //       rowElements: [
-  //         [
-  //           {
-  //             elementName: "Feedback",
-  //             elementHeader: "Feedback About us:",
-  //             elementType: "Textarea",
-  //           },
-  //         ],
-  //       ],
-  //     }, // section 3 done
-  //     {
-  //       sectionName: "How-Dropdown",
-  //       sectionText: "Please make a Selection",
-  //       sectionFont: "12",
-  //       numRows: "1",
-  //       rowElements: [
-  //         [
-  //           {
-  //             elementName: "How-Dropdown",
-  //             elementHeader: "",
-  //             elementType: "Dropdown",
-  //             size: "4",
-  //             options: [
-  //               {
-  //                 optionType: "Dropdown",
-  //                 optionName: "Yes",
-  //                 optionValue: "Yes",
-  //               },
-  //               {
-  //                 optionType: "Dropdown",
-  //                 optionName: "No",
-  //                 optionValue: "No",
-  //               },
-  //             ],
-  //           },
-  //         ],
-  //       ],
-  //     }, // section 4 table
-  //     {
-  //       sectionName: "Contact Information",
-  //       sectionText: "Contact Person:",
-  //       sectionFont: "12",
-  //       numRows: "1",
-  //       rowElements: [
-  //         [
-  //           {
-  //             elementName: "How-Table",
-  //             elementHeader: "How did you hear about us?*",
-  //             elementType: "Dropdown",
-  //             size: "4",
-  //             options: ["Selection A", "Selection B", "Selection C"],
-  //           },
-  //         ],
-  //         [
-  //           {
-  //             elementName: "Contacts2",
-  //             elementHeader: "",
-  //             elementType: "Table",
-  //             noRows: "3",
-  //             noColumns: "2",
-  //             headers: ["Name", "Tel", "Designation"],
-  //           },
-  //         ],
-  //       ],
-  //     },
-  //   ],
-  // };
-
-  // useEffect(() => {
-  //   let components = response_temp.sections;
-  //   setFormComponents(components);
-  // }, []);
-
-  /*
-=============================================================================================
-I need to pass in section names and element names to ensure that there are no duplicates
-=============================================================================================
-*/
 
   const [sectionNames, setSectionNames] = useState([]);
   const [elementNames, setElementNames] = useState([]);
@@ -540,53 +150,47 @@ handleAddComponent is deprecated
 =============================================================================================
 */
 
-  function handleAddElement({ target }) {
-    console.log(target);
-    setFormComponents([...formComponents, target]);
-    console.log(formComponents);
-    setInfoComponents([...infoComponents, target]);
-    setSaveStatus(false);
-  }
+  // function handleAddElement({ target }) {
+  //   console.log(target);
+  //   setFormComponents([...formComponents, target]);
+  //   console.log(formComponents);
+  //   setInfoComponents([...infoComponents, target]);
+  //   setSaveStatus(false);
+  // }
 
-  const handleFormSubmit = (data) => {
-    console.log(data);
-    setSectionData(data);
-    handleAddElement({ target: data });
-    console.log(data);
-  };
 
-  function handleAddComponent({ name }) {
-    // we should specific add components for each type
-    let target = textarea_section;
-    console.log(name);
+  // function handleAddComponent({ name }) {
+  //   // we should specific add components for each type
+  //   let target = textarea_section;
+  //   console.log(name);
 
-    if (name == "Add Name field") {
-      target = name_section;
-    }
-    if (name == "Add TextArea") {
-      target = textarea_section;
-    }
-    if (name == "Add DropDown") {
-      target = dropdown_section;
-    }
-    if (name == "Add Checkbox") {
-      target = checkbox_section;
-    }
-    if (name == "Add Radio") {
-      target = radio_section;
-    }
-    setFormComponents([
-      ...formComponents,
-      target,
-      // <GenerateSection
-      //   section={target}
-      //   allData={allData}
-      //   setallData={setallData}
-      // ></GenerateSection>,
-    ]);
-    setInfoComponents([...infoComponents, target]);
-    setSaveStatus(false);
-  }
+  //   if (name == "Add Name field") {
+  //     target = name_section;
+  //   }
+  //   if (name == "Add TextArea") {
+  //     target = textarea_section;
+  //   }
+  //   if (name == "Add DropDown") {
+  //     target = dropdown_section;
+  //   }
+  //   if (name == "Add Checkbox") {
+  //     target = checkbox_section;
+  //   }
+  //   if (name == "Add Radio") {
+  //     target = radio_section;
+  //   }
+  //   setFormComponents([
+  //     ...formComponents,
+  //     target,
+  //     // <GenerateSection
+  //     //   section={target}
+  //     //   allData={allData}
+  //     //   setallData={setallData}
+  //     // ></GenerateSection>,
+  //   ]);
+  //   setInfoComponents([...infoComponents, target]);
+  //   setSaveStatus(false);
+  // }
 
   function handleRemoveComponent(index) {
     const updatedComponents = formComponents.filter((_, i) => i !== index);
@@ -614,8 +218,6 @@ handleAddComponent is deprecated
     updatedComponents[index + 1] = temp;
     setFormComponents(updatedComponents);
   }
-
-  function handleAddSection(index) {}
 
   /* Below is functions connecting to MongoDB (APIs) */
   async function saveComponents() {
@@ -736,11 +338,6 @@ async function UpdateFormByNameAndVersion() {
         &nbsp;Load Form
       </Button>
         </div>
-        {/* <SectionEditor
-          onPressed={handleFormSubmit}
-          sectionNamesList={sectionNames}
-          elementNamesList={elementNames}
-        /> */}
         <hr></hr>
         <div>
           {formComponents.map((component, index) => (
@@ -775,53 +372,7 @@ async function UpdateFormByNameAndVersion() {
                 setallData={setallData}
               />
             </div>
-            {/* <div style={{ textAlign: "center", display: "block" }}>
-              <AddComponent
-                className="centered-button"
-                onAdd={() => setShowAddComponent(!showAddComponent)}
-                showAdd={showAddComponent}
-              />
-            </div> */}
           </div>
-          <>
-            {showAddComponent && (
-              <div>
-                <div className="button-container">
-                  {" "}
-                  <select onChange={handleOptionChange}>
-                    <option value="">Select an Element to add</option>
-                    {options.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                {/* <div className="button-container">
-                  <input
-                    type="text"
-                    className="centered-textbox"
-                    placeholder="Enter element name"
-                    value={elementName}
-                    // onChange={handleInputChange}
-                  />
-                </div> */}
-                {selectedOption && (
-                  <div className="button-container">
-                    {" "}
-                    <button
-                      className="centered-button"
-                      onClick={() =>
-                        handleAddComponent({ name: selectedOption })
-                      }
-                    >
-                      Add Element
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-          </>
           <div className="button-container">
 
             <input
@@ -868,7 +419,7 @@ async function UpdateFormByNameAndVersion() {
       <br></br>
           </div>
           <div className="parent-container" style={{ display: "flex", justifyContent: "center" }}>
-  <div className="centered-row">
+  {/* <div className="centered-row">
     <UpdateComponent
       className="centered-button"
       UpdateFormByNameAndVersion={() => UpdateFormByNameAndVersion()}
@@ -878,7 +429,7 @@ async function UpdateFormByNameAndVersion() {
       versionNumber={versionNumber}
       formComponents={formComponents}
     />
-  </div>
+  </div> */}
 </div>
         </div>
       </div>

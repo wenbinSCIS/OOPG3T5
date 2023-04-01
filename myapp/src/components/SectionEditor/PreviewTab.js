@@ -7,21 +7,22 @@ export default function PreviewTab({sectionState, handleDelete}) {
   return (
     <div>
       <h5>Preview Tab</h5>
-      {typeof sectionState.rowElements === "undefined" && (
-        <p>The Section is currently Empty</p>
-      )}
-      {typeof sectionState.rowElements !== "undefined" && (
-        <div>
-          <GenerateSection
-          section={sectionState}
-          allData={allData}
-          setallData={setallData}
-          generateFor = "Admin"
-          handleDelete = {handleDelete}
-          ></GenerateSection>
-        </div>
-        
-      )}
+      {typeof sectionState.rowElements === "undefined" ||
+        (sectionState.rowElements.length === 0 && (
+          <p>The Section is currently Empty</p>
+        ))}
+      {typeof sectionState.rowElements !== "undefined" &&
+        sectionState.rowElements.length !== 0 && (
+          <div>
+            <GenerateSection
+              section={sectionState}
+              allData={allData}
+              setallData={setallData}
+              generateFor="Admin"
+              handleDelete={handleDelete}
+            ></GenerateSection>
+          </div>
+        )}
     </div>
   );
 }
