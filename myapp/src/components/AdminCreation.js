@@ -121,21 +121,7 @@ return (
                         onChange={handleUsernameChange}
                       />
       </div>
-      <div className="form-group input-group">
-      <div className="input-group-prepend">
-      <span className="input-group-text">
-      <i className="fas fa-envelope"></i>
-      </span>
-      </div>
-      <input
-                        type="email"
-                        className="form-control"
-                        id="email"
-                        placeholder="Email Address"
-                        value={email}
-                        onChange={handleEmailChange}
-                      />
-      </div>
+      
       <div className="form-group input-group">
       <div className="input-group-prepend">
       <span className="input-group-text">
@@ -172,6 +158,21 @@ return (
       </div>
       {role === 'Vendor' && (
    <>
+      <div className="form-group input-group">
+      <div className="input-group-prepend">
+      <span className="input-group-text">
+      <i className="fas fa-envelope"></i>
+      </span>
+      </div>
+      <input
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        placeholder="Email Address"
+                        value={email}
+                        onChange={handleEmailChange}
+                      />
+      </div>
       <div className="form-group input-group">
          <div className="input-group-prepend">
             <span className="input-group-text">
