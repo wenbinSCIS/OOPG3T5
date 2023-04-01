@@ -130,6 +130,23 @@ public class FormController {
       }
   }
 
+  @PutMapping("/updateFormByNameAndVersion/{formName}/{version}")
+  public ResponseEntity<Form> updateFormByName(@PathVariable("formName") String formName, @PathVariable("version") double version, @RequestBody Form form) {
+    Optional<Form> formData = formRepository.findByFormNameAndVersion(formName, version);
+      if (formData.isPresent()) {
+          Form existingForm = formData.get();
+          existingForm.setFormName(form.getFormName());
+          existingForm.setSections(form.getSections());
+          existingForm.setVersion(form.getVersion());
+          existingForm.setFormTitle(form.getFormTitle());
+          existingForm.setTitleSize(form.getTitleSize());
+          Form updatedForm = formRepository.save(existingForm);
+          return new ResponseEntity<>(updatedForm, HttpStatus.OK);
+      } else {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+  }
+
   @DeleteMapping("/deleteFormByName/{formName}")
   public ResponseEntity<HttpStatus> deleteForm(@PathVariable("formName") String formName) {
     try {
