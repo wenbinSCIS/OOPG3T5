@@ -17,8 +17,34 @@ function ApproverTable({ data }) {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
-
+  const sendEmail = async (item) => {
+    console.log(item)
+    const mailDetail = {
+      "recipient":item.companyInfo.emailAddress,
+      "subject":"Reminder to complete your assigned WorkFlow",
+      "msgBody":"Dear valued vendor, please be reminded to"
+  }
+    try {
+      console.log(typeof(mailDetail))
+      console.log(typeof(JSON.stringify(mailDetail)))
+      const response = await fetch('http://localhost:8080/api/send-mail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+          
+        },
+        body: JSON.stringify(mailDetail)
+      });
+      
+      const result = await response.json();
+      alert("Email Sent")
+    } catch (error) {
+      alert(error)
+    }
+  }
   
 
   return (
@@ -34,19 +60,23 @@ function ApproverTable({ data }) {
           </tr>
         </MDBTableHead>
         <MDBTableBody>
-          {currentItems.map((item, index) => (
-            <tr key={index} className="hover-bg">
-              
-              <td>{item.companyName}</td>
-              <td>{item.formName}</td>
-              <td>{item.formVersion}</td>
-              <td>{item.formStatus}</td>
-              <td>
+        {currentItems.map((item, index) => (
+          <tr key={index} className="hover-bg">
+            <td>{item.companyName}</td>
+            <td>{item.formName}</td>
+            <td>{item.formVersion}</td>
+            <td>{item.formStatus}</td>
+            <td>
               <Button variant="outlined" outline rounded color='success' href={`/vendorApprover`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion);sessionStorage.setItem('companyName', item.companyName);sessionStorage.setItem('companyInfo', JSON.stringify(item.companyInfo));sessionStorage.setItem('vendorUsername', item.vendorUsername)}}>Start</Button>
-              </td>
-            </tr>
-          ))}
-        </MDBTableBody>
+            </td>
+            <td>
+              <Button variant="outlined" outline rounded color='success' onClick={() => sendEmail(item)}>
+                Send Email
+              </Button>
+            </td>
+          </tr>
+        ))}
+      </MDBTableBody>
       </MDBTable>
       <MDBRow className="justify-content-center">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (

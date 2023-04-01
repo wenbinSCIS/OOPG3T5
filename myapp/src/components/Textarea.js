@@ -30,7 +30,7 @@ function Textarea(props) {
           rows="4"
           cols="50"
           style={{
-            backgroundColor: props.generateFor === "Approver" ? "#fdf9f3" : "#fff",
+            backgroundColor: props.generateFor === "Approver" ? "#fdf9f3" : "#fafbfc",
             cursor: props.generateFor === "Approver" ? "not-allowed" : "auto",
             pointerEvents: props.generateFor === "Approver" ? "none" : "auto"
           }}

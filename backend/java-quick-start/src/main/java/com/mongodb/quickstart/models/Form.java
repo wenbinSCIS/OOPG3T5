@@ -2,6 +2,8 @@ package com.mongodb.quickstart.models;
 
 import java.util.List;
 
+import javax.swing.GroupLayout.Alignment;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,8 +17,7 @@ public class Form {
     private double version;
     private String formTitle; //added
     private String titleSize; //added
-    
-
+  
     public Form(String formName, List<Section> sections, double version, String formTitle, String titleSize) {
         this.formName = formName;
         this.sections = sections;
@@ -74,18 +75,28 @@ public class Form {
         private String sectionFont;
         private int numRows;
         private List<List<RowElement>> rowElements;
+        private String fillFor;
         
         // getters and setters
 
         
 
+        public String getFillFor() {
+            return fillFor;
+        }
+
+        public void setFillFor(String fillFor) {
+            this.fillFor = fillFor;
+        }
+
         public Section(String sectionName, String sectionText, String sectionFont, int numRows,
-                List<List<RowElement>> rowElements) {
+                List<List<RowElement>> rowElements, String fillFor) {
             this.sectionName = sectionName;
             this.sectionText = sectionText;
             this.sectionFont = sectionFont;
             this.numRows = numRows;
             this.rowElements = rowElements;
+            this.fillFor = fillFor;
         }
 
         public String getSectionName() {
@@ -143,7 +154,19 @@ public class Form {
             private String noRows;
             private  List<String> headers;
             private boolean compulsory;
+            private String alignment;
+            private String textSize;
             
+
+            public String getTextSize() {
+                return textSize;
+            }
+
+
+            public void setTextSize(String textSize) {
+                this.textSize = textSize;
+            }
+
 
             public String getNoRows() {
                 return noRows;
@@ -172,9 +195,19 @@ public class Form {
                 this.compulsory = compulsory;
             }
 
+            public String getAlignment() {
+                return alignment;
+            }
+
+
+            public void setAlignment(String alignment) {
+                this.alignment = alignment;
+            }
+
 
             // getters and setters
-            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, String elementType, String elementOrientation, String size, List<OptionObject> options,String noRows,List<String> headers, boolean compulsory) {
+            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, String elementType, String elementOrientation,
+             String size, List<OptionObject> options,String noRows,List<String> headers, boolean compulsory, String alignment, String textSize) {
             this.elementName = elementName;
             this.elementHeader = elementHeader;
             this.placeholder = placeholder;
@@ -186,10 +219,14 @@ public class Form {
             this.noRows = noRows;
             this.headers = headers;
             this.compulsory = compulsory;
+            this.alignment = alignment;
+            this.textSize = textSize;
             }
 
             // getters and setters
-            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, String elementType, String elementOrientation, List<OptionObject> options,String noRows,List<String> headers, boolean compulsory) {
+            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, 
+            String elementType, String elementOrientation, List<OptionObject> options,String noRows,List<String> headers,
+             boolean compulsory, String alignment, String textSize) {
             this.elementName = elementName;
             this.elementHeader = elementHeader;
             this.placeholder = placeholder;
@@ -200,23 +237,27 @@ public class Form {
             this.noRows = noRows;
             this.headers = headers;
             this.compulsory = compulsory;
+            this.alignment = alignment;
+            this.textSize = textSize;
             }
                 
 
             public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition,
-                    String elementType, boolean compulsory) {
+                    String elementType, boolean compulsory, String alignment, String textSize) {
                 this.elementName = elementName;
                 this.elementHeader = elementHeader;
                 this.placeholder = placeholder;
                 this.placeholderPosition = placeholderPosition;
                 this.elementType = elementType;
                 this.compulsory = compulsory;
+                this.alignment = alignment;
+                this.textSize = textSize;
             }
 
 
 
             public RowElement(String elementName, String elementHeader, String elementType, String elementOrientation,
-                    String size, List<OptionObject> options, boolean compulsory) {
+                    String size, List<OptionObject> options, boolean compulsory, String alignment, String textSize) {
                 this.elementName = elementName;
                 this.elementHeader = elementHeader;
                 this.elementType = elementType;
@@ -224,6 +265,8 @@ public class Form {
                 this.size = size;
                 this.options = options;
                 this.compulsory = compulsory;
+                this.alignment = alignment;
+                this.textSize = textSize;
             }
 
             public RowElement() {

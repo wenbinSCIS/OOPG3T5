@@ -219,15 +219,18 @@ console.log(isUserInputLoaded)
     var sections = formData['sections']
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
-      to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData}></GenerateSection>)
+      var fillFor = each_section['fillFor']
+      to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData} fillFor = {fillFor}></GenerateSection>)
     }}
   return (
-    <section className='d-flex'>
+    <section  className='d-flex' >
       
-      <Sidebar></Sidebar>
+      <Sidebar ></Sidebar>
       
-      <div className="container">
+      <div className="container-fluid">
       <Header/>
+      <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor:"#f9f9fb"}}>
+      
         {to_return}
         {alerts}
         {status === "Pending Approval" || status === "Approved" ? (
@@ -235,10 +238,12 @@ console.log(isUserInputLoaded)
 ) : (
   <>
     <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo)}}>Save</Button>
-    <Button variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
+    <Button  variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
   </>
 )}  
       </div>
+      </div>
+      
       
     </section>
   );

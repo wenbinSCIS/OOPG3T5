@@ -127,6 +127,11 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
               }:
               {
                 margin: '5px',
+                borderColor:"#f0f8fc",
+                "&:checked": {
+                  backgroundColor: "green",
+                },
+                
             }}
             
           />

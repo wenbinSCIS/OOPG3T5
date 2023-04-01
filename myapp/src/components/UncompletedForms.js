@@ -13,22 +13,26 @@ import 'slick-carousel/slick/slick-theme.css';
 import { ArrowForwardIos } from '@mui/icons-material';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 export default function CompletedForms() {
 
-
   const [selectedTag, setSelectedTag] = useState(null);
   const [formCards, setFormCards] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (sessionStorage.getItem('userType')!=="Vendor"){
+      alert("You are not logged in as a Vendor")
+      navigate('/')
+    }
     const fetchData = async () => {
       try {
         const response = await axios.post("http://localhost:8080/user/getUserByName", {
           username: sessionStorage.getItem("username")
         });
         
-        //console.log(response)
+
         //Get list of formnames and another list of form versions
         var formNames = []
         var formVersions = []
@@ -50,7 +54,7 @@ export default function CompletedForms() {
             "username":sessionStorage.getItem("username"),
             "formVersion":formVersions[i]
           }
-          //console.log(inputJson)
+
           try {
             const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
             if (response.status === 200) {

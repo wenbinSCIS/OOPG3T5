@@ -70,6 +70,10 @@ export default function VendorAssessmentFormApprover() {
   }
 
    useEffect(() => {
+    if (sessionStorage.getItem('userType')!=="Approver"){
+      alert("You are not logged in as an Approver")
+      navigate('/')
+    }
     async function fetchData() {
       try {
           getData(formName);
@@ -157,10 +161,10 @@ export default function VendorAssessmentFormApprover() {
 
   if (formData && isLoaded && isUserInputLoaded) {
     var sections = formData['sections']
-    //console.log(sections)
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
-      to_return.push(<GenerateSectionApproval remarks = {remarks} setRemarks = {setRemarks} section={each_section} allData = {allData} setallData = {setallData}></GenerateSectionApproval>)
+      var fillFor = each_section['fillFor']
+      to_return.push(<GenerateSectionApproval remarks = {remarks} setRemarks = {setRemarks} section={each_section} allData = {allData} setallData = {setallData} fillFor = {fillFor}></GenerateSectionApproval>)
     }}
   
     return (

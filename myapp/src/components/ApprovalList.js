@@ -7,16 +7,22 @@ import ApproverTable from './ApproverTable';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 export default function ApprovalList() {
   const [searchText, setSearchText] = useState('');
   const [data, setData] = useState([]);
-
+  const navigate = useNavigate();
   const handleSearch = (event) => {
     setSearchText(event.target.value);
   };
 
   useEffect(() => {
+    
+    if (sessionStorage.getItem('userType')!="Approver"){
+      alert("You are not logged in as an Approver")
+      navigate('/')
+    }
     const fetchData = async () => {
       try {
         var allApproverForms = []

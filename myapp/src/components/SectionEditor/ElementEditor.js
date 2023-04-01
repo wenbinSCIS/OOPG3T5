@@ -663,7 +663,7 @@ appendToOverallState: appends element to selected row as chosen by the user
     if (
       elementState.elementType == "Text" &&
       "elementName" in elementState &&
-      "Text" in elementState
+      "placeholder" in elementState
     ) {
       elementIsGood = true;
       console.log("you are good!");
@@ -1041,7 +1041,7 @@ Returned Component
               onChange={(event) => handleInputChangeImproved(event)}
             />
           </Form.Group>
-          <Form.Group controlId="Text" className="mb-3">
+          <Form.Group controlId="placeholder" className="mb-3">
             <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
               Text
             </Form.Label>

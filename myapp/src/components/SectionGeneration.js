@@ -17,11 +17,11 @@ function GenerateSection(props) {
 
     for(let i=0;i<rows;i++){
         var curr_row = rowElements[i]
-        to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} generateFor = {props.generateFor} handleDelete = {props.handleDelete}></GenerateRow>)
+        to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} generateFor = {props.fillFor == "Vendor" || props.fillFor == null? "Vendor": "Approver"} handleDelete = {props.handleDelete}  ></GenerateRow>)
         
     }
     return (
-        <div className='row mb-3'>
+        <div className='row mb-3' >
             <h5>{sectionText}</h5>
             {to_return}
             { 

@@ -24,19 +24,21 @@ function GenerateSectionApproval(props) {
     const rowElements = props['section']["rowElements"]
     const to_return = []
     var sectionText = props['section']['sectionText']
+    var generateFor = props.fillFor == "Vendor" || props.fillFor == null? "Approver": "Vendor"
 
- 
+   
 
     for(let i=0;i<rows;i++){
         var curr_row = rowElements[i]
-        to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} generateFor = 'Approver'></GenerateRow>)
+        to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} generateFor = {generateFor} ></GenerateRow>)
     }
     return (
         <div className='row mb-3'>
             <h5>{sectionText}</h5>
             {to_return}
             { 
-                props['remarks']!==undefined && props['remarks'][props.section.sectionName] !== undefined &&
+            
+              generateFor === "Approver" &&
                 <textarea
                 name={props.section.sectionName}
                 key={props.section.sectionName}
