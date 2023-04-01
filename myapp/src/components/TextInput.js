@@ -20,7 +20,7 @@ function TextInput(props) {
         {
           props.generateFor==="Admin" &&
           <CloseButton variant='blue' onClick={props.handleDelete} value={props.name}/>
-          }
+        }
         {props.title.length>0 &&
         <label style={{margin:0,color:'deepskyblue'}}>{props.title}</label>
         }

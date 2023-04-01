@@ -17,7 +17,7 @@ function GenerateSection(props) {
 
     for(let i=0;i<rows;i++){
         var curr_row = rowElements[i]
-        to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} generateFor = {props.fillFor == "Vendor" || props.fillFor == null? "Vendor": "Approver"} handleDelete = {props.handleDelete}  ></GenerateRow>)
+        to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} generateFor = {props.fillFor == "Vendor" ? "Vendor": props.generateFor} handleDelete = {props.handleDelete}  ></GenerateRow>)
         
     }
     return (
