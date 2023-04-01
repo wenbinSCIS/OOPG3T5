@@ -138,7 +138,7 @@ public class Form {
             private String placeholderPosition;
             private String elementType;
             private String elementOrientation;
-            private int size;
+            private String size;
             private List<OptionObject> options;
             private String noRows;
             private  List<String> headers;
@@ -174,7 +174,7 @@ public class Form {
 
 
             // getters and setters
-            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, String elementType, String elementOrientation, int size, List<OptionObject> options,String noRows,List<String> headers, boolean compulsory) {
+            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, String elementType, String elementOrientation, String size, List<OptionObject> options,String noRows,List<String> headers, boolean compulsory) {
             this.elementName = elementName;
             this.elementHeader = elementHeader;
             this.placeholder = placeholder;
@@ -182,6 +182,20 @@ public class Form {
             this.elementType = elementType;
             this.elementOrientation = elementOrientation;
             this.size = size;
+            this.options = options;
+            this.noRows = noRows;
+            this.headers = headers;
+            this.compulsory = compulsory;
+            }
+
+            // getters and setters
+            public RowElement(String elementName, String elementHeader, String placeholder, String placeholderPosition, String elementType, String elementOrientation, List<OptionObject> options,String noRows,List<String> headers, boolean compulsory) {
+            this.elementName = elementName;
+            this.elementHeader = elementHeader;
+            this.placeholder = placeholder;
+            this.placeholderPosition = placeholderPosition;
+            this.elementType = elementType;
+            this.elementOrientation = elementOrientation;
             this.options = options;
             this.noRows = noRows;
             this.headers = headers;
@@ -202,7 +216,7 @@ public class Form {
 
 
             public RowElement(String elementName, String elementHeader, String elementType, String elementOrientation,
-                    int size, List<OptionObject> options, boolean compulsory) {
+                    String size, List<OptionObject> options, boolean compulsory) {
                 this.elementName = elementName;
                 this.elementHeader = elementHeader;
                 this.elementType = elementType;
@@ -256,11 +270,11 @@ public class Form {
                 this.elementType = elementType;
             }
 
-            public int getSize() {
+            public String getSize() {
                 return size;
             }
 
-            public void setSize(int size) {
+            public void setSize(String size) {
                 this.size = size;
             }
             
@@ -370,14 +384,7 @@ public class Form {
                         this.hintText = hintText;
                     }
                 }
-
-
-
-            }
-
-
-
-            
+            } 
         }
     }
 }

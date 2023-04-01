@@ -620,7 +620,7 @@ appendToOverallState: appends element to selected row as chosen by the user
       delItem(overallRowState, elementName)
     );
     // console.log(updatedOverallState); // this should be pushed to the admin page
-    //handleToggleSection();
+    handleToggleSection();
     handleSectionChangesDelete(overallRowState); // for the preview tab
   };
 

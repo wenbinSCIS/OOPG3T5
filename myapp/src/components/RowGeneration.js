@@ -9,7 +9,7 @@ import Text from './Text';
 
 function GenerateRow(props) {
   var info = props.info
-  console.log(props.info)
+  console.log(props)
 
   var allData = props.allData //useState prop from main
   var setallData = props.setallData //setState prop from main
@@ -34,7 +34,6 @@ function GenerateRow(props) {
       }
     }
   }, [allData]);
-
   const handleInputChange = e => {
     const {name , value} = e.target;
     setallData(prevState => ({
@@ -79,7 +78,10 @@ function GenerateRow(props) {
       if(i>0 && info[0]["elementHeader"].length>0){
           false_header = true;
       }
-      const text = allData[element["elementName"]] || "";
+      var text =  "";
+      if(allData[element["elementName"]]!==undefined){
+        text = allData[element["elementName"]]
+      }
       to_return.push(
         <TextInput
           title={element["elementHeader"]}

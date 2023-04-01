@@ -104,7 +104,7 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
             onChange={(e) => handleTextinChange(name,option.optionValue, e)}
             text={data != null && data.find(item => item.name === option.optionValue && item.type === "Checkbox-text") ? data.find(item => item.name === option.optionValue && item.type === "Checkbox-text").text : ""}
             disabled={data != null && data.find(item => item.name === option.optionValue) ? false : true}
-            generateFor={generateFor}
+            generateFor={generateFor== "Approver" ? "Approver" : ""}
       />
         </div>
       ) : (

@@ -35,17 +35,25 @@ function GenerateSectionApproval(props) {
         <div className='row mb-3'>
             <h5>{sectionText}</h5>
             {to_return}
-            <textarea
-          name={props.section.sectionName}
-          key={props.section.sectionName}
-          className="form-control"
-          placeholder="Write Remarks Here"
-          onChange={handleRemarksChange}
-          rows="4"
-          cols="50"
-        >
-          {props.remarks[props.section.sectionName]}
-        </textarea>
+            { 
+                props['remarks']!==undefined && props['remarks'][props.section.sectionName] !== undefined &&
+                <textarea
+                name={props.section.sectionName}
+                key={props.section.sectionName}
+                className="form-control mx-3"
+                placeholder="Write Remarks Here"
+                onChange={handleRemarksChange}
+                rows="4"
+                cols="40"
+                style={{width:"90%",
+                border: "3px solid #ced4da", 
+                marginTop: "10px"}}
+              >
+                {props.remarks[props.section.sectionName]}
+              </textarea>  
+            } 
+
+
         </div>
         
     );

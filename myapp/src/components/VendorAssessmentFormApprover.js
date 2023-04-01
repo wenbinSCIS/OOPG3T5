@@ -10,13 +10,14 @@ export default function VendorAssessmentFormApprover() {
 
   var [allData, setallData] = useState({}); //All data to save for user
   var [isLoaded, setIsLoaded] = useState(false);
+  var [isUserInputLoaded, setIsUserInputLoaded] = useState(false);
   var [formData, setFormData] = useState(null);
   const [remarks, setRemarks] = useState({})
   //console.log(sessionStorage)
   var formVersion =  sessionStorage.getItem('formVersion')
-  var formName = sessionStorage.getItem('formName') || "QLI-QHSP-10-F01 New Vendor Assessment Form";
-  var vendor = sessionStorage.getItem('vendorUsername') || "abc@gmail.com";
-  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) || "";
+  var formName = sessionStorage.getItem('formName') 
+  var vendor = sessionStorage.getItem('vendorUsername')
+  var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo"))
   var projectName = sessionStorage.getItem('projectName') 
   var projectId = sessionStorage.getItem('projectId')
 
@@ -24,38 +25,15 @@ export default function VendorAssessmentFormApprover() {
     try {
       console.log('Sending request...');
       const response = await axios.get(`http://localhost:8080/api/getFormByNameAndVersion/${formName}/${formVersion}`);
-      //console.log('Response received:', response.data);
+      console.log('Response received:', response.data);
       setFormData(response.data);
+      setIsLoaded(true)
     } catch (error) {
       console.error(error);
+      setIsLoaded(false)
     }
   }
 
-  useEffect(() => {
-    getData(formName);
-    loadUserInput(formName, formVersion, vendor);
-  }, []); // empty dependency array to run the effect only once
-
-  async function loadUserInput(formName, formVersion, vendor) {
-    var inputJson = {
-      "formName": formName,
-      "username": vendor,
-      "formVersion": formVersion,
-    }
-    //console.log(inputJson)
-    await axios
-      .post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson)
-      .then((response) => {
-        if (response.status === 200) {
-          setallData(response.data.formInputData[0])
-          if(response.data.approverComments[0]){
-            setRemarks(response.data.approverComments[0])
-          }
-          setIsLoaded(true);
-        }
-      });
-    return null
-  }
 
   async function setDescription(username,projectId,projectName,formName,formVersion,desc) {
     try {
@@ -90,6 +68,40 @@ export default function VendorAssessmentFormApprover() {
       return false
     }
   }
+
+   useEffect(() => {
+    async function fetchData() {
+      try {
+          getData(formName);
+          var inputJson = {
+                "formName": formName,
+                "username": vendor,
+                "formVersion": formVersion,
+              }
+          const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
+          if(response.status == 200){
+            if(response.data.formInputData[0]!==undefined){
+              setallData(response.data.formInputData[0]);
+            }
+            else{
+              setallData({});
+            }
+            if (response.data.status=="Rejected") {
+              if(response.data.formInputData[0]!==undefined){
+                setRemarks(response.data.approverComments[0]);
+              }
+            }
+            setIsUserInputLoaded(true);         
+          } else {
+            setIsUserInputLoaded(false);
+          }
+        } catch (error) {
+          if(error == "Error: Request failed with status code 404"){
+          setIsUserInputLoaded(false);}
+        }
+          }   
+    fetchData();
+  }, []); // empty dependency array to run the effect only once
   
 
   async function reject(formName, formVersion, username, remarks) {
@@ -141,9 +153,9 @@ export default function VendorAssessmentFormApprover() {
 
   const to_return = []
 
-  //console.log(remarks)
+  console.log(allData)
 
-  if (formData) {
+  if (formData && isLoaded && isUserInputLoaded) {
     var sections = formData['sections']
     //console.log(sections)
     for (let i = 0; i < sections.length; i++) {
