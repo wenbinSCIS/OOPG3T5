@@ -20,10 +20,10 @@ export default function AdminApprovalList() {
 
     useEffect(() => {
     
-      // if (sessionStorage.getItem('userType')!="Approver"){
-      //   alert("You are not logged in as an Approver")
-      //   navigate('/')
-      // }
+      if (sessionStorage.getItem('userType')!="AdministrativePersonnel"){
+        alert("You are not logged in as an AdministrativePersonnel")
+        navigate('/')
+      }
       const fetchData = async () => {
         try {
           var allApproverForms = []

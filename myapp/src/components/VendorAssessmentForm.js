@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GenerateSection from './SectionGeneration.js';
 import Sidebar from "./Sidebar/Sidebar.js";
+import AdminSidebar from './Sidebar/AdminSidebar';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import {Routes, Route, useNavigate} from 'react-router-dom';
@@ -13,7 +14,7 @@ export default function VendorAssessmentForm() {
   var [formData, setFormData] = useState(null);
   const [status, setStatus] = useState(null)
 
-  console.log(sessionStorage)
+  //console.log(sessionStorage)
   if (sessionStorage.getItem('userType')==='Vendor'){
     var username = sessionStorage.getItem('username') 
   } else {
@@ -21,7 +22,6 @@ export default function VendorAssessmentForm() {
   }
   var formVersion =   sessionStorage.getItem('formVersion')
   var formName = sessionStorage.getItem('formName')
-  
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) 
   var projectName = sessionStorage.getItem('projectName') 
   var projectId = sessionStorage.getItem('projectId') 
@@ -231,8 +231,8 @@ console.log(isUserInputLoaded)
     }}
   return (
     <section  className='d-flex' >
-      
-      <Sidebar ></Sidebar>
+      {sessionStorage.getItem('userType')==='Vendor' ? (<Sidebar ></Sidebar>):(<AdminSidebar />)}
+
       
       <div className="container-fluid">
       <Header/>
