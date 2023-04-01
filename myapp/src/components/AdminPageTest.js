@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState , useEffect, version} from "react";
 
 import GenerateSection from "./SectionGeneration";
 import "./AdminPage.css";
@@ -648,16 +648,16 @@ handleAddComponent is deprecated
     });
 }
 
-async function updateComponents() {
+async function UpdateFormByNameAndVersion() {
   let formJson = {
     formName: nameSaveAs,
     sections: formComponents,
     version: versionSaveAs,
   };
-  await axios.put(`http://localhost:8080/api/updateFormByName/${formName}`, formJson)
+  await axios.put(`http://localhost:8080/api/updateFormByNameAndVersion/${nameSaveAs}/${versionSaveAs}`, formJson)
   .then((response) => {
     console.log(response);
-    if (response.status === 201) {
+    if (response.status === 200) {
       setSaveStatus(true);
       alert("Form updated successfully");
     } else {
@@ -665,8 +665,11 @@ async function updateComponents() {
     }
   })
   .catch((error) => {
-    if (error.response.status === 400) {
+    alert(error)
+    if (error && error.response && error.response.status === 400) {
       alert("Error updating form 400")
+    } else if (error && error.response && error.response.status === 403) {
+      alert("Error updating form 403")
     } else {
       alert("Error updating form");
     }
@@ -862,17 +865,21 @@ async function updateComponents() {
               isFormNameEmpty={isFormNameEmpty}
               formComponents={formComponents}
       />
-      <UpdateComponent
-              className="centered-button"
-              updateComponents={() => updateComponents()}
-              isSaved={isSaved}
-              text={saveText}
-              formName={formName}
-              versionNumber={versionNumber}
-              formComponents={formComponents}
-      />
-      
+      <br></br>
           </div>
+          <div className="parent-container" style={{ display: "flex", justifyContent: "center" }}>
+  <div className="centered-row">
+    <UpdateComponent
+      className="centered-button"
+      UpdateFormByNameAndVersion={() => UpdateFormByNameAndVersion()}
+      isSaved={isSaved}
+      text={saveText}
+      formName={formName}
+      versionNumber={versionNumber}
+      formComponents={formComponents}
+    />
+  </div>
+</div>
         </div>
       </div>
       <div style={{ position: "absolute", bottom: 50, width: "100%" }}></div>
