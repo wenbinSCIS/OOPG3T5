@@ -20,7 +20,7 @@ function ApproverTable({ data }) {
   const sendEmail = async (item) => {
     console.log(item)
     const mailDetail = {
-      "recipient":"eddtots@gmail.com",
+      "recipient":item.companyInfo.emailAddress,
       "subject":"Reminder to complete your assigned WorkFlow",
       "msgBody":"Dear valued vendor, please be reminded to"
   }
