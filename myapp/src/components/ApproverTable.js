@@ -53,6 +53,7 @@ function ApproverTable({ data }) {
     <th className="gray-th">Version</th>
     <th className="gray-th">Status</th>
     <th className="gray-th">Action</th>
+    <th className="gray-th">Email</th>
           </tr>
         </MDBTableHead>
         <MDBTableBody>

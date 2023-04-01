@@ -114,14 +114,27 @@ console.log(isUserInputLoaded)
   async function saveUserInput(formName, formVersion, username, companyInfo){
     var desc = "Form incomplete, please complete the form"
     setDescription(username,projectId,projectName,formName,formVersion,desc);
-    var inputJson = {
-      "formName":formName,
-      "username":username,
-      "formVersion":formVersion,
-      "status":"In Progress",
-      "formInputData": [allData],
-      "companyInfo": companyInfo
+
+    if (sessionStorage.getItem('userType')==="Vendor"){
+      var inputJson = {
+        "formName":formName,
+        "username":username,
+        "formVersion":formVersion,
+        "status":"In Progress",
+        "formInputData": [allData],
+        "companyInfo": companyInfo
+      }
+    } else {
+      var inputJson = {
+        "formName":formName,
+        "username":username,
+        "formVersion":formVersion,
+        "status":"Pending Approval",
+        "formInputData": [allData],
+        "companyInfo": companyInfo
+      }
     }
+    
 
     if (!isUserInputLoaded){
       await axios
@@ -139,7 +152,11 @@ console.log(isUserInputLoaded)
         console.log(response.data);
       });
     }
-    //navigate("/UncompletedForms")
+    if (sessionStorage.getItem('userType')=="Vendor"){
+      navigate("/UncompletedForms")
+    } else {
+      navigate("/AdminApprovalList")
+    }  
   }
 
   function checkMandatory(formData){
@@ -203,7 +220,11 @@ console.log(isUserInputLoaded)
             .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
             .then((response) => {
               alert("Saved new input data!");
-              navigate("/CompletedForms")
+              if (sessionStorage.getItem('userType')=="Vendor"){
+                navigate("/CompletedForms")
+              } else {
+                navigate("/AdminApprovalList")
+              }  
               setIsUserInputLoaded(true);
               console.log(response.data);
             });
@@ -212,7 +233,11 @@ console.log(isUserInputLoaded)
             .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
             .then((response) => {
               alert("Resaved input data!");
-              navigate("/CompletedForms")
+              if (sessionStorage.getItem('userType')=="Vendor"){
+                navigate("/CompletedForms")
+              } else {
+                navigate("/AdminApprovalList")
+              }  
               console.log(response.data);
             });
         }
@@ -236,22 +261,22 @@ console.log(isUserInputLoaded)
 
       
       <div className="container-fluid">
-      <Header/>
-      <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: sessionStorage.getItem("userType") === "Vendor"?"#f9f9fb":"#f8f9ee"}}>
-      
-        {to_return}
-        {alerts}
-        {status === "Pending Approval" || status === "Approved" ? (
-  <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {navigate("/completedForms")}}>Exit</Button>
-) : (
-  <>
-    <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo)}}>Save</Button>
-    <Button  variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
-  </>
-)}  
+        <Header/>
+        <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: sessionStorage.getItem("userType") === "Vendor"?"#f9f9fb":"#f8f9ee"}}>
+        
+          {to_return}
+          {alerts}
+          {(status === "Pending Approval" || status === "Approved") && sessionStorage.getItem('userType')=="Vendor" ? (
+              <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {navigate("/completedForms")}}>Exit</Button>
+            ) : (
+              <>
+                <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo)}}>Save</Button>
+                <Button  variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
+              </>
+            )}  
+        </div>
       </div>
-      </div>
-      
+                
       
     </section>
   );
