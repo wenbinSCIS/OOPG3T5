@@ -4,9 +4,9 @@ import { useLocation } from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
 import Button from '@mui/material/Button';
 
-const SaveComponent = ({ isSaved, saveComponents, text, formsAvailable, isVersionNumberEmpty, isFormNameEmpty, formComponents}) => {
+const SaveComponent = ({ isSaved, saveComponents, text, formsAvailable, isVersionNumberEmpty, isFormNameEmpty, formComponents, updateForm}) => {
   const location = useLocation();
-  console.log(formComponents)
+  //console.log(formComponents)
   return (
     <header className="header">
       {location.pathname === "/testadmin" && (
@@ -19,9 +19,10 @@ const SaveComponent = ({ isSaved, saveComponents, text, formsAvailable, isVersio
           disabled={isVersionNumberEmpty || isFormNameEmpty || formComponents.length === 0}
         >
           <SaveIcon />
-          &nbsp; Save Form 
+          &nbsp; Save New Form 
           
         </Button>
+        
           <span>{text}</span>
         </div>
       )}

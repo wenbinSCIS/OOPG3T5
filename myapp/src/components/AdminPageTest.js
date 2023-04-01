@@ -9,6 +9,7 @@ import EditPanel from "./Buttons/EditPanel";
 import AddButton from "./Buttons/AddButton";
 
 import SaveComponent from "./AdminPageComponents/SaveComponent";
+import UpdateComponent from "./AdminPageComponents/UpdateComponent";
 import FormSelector from "./AdminPageComponents/FormSelector";
 
 import axios from "axios";
@@ -616,11 +617,11 @@ handleAddComponent is deprecated
 
   /* Below is functions connecting to MongoDB (APIs) */
   async function saveComponents() {
-    console.log(infoComponents);
+    //console.log(infoComponents);
     // fetch
     let formJson = {
       formName: nameSaveAs,
-      sections: infoComponents,
+      sections: formComponents,
       version: versionSaveAs,
     };
     await axios.
@@ -644,6 +645,32 @@ handleAddComponent is deprecated
       }
     });
 }
+
+async function updateComponents() {
+  let formJson = {
+    formName: nameSaveAs,
+    sections: formComponents,
+    version: versionSaveAs,
+  };
+  await axios.put(`http://localhost:8080/api/updateFormByName/${formName}`, formJson)
+  .then((response) => {
+    console.log(response);
+    if (response.status === 201) {
+      setSaveStatus(true);
+      alert("Form updated successfully");
+    } else {
+      alert("Error updating form");
+    }
+  })
+  .catch((error) => {
+    if (error.response.status === 400) {
+      alert("Error updating form 400")
+    } else {
+      alert("Error updating form");
+    }
+  });
+}
+
   async function loadExistingForms() {
     await axios
       .get("http://localhost:8080/api/getAllForms")
@@ -828,11 +855,21 @@ handleAddComponent is deprecated
               text={saveText}
               formName={formName}
               versionNumber={versionNumber}
-              formsAvailable={formsAvailable}
+              //formsAvailable={formsAvailable}
               isVersionNumberEmpty={isVersionNumberEmpty}
               isFormNameEmpty={isFormNameEmpty}
               formComponents={formComponents}
       />
+      <UpdateComponent
+              className="centered-button"
+              updateComponents={() => updateComponents()}
+              isSaved={isSaved}
+              text={saveText}
+              formName={formName}
+              versionNumber={versionNumber}
+              formComponents={formComponents}
+      />
+      
           </div>
         </div>
       </div>
