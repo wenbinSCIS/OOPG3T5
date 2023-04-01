@@ -9,8 +9,6 @@ import Text from './Text';
 
 function GenerateRow(props) {
   var info = props.info
-  console.log(props)
-
   var allData = props.allData //useState prop from main
   var setallData = props.setallData //setState prop from main
 
@@ -68,12 +66,14 @@ function GenerateRow(props) {
   for(let i=0;i<info.length;i++){
     const element = info[i];
     const inputType = element["elementType"];
-    if("size" in element){
+    console.log(element["size"])
+    if("size" in element && element["size"]!=null || element["size"]!=undefined){
       var dimensions = parseInt(element["size"])
     }
     else{
         var dimensions = 12 /info.length
     }
+
     if(inputType==="Textinput"){
       if(i>0 && info[0]["elementHeader"].length>0){
           false_header = true;
@@ -134,7 +134,7 @@ function GenerateRow(props) {
     }  
     //text
     else if (inputType=="Text"){
-      to_return.push( <Text size={dimensions} name = {element["elementName"]} textSize = {element["textSize"] } text = {element["Text"]} alignment = {element["alignment"]} generateFor = {props.generateFor} handleDelete = {props.handleDelete}></Text>)
+      to_return.push( <Text size={dimensions} name = {element["elementName"]} textSize = {element["textSize"] } text = {element["placeholder"]} alignment = {element["alignment"]} generateFor = {props.generateFor} handleDelete = {props.handleDelete}></Text>)
     } 
   }
 
