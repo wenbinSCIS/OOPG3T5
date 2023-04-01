@@ -66,7 +66,6 @@ function GenerateRow(props) {
   for(let i=0;i<info.length;i++){
     const element = info[i];
     const inputType = element["elementType"];
-    console.log(element["size"])
     if("size" in element && element["size"]!=null || element["size"]!=undefined){
       var dimensions = parseInt(element["size"])
     }
@@ -94,6 +93,7 @@ function GenerateRow(props) {
           text={text}
           generateFor = {props.generateFor}
           handleDelete = {props.handleDelete}
+          fillFor = {props.fillFor}
         />
       );
     }
@@ -102,7 +102,7 @@ function GenerateRow(props) {
       if(i>0 && info[0]["elementHeader"].length>0){
           var false_header = true
       }
-      to_return.push(<Dropdown data = {allData[element["elementName"]]} title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} onChange={handleInputChange} generateFor = {props.generateFor} handleDelete = {props.handleDelete}></Dropdown>)
+      to_return.push(<Dropdown data = {allData[element["elementName"]]} title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} onChange={handleInputChange} generateFor = {props.generateFor} handleDelete = {props.handleDelete} fillFor = {props.fillFor}></Dropdown>)
       
     }
     //checkbox
@@ -110,12 +110,12 @@ function GenerateRow(props) {
       if(i>0 && info[0]["elementHeader"].length>0){
           var false_header = true
       }
-      to_return.push(<Checkbox data = {allData[element["elementName"]]} title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} orientation={element["elementOrientation"]} onChange={handleValueChange} generateFor = {props.generateFor} handleDelete = {props.handleDelete}></Checkbox>)       
+      to_return.push(<Checkbox data = {allData[element["elementName"]]} title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} false_header={false_header} orientation={element["elementOrientation"]} onChange={handleValueChange} generateFor = {props.generateFor} handleDelete = {props.handleDelete} fillFor = {props.fillFor}></Checkbox>)       
     }
     //radio
     else if (inputType == "Radio") {
       to_return.push(
-        <Radio data = {allData[element["elementName"]]} title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} orientation={element["elementOrientation"]}  onChange={handleValueChange} generateFor = {props.generateFor} handleDelete = {props.handleDelete}></Radio>
+        <Radio data = {allData[element["elementName"]]} title={element["elementHeader"]} options={element["options"]} size={dimensions} name = {element["elementName"]} orientation={element["elementOrientation"]}  onChange={handleValueChange} generateFor = {props.generateFor} handleDelete = {props.handleDelete} fillFor={props.fillFor}></Radio>
       );
     }
     //textarea
@@ -124,12 +124,12 @@ function GenerateRow(props) {
       if(i>0 && info[0]["elementHeader"].length>0){
           var false_header = true
       }
-      to_return.push( <Textarea title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header} onChange={handleInputChange} text = {text} generateFor = {props.generateFor} handleDelete = {props.handleDelete}></Textarea>)
+      to_return.push( <Textarea title={element["elementHeader"]} hint={element["placeholder"]} hintPosition={element["placeholderPosition"]} size={dimensions} name = {element["elementName"]} false_header={false_header} onChange={handleInputChange} text = {text} generateFor = {props.generateFor} handleDelete = {props.handleDelete} fillFor={props.fillFor}></Textarea>)
     } 
     //table
     else if (inputType == "Table") {
       to_return.push(
-        <TableComponent  columnHeaders={element["headers"]} size={dimensions} name = {element["elementName"]}  columns={element["noColumns"]} rows={element["noRows"]} onChange={handleTableChange} data = {allData[element["elementName"]]} generateFor = {props.generateFor} handleDelete = {props.handleDelete}></TableComponent>
+        <TableComponent  columnHeaders={element["headers"]} size={dimensions} name = {element["elementName"]}  columns={element["noColumns"]} rows={element["noRows"]} onChange={handleTableChange} data = {allData[element["elementName"]]} generateFor = {props.generateFor} handleDelete = {props.handleDelete} fillFor={props.fillFor}></TableComponent>
       );
     }  
     //text

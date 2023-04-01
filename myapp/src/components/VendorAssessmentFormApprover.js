@@ -4,6 +4,7 @@ import AdminSidebar from './Sidebar/ApproverSidebar';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import {Routes, Route, useNavigate} from 'react-router-dom';
+import Header from "./Header";
 
 export default function VendorAssessmentFormApprover() {
   const navigate = useNavigate();
@@ -164,16 +165,20 @@ export default function VendorAssessmentFormApprover() {
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
       var fillFor = each_section['fillFor']
-      to_return.push(<GenerateSectionApproval remarks = {remarks} setRemarks = {setRemarks} section={each_section} allData = {allData} setallData = {setallData} fillFor = {fillFor}></GenerateSectionApproval>)
+      var generateFor = sessionStorage.getItem("userType")
+      to_return.push(<GenerateSectionApproval remarks = {remarks} setRemarks = {setRemarks} section={each_section} allData = {allData} setallData = {setallData} fillFor = {fillFor} generateFor = {generateFor}></GenerateSectionApproval>)
     }}
   
     return (
       <section className='d-flex'>
         <AdminSidebar></AdminSidebar>
-      <div className="container">
-      {to_return}
+      <div className="container-fluid">
+      <Header/>
+      <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: "#fcf5e9"}}>
+        {to_return}
       <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {reject(formName, formVersion, vendor, remarks)}}>Reject</Button>
       <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {approve(formName, formVersion, vendor, remarks)}}>Approve</Button>
+      </div>
       </div>
       </section>
     );
