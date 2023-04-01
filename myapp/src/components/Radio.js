@@ -49,7 +49,7 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
           <CloseButton variant='blue' onClick={handleDelete} value={name}/>
           }
       {title.length > 0 && (
-        <InputGroup.Text style={{ paddingTop: 2, paddingBottom:2,marginBottom:2 ,backgroundColor: generateFor === "Approver" ? "#f4dcb7" : "#fff"}}>{title}</InputGroup.Text>
+        <InputGroup.Text style={{ paddingTop: 2, paddingBottom:2,marginBottom:2 ,backgroundColor: generateFor === "Approver" ? "#f4dcb7" : "#eff1f5"}}>{title}</InputGroup.Text>
       )}
       {false_header && <br />}
       {options.map((option,index) => option.optionType === "radio-text" ? (

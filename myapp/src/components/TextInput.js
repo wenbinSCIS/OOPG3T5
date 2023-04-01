@@ -32,7 +32,7 @@ function TextInput(props) {
         {
           props.hintPosition == "front" &&
           <InputGroup.Text style={{
-            backgroundColor: props.generateFor === "Approver" ? "#f4dcb7" : "#fff",
+            backgroundColor: props.generateFor === "Approver" ? "#f4dcb7" : "#eff1f5",
           }}>{props.hint}</InputGroup.Text>
         }
         {
@@ -45,7 +45,7 @@ function TextInput(props) {
                     data-format="textinput"
                     disabled={props.disabled !== null ? props.disabled : false}
                     style={{
-                      backgroundColor: props.generateFor === "Approver" ? "#fdf9f3" : "#fff",
+                      backgroundColor: props.generateFor === "Approver" ? "#fdf9f3" : "#fafbfc",
                       cursor: props.generateFor === "Approver" ? "not-allowed" : "auto",
                       pointerEvents: props.generateFor === "Approver" ? "none" : "auto"
                     }}
