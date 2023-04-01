@@ -20,10 +20,10 @@ export default function AdminApprovalList() {
 
     useEffect(() => {
     
-      // if (sessionStorage.getItem('userType')!="Approver"){
-      //   alert("You are not logged in as an Approver")
-      //   navigate('/')
-      // }
+      if (sessionStorage.getItem('userType')!="AdministrativePersonnel"){
+        alert("You are not logged in as an AdministrativePersonnel")
+        navigate('/')
+      }
       const fetchData = async () => {
         try {
           var allApproverForms = []
@@ -69,7 +69,7 @@ export default function AdminApprovalList() {
 
   const filteredData = data.filter((item) =>
   (!searchText || item.companyName.toLowerCase().includes(searchText.toLowerCase())) &&
-  (!selectedTag || selectedTag === 'All Forms' || item.status === selectedTag)
+  (!selectedTag || selectedTag === 'All Forms' || item.formStatus === selectedTag)
 );
   return (
     <>

@@ -19,7 +19,7 @@ function TableComponent(props) {
         <thead>
         <tr>
           {column_headers.map((column,index) => (
-            <th key={index} style={{backgroundColor: props.generateFor === "Approver" ? "#f4dcb7" : "#eff1f5",}}>{column}</th>
+            <th key={index} style={{backgroundColor: props.generateFor === "Vendor" ? "#eff1f5" : props.generateFor === "Approver" ? "#f4dcb7" : "#dfe6b3"}}>{column}</th>
           ))}
         </tr>
         </thead>
@@ -27,10 +27,10 @@ function TableComponent(props) {
         {data && data.length > 0 && (
           // Generate numRows rows
           data.map((row, rowIndex) => (
-            <tr key={rowIndex} style={{backgroundColor: props.generateFor === "Approver" ? "#fdf9f3" : "#fafbfc",}}>
+            <tr key={rowIndex} style={{backgroundColor: props.generateFor === "Vendor" ? "#fafbfc" : props.generateFor === "Approver" ? "#fdf9f3" : "#f1f4dd"}}>
               {column_headers.map((column,index) => (
                 <td key={index}>
-                  {props.generateFor === "Approver" ? (
+                  {props.generateFor !== props.fillFor ? (
                     <h5>{data[rowIndex][column] || ''}</h5>
                   ) : (
                     <input

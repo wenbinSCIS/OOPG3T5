@@ -15,7 +15,7 @@ import FormSelector from "./AdminPageComponents/FormSelector";
 import axios from "axios";
 
 import AdminSidebar from './Sidebar/AdminSidebar';
-
+import {Routes, Route, useNavigate} from 'react-router-dom';
 import Button from '@mui/material/Button';
 import SectionEditor from "./SectionEditor/SectionEditor";
 import AutorenewIcon from '@mui/icons-material/Autorenew';
@@ -38,6 +38,7 @@ function MyForm() {
   const [availableForms, setAvailableForms] = useState([]);
   const [selectedForm, setSelectedForm] = useState(null);
   const [selectedVersion, setSelectedVersion] = useState(null);
+  const navigate = useNavigate();
   const [options, setOptions] = useState([
     "Add Name field",
     "Add DropDown",
@@ -98,6 +99,10 @@ for testing purposes
   const [elementNames, setElementNames] = useState([]);
 
   useEffect(() => {
+    if (sessionStorage.getItem('userType')!="AdministrativePersonnel"){
+      alert("You are not logged in as an AdministrativePersonnel")
+      navigate('/')
+    }
     let sectionNamesTemp = [];
     formComponents.forEach((section) => {
       const sectionName = section.sectionName;

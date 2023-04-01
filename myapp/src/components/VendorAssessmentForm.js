@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GenerateSection from './SectionGeneration.js';
 import Sidebar from "./Sidebar/Sidebar.js";
+import AdminSidebar from './Sidebar/AdminSidebar';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import {Routes, Route, useNavigate} from 'react-router-dom';
@@ -13,10 +14,14 @@ export default function VendorAssessmentForm() {
   var [formData, setFormData] = useState(null);
   const [status, setStatus] = useState(null)
 
-
+  //console.log(sessionStorage)
+  if (sessionStorage.getItem('userType')==='Vendor'){
+    var username = sessionStorage.getItem('username') 
+  } else {
+    var username = sessionStorage.getItem('vendorUsername') 
+  }
   var formVersion =   sessionStorage.getItem('formVersion')
   var formName = sessionStorage.getItem('formName')
-  var username = sessionStorage.getItem('username') 
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) 
   var projectName = sessionStorage.getItem('projectName') 
   var projectId = sessionStorage.getItem('projectId') 
@@ -72,6 +77,7 @@ export default function VendorAssessmentForm() {
   }
 
    useEffect(() => {
+
     async function fetchData() {
       try {
           getData(formName);
@@ -80,6 +86,7 @@ export default function VendorAssessmentForm() {
                 "username": username,
                 "formVersion": formVersion,
               }
+              console.log(inputJson)
           const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
           if(response.status == 200){
             setallData(response.data.formInputData[0]);
@@ -107,14 +114,27 @@ console.log(isUserInputLoaded)
   async function saveUserInput(formName, formVersion, username, companyInfo){
     var desc = "Form incomplete, please complete the form"
     setDescription(username,projectId,projectName,formName,formVersion,desc);
-    var inputJson = {
-      "formName":formName,
-      "username":username,
-      "formVersion":formVersion,
-      "status":"In Progress",
-      "formInputData": [allData],
-      "companyInfo": companyInfo
+
+    if (sessionStorage.getItem('userType')==="Vendor"){
+      var inputJson = {
+        "formName":formName,
+        "username":username,
+        "formVersion":formVersion,
+        "status":"In Progress",
+        "formInputData": [allData],
+        "companyInfo": companyInfo
+      }
+    } else {
+      var inputJson = {
+        "formName":formName,
+        "username":username,
+        "formVersion":formVersion,
+        "status":"Pending Approval",
+        "formInputData": [allData],
+        "companyInfo": companyInfo
+      }
     }
+    
 
     if (!isUserInputLoaded){
       await axios
@@ -132,7 +152,11 @@ console.log(isUserInputLoaded)
         console.log(response.data);
       });
     }
-    //navigate("/UncompletedForms")
+    if (sessionStorage.getItem('userType')=="Vendor"){
+      navigate("/UncompletedForms")
+    } else {
+      navigate("/AdminApprovalList")
+    }  
   }
 
   function checkMandatory(formData){
@@ -196,7 +220,11 @@ console.log(isUserInputLoaded)
             .post(`http://localhost:8080/formInput/createFormInput`, inputJson)
             .then((response) => {
               alert("Saved new input data!");
-              navigate("/CompletedForms")
+              if (sessionStorage.getItem('userType')=="Vendor"){
+                navigate("/CompletedForms")
+              } else {
+                navigate("/AdminApprovalList")
+              }  
               setIsUserInputLoaded(true);
               console.log(response.data);
             });
@@ -205,14 +233,18 @@ console.log(isUserInputLoaded)
             .put(`http://localhost:8080/formInput/updateFormInputDataAndStatus`, inputJson)
             .then((response) => {
               alert("Resaved input data!");
-              navigate("/CompletedForms")
+              if (sessionStorage.getItem('userType')=="Vendor"){
+                navigate("/CompletedForms")
+              } else {
+                navigate("/AdminApprovalList")
+              }  
               console.log(response.data);
             });
         }
       }
     }    
   }
-  console.log(allData)
+
 
   const to_return = []
   if (formData && isUserInputLoaded!=null) {
@@ -220,30 +252,31 @@ console.log(isUserInputLoaded)
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
       var fillFor = each_section['fillFor']
-      to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData} fillFor = {fillFor}></GenerateSection>)
+      var generateFor = sessionStorage.getItem("userType")
+      to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData} fillFor = {fillFor} generateFor = {generateFor}></GenerateSection>)
     }}
   return (
     <section  className='d-flex' >
-      
-      <Sidebar ></Sidebar>
+      {sessionStorage.getItem('userType')==='Vendor' ? (<Sidebar ></Sidebar>):(<AdminSidebar />)}
+
       
       <div className="container-fluid">
-      <Header/>
-      <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor:"#f9f9fb"}}>
-      
-        {to_return}
-        {alerts}
-        {status === "Pending Approval" || status === "Approved" ? (
-  <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {navigate("/completedForms")}}>Exit</Button>
-) : (
-  <>
-    <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo)}}>Save</Button>
-    <Button  variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
-  </>
-)}  
+        <Header/>
+        <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: sessionStorage.getItem("userType") === "Vendor"?"#f9f9fb":"#f8f9ee"}}>
+        
+          {to_return}
+          {alerts}
+          {(status === "Pending Approval" || status === "Approved") && sessionStorage.getItem('userType')=="Vendor" ? (
+              <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {navigate("/completedForms")}}>Exit</Button>
+            ) : (
+              <>
+                <Button style={{margin: 1 + 'em'}} variant="dark" onClick={() => {saveUserInput(formName, formVersion, username, companyInfo)}}>Save</Button>
+                <Button  variant="dark" onClick={() => {submit(formName, formVersion, username, companyInfo)}}>Submit Form</Button>
+              </>
+            )}  
+        </div>
       </div>
-      </div>
-      
+                
       
     </section>
   );
