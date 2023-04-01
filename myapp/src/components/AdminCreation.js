@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from './Footer';
 import Totop from './Totop';
 import AdminSidebar from './Sidebar/AdminSidebar';
 import Header from './Header';
 import './AdminCreation.css';
 import axios from "axios";
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 export default function AdminCreation() {
 const [username, setUsername] = useState('');
@@ -16,6 +17,13 @@ const [registrationNumber, setRegistrationNumber] = useState('');
 const [businessNature, setBusinessNature] = useState('');
 const [phoneNumber, setPhoneNumber] = useState('');
 const [gstNumber, setGstNumber] = useState('');
+const navigate = useNavigate();
+
+useEffect(()=>{
+   if (sessionStorage.getItem('userType')!="AdministrativePersonnel"){
+   alert("You are not logged in as an AdministrativePersonnel")
+   navigate('/')
+ }})
 
 const handleUsernameChange = (event) => {
 setUsername(event.target.value);

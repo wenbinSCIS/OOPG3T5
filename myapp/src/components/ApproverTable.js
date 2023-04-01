@@ -20,26 +20,22 @@ function ApproverTable({ data }) {
   const sendEmail = async (item) => {
     console.log(item)
     const mailDetail = {
-      "recipient":item.companyInfo.emailAddress,
+      "recipient":"eddtots@gmail.com",
       "subject":"Reminder to complete your assigned WorkFlow",
       "msgBody":"Dear valued vendor, please be reminded to"
   }
     try {
       console.log(typeof(mailDetail))
       console.log(typeof(JSON.stringify(mailDetail)))
-      const response = await fetch('http://localhost:8080/api/send-mail', {
+      const response = await fetch('http://localhost:8080/user/send-mail', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization'
-          
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(mailDetail)
       });
       
-      const result = await response.json();
+      const result = response;
       alert("Email Sent")
     } catch (error) {
       alert(error)

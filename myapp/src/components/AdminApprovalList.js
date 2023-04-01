@@ -69,7 +69,7 @@ export default function AdminApprovalList() {
 
   const filteredData = data.filter((item) =>
   (!searchText || item.companyName.toLowerCase().includes(searchText.toLowerCase())) &&
-  (!selectedTag || selectedTag === 'All Forms' || item.status === selectedTag)
+  (!selectedTag || selectedTag === 'All Forms' || item.formStatus === selectedTag)
 );
   return (
     <>
