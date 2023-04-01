@@ -63,6 +63,9 @@ handleNewRowAddElement: sets the elementType value as the one that we have selec
     console.log("The user selects row: ", e.target.value);
   };
 
+  
+
+
   /*
 =============================================================================================
 The code below manages the state for element type, 
@@ -585,6 +588,57 @@ appendToOverallState: appends element to selected row as chosen by the user
     setRowState((rowState) => addItem(rowState, elementState));
     handleOverallRowState(updatedRowState);
   };
+
+  function delItem(currentList, elementName) {
+    var returnState = []
+    const deletedRowState = [...currentList];
+    for(let i = 0; i < deletedRowState.length; i++){
+      var inner = []
+      for(let j = 0; j < deletedRowState[i].length; j++){
+        if(deletedRowState[i][j]["elementName"] !== elementName){
+         inner.push(deletedRowState[i][j])
+        }
+        if(inner.length!=0){
+          returnState.push(inner)
+        }
+      }
+    }
+    console.log(returnState)
+    return returnState;
+  }
+  
+  const handleDelete = (e) => {
+    const { value } = e.target;
+    const updatedRowState = delItem(rowState, value);
+    setRowState(updatedRowState);
+    handleOverallRowStateDelete(updatedRowState,value);
+    
+  };
+
+  const handleOverallRowStateDelete = (updatedState,elementName) => {
+    setOverallRowState((overallRowState) =>
+      delItem(overallRowState, elementName)
+    );
+    // console.log(updatedOverallState); // this should be pushed to the admin page
+    //handleToggleSection();
+    handleSectionChangesDelete(overallRowState); // for the preview tab
+  };
+
+
+  const handleSectionChangesDelete = (overallRowState) => {
+    // will be added in appendoverall state and handleRowState
+    console.log("CHECKING ROW DATA")
+    console.log(overallRowState)
+    const newSection = { ...sectionData };
+    newSection.rowElements = overallRowState;
+    const rowsLength = overallRowState.length-1;
+    newSection.numRows = String(rowsLength);
+    setSectionData(newSection);
+    console.log("The new section data for the preview tab is: ", newSection);
+    
+  };
+  
+  console.log(sectionData)
 
   const handleOverallRowState = (updatedState) => {
     const updatedOverallState = [...overallRowState, updatedState]; // updatedOverallState should be sent over to the overallRowState -> takes a while to update
@@ -1547,7 +1601,7 @@ Returned Component
           <SendIcon />
         </Button>
       </Stack>
-      <PreviewTab sectionState={sectionData} />
+      <PreviewTab sectionState={sectionData} handleDelete={handleDelete}/>
       <Stack
         direction="row"
         alignItems="center"

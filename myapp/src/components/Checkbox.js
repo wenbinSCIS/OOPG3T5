@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
+import Button from 'react-bootstrap/Button';
 
-function Checkbox({data,onChange, options,title,size,false_header,name,orientation, generateFor}) {
+function Checkbox({data,onChange, options,title,size,false_header,name,orientation, generateFor, handleDelete}) {
 
 
  var [selectedItems, setSelectedItems] = useState([]);
@@ -88,7 +89,6 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
               {
                 margin: '5px',
             }}
-            
           />
             <TextInput
             key="test"
@@ -129,6 +129,10 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
           </div>
           )
       )}
+      {
+          generateFor==="Admin" &&
+          <Button onClick={handleDelete} value={name} variant="danger">Delete Element</Button>
+        }
     </div>  
   );
 }

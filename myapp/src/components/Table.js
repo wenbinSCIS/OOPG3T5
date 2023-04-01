@@ -1,6 +1,7 @@
 import Table from 'react-bootstrap/Table';
 
 import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
 
 function TableComponent(props) {
     const number = `col-md-${props.size}`
@@ -43,6 +44,10 @@ function TableComponent(props) {
         )}
       </tbody>
       </Table>
+      {
+          props.generateFor==="Admin" &&
+          <Button onClick={props.handleDelete} value={props.name} variant="danger">Delete Element</Button>
+        }
       </div>
     );
   }
