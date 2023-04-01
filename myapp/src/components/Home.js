@@ -24,7 +24,7 @@ export default function Home() {
   const navigate = useNavigate();
   const [forms, setForms] = useState([]);
   const [formStatus, setFormStatus] = useState({});
-
+  
   useEffect(() => {
     if (sessionStorage.getItem('userType')!=="Vendor"){
       alert("You are not logged in as a Vendor")
@@ -127,7 +127,7 @@ export default function Home() {
               <div>
                 
                 <h2 className="text-g" style={{ fontWeight : "bold", fontSize: 30, color: 'black'}}>
-                  Welcome back, John
+                  Welcome back, {JSON.parse(sessionStorage.getItem("companyInfo")).companyName}
                 </h2>
 
               </div>
