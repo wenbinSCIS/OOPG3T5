@@ -4,7 +4,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
 import CloseButton from 'react-bootstrap/CloseButton';
 
-function Checkbox({data,onChange, options,title,size,false_header,name,orientation, generateFor, handleDelete}) {
+function Checkbox({data,onChange, options,title,size,false_header,name,orientation, generateFor, handleDelete, fillFor}) {
 
 
  var [selectedItems, setSelectedItems] = useState([]);
@@ -59,12 +59,12 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
   return (
     <div className={number}>
        {
-          generateFor==="Admin" &&
-          <CloseButton variant='blue' onClick={handleDelete} value={name}/>
+          generateFor==="AdminCreation" &&
+          <CloseButton onClick={handleDelete} value={name}/>
           }
       {title.length>0 &&
        <InputGroup.Text >
-       <label style={{margin:1,color:'deepskyblue'}}>{title} </label>
+       <label style={{margin:1,color: generateFor === "Vendor" ? "#eff1f5" : generateFor === "Approver" ? "#f4dcb7" : "#dfe6b3"}}>{title} </label>
        </InputGroup.Text>
       }
       {
@@ -85,7 +85,7 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
             value = {option.optionValue}
             onChange={(e) => handleCheckboxChange(e)}
             style={
-              generateFor == "Approver" ?{
+              generateFor !== fillFor ?{
                 margin: '5px',
                 cursor: 'not-allowed',
                 pointerEvents: 'none',
@@ -104,7 +104,8 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
             onChange={(e) => handleTextinChange(name,option.optionValue, e)}
             text={data != null && data.find(item => item.name === option.optionValue && item.type === "Checkbox-text") ? data.find(item => item.name === option.optionValue && item.type === "Checkbox-text").text : ""}
             disabled={data != null && data.find(item => item.name === option.optionValue) ? false : true}
-            generateFor={generateFor== "Approver" ? "Approver" : ""}
+            generateFor={generateFor}
+            fillFor = {fillFor}
       />
         </div>
       ) : (
@@ -120,20 +121,14 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
             value = {option.optionValue}
             onChange={(e) => handleCheckboxChange(e)}
             style={
-              generateFor == "Approver" ?{
+              generateFor !== fillFor ?{
                 margin: '5px',
                 cursor: 'not-allowed',
                 pointerEvents: 'none',
               }:
               {
-                margin: '5px',
-                borderColor:"#f0f8fc",
-                "&:checked": {
-                  backgroundColor: "green",
-                },
-                
+                margin: '5px',             
             }}
-            
           />
           </div>
           )

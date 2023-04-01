@@ -15,10 +15,11 @@ function TextInput(props) {
     if(props.hintPosition == "hint"){
       inlineHint = props.hint
     }
+
     return (
       <div className={number} style={{margin:0}}>
         {
-          props.generateFor==="Admin" &&
+          props.generateFor==="AdminCreation" &&
           <CloseButton variant='blue' onClick={props.handleDelete} value={props.name}/>
         }
         {props.title.length>0 &&
@@ -32,7 +33,7 @@ function TextInput(props) {
         {
           props.hintPosition == "front" &&
           <InputGroup.Text style={{
-            backgroundColor: props.generateFor === "Approver" ? "#f4dcb7" : "#eff1f5",
+            backgroundColor: props.generateFor === "Vendor" ? "#eff1f5" : props.generateFor === "Approver" ? "#f4dcb7" : "#dfe6b3"
           }}>{props.hint}</InputGroup.Text>
         }
         {
@@ -45,9 +46,9 @@ function TextInput(props) {
                     data-format="textinput"
                     disabled={props.disabled !== null ? props.disabled : false}
                     style={{
-                      backgroundColor: props.generateFor === "Approver" ? "#fdf9f3" : "#fafbfc",
-                      cursor: props.generateFor === "Approver" ? "not-allowed" : "auto",
-                      pointerEvents: props.generateFor === "Approver" ? "none" : "auto"
+                      backgroundColor: props.generateFor === "Vendor" ? "#fafbfc" : props.generateFor === "Approver" ? "#fdf9f3" : "#f1f4dd",
+                      cursor: props.generateFor !== props.fillFor ? "not-allowed" : "auto",
+                      pointerEvents: props.generateFor !== props.fillFor ? "none" : "auto"
                     }}
                   />
         }

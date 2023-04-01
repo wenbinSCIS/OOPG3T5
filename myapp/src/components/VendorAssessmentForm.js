@@ -219,7 +219,7 @@ console.log(isUserInputLoaded)
       }
     }    
   }
-  console.log(allData)
+
 
   const to_return = []
   if (formData && isUserInputLoaded!=null) {
@@ -227,7 +227,8 @@ console.log(isUserInputLoaded)
     for (let i = 0; i < sections.length; i++) {
       const each_section = sections[i]
       var fillFor = each_section['fillFor']
-      to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData} fillFor = {fillFor}></GenerateSection>)
+      var generateFor = sessionStorage.getItem("userType")
+      to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData} fillFor = {fillFor} generateFor = {generateFor}></GenerateSection>)
     }}
   return (
     <section  className='d-flex' >
@@ -236,7 +237,7 @@ console.log(isUserInputLoaded)
       
       <div className="container-fluid">
       <Header/>
-      <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor:"#f9f9fb"}}>
+      <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: sessionStorage.getItem("userType") === "Vendor"?"#f9f9fb":"#f8f9ee"}}>
       
         {to_return}
         {alerts}

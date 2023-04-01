@@ -31,20 +31,20 @@ function Dropdown(props) {
     return (
       <div className={number} style={selectWrapperStyle}>
           {
-          props.generateFor==="Admin" &&
-          <CloseButton variant='blue' onClick={props.handleDelete} value={props.name}/>
+          props.generateFor==="AdminCreation" &&
+          <CloseButton onClick={props.handleDelete} value={props.name}/>
           }
         {props.title.length > 0 &&
-          <label style={{margin:0,color: props.generateFor === "Approver" ? "#d5b17a" : "deepskyblue"}}>{props.title}</label>
+          <label style={{margin:0,color:  props.generateFor === "Vendor" ? "#eff1f5" : props.generateFor === "Approver" ? "#f4dcb7" : "#dfe6b3"}}>{props.title}</label>
         }
         {
           props.false_header &&
           <br></br>
         }
         <select name={props.name} style={{
-            backgroundColor: props.generateFor === "Approver" ? "#fdf9f3" : "#fff",
-            cursor: props.generateFor === "Approver" ? "not-allowed" : "auto",
-            pointerEvents: props.generateFor === "Approver" ? "none" : "auto"
+           backgroundColor: props.generateFor === "Vendor" ? "#fafbfc" : props.generateFor === "Approver" ? "#fdf9f3" : "#f1f4dd",
+           cursor: props.generateFor !== props.fillFor ? "not-allowed" : "auto",
+           pointerEvents: props.generateFor !== props.fillFor ? "none" : "auto"
           }} className="form-control" value={props.data} onChange={handleValueChange}>
           {props.options.map((option, index) => (
             <option key={option.optionName} value={option.optionValue} >

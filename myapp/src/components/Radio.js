@@ -5,7 +5,7 @@ import TextInput from './TextInput';
 import CloseButton from 'react-bootstrap/CloseButton';
 
 
-function Radio({ data, onChange, options, title, size, false_header, name, orientation, generateFor , handleDelete}) {
+function Radio({ data, onChange, options, title, size, false_header, name, orientation, generateFor , handleDelete, fillFor}) {
 
   var [selectedOption, setSelectedOption] = useState('');
   // var [disabled, setDisabled] = useState(true);
@@ -45,11 +45,11 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
   return (
     <div className={number} style={{ margin: 0 }}>
        {
-          generateFor==="Admin" &&
-          <CloseButton variant='blue' onClick={handleDelete} value={name}/>
+          generateFor==="AdminCreation" &&
+          <CloseButton onClick={handleDelete} value={name}/>
           }
       {title.length > 0 && (
-        <InputGroup.Text style={{ paddingTop: 2, paddingBottom:2,marginBottom:2 ,backgroundColor: generateFor === "Approver" ? "#f4dcb7" : "#eff1f5"}}>{title}</InputGroup.Text>
+        <InputGroup.Text style={{ paddingTop: 2, paddingBottom:2,marginBottom:2 ,backgroundColor: generateFor === "Vendor" ? "#eff1f5" : generateFor === "Approver" ? "#f4dcb7" : "#dfe6b3"}}>{title}</InputGroup.Text>
       )}
       {false_header && <br />}
       {options.map((option,index) => option.optionType === "radio-text" ? (
@@ -63,7 +63,7 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
             value = {option.optionValue}
             onChange={(e) => {handleRadioChange(e); }}
             style={
-              generateFor == "Approver" ?{
+              generateFor !== fillFor ?{
                 margin: '7px',
                 cursor: 'not-allowed',
                 pointerEvents: 'none',
@@ -77,7 +77,7 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
             onChange={(e) => handleTextinChange(name,option.optionValue, e)}
             text={data!==undefined?data.text:''}
             generateFor={
-              generateFor == "Approver" ? "Approver" : ""
+              generateFor
             }
             /> 
           </div>
@@ -94,7 +94,7 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
             value = {option.optionValue}
             onChange={(e) => handleRadioChange(e)}
             style={
-              generateFor == "Approver" ?{
+              generateFor !== fillFor ?{
                 margin: '7px',
                 cursor: 'not-allowed',
                 pointerEvents: 'none',

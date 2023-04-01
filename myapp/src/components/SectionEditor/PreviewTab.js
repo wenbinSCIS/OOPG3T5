@@ -18,7 +18,7 @@ export default function PreviewTab({sectionState, handleDelete}) {
               section={sectionState}
               allData={allData}
               setallData={setallData}
-              generateFor="Admin"
+              generateFor="AdminCreation"
               handleDelete={handleDelete}
             ></GenerateSection>
           </div>
