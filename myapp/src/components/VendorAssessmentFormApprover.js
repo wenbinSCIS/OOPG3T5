@@ -70,6 +70,10 @@ export default function VendorAssessmentFormApprover() {
   }
 
    useEffect(() => {
+    if (sessionStorage.getItem('userType')!=="Approver"){
+      alert("You are not logged in as an Approver")
+      navigate('/')
+    }
     async function fetchData() {
       try {
           getData(formName);

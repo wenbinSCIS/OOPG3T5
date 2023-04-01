@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from './Footer';
 import Totop from './Totop';
 import AdminSidebar from './Sidebar/AdminSidebar';
@@ -7,25 +7,65 @@ import AdminTable from './AdminTable';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button } from '@mui/material';
+import {Routes, Route, useNavigate} from 'react-router-dom';
+import axios from "axios";
 export default function AdminApprovalList() {
     const [searchText, setSearchText] = useState('');
     const [selectedTag, setSelectedTag] = useState('');
-  
+    const navigate = useNavigate();
+    const [data, setData] = useState([]);
     const handleSearch = (event) => {
       setSearchText(event.target.value);
     };
-  const data = [
-    { companyName: 'ABC Inc.', formName: 'Form 1', status : 'In Progress' },
-    { companyName: 'XYZ Corp.', formName: 'Form 2', status : 'Not Started' },
-    { companyName: '123 Ltd.', formName: 'Form 3',status : 'Pending Review'},
-    { companyName: '456 Co.', formName: 'Form 4',status : 'Pending Approval' },
-    { companyName: '789 LLC', formName: 'Form 5',status : 'In Progress' },
-    { companyName: 'DEF Ltd.', formName: 'Form 6', status : 'Rejected' },
-    { companyName: 'GHI Inc.', formName: 'Form 7',status : 'In Progress' },
-    { companyName: 'JKL Corp.', formName: 'Form 8',status : 'Approved' },
-    { companyName: 'MNO Ltd.', formName: 'Form 9',status : 'In Progress'},
-    { companyName: 'ABC Inc.', formName: 'Form 10', status : 'Approved' },
-  ];
+
+    useEffect(() => {
+    
+      // if (sessionStorage.getItem('userType')!="Approver"){
+      //   alert("You are not logged in as an Approver")
+      //   navigate('/')
+      // }
+      const fetchData = async () => {
+        try {
+          var allApproverForms = []
+  
+          const allForms = await axios.get(
+            'http://localhost:8080/formInput/getAllFormInput'
+          );
+  
+          for (let i=0;i<allForms.data.length;i++){
+            allApproverForms.push(allForms.data[i])
+          }
+          
+          const forms = allApproverForms.map((item) => ({
+            companyName: item.companyInfo.companyName,
+            formName: item.formName,
+            formVersion: item.formVersion,
+            companyInfo:item.companyInfo,
+            formStatus:item.status,
+            vendorUsername:item.username
+          }));
+          console.log(forms)
+          setData(forms);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      fetchData();
+    }, []);
+
+  // const data = [
+  //   { companyName: 'ABC Inc.', formName: 'Form 1', status : 'In Progress' },
+  //   { companyName: 'XYZ Corp.', formName: 'Form 2', status : 'Not Started' },
+  //   { companyName: '123 Ltd.', formName: 'Form 3',status : 'Pending Review'},
+  //   { companyName: '456 Co.', formName: 'Form 4',status : 'Pending Approval' },
+  //   { companyName: '789 LLC', formName: 'Form 5',status : 'In Progress' },
+  //   { companyName: 'DEF Ltd.', formName: 'Form 6', status : 'Rejected' },
+  //   { companyName: 'GHI Inc.', formName: 'Form 7',status : 'In Progress' },
+  //   { companyName: 'JKL Corp.', formName: 'Form 8',status : 'Approved' },
+  //   { companyName: 'MNO Ltd.', formName: 'Form 9',status : 'In Progress'},
+  //   { companyName: 'ABC Inc.', formName: 'Form 10', status : 'Approved' },
+  // ];
 
   const filteredData = data.filter((item) =>
   (!searchText || item.companyName.toLowerCase().includes(searchText.toLowerCase())) &&

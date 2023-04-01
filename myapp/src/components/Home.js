@@ -1,4 +1,3 @@
-
 // import { Link } from "react-router-dom";
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../theme";
@@ -16,12 +15,21 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 // import React, { useState, useEffect } from 'react';
 
+
+
 export default function Home() {
+  const navigate = useNavigate();
   const [forms, setForms] = useState([]);
   const [formStatus, setFormStatus] = useState({});
+
   useEffect(() => {
+    if (sessionStorage.getItem('userType')!=="Vendor"){
+      alert("You are not logged in as a Vendor")
+      navigate('/')
+    }
     const fetchData = async () => {
       try {
         const response = await axios.post("http://localhost:8080/user/getUserByName", {

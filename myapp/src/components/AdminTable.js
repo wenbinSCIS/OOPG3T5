@@ -26,10 +26,9 @@ function AdminTable({ data }) {
       <MDBTable>
         <MDBTableHead>
           <tr>
-          <th className="gray-th">Index</th>
-    <th className="gray-th">Company Name</th>
+          <th className="gray-th">Company Name</th>
     <th className="gray-th">Form Name</th>
-  
+    <th className="gray-th">Version</th>
     <th className="gray-th">Status</th>
     <th className="gray-th">Action</th>
           </tr>
@@ -40,10 +39,10 @@ function AdminTable({ data }) {
               <td>{startIndex + index + 1}</td>
               <td>{item.companyName}</td>
               <td>{item.formName}</td>
-            
-              <td>{item.status}</td>
+              <td>{item.formVersion}</td>
+              <td>{item.formStatus}</td>
               <td>
-              <Button variant="outlined" outline rounded color='success' >Review</Button>
+              <Button variant="outlined" outline rounded color='success' href={`/Vendor`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion);sessionStorage.setItem('companyName', item.companyName);sessionStorage.setItem('companyInfo', JSON.stringify(item.companyInfo));sessionStorage.setItem('vendorUsername', item.vendorUsername)}}>Review</Button>
               </td>
             </tr>
           ))}

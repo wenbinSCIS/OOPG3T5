@@ -14,7 +14,7 @@ import FormSelector from "./AdminPageComponents/FormSelector";
 
 import axios from "axios";
 
-import Sidebar from "./Sidebar/Sidebar";
+import AdminSidebar from './Sidebar/AdminSidebar';
 
 import Button from '@mui/material/Button';
 import SectionEditor from "./SectionEditor/SectionEditor";
@@ -718,7 +718,7 @@ async function UpdateFormByNameAndVersion() {
   /* returning the Page */
   return (
     <section className="d-flex">
-      <Sidebar></Sidebar>
+      <AdminSidebar />
       <div className="container">
         <FormSelector
           forms={availableForms}
