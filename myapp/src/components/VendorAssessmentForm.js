@@ -13,10 +13,15 @@ export default function VendorAssessmentForm() {
   var [formData, setFormData] = useState(null);
   const [status, setStatus] = useState(null)
 
-
+  console.log(sessionStorage)
+  if (sessionStorage.getItem('userType')==='Vendor'){
+    var username = sessionStorage.getItem('username') 
+  } else {
+    var username = sessionStorage.getItem('vendorUsername') 
+  }
   var formVersion =   sessionStorage.getItem('formVersion')
   var formName = sessionStorage.getItem('formName')
-  var username = sessionStorage.getItem('username') 
+  
   var companyInfo = JSON.parse(sessionStorage.getItem("companyInfo")) 
   var projectName = sessionStorage.getItem('projectName') 
   var projectId = sessionStorage.getItem('projectId') 
@@ -72,6 +77,7 @@ export default function VendorAssessmentForm() {
   }
 
    useEffect(() => {
+
     async function fetchData() {
       try {
           getData(formName);
@@ -80,6 +86,7 @@ export default function VendorAssessmentForm() {
                 "username": username,
                 "formVersion": formVersion,
               }
+              console.log(inputJson)
           const response = await axios.post(`http://localhost:8080/formInput/getFormInputByFormNameUsernameFormVersion`, inputJson);
           if(response.status == 200){
             setallData(response.data.formInputData[0]);

@@ -36,13 +36,12 @@ function AdminTable({ data }) {
         <MDBTableBody>
           {currentItems.map((item, index) => (
             <tr key={index} className="hover-bg">
-              <td>{startIndex + index + 1}</td>
               <td>{item.companyName}</td>
               <td>{item.formName}</td>
               <td>{item.formVersion}</td>
               <td>{item.formStatus}</td>
               <td>
-              <Button variant="outlined" outline rounded color='success' href={`/Vendor`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion);sessionStorage.setItem('companyName', item.companyName);sessionStorage.setItem('companyInfo', JSON.stringify(item.companyInfo));sessionStorage.setItem('vendorUsername', item.vendorUsername)}}>Review</Button>
+              <Button variant="outlined" outline rounded color='success' href={`/vendor`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion);sessionStorage.setItem('companyName', item.companyName);sessionStorage.setItem('companyInfo', JSON.stringify(item.companyInfo));sessionStorage.setItem('vendorUsername', item.vendorUsername)}}>Review</Button>
               </td>
             </tr>
           ))}
