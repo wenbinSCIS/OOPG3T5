@@ -27,6 +27,7 @@ export default function PreviewTab({
             allData={allData}
             setallData={setallData}
             generateFor="AdminCreation"
+            fillFor="AdminCreation"
             handleDelete={handleDelete}
             MoveDown={MoveDown}
             MoveUp={MoveUp}

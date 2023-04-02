@@ -59,7 +59,7 @@ const EditButton = ({
         <BuildIcon />
         &nbsp;Edit
       </Button>
-      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
+      <Modal show={showModal} onHide={() => setShowModal(false)} size="xl">
         <Modal.Header closeButton>
           <Modal.Title>Edit Existing Section</Modal.Title>
         </Modal.Header>

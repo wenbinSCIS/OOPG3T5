@@ -63,6 +63,7 @@ editor is active or disabled
 
   const [sectionName, setSectionName] = useState("");
   const [sectionText, setSectionText] = useState("");
+  const [fillFor, setFillFor] = useState("Vendor");
 
   useEffect(() => {
     if (index !== null) {
@@ -73,6 +74,7 @@ editor is active or disabled
       );
       setSectionName(currentSection.sectionName);
       setSectionText(currentSection.sectionText);
+      setFillFor(currentSection.fillFor);
     }
   }, []);
 
@@ -184,34 +186,30 @@ the element editor
           <Form.Control
             type="sectionText"
             placeholder="Section Text"
-            value = {sectionText}
+            value={sectionText}
             onChange={handleInputChange}
           />
         </Form.Group>
         <div className="d-flex">
-          {/* <div className="me-3">
-            <Form.Group controlId="numRows">
-              <Form.Label
-                style={{ margin: 0, color: "deepskyblue" }}
-                // style={{ margin: 0, color: "#005FF1", fontWeight: "bold" }}
-              >
-                Select number of Element Rows
+          <div className="me-3">
+            <Form.Group controlId="fillFor">
+              <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
+                Fill for?
               </Form.Label>
               <Form.Select
-                // style={{ width: "32%" }}
                 className="custom-select"
-                defaultValue="1"
+                value={fillFor}
                 onChange={handleInputChange}
               >
-                {Array.from({ length: 15 }, (_, index) => (
-                  <option key={index + 1} value={index + 1}>
-                    {index + 1}
-                  </option>
-                ))}
+                <option value="Vendor">Vendor</option>
+                <option value="AdministrativePersonnel">
+                  Administrative Personnel
+                </option>
+                <option value="Approver">Approver</option>
               </Form.Select>
             </Form.Group>
-          </div> */}
-          <div>
+          </div>
+          <div className="mb-3">
             <Form.Group controlId="sectionFont">
               <Form.Label style={{ margin: 0, color: "deepskyblue" }}>
                 Select Font (Optional)
