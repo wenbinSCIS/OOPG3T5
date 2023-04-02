@@ -9,7 +9,7 @@ const SaveComponent = ({ isSaved, saveComponents, text, formsAvailable, isVersio
   //console.log(formComponents)
   return (
     <header className="header">
-      {location.pathname === "/testadmin" && (
+      {location.pathname === "/FormCreation" && (
         <div>
           <Button
           alignItems="center"

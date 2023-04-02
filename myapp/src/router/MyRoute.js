@@ -25,7 +25,7 @@ export default function MyRoute() {
         <Route exact path="/AdminCreation" element={<AdminCreation/>} />     
         <Route exact path="/vendor" element={<VendorAssessmentForm/>} />
         <Route exact path="/vendorApprover" element={<VendorAssessmentFormApprover/>} />
-        <Route exact path="/testadmin" element={<MyForm/>}/> 
+        <Route exact path="/FormCreation" element={<MyForm/>}/> 
       </Routes>
     </>
   );

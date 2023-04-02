@@ -18,19 +18,8 @@ const FormSelector = ({ forms, loadForms , onChange, selectedForm, setSelectedFo
 
   return (
     <header className="header">
-      {location.pathname === "/testadmin" && (
+      {location.pathname === "/FormCreation" && (
         <div>
-          {/* <div className="button-container">
-            {" "}
-            <select onClick={loadForms} onChange={onChange}>
-              <option value="">Select a Form to load</option>
-              {forms.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div> */}
           <Form>
             <Form.Group
               controlId="placeholderPosition"

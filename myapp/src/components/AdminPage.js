@@ -1,9 +1,7 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import GenerateSection from "./SectionGeneration";
 import "./AdminPage.css";
-// import AddComponent from "./AddComponent";
-// import Creator from "./Buttons/Creator";
 
 import EditPanel from "./Buttons/EditPanel";
 import AddButton from "./Buttons/AddButton";
@@ -17,11 +15,9 @@ import axios from "axios";
 import AdminSidebar from "./Sidebar/AdminSidebar";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import SectionEditor from "./SectionEditor/SectionEditor";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 function MyForm() {
-  const [showAddComponent, setShowAddComponent] = useState(false);
   const [formComponents, setFormComponents] = useState([]);
   const [infoComponents, setInfoComponents] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -39,18 +35,9 @@ function MyForm() {
   const [selectedForm, setSelectedForm] = useState(null);
   const [selectedVersion, setSelectedVersion] = useState(null);
   const navigate = useNavigate();
-  const [options, setOptions] = useState([
-    "Add Name field",
-    "Add DropDown",
-    "Add TextArea",
-    "Add Checkbox",
-    "Add Radio",
-    "Add Table",
-  ]);
   const [formName, setFormName] = useState("");
   const [versionNumber, setVersionNumber] = useState("");
   const [loadFormDisabled, setLoadFormDisabled] = useState(false);
-
 
   /*
 =============================================================================================
@@ -96,9 +83,9 @@ for testing purposes
   const [elementNames, setElementNames] = useState([]);
 
   useEffect(() => {
-    if (sessionStorage.getItem('userType')!="AdministrativePersonnel"){
-      alert("You are not logged in as an AdministrativePersonnel")
-      navigate('/')
+    if (sessionStorage.getItem("userType") != "AdministrativePersonnel") {
+      alert("You are not logged in as an AdministrativePersonnel");
+      navigate("/");
     }
     let sectionNamesTemp = [];
     formComponents.forEach((section) => {
@@ -146,50 +133,8 @@ userobject, setdata and set all data new paramaters for generate section
 Code below handles the addition of elements, handleAddElement to be built on, however most of these functions should be drepecated,
 particularly handleAddComponent
 
-handleAddComponent is deprecated
 =============================================================================================
 */
-
-  // function handleAddElement({ target }) {
-  //   console.log(target);
-  //   setFormComponents([...formComponents, target]);
-  //   console.log(formComponents);
-  //   setInfoComponents([...infoComponents, target]);
-  //   setSaveStatus(false);
-  // }
-
-  // function handleAddComponent({ name }) {
-  //   // we should specific add components for each type
-  //   let target = textarea_section;
-  //   console.log(name);
-
-  //   if (name == "Add Name field") {
-  //     target = name_section;
-  //   }
-  //   if (name == "Add TextArea") {
-  //     target = textarea_section;
-  //   }
-  //   if (name == "Add DropDown") {
-  //     target = dropdown_section;
-  //   }
-  //   if (name == "Add Checkbox") {
-  //     target = checkbox_section;
-  //   }
-  //   if (name == "Add Radio") {
-  //     target = radio_section;
-  //   }
-  //   setFormComponents([
-  //     ...formComponents,
-  //     target,
-  //     // <GenerateSection
-  //     //   section={target}
-  //     //   allData={allData}
-  //     //   setallData={setallData}
-  //     // ></GenerateSection>,
-  //   ]);
-  //   setInfoComponents([...infoComponents, target]);
-  //   setSaveStatus(false);
-  // }
 
   function handleRemoveComponent(index) {
     const updatedComponents = formComponents.filter((_, i) => i !== index);
@@ -427,17 +372,17 @@ handleAddComponent is deprecated
             className="parent-container"
             style={{ display: "flex", justifyContent: "center" }}
           >
-            {/* <div className="centered-row">
-    <UpdateComponent
-      className="centered-button"
-      UpdateFormByNameAndVersion={() => UpdateFormByNameAndVersion()}
-      isSaved={isSaved}
-      text={saveText}
-      formName={formName}
-      versionNumber={versionNumber}
-      formComponents={formComponents}
-    />
-  </div> */}
+            <div className="centered-row">
+              <UpdateComponent
+                className="centered-button"
+                UpdateFormByNameAndVersion={() => UpdateFormByNameAndVersion()}
+                isSaved={isSaved}
+                text={saveText}
+                formName={formName}
+                versionNumber={versionNumber}
+                formComponents={formComponents}
+              />
+            </div>
           </div>
         </div>
       </div>
