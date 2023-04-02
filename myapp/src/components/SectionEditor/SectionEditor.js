@@ -56,8 +56,11 @@ editor is active or disabled
 
   useEffect(() => {
     setSectionNames(sectionNamesList);
+  }, sectionNamesList);
+
+  useEffect(() => {
     setElementNames(elementNamesList);
-  }, [sectionNamesList, elementNamesList]);
+  }, elementNamesList);
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
@@ -103,7 +106,8 @@ the element editor
 
   function sectionIsCreated() {
     if ("sectionName" in sectionData && "sectionText" in sectionData) {
-      console.log("printing out sectionName in sectionEditor", sectionNames);
+      console.log("printing out sectionNames in sectionEditor", sectionNames);
+      console.log("printing out elementNames in sectionEditor", elementNames);
       if (sectionNames.includes(sectionData.sectionName)) {
         alert("Section Name is already used, please try another one");
       } else {

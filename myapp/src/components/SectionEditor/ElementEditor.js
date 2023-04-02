@@ -600,7 +600,7 @@ appendToOverallState: appends element to selected row as chosen by the user
         returnState.push(inner);
       }
     }
-    console.log("The return state for the target row is",returnState);
+    console.log("The return state for the target row is", returnState);
     return returnState;
   }
 
@@ -785,6 +785,7 @@ appendToOverallState: appends element to selected row as chosen by the user
     if (elementIsGood) {
       if (elementNames.includes(elementState.elementName)) {
         alert("Element Name is already being used, please try another one");
+        console.log("The current element Names are", elementNames);
       } else {
         try {
           if (selectedOption === "new row") {
@@ -793,11 +794,11 @@ appendToOverallState: appends element to selected row as chosen by the user
           } else {
             appendToOverallRowState();
           }
-          elementNames.push(elementState.elementName); // so that the new element name will be added to the elementNames list
+          setElementNames([...elementNames, elementState.elementName]); // so that the new element name will be added to the elementNames list
           setElementType(null); // I want to 'close' the element editor
           // need code here to change the preview tab to true
           handleToggleElement(null);
-          elementNames.push(elementState.elementName); // so that the new element
+          console.log("The current element Names are", elementNames);
         } catch (error) {
           console.error(error);
         }
