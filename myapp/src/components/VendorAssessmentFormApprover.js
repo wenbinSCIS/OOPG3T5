@@ -117,7 +117,6 @@ export default function VendorAssessmentFormApprover() {
     }
   }, [isPrint]);
 
-
   useEffect(() => {    
     window.addEventListener('afterprint', handlePrintClose);
     return () => {
@@ -196,21 +195,24 @@ export default function VendorAssessmentFormApprover() {
   
     return (
       <section className='d-flex'>
-        <AdminSidebar></AdminSidebar>
+      <div style={{display: isPrint ? "none" : "block" }}><AdminSidebar/></div>
+      
       <div className="container-fluid">
-      <Header/>
-      <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: "#f9f9fb"}}>
-        {to_return}
-        {
-          isPrint==false &&
-          <div>
-        <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {reject(formName, formVersion, vendor, remarks)}}>Reject</Button>
-        <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {approve(formName, formVersion, vendor, remarks)}}>Approve</Button>
-        <Button  variant="dark" onClick={() => {handlePrint()}}>Print Form</Button> 
-          </div>
-        }
+        <div style={{display: isPrint ? "none" : "block" }}><Header /></div>
+      
+        <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: "#f9f9fb"}} id="toPrint">
+          {to_return}
+          {
+            isPrint==false &&
+            <div>
+          <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {reject(formName, formVersion, vendor, remarks)}}>Reject</Button>
+          <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {approve(formName, formVersion, vendor, remarks)}}>Approve</Button>
+          <Button  variant="dark" onClick={() => {handlePrint()}}>Print Form</Button> 
+            </div>
+          }
+        </div>
       </div>
-      </div>
+
       </section>
     );
 }
