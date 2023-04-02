@@ -18,7 +18,7 @@ const AssignForm = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-      if (sessionStorage.getItem('userType')!=="Admin"){
+      if (sessionStorage.getItem('userType')!=="AdministrativePersonnel"){
         alert("You are not logged in as a Admin")
         navigate('/')
       }
@@ -113,21 +113,31 @@ const AssignForm = () => {
   };
   const handleRemoveForm = async (projectId, formNameVersion) => {
     const projectIndex = selectedUser.project.findIndex((project) => project.projectId == projectId);
+    console.log('projectIndex',projectIndex)
     const formName = formNameVersion.split(" v").slice(0,-1).join("");
     const formVersion = formNameVersion.split(" v").slice(-1) ;
     var tempSelectedUser = selectedUser;
     var filteredForms = tempSelectedUser.project[projectIndex].assignedForm.filter((form) => form.formName !== formName && form.formVersion !== formVersion)
+    var deleteForms = tempSelectedUser.project[projectIndex].assignedForm.filter((form) => form.formName == formName && form.formVersion == formVersion)
     tempSelectedUser.project[projectIndex].assignedForm = filteredForms
-    var dataJson = {
-      companyInfo: tempSelectedUser.companyInfo,
-      hashedPassword: tempSelectedUser.hashedPassword,
-      passwordSalt: tempSelectedUser.passwordSalt,
-      userType: tempSelectedUser.userType,
-      username: tempSelectedUser.username,
-      project : [tempSelectedUser.project[projectIndex]]
-    }
+
+    var dataJson = JSON.parse(JSON.stringify(tempSelectedUser))
+    // var dataJson = {
+    //   companyInfo: tempSelectedUser.companyInfo,
+    //   hashedPassword: tempSelectedUser.hashedPassword,
+    //   passwordSalt: tempSelectedUser.passwordSalt,
+    //   userType: tempSelectedUser.userType,
+    //   username: tempSelectedUser.username,
+    //   project : [tempSelectedUser.project[projectIndex]]
+    // }
+    console.log(dataJson)
+    dataJson.project = [dataJson.project[projectIndex]]
+    dataJson.project[0].assignedForm = deleteForms
+    console.log('dataJson',dataJson)
     var url = "http://localhost:8080/user/deleteAssignedForm";
     await axios.put(url, dataJson).then((response) => {
+      console.log(response.data)
+      console.log('tempSelectedUser',tempSelectedUser)
       setSelectedUser(tempSelectedUser)
     })
     setFormRender(renderSelectedForms())
