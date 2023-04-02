@@ -586,74 +586,6 @@ appendToOverallState: appends element to selected row as chosen by the user
     handleOverallRowState(updatedRowState);
   };
 
-  function delItem(currentList, elementName) {
-    var returnState = [];
-    const deletedRowState = [...currentList];
-    for (let i = 0; i < deletedRowState.length; i++) {
-      var inner = [];
-      for (let j = 0; j < deletedRowState[i].length; j++) {
-        if (deletedRowState[i][j]["elementName"] !== elementName) {
-          inner.push(deletedRowState[i][j]);
-        }
-      }
-      if (inner.length != 0) {
-        returnState.push(inner);
-      }
-    }
-    console.log("The return state for the target row is", returnState);
-    return returnState;
-  }
-
-  function delItemOverallRowState(currentList, elementName) {
-    var returnState = [];
-    const deletedRowState = [...currentList];
-    for (let i = 0; i < deletedRowState.length; i++) {
-      var inner = [];
-      for (let j = 0; j < deletedRowState[i].length; j++) {
-        if (deletedRowState[i][j]["elementName"] !== elementName) {
-          inner.push(deletedRowState[i][j]);
-        }
-      }
-      if (inner.length != 0) {
-        returnState.push(inner);
-      }
-    }
-    console.log("The return state for the overall row state is", returnState);
-    handleToggleSection(returnState);
-    handleSectionChangesDelete(returnState); // for the preview tab
-    const updatedElementNames = elementNames.filter(
-      (name) => name !== elementName
-    ); // do this for form validation, so elemenName that is deleted will be removed from the list
-    setElementNames(updatedElementNames);
-    setSelectedOption("new row"); // do this in case when user choose to add to a current row, if they delete the row while they are filling up the form it will just force them to create a new row instead
-    return returnState;
-  }
-
-  const handleDelete = (e) => {
-    const { value } = e.target;
-    const updatedRowState = delItem(rowState, value);
-    setRowState(updatedRowState);
-    handleOverallRowStateDelete(value);
-  };
-
-  const handleOverallRowStateDelete = (elementName) => {
-    setOverallRowState((overallRowState) =>
-      delItemOverallRowState(overallRowState, elementName)
-    );
-  };
-
-  const handleSectionChangesDelete = (overallRowState) => {
-    // will be added in appendoverall state and handleRowState
-    console.log("CHECKING ROW DATA");
-    console.log(overallRowState);
-    const newSection = { ...sectionData };
-    newSection.rowElements = overallRowState;
-    const rowsLength = overallRowState.length;
-    newSection.numRows = String(rowsLength);
-    setSectionData(newSection);
-    console.log("The new section data for the preview tab is: ", newSection);
-  };
-
   const handleOverallRowState = (updatedState) => {
     const updatedOverallState = [...overallRowState, updatedState]; // updatedOverallState should be sent over to the overallRowState -> takes a while to update
     setOverallRowState((overallRowState) =>
@@ -814,6 +746,103 @@ appendToOverallState: appends element to selected row as chosen by the user
     console.log(sectionData);
     console.log("Element Editor sends data to Section Editor");
     alert("Section has been Added!");
+  }
+
+  /*
+=============================================================================================
+The code below manages the deletion of an element from the preview tab
+=============================================================================================
+*/
+  function delItem(currentList, elementName) {
+    var returnState = [];
+    const deletedRowState = [...currentList];
+    for (let i = 0; i < deletedRowState.length; i++) {
+      var inner = [];
+      for (let j = 0; j < deletedRowState[i].length; j++) {
+        if (deletedRowState[i][j]["elementName"] !== elementName) {
+          inner.push(deletedRowState[i][j]);
+        }
+      }
+      if (inner.length != 0) {
+        returnState.push(inner);
+      }
+    }
+    console.log("The return state for the target row is", returnState);
+    return returnState;
+  }
+
+  function delItemOverallRowState(currentList, elementName) {
+    var returnState = [];
+    const deletedRowState = [...currentList];
+    for (let i = 0; i < deletedRowState.length; i++) {
+      var inner = [];
+      for (let j = 0; j < deletedRowState[i].length; j++) {
+        if (deletedRowState[i][j]["elementName"] !== elementName) {
+          inner.push(deletedRowState[i][j]);
+        }
+      }
+      if (inner.length != 0) {
+        returnState.push(inner);
+      }
+    }
+    console.log("The return state for the overall row state is", returnState);
+    handleToggleSection(returnState);
+    handleSectionChangesDelete(returnState); // for the preview tab
+    const updatedElementNames = elementNames.filter(
+      (name) => name !== elementName
+    ); // do this for form validation, so elemenName that is deleted will be removed from the list
+    setElementNames(updatedElementNames);
+    setSelectedOption("new row"); // do this in case when user choose to add to a current row, if they delete the row while they are filling up the form it will just force them to create a new row instead
+    return returnState;
+  }
+
+  const handleDelete = (e) => {
+    const { value } = e.target;
+    const updatedRowState = delItem(rowState, value);
+    setRowState(updatedRowState);
+    handleOverallRowStateDelete(value);
+  };
+
+  const handleOverallRowStateDelete = (elementName) => {
+    setOverallRowState((overallRowState) =>
+      delItemOverallRowState(overallRowState, elementName)
+    );
+  };
+
+  const handleSectionChangesDelete = (overallRowState) => {
+    // will be added in appendoverall state and handleRowState
+    console.log("CHECKING ROW DATA");
+    console.log(overallRowState);
+    const newSection = { ...sectionData };
+    newSection.rowElements = overallRowState;
+    const rowsLength = overallRowState.length;
+    newSection.numRows = String(rowsLength);
+    setSectionData(newSection);
+    console.log("The new section data for the preview tab is: ", newSection);
+  };
+
+  /*
+=============================================================================================
+The code below hanldes movement of an element within the preview tab
+=============================================================================================
+*/
+
+  function handleMoveRowUp(index) {
+    if (index === 0) return; // No-op if the element is already at the top
+    const updatedRowState = [...overallRowState];
+    const temp = updatedRowState[index];
+    updatedRowState[index] = updatedRowState[index - 1];
+    updatedRowState[index - 1] = temp;
+    setRowState(updatedRowState);
+  }
+
+  function handleMoveRowDown(index) {
+    if (index === overallRowState.length - 1) return; // No-op if the element is already at the bottom
+    const updatedRowState = [...overallRowState];
+    const temp = updatedRowState[index];
+    updatedRowState[index] = updatedRowState[index + 1];
+    updatedRowState[index + 1] = temp;
+    setRowState(updatedRowState);
   }
 
   /*
@@ -1623,7 +1652,7 @@ Returned Component
           <SendIcon />
         </Button>
       </Stack>
-      <PreviewTab sectionState={sectionData} handleDelete={handleDelete} />
+      <PreviewTab sectionState={sectionData} handleDelete={handleDelete} MoveDown={handleMoveRowDown} MoveUp={handleMoveRowUp}/>
       <Stack
         direction="row"
         alignItems="center"
