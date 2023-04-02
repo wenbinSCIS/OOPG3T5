@@ -1,4 +1,4 @@
-import React, { useState , useEffect, version} from "react";
+import React, { useState, useEffect, version } from "react";
 
 import GenerateSection from "./SectionGeneration";
 import "./AdminPage.css";
@@ -14,11 +14,11 @@ import FormSelector from "./AdminPageComponents/FormSelector";
 
 import axios from "axios";
 
-import AdminSidebar from './Sidebar/AdminSidebar';
-import {Routes, Route, useNavigate} from 'react-router-dom';
-import Button from '@mui/material/Button';
+import AdminSidebar from "./Sidebar/AdminSidebar";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
 import SectionEditor from "./SectionEditor/SectionEditor";
-import AutorenewIcon from '@mui/icons-material/Autorenew';
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 function MyForm() {
   const [showAddComponent, setShowAddComponent] = useState(false);
@@ -74,13 +74,13 @@ The code below contains API calls to mongoDB configured by kruise
   function handleNameSaveAs(event) {
     setNameSaveAs(event.target.value);
     const formName = event.target.value;
-    setIsFormNameEmpty(formName === '');
+    setIsFormNameEmpty(formName === "");
     setVersionNumber(versionNumber);
   }
   const handleVersionSaveAs = (event) => {
     setVersionSaveAs(event.target.value);
     const versionNumber = event.target.value;
-    setIsVersionNumberEmpty(versionNumber === '');
+    setIsVersionNumberEmpty(versionNumber === "");
     setVersionNumber(versionNumber);
   };
 
@@ -93,7 +93,6 @@ It also contains a dummy response from vendor to be used
 for testing purposes
 =============================================================================================
 */
-
 
   const [sectionNames, setSectionNames] = useState([]);
   const [elementNames, setElementNames] = useState([]);
@@ -110,7 +109,7 @@ for testing purposes
     });
     setSectionNames(sectionNamesTemp);
     console.log("section Names are currently: ", sectionNamesTemp);
-  },[formComponents]);
+  }, [formComponents]);
 
   useEffect(() => {
     let elementNamesTemp = [];
@@ -160,7 +159,6 @@ handleAddComponent is deprecated
   //   setInfoComponents([...infoComponents, target]);
   //   setSaveStatus(false);
   // }
-
 
   // function handleAddComponent({ name }) {
   //   // we should specific add components for each type
@@ -231,55 +229,59 @@ handleAddComponent is deprecated
       sections: formComponents,
       version: versionSaveAs,
     };
-    await axios.
-    post("http://localhost:8080/api/createForm", formJson)
-    .then((response) => {
-      console.log(response);
-      if (response.status === 201) {
-        setSaveStatus(true);
-        alert("Form saved successfully");
-      } else {
-        alert("Error saving form");
-      }
-    })
-    .catch((error) => {
-      if (error.response.status === 400) {
-        alert("Non-numerical data in Version Number field");
-      } else if (error.response.status === 409) {
-        alert("Duplicate Form Name and Version Number exists");
-      } else {
-        alert("Error saving form");
-      }
-    });
-}
+    await axios
+      .post("http://localhost:8080/api/createForm", formJson)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 201) {
+          setSaveStatus(true);
+          alert("Form saved successfully");
+        } else {
+          alert("Error saving form");
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          alert("Non-numerical data in Version Number field");
+        } else if (error.response.status === 409) {
+          alert("Duplicate Form Name and Version Number exists");
+        } else {
+          alert("Error saving form");
+        }
+      });
+  }
 
-async function UpdateFormByNameAndVersion() {
-  let formJson = {
-    formName: nameSaveAs,
-    sections: formComponents,
-    version: versionSaveAs,
-  };
-  await axios.put(`http://localhost:8080/api/updateFormByNameAndVersion/${nameSaveAs}/${versionSaveAs}`, formJson)
-  .then((response) => {
-    console.log(response);
-    if (response.status === 200) {
-      setSaveStatus(true);
-      alert("Form updated successfully");
-    } else {
-      alert("Error updating form");
-    }
-  })
-  .catch((error) => {
-    alert(error)
-    if (error && error.response && error.response.status === 400) {
-      alert("Error updating form 400")
-    } else if (error && error.response && error.response.status === 403) {
-      alert("Error updating form 403")
-    } else {
-      alert("Error updating form");
-    }
-  });
-}
+  async function UpdateFormByNameAndVersion() {
+    let formJson = {
+      formName: nameSaveAs,
+      sections: formComponents,
+      version: versionSaveAs,
+    };
+    await axios
+      .put(
+        `http://localhost:8080/api/updateFormByNameAndVersion/${nameSaveAs}/${versionSaveAs}`,
+        formJson
+      )
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          setSaveStatus(true);
+          alert("Form updated successfully");
+        } else {
+          alert("Error updating form");
+        }
+      })
+      .catch((error) => {
+        alert(error);
+        if (error && error.response && error.response.status === 400) {
+          alert("Error updating form 400");
+        } else if (error && error.response && error.response.status === 403) {
+          alert("Error updating form 403");
+        } else {
+          alert("Error updating form");
+        }
+      });
+  }
 
   async function loadExistingForms() {
     await axios
@@ -318,7 +320,8 @@ async function UpdateFormByNameAndVersion() {
 
   const handleSelectChange = (event) => {
     const value = event.target.value;
-    setSelectedForm(value);}
+    setSelectedForm(value);
+  };
 
   /* returning the Page */
   return (
@@ -332,14 +335,14 @@ async function UpdateFormByNameAndVersion() {
         />
         <div className="button-container">
           <Button
-          alignItems="center"
-          variant="outlined"
-          disabled={loadFormDisabled}
-           onClick={() => loadSelectedForm(selectedForm, selectedVersion)}
+            alignItems="center"
+            variant="outlined"
+            disabled={loadFormDisabled}
+            onClick={() => loadSelectedForm(selectedForm, selectedVersion)}
           >
-        <AutorenewIcon />
-        &nbsp;Load Form
-      </Button>
+            <AutorenewIcon />
+            &nbsp;Load Form
+          </Button>
         </div>
         <hr></hr>
         <div>
@@ -349,11 +352,15 @@ async function UpdateFormByNameAndVersion() {
               <EditPanel
                 MoveDown={() => handleMoveComponentDown(index)}
                 MoveUp={() => handleMoveComponentUp(index)}
-                // Add={() => handleAddSection(index)}
                 // Edit={() => handleMoveComponentUp(index)}
                 Delete={() => handleRemoveComponent(index)}
+                sectionNamesList={sectionNames}
+                elementNamesList={elementNames}
                 formComponents={formComponents}
                 setFormComponents={setFormComponents}
+                allData={allData}
+                setallData={setallData}
+                index={index}
               />
               <GenerateSection
                 section={component}
@@ -366,7 +373,6 @@ async function UpdateFormByNameAndVersion() {
           <div className="button-container" style={{ display: "block" }}>
             <div style={{ textAlign: "center", display: "block" }}>
               <AddButton
-                // Add={() => handleAddSection()}
                 sectionNamesList={sectionNames}
                 elementNamesList={elementNames}
                 formComponents={formComponents}
@@ -377,7 +383,6 @@ async function UpdateFormByNameAndVersion() {
             </div>
           </div>
           <div className="button-container">
-
             <input
               type="text"
               className="centered-textbox"
@@ -389,7 +394,6 @@ async function UpdateFormByNameAndVersion() {
                 padding: "12px",
                 border: "1px solid #ccc",
                 borderRadius: "7px",
-                
               }}
             />
             <input
@@ -404,7 +408,7 @@ async function UpdateFormByNameAndVersion() {
                 padding: "12px",
                 border: "1px solid #ccc",
                 borderRadius: "7px",
-                margin: "1em"
+                margin: "1em",
               }}
             />
             <SaveComponent
@@ -418,11 +422,14 @@ async function UpdateFormByNameAndVersion() {
               isVersionNumberEmpty={isVersionNumberEmpty}
               isFormNameEmpty={isFormNameEmpty}
               formComponents={formComponents}
-      />
-      <br></br>
+            />
+            <br></br>
           </div>
-          <div className="parent-container" style={{ display: "flex", justifyContent: "center" }}>
-  {/* <div className="centered-row">
+          <div
+            className="parent-container"
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            {/* <div className="centered-row">
     <UpdateComponent
       className="centered-button"
       UpdateFormByNameAndVersion={() => UpdateFormByNameAndVersion()}
@@ -433,7 +440,7 @@ async function UpdateFormByNameAndVersion() {
       formComponents={formComponents}
     />
   </div> */}
-</div>
+          </div>
         </div>
       </div>
       <div style={{ position: "absolute", bottom: 50, width: "100%" }}></div>

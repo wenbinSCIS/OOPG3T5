@@ -96,6 +96,8 @@ const AddButton = ({
   //   newWindow.document.write("</body></html>");
   // };
 
+  const currentSection = {sectionData: "12"};
+
   return (
     <>
       <Button
@@ -116,6 +118,7 @@ const AddButton = ({
             onPressed={handleFormSubmit}
             sectionNamesList={sectionNames}
             elementNamesList={elementNames}
+            currentSection={currentSection}
           />
         </Modal.Body>
         <Modal.Footer>

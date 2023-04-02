@@ -10,6 +10,7 @@ const ElementEditor = ({
   onPressedElement,
   sectionState,
   elementNamesList,
+  index = null,
 }) => {
   const [elementType, setElementType] = useState(null); // element type
 
@@ -31,6 +32,18 @@ const ElementEditor = ({
   useEffect(() => {
     setElementNames(elementNamesList);
   }, elementNamesList);
+
+  useEffect(() => {
+    if (index !== null) {
+      let overallRowStateTemp = [];
+      overallRowStateTemp = sectionData.rowElements;
+      setOverallRowState(overallRowStateTemp);
+      console.log(
+        "The overall row state is ",
+        overallRowStateTemp
+      );
+    }
+  }, []);
 
   /*
 =============================================================================================
@@ -1652,7 +1665,12 @@ Returned Component
           <SendIcon />
         </Button>
       </Stack>
-      <PreviewTab sectionState={sectionData} handleDelete={handleDelete} MoveDown={handleMoveRowDown} MoveUp={handleMoveRowUp}/>
+      <PreviewTab
+        sectionState={sectionData}
+        handleDelete={handleDelete}
+        MoveDown={handleMoveRowDown}
+        MoveUp={handleMoveRowUp}
+      />
       <Stack
         direction="row"
         alignItems="center"

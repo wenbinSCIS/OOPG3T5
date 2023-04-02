@@ -7,7 +7,13 @@ import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ElementEditor from "./ElementEditor";
 
-function SectionEditor({ onPressed, sectionNamesList, elementNamesList }) {
+function SectionEditor({
+  onPressed,
+  sectionNamesList,
+  elementNamesList,
+  index = null,
+  currentSection,
+}) {
   /*
 =============================================================================================
 const sectionData: intializes the section with the section font 12
@@ -17,9 +23,8 @@ useEffect: logs changes to section data everytime a change is made
 theme: provides theme for buttons
 =============================================================================================
 */
-  const [sectionData, setSectionData] = useState({
-    sectionFont: "12",
-  });
+
+  const [sectionData, setSectionData] = useState(currentSection);
 
   useEffect(
     () => console.log("The Section State is: ", sectionData),
@@ -54,6 +59,23 @@ editor is active or disabled
   const [sectionNames, setSectionNames] = useState(sectionNamesList);
   const [elementNames, setElementNames] = useState(elementNamesList);
 
+  const [sectionNameInitialized, setSectionNameInitialized] = useState(null); // checking if the sectionName is present (i.e editing a section)
+
+  const [sectionName, setSectionName] = useState("");
+  const [sectionText, setSectionText] = useState("");
+
+  useEffect(() => {
+    if (index !== null) {
+      setSectionNameInitialized(currentSection.sectionName);
+      console.log(
+        "The current initalized section name is ",
+        currentSection.sectionName
+      );
+      setSectionName(currentSection.sectionName);
+      setSectionText(currentSection.sectionText);
+    }
+  }, []);
+
   useEffect(() => {
     setSectionNames(sectionNamesList);
   }, sectionNamesList);
@@ -68,6 +90,12 @@ editor is active or disabled
       ...prevSectionData,
       [id]: value,
     }));
+    if (id === "sectionName") {
+      setSectionName(value);
+    }
+    if (id === "sectionText") {
+      setSectionText(value);
+    }
   };
 
   const [isActive, setIsActive] = useState(true);
@@ -109,7 +137,12 @@ the element editor
       console.log("printing out sectionNames in sectionEditor", sectionNames);
       console.log("printing out elementNames in sectionEditor", elementNames);
       if (sectionNames.includes(sectionData.sectionName)) {
-        alert("Section Name is already used, please try another one");
+        if ((sectionData.sectionName = sectionNameInitialized)) {
+          setSectionCreated(true);
+          handleToggle();
+        } else {
+          alert("Section Name is already used, please try another one");
+        }
       } else {
         setSectionCreated(true);
         handleToggle();
@@ -140,6 +173,7 @@ the element editor
           <Form.Control
             type="sectionName"
             placeholder="Section Name"
+            value={sectionName}
             onChange={handleInputChange}
           />
         </Form.Group>
@@ -150,6 +184,7 @@ the element editor
           <Form.Control
             type="sectionText"
             placeholder="Section Text"
+            value = {sectionText}
             onChange={handleInputChange}
           />
         </Form.Group>
@@ -229,6 +264,7 @@ the element editor
           onPressedElement={retrieveFromElementEditor}
           sectionState={sectionData}
           elementNamesList={elementNames}
+          index={index}
         /> // onPressedElement - need to add handle submit here? -> need to be at Save and Close as submit button within element editor
       )}
     </div>

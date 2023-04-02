@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import GenerateSection from "../SectionGeneration";
 
-export default function PreviewTab({ sectionState, handleDelete, MoveUp,MoveDown }) {
+export default function PreviewTab({
+  sectionState,
+  handleDelete,
+  MoveUp,
+  MoveDown,
+}) {
   console.log("in the preview tab the section state is", sectionState);
 
   var [allData, setallData] = useState({}); //All data to save for user
@@ -17,17 +22,15 @@ export default function PreviewTab({ sectionState, handleDelete, MoveUp,MoveDown
         )}
       {typeof sectionState.rowElements !== "undefined" &&
         sectionState.rowElements.length !== 0 && (
-          <div>
-            <GenerateSection
-              section={sectionState}
-              allData={allData}
-              setallData={setallData}
-              generateFor="AdminCreation"
-              handleDelete={handleDelete}
-              MoveDown={MoveDown}
-              MoveUp={MoveUp}
-            ></GenerateSection>
-          </div>
+          <GenerateSection
+            section={sectionState}
+            allData={allData}
+            setallData={setallData}
+            generateFor="AdminCreation"
+            handleDelete={handleDelete}
+            MoveDown={MoveDown}
+            MoveUp={MoveUp}
+          ></GenerateSection>
         )}
     </div>
   );
