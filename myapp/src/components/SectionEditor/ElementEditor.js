@@ -595,12 +595,37 @@ appendToOverallState: appends element to selected row as chosen by the user
         if (deletedRowState[i][j]["elementName"] !== elementName) {
           inner.push(deletedRowState[i][j]);
         }
-        if (inner.length != 0) {
-          returnState.push(inner);
-        }
+      }
+      if (inner.length != 0) {
+        returnState.push(inner);
       }
     }
-    console.log(returnState);
+    console.log("The return state for the target row is",returnState);
+    return returnState;
+  }
+
+  function delItemOverallRowState(currentList, elementName) {
+    var returnState = [];
+    const deletedRowState = [...currentList];
+    for (let i = 0; i < deletedRowState.length; i++) {
+      var inner = [];
+      for (let j = 0; j < deletedRowState[i].length; j++) {
+        if (deletedRowState[i][j]["elementName"] !== elementName) {
+          inner.push(deletedRowState[i][j]);
+        }
+      }
+      if (inner.length != 0) {
+        returnState.push(inner);
+      }
+    }
+    console.log("The return state for the overall row state is", returnState);
+    handleToggleSection(returnState);
+    handleSectionChangesDelete(returnState); // for the preview tab
+    const updatedElementNames = elementNames.filter(
+      (name) => name !== elementName
+    ); // do this for form validation, so elemenName that is deleted will be removed from the list
+    setElementNames(updatedElementNames);
+    setSelectedOption("new row"); // do this in case when user choose to add to a current row, if they delete the row while they are filling up the form it will just force them to create a new row instead
     return returnState;
   }
 
@@ -608,16 +633,13 @@ appendToOverallState: appends element to selected row as chosen by the user
     const { value } = e.target;
     const updatedRowState = delItem(rowState, value);
     setRowState(updatedRowState);
-    handleOverallRowStateDelete(updatedRowState, value);
+    handleOverallRowStateDelete(value);
   };
 
-  const handleOverallRowStateDelete = (updatedState, elementName) => {
+  const handleOverallRowStateDelete = (elementName) => {
     setOverallRowState((overallRowState) =>
-      delItem(overallRowState, elementName)
+      delItemOverallRowState(overallRowState, elementName)
     );
-    // console.log(updatedOverallState); // this should be pushed to the admin page
-    handleToggleSection(updatedState);
-    handleSectionChangesDelete(updatedState); // for the preview tab
   };
 
   const handleSectionChangesDelete = (overallRowState) => {
@@ -631,8 +653,6 @@ appendToOverallState: appends element to selected row as chosen by the user
     setSectionData(newSection);
     console.log("The new section data for the preview tab is: ", newSection);
   };
-
-  console.log(sectionData);
 
   const handleOverallRowState = (updatedState) => {
     const updatedOverallState = [...overallRowState, updatedState]; // updatedOverallState should be sent over to the overallRowState -> takes a while to update
@@ -819,22 +839,22 @@ it also handles changes to the preview tab
 
   const [canAddSection, setCanAddSection] = useState(false);
 
-const handleToggleSection = (updatedState = null) => {
-  let tempcanAdd = false;
-  if (updatedState === null) {
-    console.log("updated state is null")
-    if (overallRowState != []) {
-      tempcanAdd = true;
+  const handleToggleSection = (updatedState = null) => {
+    let tempcanAdd = false;
+    if (updatedState === null) {
+      console.log("updated state is null");
+      if (overallRowState != []) {
+        tempcanAdd = true;
+      }
+    } else {
+      console.log("updated state is not null", updatedState, tempcanAdd);
+      if (updatedState.length > 0) {
+        tempcanAdd = true;
+      }
     }
-  } else {
-    console.log("updated state is not null", updatedState, tempcanAdd)
-    if (updatedState.length > 0) {
-      tempcanAdd = true;
-    }
-  }
-  setCanAddSection(tempcanAdd);
-  console.log("The Save Section button is active?: " + tempcanAdd);
-};
+    setCanAddSection(tempcanAdd);
+    console.log("The Save Section button is active?: " + tempcanAdd);
+  };
 
   const handleSectionChanges = (rowData) => {
     // will be added in appendoverall state and handleRowState
