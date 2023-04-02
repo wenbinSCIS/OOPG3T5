@@ -1,6 +1,6 @@
 # OOPG3T5
 
-##Installation
+## Installation
 
 Download the latest [maven](https://maven.apache.org/download.cgi) (binary file)
 
@@ -55,6 +55,7 @@ Under the collections "form_elements" and "userCollection" import the correspond
 
 ![image](https://user-images.githubusercontent.com/85857168/229339285-3a88ebfd-148c-42f5-8d84-3b439e1d6ea4.png)
 
+## Setting up java program and web app
 
 run setup.bat in the terminal
 ```
