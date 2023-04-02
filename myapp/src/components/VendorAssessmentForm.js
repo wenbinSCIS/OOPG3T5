@@ -262,7 +262,7 @@ console.log(isUserInputLoaded)
       
       <div className="container-fluid">
         <Header/>
-        <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: sessionStorage.getItem("userType") === "Vendor"?"#f9f9fb":"#f8f9ee"}}>
+        <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: "#f9f9fb"}}>
         
           {to_return}
           {alerts}

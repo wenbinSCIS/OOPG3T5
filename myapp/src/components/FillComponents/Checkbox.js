@@ -64,7 +64,7 @@ function Checkbox({data,onChange, options,title,size,false_header,name,orientati
           }
       {title.length>0 &&
        <InputGroup.Text >
-       <label style={{margin:1,color: generateFor === "Vendor" ? "#eff1f5" : generateFor === "Approver" ? "#f4dcb7" : "#dfe6b3"}}>{title} </label>
+       <label style={{margin:1,color: "black"}}>{title} </label>
        </InputGroup.Text>
       }
       {

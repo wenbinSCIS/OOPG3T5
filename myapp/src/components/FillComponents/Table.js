@@ -19,7 +19,7 @@ function TableComponent(props) {
         <thead>
         <tr>
           {column_headers.map((column,index) => (
-            <th key={index} style={{backgroundColor: props.generateFor === "Vendor" ? "#eff1f5" : props.generateFor === "Approver" ? "#f4dcb7" : "#dfe6b3"}}>{column}</th>
+            <th key={index} style={{backgroundColor: props.generateFor !== props.fillFor ? "#cbcbcc" : "#eff1f5"}}>{column}</th>
           ))}
         </tr>
         </thead>
@@ -27,7 +27,7 @@ function TableComponent(props) {
         {data && data.length > 0 && (
           // Generate numRows rows
           data.map((row, rowIndex) => (
-            <tr key={rowIndex} style={{backgroundColor: props.generateFor === "Vendor" ? "#fafbfc" : props.generateFor === "Approver" ? "#fdf9f3" : "#f1f4dd"}}>
+            <tr key={rowIndex} style={{backgroundColor: props.generateFor !== props.fillFor ? "#e1e2e3" : "#fafbfc"}}>
               {column_headers.map((column,index) => (
                 <td key={index}>
                   {props.generateFor !== props.fillFor ? (

@@ -68,14 +68,8 @@ function GenerateSection(props) {
   }
   return (
     <div
-      className="row mb-3 pt-3"
-      style={{
-        backgroundColor:
-          props.generateFor !== props.fillFor &&
-          (sessionStorage.getItem("userType") == "Vendor"
-            ? "#e1e2e3"
-            : "#d9dcc7"),
-      }}
+      className="row py-3"
+      style={{backgroundColor: props.generateFor !== props.fillFor && props.generateFor!="AdminCreation"&& "#Ebebec"}}
     >
       <h5>{sectionText}</h5>
       {/* {to_return} */}

@@ -35,14 +35,14 @@ function Dropdown(props) {
           <CloseButton onClick={props.handleDelete} value={props.name}/>
           }
         {props.title.length > 0 &&
-          <label style={{margin:0,color:  props.generateFor === "Vendor" ? "#eff1f5" : props.generateFor === "Approver" ? "#f4dcb7" : "#dfe6b3"}}>{props.title}</label>
+          <label style={{margin:0,color:'black'}}>{props.title}</label>
         }
         {
           props.false_header &&
           <br></br>
         }
         <select name={props.name} style={{
-           backgroundColor: props.generateFor === "Vendor" ? "#fafbfc" : props.generateFor === "Approver" ? "#fdf9f3" : "#f1f4dd",
+           backgroundColor: props.generateFor !== props.fillFor ? "#e1e2e3" : "#fafbfc",
            cursor: props.generateFor !== props.fillFor ? "not-allowed" : "auto",
            pointerEvents: props.generateFor !== props.fillFor ? "none" : "auto"
           }} className="form-control" value={props.data} onChange={handleValueChange}>
