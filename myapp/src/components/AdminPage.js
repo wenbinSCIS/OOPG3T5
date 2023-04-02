@@ -1,9 +1,9 @@
-import React, { useState, useEffect, version } from "react";
+import React, { useState, useEffect} from "react";
 
 import GenerateSection from "./SectionGeneration";
 import "./AdminPage.css";
-import AddComponent from "./AddComponent";
-import Creator from "./Buttons/Creator";
+// import AddComponent from "./AddComponent";
+// import Creator from "./Buttons/Creator";
 
 import EditPanel from "./Buttons/EditPanel";
 import AddButton from "./Buttons/AddButton";
@@ -50,9 +50,7 @@ function MyForm() {
   const [formName, setFormName] = useState("");
   const [versionNumber, setVersionNumber] = useState("");
   const [loadFormDisabled, setLoadFormDisabled] = useState(false);
-  // const handleInputChange = (event) => {
-  //   setElementName(event.target.value);
-  // };
+
 
   /*
 =============================================================================================
@@ -86,7 +84,7 @@ The code below contains API calls to mongoDB configured by kruise
 
   /*
 =============================================================================================
-The code below contains the parametersfor sections 
+The code below contains the parameters for sections 
 using the old elemenent editor (deprecated)
 
 It also contains a dummy response from vendor to be used
@@ -98,10 +96,10 @@ for testing purposes
   const [elementNames, setElementNames] = useState([]);
 
   useEffect(() => {
-    // if (sessionStorage.getItem('userType')!="AdministrativePersonnel"){
-    //   alert("You are not logged in as an AdministrativePersonnel")
-    //   navigate('/')
-    // }
+    if (sessionStorage.getItem('userType')!="AdministrativePersonnel"){
+      alert("You are not logged in as an AdministrativePersonnel")
+      navigate('/')
+    }
     let sectionNamesTemp = [];
     formComponents.forEach((section) => {
       const sectionName = section.sectionName;

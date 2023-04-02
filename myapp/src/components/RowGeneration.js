@@ -245,7 +245,7 @@ function GenerateRow(props) {
           direction="row"
           alignItems="center"
           spacing={2}
-          sx={{ justifyContent: "flex-end" }}
+          sx={{ justifyContent: "flex-end", marginBottom:-7 }}
         >
           <IconButton onClick={() => handleMoveDown(props.index)}>
             <ExpandCircleDownIcon fontSize="large" />
@@ -256,7 +256,7 @@ function GenerateRow(props) {
               sx={{ transform: "rotate(180deg)" }}
             />
           </IconButton>
-          <Button
+          {/* <Button
             display="flex"
             alignItems="center"
             flexWrap="wrap"
@@ -268,11 +268,11 @@ function GenerateRow(props) {
           >
             <HighlightOffIcon />
             &nbsp;Remove
-          </Button>
+          </Button> */}
         </Stack>
       )}
       {to_return}
-      {props.generateFor === "AdminCreation" && <hr></hr>}
+      {props.generateFor === "AdminCreation" && (<><p></p><hr></hr></>)}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import Login from "../components/Login";
 import ApprovalList from "../components/ApprovalList";
 import AdminApprovalList from "../components/AdminApprovalList";
 import AdminCreation from "../components/AdminCreation";
-import MyForm from "../components/AdminPageTest";
+import MyForm from "../components/AdminPage";
 import AssignForm from "../components/AssignForm";
 import VendorAssessmentForm from "../components/VendorAssessmentForm";
 import UncompletedForms from "../components/UncompletedForms";

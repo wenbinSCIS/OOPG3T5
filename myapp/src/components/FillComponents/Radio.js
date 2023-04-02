@@ -2,7 +2,9 @@ import React, { useState,useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import TextInput from './TextInput';
-import CloseButton from 'react-bootstrap/CloseButton';
+
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import IconButton from "@mui/material/IconButton";
 
 
 function Radio({ data, onChange, options, title, size, false_header, name, orientation, generateFor , handleDelete, fillFor}) {
@@ -43,71 +45,111 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
     onChange(parentName, useStateobj);
   }
   return (
-    <div className={number} style={{ margin: 0 }}>
-       {
-          generateFor==="AdminCreation" &&
-          <CloseButton onClick={handleDelete} value={name}/>
-          }
-      {title.length > 0 && (
-        <InputGroup.Text style={{ paddingTop: 2, paddingBottom:2,marginBottom:2 ,backgroundColor: generateFor !== fillFor ? "#cbcbcc" : "#eff1f5"}}>{title}</InputGroup.Text>
-      )}
-      {false_header && <br />}
-      {options.map((option,index) => option.optionType === "radio-text" ? (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Form.Check
-            label={option.optionValue}
-            checked={data != null && data.name == option.optionValue ? true : false}
-            name={name}
-            type="radio"
-            key={index}
-            value = {option.optionValue}
-            onChange={(e) => {handleRadioChange(e); }}
-            style={
-              generateFor !== fillFor ?{
-                margin: '7px',
-                cursor: 'not-allowed',
-                pointerEvents: 'none',
-              }:
-              {
-                margin: '7px',
-            }}
-            data-format="radio-text"
+    <div style={{ position: "relative" }}>
+      {generateFor === "AdminCreation" && (
+        <IconButton
+          onClick={(event) => {
+            const newEvent = Object.assign({}, event, {
+              target: { value: name },
+            });
+            handleDelete(newEvent);
+          }}
+        >
+          <HighlightOffIcon
+            fontSize="large"
+            sx={{ color: "red", marginLeft: -1 }}
           />
-            <TextInput title={option.textVariables.header} hint={option.textVariables.hintText} hintPosition={option.textVariables.hintPosition} name = {option.optionName + "_text"} false_header={false_header} disabled={data != null && data.name == option.optionValue ? false : true} 
-            onChange={(e) => handleTextinChange(name,option.optionValue, e)}
-            text={data!==undefined?data.text:''}
-            generateFor={
-              generateFor
-            }
-            /> 
-          </div>
-        
-      ) : (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Form.Check
-            label={option.optionValue}
-            checked={data != null && data.name == option.optionValue ? true : false}
-            name={name}
-            type="radio"
-            data-format="radio"
-            key={index}
-            value = {option.optionValue}
-            onChange={(e) => handleRadioChange(e)}
-            style={
-              generateFor !== fillFor ?{
-                margin: '7px',
-                cursor: 'not-allowed',
-                pointerEvents: 'none',
-              }:
-              {
-                margin: '7px',
-            }}
-          />
-          </div>
-      )
+        </IconButton>
       )}
-      
-      </div>  
+      <div className={number} style={{ margin: 0, marginLeft: -15 }}>
+        {title.length > 0 && (
+          <InputGroup.Text
+            style={{
+              paddingTop: 2,
+              paddingBottom: 2,
+              marginBottom: 2,
+              backgroundColor: generateFor !== fillFor ? "#cbcbcc" : "#eff1f5",
+            }}
+          >
+            {title}
+          </InputGroup.Text>
+        )}
+        {false_header && <br />}
+        {options.map((option, index) =>
+          option.optionType === "radio-text" ? (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Form.Check
+                label={option.optionValue}
+                checked={
+                  data != null && data.name == option.optionValue ? true : false
+                }
+                name={name}
+                type="radio"
+                key={index}
+                value={option.optionValue}
+                onChange={(e) => {
+                  handleRadioChange(e);
+                }}
+                style={
+                  generateFor !== fillFor
+                    ? {
+                        margin: "7px",
+                        cursor: "not-allowed",
+                        pointerEvents: "none",
+                      }
+                    : {
+                        margin: "7px",
+                      }
+                }
+                data-format="radio-text"
+              />
+              <TextInput
+                title={option.textVariables.header}
+                hint={option.textVariables.hintText}
+                hintPosition={option.textVariables.hintPosition}
+                name={option.optionName + "_text"}
+                false_header={false_header}
+                disabled={
+                  data != null && data.name == option.optionValue ? false : true
+                }
+                onChange={(e) =>
+                  handleTextinChange(name, option.optionValue, e)
+                }
+                text={data !== undefined ? data.text : ""}
+                generateFor={generateFor}
+                isFromOtherElement = {true} // added so that we will not create the x button on top of it
+              />
+            </div>
+          ) : (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Form.Check
+                label={option.optionValue}
+                checked={
+                  data != null && data.name == option.optionValue ? true : false
+                }
+                name={name}
+                type="radio"
+                data-format="radio"
+                key={index}
+                value={option.optionValue}
+                onChange={(e) => handleRadioChange(e)}
+                style={
+                  generateFor !== fillFor
+                    ? {
+                        margin: "7px",
+                        cursor: "not-allowed",
+                        pointerEvents: "none",
+                      }
+                    : {
+                        margin: "7px",
+                      }
+                }
+              />
+            </div>
+          )
+        )}
+      </div>
+    </div>
   );
 }
 
