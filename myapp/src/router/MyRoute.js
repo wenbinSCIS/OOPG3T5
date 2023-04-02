@@ -1,9 +1,9 @@
 import { Routes , Route } from "react-router-dom";
 
-import Error from "../components/Error";
+
 import Home from "../components/Home";
 import Login from "../components/Login";
-import TestPage from "../components/JEPAGETEST";
+
 
 import ApprovalList from "../components/ApprovalList";
 import AdminApprovalList from "../components/AdminApprovalList";
@@ -31,8 +31,8 @@ export default function MyRoute() {
         <Route exact path="/vendor" element={<VendorAssessmentForm/>} />
         <Route exact path="/vendorApprover" element={<VendorAssessmentFormApprover/>} />
         <Route exact path="/testadmin" element={<MyForm/>}/> 
-        {/* <Route exact path="/UserForm" element={<UserForm/>}/>  */}
-        <Route component={Error} />
+
+
       </Routes>
     </>
   );
