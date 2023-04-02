@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import TextInput from "./TextInput";
-import Checkbox from "./Checkbox";
-import Radio from "./Radio";
-import Dropdown from "./DropdownSelect";
-import Textarea from "./Textarea";
-import TableComponent from "./Table";
-import Text from "./Text";
+import TextInput from "./FillComponents/TextInput";
+import Checkbox from "./FillComponents/Checkbox";
+import Radio from "./FillComponents/Radio";
+import Dropdown from "./FillComponents/DropdownSelect";
+import Textarea from "./FillComponents/Textarea";
+import TableComponent from "./FillComponents/Table";
+import Text from "./FillComponents/Text";
 
 // styling up for AdminCreation
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";

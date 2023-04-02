@@ -22,13 +22,10 @@ export default function MyRoute() {
         <Route exact path="/AdminApprovalList" element={<AdminApprovalList/>} />
         <Route exact path="/ApprovalList" element={<ApprovalList/>} />
         <Route exact path="/AssignForm" element={<AssignForm/>} />
-        <Route exact path="/AdminCreation" element={<AdminCreation/>} />
-       
+        <Route exact path="/AdminCreation" element={<AdminCreation/>} />     
         <Route exact path="/vendor" element={<VendorAssessmentForm/>} />
         <Route exact path="/vendorApprover" element={<VendorAssessmentFormApprover/>} />
         <Route exact path="/testadmin" element={<MyForm/>}/> 
-
-
       </Routes>
     </>
   );
