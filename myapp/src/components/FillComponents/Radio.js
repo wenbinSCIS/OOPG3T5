@@ -1,46 +1,56 @@
-import React, { useState,useEffect } from 'react';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import TextInput from './TextInput';
+import React, { useState, useEffect } from "react";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import TextInput from "./TextInput";
 
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import IconButton from "@mui/material/IconButton";
 
-function Radio({ data, onChange, options, title, size, false_header, name, orientation, generateFor , handleDelete, fillFor}) {
-
-  var [selectedOption, setSelectedOption] = useState('');
+function Radio({
+  data,
+  onChange,
+  options,
+  title,
+  size,
+  false_header,
+  name,
+  orientation,
+  generateFor,
+  handleDelete,
+  fillFor,
+}) {
+  var [selectedOption, setSelectedOption] = useState("");
   // var [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     if (data !== undefined) {
-      setSelectedOption(prevData => ({ ...prevData, ...data }));
+      setSelectedOption((prevData) => ({ ...prevData, ...data }));
     }
   }, []); // empty dependency array to run the effect only once
 
-
   var number = `form col-md-${size}`;
-  if(orientation === "horizontal"){
-    number = number + " d-flex"
+  if (orientation === "horizontal") {
+    number = number + " d-flex";
   }
 
   function handleRadioChange(event) {
     var useStateobj = {
       name: event.target.value,
       type: event.target.dataset.format,
-      text: ""
+      text: "",
     };
     setSelectedOption(event.target.value);
-    onChange(name, useStateobj)    
+    onChange(name, useStateobj);
   }
-  function handleTextinChange(parentName,parentRadioValue, event) {
+  function handleTextinChange(parentName, parentRadioValue, event) {
     // const inputName = e.target.name;
-    console.log(event.target.value)
+    console.log(event.target.value);
     var useStateobj = {
       name: parentRadioValue,
       type: "radio-text",
-      text: event.target.value
+      text: event.target.value,
     };
-    console.log(useStateobj)
+    console.log(useStateobj);
     onChange(parentName, useStateobj);
   }
   return (
@@ -53,6 +63,7 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
             });
             handleDelete(newEvent);
           }}
+          sx={{ zIndex: 1 }}
         >
           <HighlightOffIcon
             fontSize="large"
@@ -60,7 +71,7 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
           />
         </IconButton>
       )}
-      <div className={number} style={{marginLeft: 0 }}>
+      <div className={number} style={{ marginLeft: 0 }}>
         {title.length > 0 && (
           <InputGroup.Text
             style={{
@@ -116,7 +127,7 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
                 }
                 text={data !== undefined ? data.text : ""}
                 generateFor={generateFor}
-                isFromOtherElement = {true} // added so that we will not create the x button on top of it
+                isFromOtherElement={true} // added so that we will not create the x button on top of it
               />
             </div>
           ) : (
@@ -152,7 +163,4 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
   );
 }
 
-
 export default Radio;
-
-

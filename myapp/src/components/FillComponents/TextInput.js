@@ -29,6 +29,7 @@ function TextInput(props) {
               });
               props.handleDelete(newEvent);
             }}
+            sx={{ zIndex: 1 }}
           >
             <HighlightOffIcon
               fontSize="large"

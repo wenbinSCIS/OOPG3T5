@@ -250,7 +250,7 @@ function GenerateRow(props) {
           direction="row"
           alignItems="center"
           spacing={2}
-          sx={{ justifyContent: "flex-end", marginBottom:margin }}
+          sx={{ justifyContent: "flex-end", marginBottom:margin, zIndex: 1 }}
         >
           <IconButton onClick={() => handleMoveDown(props.index)}>
             <ExpandCircleDownIcon fontSize="large" />
