@@ -2,6 +2,12 @@
 
 Download [maven](https://maven.apache.org/download.cgi) (binary file)
 
+Have a JDK installation on your system. Either set the JAVA_HOME environment variable pointing to your JDK installation or have the java executable on your PATH.
+
+Extract distribution archive in any directory
+
+Add the bin directory of the created directory apache-maven-3.9.1 to the PATH environment variable
+
 Download [mongo shell](https://www.mongodb.com/try/download/shell) and [mongodb community version](https://www.mongodb.com/try/download/community) (install all functionalities and restart com)
 
 MongoDB needs a folder to store the database. Create a C:\data\db\ directory:
