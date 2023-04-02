@@ -39,7 +39,7 @@ function GenerateSectionApproval(props) {
             {to_return}
             { 
             
-              props.generateFor === "Approver" &&
+              props.generateFor === "Approver" && props.isPrint==false &&
                 <textarea
                 name={props.section.sectionName}
                 key={props.section.sectionName}

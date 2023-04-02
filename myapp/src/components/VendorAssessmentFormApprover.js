@@ -22,6 +22,8 @@ export default function VendorAssessmentFormApprover() {
   var projectName = sessionStorage.getItem('projectName') 
   var projectId = sessionStorage.getItem('projectId')
 
+  var [isPrint , setIsPrint] = useState(false)
+
   async function getData(formName) {
     try {
       console.log('Sending request...');
@@ -107,7 +109,30 @@ export default function VendorAssessmentFormApprover() {
           }   
     fetchData();
   }, []); // empty dependency array to run the effect only once
+
   
+  useEffect(() => {
+    if (isPrint) {
+      window.print();
+    }
+  }, [isPrint]);
+
+
+  useEffect(() => {    
+    window.addEventListener('afterprint', handlePrintClose);
+    return () => {
+      window.removeEventListener('afterprint', handlePrintClose);
+    };
+  }, []);
+  
+  const handlePrint = () => {
+    setIsPrint(true);
+  };
+
+  const handlePrintClose = () => {
+    setIsPrint(false);
+  };
+
 
   async function reject(formName, formVersion, username, remarks) {
     
@@ -166,7 +191,7 @@ export default function VendorAssessmentFormApprover() {
       const each_section = sections[i]
       var fillFor = each_section['fillFor']
       var generateFor = sessionStorage.getItem("userType")
-      to_return.push(<GenerateSectionApproval remarks = {remarks} setRemarks = {setRemarks} section={each_section} allData = {allData} setallData = {setallData} fillFor = {fillFor} generateFor = {generateFor}></GenerateSectionApproval>)
+      to_return.push(<GenerateSectionApproval remarks = {remarks} setRemarks = {setRemarks} section={each_section} allData = {allData} setallData = {setallData} fillFor = {fillFor} generateFor = {generateFor} isPrint = {isPrint}></GenerateSectionApproval>)
     }}
   
     return (
@@ -176,8 +201,14 @@ export default function VendorAssessmentFormApprover() {
       <Header/>
       <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: "#fcf5e9"}}>
         {to_return}
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {reject(formName, formVersion, vendor, remarks)}}>Reject</Button>
-      <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {approve(formName, formVersion, vendor, remarks)}}>Approve</Button>
+        {
+          isPrint==false &&
+          <div>
+        <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {reject(formName, formVersion, vendor, remarks)}}>Reject</Button>
+        <Button style={{margin: 1 + 'em'}} variant="dark" onClick={()=> {approve(formName, formVersion, vendor, remarks)}}>Approve</Button>
+        <Button  variant="dark" onClick={() => {handlePrint()}}>Print Form</Button> 
+          </div>
+        }
       </div>
       </div>
       </section>
