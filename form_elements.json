@@ -1,0 +1,2836 @@
+[{
+  "_id": {
+    "$oid": "641d41d29ca1572647a97810"
+  },
+  "formName": "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
+  "sections": [
+    {
+      "sectionName": "Company Info",
+      "sectionText": "Fill in your name",
+      "sectionFont": "12",
+      "numRows": 4,
+      "rowElements": [
+        [
+          {
+            "elementName": "CompanyName",
+            "elementHeader": "",
+            "placeholder": "Company's Name: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          },
+          {
+            "elementName": "CompanyRegistrationNo",
+            "elementHeader": "",
+            "placeholder": "Company Registration No:",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          }
+        ],
+        [
+          {
+            "elementName": "Like",
+            "elementHeader": "Like",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "size": 12,
+            "options": [
+              {
+                "optionType": "radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "radio",
+                "optionName": "No",
+                "optionValue": "No"
+              },
+              {
+                "optionType": "radio-text",
+                "optionName": "others",
+                "optionValue": "Others",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front",
+                  "hintText": "Please specify"
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "elementName": "OfficeAddress",
+            "elementHeader": "",
+            "placeholder": "Office Address: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          }
+        ],
+        [
+          {
+            "elementName": "Telephone",
+            "elementHeader": "",
+            "placeholder": "Tel: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          },
+          {
+            "elementName": "Fax",
+            "elementHeader": "",
+            "placeholder": "Fax: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Evaluation",
+      "sectionText": "Evaluation",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Licenses",
+            "elementHeader": "",
+            "elementType": "Checkbox",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Checkbox",
+                "optionName": "a. Sole proprietorship",
+                "optionValue": "a. Sole proprietorship"
+              },
+              {
+                "optionType": "Checkbox",
+                "optionName": "b. Limited Company",
+                "optionValue": "b. Limited Company"
+              },
+              {
+                "optionType": "Checkbox",
+                "optionName": "c. Partnership Agreement",
+                "optionValue": "c. Partnership Agreement"
+              },
+              {
+                "optionType": "Checkbox-text",
+                "optionName": "others",
+                "optionValue": "Others",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front"
+                }
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Evaluation",
+      "sectionText": "Evaluation",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Feedback",
+            "elementHeader": "Feedback About us:",
+            "elementType": "Textarea",
+            "size": 0
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Contact Information",
+      "sectionText": "Contact Person:",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Contacts",
+            "elementHeader": "",
+            "elementType": "Table",
+            "size": 0,
+            "noRows": "3",
+            "headers": [
+              "Name",
+              "Tel",
+              "Designation"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Contact Information",
+      "sectionText": "Contact Person:",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "How",
+            "elementHeader": "How did you hear about us?*",
+            "elementType": "Dropdown",
+            "size": 4,
+            "options": [
+              {
+                "optionType": "Dropdown",
+                "optionName": "Selection A",
+                "optionValue": "Selection A"
+              },
+              {
+                "optionType": "Dropdown",
+                "optionName": "Selection B",
+                "optionValue": "Selection B"
+              },
+              {
+                "optionType": "Dropdown",
+                "optionName": "Selection C",
+                "optionValue": "Selection C"
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "version": 1.1,
+  "formTitle": "Quantum Leap Incorporation PTE LTD",
+  "titleSize": "20",
+  "_class": "com.mongodb.quickstart.models.Form"
+},{
+  "_id": {
+    "$oid": "641d7a36861abc3220e411c9"
+  },
+  "formName": "Leave of absence",
+  "sections": [
+    {
+      "sectionName": "Company Info",
+      "sectionText": "Fill in your name",
+      "sectionFont": "12",
+      "numRows": 4,
+      "rowElements": [
+        [
+          {
+            "elementName": "CompanyName",
+            "elementHeader": "",
+            "placeholder": "Company's Name: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          },
+          {
+            "elementName": "CompanyRegistrationNo",
+            "elementHeader": "",
+            "placeholder": "Company Registration No:",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          }
+        ],
+        [
+          {
+            "elementName": "Like",
+            "elementHeader": "Like",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "size": 12,
+            "options": [
+              {
+                "optionType": "radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "radio",
+                "optionName": "No",
+                "optionValue": "No"
+              },
+              {
+                "optionType": "radio-text",
+                "optionName": "others",
+                "optionValue": "Others",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front",
+                  "hintText": "Please specify"
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "elementName": "OfficeAddress",
+            "elementHeader": "",
+            "placeholder": "Office Address: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          }
+        ],
+        [
+          {
+            "elementName": "Telephone",
+            "elementHeader": "",
+            "placeholder": "Tel: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          },
+          {
+            "elementName": "Fax",
+            "elementHeader": "",
+            "placeholder": "Fax: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Evaluation",
+      "sectionText": "Evaluation",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Licenses",
+            "elementHeader": "",
+            "elementType": "Checkbox",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Checkbox",
+                "optionName": "a. Sole proprietorship",
+                "optionValue": "a. Sole proprietorship"
+              },
+              {
+                "optionType": "Checkbox",
+                "optionName": "b. Limited Company",
+                "optionValue": "b. Limited Company"
+              },
+              {
+                "optionType": "Checkbox",
+                "optionName": "c. Partnership Agreement",
+                "optionValue": "c. Partnership Agreement"
+              },
+              {
+                "optionType": "Checkbox-text",
+                "optionName": "others",
+                "optionValue": "Others",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front"
+                }
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Evaluation",
+      "sectionText": "Evaluation",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Feedback",
+            "elementHeader": "Feedback About us:",
+            "elementType": "Textarea",
+            "size": 0
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Contact Information",
+      "sectionText": "Contact Person:",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Contacts",
+            "elementHeader": "",
+            "elementType": "Table",
+            "size": 0,
+            "noRows": "3",
+            "headers": [
+              "Name",
+              "Tel",
+              "Designation"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Contact Information",
+      "sectionText": "Contact Person:",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "How",
+            "elementHeader": "How did you hear about us?*",
+            "elementType": "Dropdown",
+            "size": 4,
+            "options": [
+              {
+                "optionType": "Dropdown",
+                "optionName": "Selection A",
+                "optionValue": "Selection A"
+              },
+              {
+                "optionType": "Dropdown",
+                "optionName": "Selection B",
+                "optionValue": "Selection B"
+              },
+              {
+                "optionType": "Dropdown",
+                "optionName": "Selection C",
+                "optionValue": "Selection C"
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "version": 1.1,
+  "formTitle": "Quantum Leap Incorporation PTE LTD",
+  "titleSize": "20",
+  "_class": "com.mongodb.quickstart.models.Form"
+},{
+  "_id": {
+    "$oid": "641d7a65861abc3220e411ca"
+  },
+  "formName": "Notice of termination",
+  "sections": [
+    {
+      "sectionName": "Company Info",
+      "sectionText": "Fill in your name",
+      "sectionFont": "12",
+      "numRows": 4,
+      "rowElements": [
+        [
+          {
+            "elementName": "CompanyName",
+            "elementHeader": "",
+            "placeholder": "Company's Name: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          },
+          {
+            "elementName": "CompanyRegistrationNo",
+            "elementHeader": "",
+            "placeholder": "Company Registration No:",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          }
+        ],
+        [
+          {
+            "elementName": "Like",
+            "elementHeader": "Like",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "size": 12,
+            "options": [
+              {
+                "optionType": "radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "radio",
+                "optionName": "No",
+                "optionValue": "No"
+              },
+              {
+                "optionType": "radio-text",
+                "optionName": "others",
+                "optionValue": "Others",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front",
+                  "hintText": "Please specify"
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "elementName": "OfficeAddress",
+            "elementHeader": "",
+            "placeholder": "Office Address: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          }
+        ],
+        [
+          {
+            "elementName": "Telephone",
+            "elementHeader": "",
+            "placeholder": "Tel: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          },
+          {
+            "elementName": "Fax",
+            "elementHeader": "",
+            "placeholder": "Fax: ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Evaluation",
+      "sectionText": "Evaluation",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Licenses",
+            "elementHeader": "",
+            "elementType": "Checkbox",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Checkbox",
+                "optionName": "a. Sole proprietorship",
+                "optionValue": "a. Sole proprietorship"
+              },
+              {
+                "optionType": "Checkbox",
+                "optionName": "b. Limited Company",
+                "optionValue": "b. Limited Company"
+              },
+              {
+                "optionType": "Checkbox",
+                "optionName": "c. Partnership Agreement",
+                "optionValue": "c. Partnership Agreement"
+              },
+              {
+                "optionType": "Checkbox-text",
+                "optionName": "others",
+                "optionValue": "Others",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front"
+                }
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Evaluation",
+      "sectionText": "Evaluation",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Feedback",
+            "elementHeader": "Feedback About us:",
+            "elementType": "Textarea",
+            "size": 0
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Contact Information",
+      "sectionText": "Contact Person:",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Contacts",
+            "elementHeader": "",
+            "elementType": "Table",
+            "size": 0,
+            "noRows": "3",
+            "headers": [
+              "Name",
+              "Tel",
+              "Designation"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Contact Information",
+      "sectionText": "Contact Person:",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "How",
+            "elementHeader": "How did you hear about us?*",
+            "elementType": "Dropdown",
+            "size": 4,
+            "options": [
+              {
+                "optionType": "Dropdown",
+                "optionName": "Selection A",
+                "optionValue": "Selection A"
+              },
+              {
+                "optionType": "Dropdown",
+                "optionName": "Selection B",
+                "optionValue": "Selection B"
+              },
+              {
+                "optionType": "Dropdown",
+                "optionName": "Selection C",
+                "optionValue": "Selection C"
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "version": 1.1,
+  "formTitle": "Quantum Leap Incorporation PTE LTD",
+  "titleSize": "20",
+  "_class": "com.mongodb.quickstart.models.Form"
+},{
+  "_id": {
+    "$oid": "6427bf1394904e7c7ebfa545"
+  },
+  "formName": "QLI-QHSP-10-F01 New Vendor Assessment Form",
+  "sections": [
+    {
+      "sectionName": "title",
+      "sectionText": "QUANTUM LEAP INCORPORATION PTE LTD",
+      "sectionFont": "15",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "formNo",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "left",
+            "placeholder": "Form No.: QLI-QHSP-10-F01"
+          },
+          {
+            "elementName": "revNo",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "center",
+            "placeholder": "Rev. No: 00"
+          },
+          {
+            "elementName": "effectiveDate",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "right",
+            "placeholder": "Effective Date:04.04.2022"
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "formTitle",
+      "sectionText": "NEW VENDOR ASSESSMENT FORM",
+      "sectionFont": "15",
+      "numRows": 3,
+      "rowElements": [
+        [
+          {
+            "elementName": "companyName",
+            "elementHeader": "",
+            "placeholder": "Company's Name",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "registrationNumber",
+            "elementHeader": "",
+            "placeholder": "Company Registration No",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          },
+          {
+            "elementName": "GST registration",
+            "elementHeader": "GST Registered",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "officeAddress",
+            "elementHeader": "",
+            "placeholder": "Office Address",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          },
+          {
+            "elementName": "tel",
+            "elementHeader": "",
+            "placeholder": "Tel",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          },
+          {
+            "elementName": "Fax",
+            "elementHeader": "",
+            "placeholder": "Fax",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "License / Registration",
+      "sectionText": "Type of business License / Registration",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "License / Registration",
+            "elementHeader": "",
+            "elementType": "Checkbox",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Checkbox",
+                "optionName": "a. Sole proprietorship",
+                "optionValue": "a. Sole proprietorship"
+              },
+              {
+                "optionType": "Checkbox",
+                "optionName": "b. Limited Company",
+                "optionValue": "b. Limited Company"
+              },
+              {
+                "optionType": "Checkbox",
+                "optionName": "c. Partnership Agreement",
+                "optionValue": "c. Partnership Agreement"
+              },
+              {
+                "optionType": "Checkbox-text",
+                "optionName": "Others",
+                "optionValue": "Others",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front",
+                  "hintText": ""
+                }
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "Contact Person",
+      "sectionText": "Contact Person",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Contact Person",
+            "elementHeader": "",
+            "elementType": "Table",
+            "size": 0,
+            "noRows": "2",
+            "headers": [
+              "Name",
+              "Tel",
+              "Designation"
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "Nature of Business",
+      "sectionText": "Nature of Business",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Nature of Business",
+            "elementHeader": "",
+            "elementType": "Checkbox",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Checkbox",
+                "optionName": "Manufacturing",
+                "optionValue": "Manufacturing"
+              },
+              {
+                "optionType": "Checkbox",
+                "optionName": "Agent/dealer",
+                "optionValue": "Agent/dealer"
+              },
+              {
+                "optionType": "Checkbox",
+                "optionName": "Distributor",
+                "optionValue": "Distributor"
+              },
+              {
+                "optionType": "Checkbox-text",
+                "optionName": "Others",
+                "optionValue": "Others",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front",
+                  "hintText": "Pls. Specify"
+                }
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "Product / Services",
+      "sectionText": "Product / Services",
+      "sectionFont": "12",
+      "numRows": 2,
+      "rowElements": [
+        [
+          {
+            "elementName": "Product / Services",
+            "elementHeader": "",
+            "placeholder": "Product / Services",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "size": 0,
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "details",
+            "elementType": "Text",
+            "size": 0,
+            "compulsory": false
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "Evaluation",
+      "sectionText": "Evaluation",
+      "sectionFont": "12",
+      "numRows": 8,
+      "rowElements": [
+        [
+          {
+            "elementName": "ISO 9001 Certification",
+            "elementHeader": "",
+            "elementType": "Checkbox",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Checkbox-text",
+                "optionName": "ISO 9001 Certification",
+                "optionValue": "ISO 9001 Certification",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front",
+                  "hintText": "Certification Body"
+                }
+              }
+            ],
+            "compulsory": false
+          }
+        ],
+        [
+          {
+            "elementName": "Accreditation of Laboratory",
+            "elementHeader": "",
+            "elementType": "Checkbox",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Checkbox-text",
+                "optionName": "Accreditation of Laboratory",
+                "optionValue": "Accreditation of Laboratory",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front",
+                  "hintText": "Accreditation Body"
+                }
+              }
+            ],
+            "compulsory": false
+          }
+        ],
+        [
+          {
+            "elementName": " Product Certification",
+            "elementHeader": "",
+            "elementType": "Checkbox",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Checkbox-text",
+                "optionName": " Product Certification",
+                "optionValue": " Product Certification",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front",
+                  "hintText": "Product Markings (e.g. PSB, UL, TUV)"
+                }
+              }
+            ],
+            "compulsory": false
+          }
+        ],
+        [
+          {
+            "elementName": "Site Evaluation Results",
+            "elementHeader": "Site Evaluation Results",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Satisfactory",
+                "optionValue": "Satisfactory"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "Unsatisfactory",
+                "optionValue": "Unsatisfactory"
+              }
+            ],
+            "compulsory": false
+          }
+        ],
+        [
+          {
+            "elementName": "Results of Samples/Product Evaluation",
+            "elementHeader": "Results of Samples/Product Evaluation",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Satisfactory",
+                "optionValue": "Satisfactory"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "Unsatisfactory",
+                "optionValue": "Unsatisfactory"
+              }
+            ],
+            "compulsory": false
+          }
+        ],
+        [
+          {
+            "elementName": "Results of First Deal",
+            "elementHeader": "Results of First Deal",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Satisfactory",
+                "optionValue": "Satisfactory"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "Unsatisfactory",
+                "optionValue": "Unsatisfactory"
+              }
+            ],
+            "compulsory": false
+          }
+        ],
+        [
+          {
+            "elementName": "Track Record Review/ Customer Reference",
+            "elementHeader": "Track Record Review/ Customer Reference",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Satisfactory",
+                "optionValue": "Satisfactory"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "Unsatisfactory",
+                "optionValue": "Unsatisfactory"
+              }
+            ],
+            "compulsory": false
+          }
+        ],
+        [
+          {
+            "elementName": "Others (e.g. commercial, sole supplier, customer specified, franchise etc.)",
+            "elementHeader": "",
+            "elementType": "Checkbox",
+            "elementOrientation": "horizontal",
+            "size": 0,
+            "options": [
+              {
+                "optionType": "Checkbox-text",
+                "optionName": "Others (e.g. commercial, sole supplier, customer specified, franchise etc.)",
+                "optionValue": "Others (e.g. commercial, sole supplier, customer specified, franchise etc.)",
+                "textVariables": {
+                  "header": "",
+                  "hintPosition": "front",
+                  "hintText": "Specify"
+                }
+              }
+            ],
+            "compulsory": false
+          }
+        ]
+      ],
+      "fillFor": "AdministrativePersonnel"
+    }
+  ],
+  "version": 1.1,
+  "_class": "com.mongodb.quickstart.models.Form"
+},{
+  "_id": {
+    "$oid": "64293bf91fd1a348a2331ef4"
+  },
+  "formName": "SUBCONTRACTOR’S SAFETY & HEALTH PRE-EVALUATION",
+  "sections": [
+    {
+      "sectionName": "Company",
+      "sectionText": "QUANTUM LEAP INCORPORATION PTE LTD",
+      "sectionFont": "13",
+      "numRows": 2,
+      "rowElements": [
+        [
+          {
+            "elementName": "formName",
+            "placeholder": "QLI-QHSP-10-F04",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "left",
+            "textSize": "12"
+          },
+          {
+            "elementName": "Date",
+            "placeholder": "Date: 04.04.2022",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "center",
+            "textSize": "12"
+          },
+          {
+            "elementName": "Revision",
+            "placeholder": "Revision 0",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "right",
+            "textSize": "12"
+          }
+        ],
+        [
+          {
+            "elementName": "formType",
+            "placeholder": "SYSTEM FORMS",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "left",
+            "textSize": "13"
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Information",
+      "sectionText": " ",
+      "sectionFont": "12",
+      "numRows": 2,
+      "rowElements": [
+        [
+          {
+            "elementName": "Subcontractor Name",
+            "elementHeader": "",
+            "placeholder": "Name of Sub-Contractor",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Scope",
+            "elementHeader": "",
+            "placeholder": "Scope of Work : ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "EvaluationBy",
+      "sectionText": "  ",
+      "sectionFont": "12",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "EvaluatedBy",
+            "elementHeader": "",
+            "placeholder": "Evaluated By ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": false
+          },
+          {
+            "elementName": "DateEval",
+            "elementHeader": "",
+            "placeholder": "Date",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": false
+          }
+        ]
+      ],
+      "fillFor": "Admin"
+    },
+    {
+      "sectionName": "Questions",
+      "sectionText": "Safety & Health Policy and Organisation",
+      "sectionFont": "13",
+      "numRows": 3,
+      "rowElements": [
+        [
+          {
+            "elementName": "Question 1",
+            "elementHeader": "Is there a written Safety & Health Policy?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Question 1b",
+            "elementHeader": "Is there a Safety Organisation with proper delegation of responsibility and accountability for safety and health?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Question 1c",
+            "elementHeader": "Is there a written safety commitment and is it submitted?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "Tool Box Meeting",
+      "sectionText": "Tool Box Meeting",
+      "sectionFont": "13",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Question 2a",
+            "elementHeader": "Are regular tool-box meetings conducted and reports submitted?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "Safety Training",
+      "sectionText": "Safety Training",
+      "sectionFont": "13",
+      "numRows": 3,
+      "rowElements": [
+        [
+          {
+            "elementName": "Question 3a",
+            "elementHeader": "Are relevant safety training courses provided for management / Supervisors?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Question 3b",
+            "elementHeader": "Are relevant safety training courses provided for workers?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Question 3c",
+            "elementHeader": "Are relevant safety training certificates submitted?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "Safety & Health Rules & Safe Work Procedures/ Risk Assessment",
+      "sectionText": "Safety & Health Rules & Safe Work Procedures/ Risk Assessment",
+      "sectionFont": "13",
+      "numRows": 2,
+      "rowElements": [
+        [
+          {
+            "elementName": "Question 4a",
+            "elementHeader": "Are there written safety & health rules for the workers?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Question 4b",
+            "elementHeader": "Are there written safe work procedures/ risk assessment formulated and submitted?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "Safety & Health Inspection & Equipment",
+      "sectionText": "Safety & Health Inspection & Equipment",
+      "sectionFont": "13",
+      "numRows": 2,
+      "rowElements": [
+        [
+          {
+            "elementName": "Question 5a",
+            "elementHeader": "Is there a written programme outlining inspection guidelines, frequency and follow-up corrective actions?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Question 5b",
+            "elementHeader": "Is there available Personal Protective Equipment and of proper working condition and comply to safety requirements?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "Responsible Personnel",
+      "sectionText": "Responsible Personnel",
+      "sectionFont": "13",
+      "numRows": 3,
+      "rowElements": [
+        [
+          {
+            "elementName": "Question 6a",
+            "elementHeader": "Is there a Safety Supervisor working at least 5 hrs / week?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Question 6b",
+            "elementHeader": "Is there a qualified First Aider?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Question 6c",
+            "elementHeader": "Are there relevant Licensed Electrical Workers, qualified engineers, qualified supervisors, lifting supervisors, qualified JCB Tower / Mobile / Crawler Crane operators?",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "Yes",
+                "optionValue": "Yes"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "No",
+                "optionValue": "No"
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "Accident Analysis",
+      "sectionText": "Accident Analysis",
+      "sectionFont": "13",
+      "numRows": 5,
+      "rowElements": [
+        [
+          {
+            "elementName": "Accident Records",
+            "placeholder": "Accident Records for the last three years",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "left",
+            "textSize": "12"
+          }
+        ],
+        [
+          {
+            "elementName": "Number of Temporary Disability Cases ",
+            "elementHeader": "",
+            "placeholder": "Number of Temporary Disability Cases ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Number of Permanent Disability Cases ",
+            "elementHeader": "",
+            "placeholder": "Number of Permanent Disability Cases ",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Number of Fatal Cases",
+            "elementHeader": "",
+            "placeholder": "Number of Fatal Cases",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "* Delete where appropriate.  Indicate NA for ‘Not Applicable’.",
+            "placeholder": "* Delete where appropriate.  Indicate NA for ‘Not Applicable’.",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "left",
+            "textSize": "11"
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "ACKNOWLEDGEMENT",
+      "sectionText": "ACKNOWLEDGEMENT",
+      "sectionFont": "13",
+      "numRows": 3,
+      "rowElements": [
+        [
+          {
+            "elementName": "Text",
+            "placeholder": "I, representative of the above-named sub-contractor, have understand the various Safety Criteria listed above and hereby acknowledged that the information given above are valid and supporting items/documents are available upon request by the main contractor. \t ",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "center",
+            "textSize": "13"
+          }
+        ],
+        [
+          {
+            "elementName": "DateVendor",
+            "elementHeader": "",
+            "placeholder": "Date",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Acknowledged by",
+            "elementHeader": "",
+            "placeholder": "Acknowledged by",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          },
+          {
+            "elementName": "SignatureVendor",
+            "elementHeader": "",
+            "placeholder": "SignatureVendor",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    }
+  ],
+  "version": 2,
+  "_class": "com.mongodb.quickstart.models.Form"
+},{
+  "_id": {
+    "$oid": "64294b751fd1a348a2331ef6"
+  },
+  "formName": "SUBCONTRACTOR’S SAFETY & HEALTH PERFORMANCE EVALUATION",
+  "sections": [
+    {
+      "sectionName": "Company",
+      "sectionText": "QUANTUM LEAP INCORPORATION PTE LTD",
+      "sectionFont": "13",
+      "numRows": 2,
+      "rowElements": [
+        [
+          {
+            "elementName": "formName",
+            "placeholder": "QLI-QHSP-10-F04",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "left",
+            "textSize": "12"
+          },
+          {
+            "elementName": "Date",
+            "placeholder": "Date: 04.04.2022",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "center",
+            "textSize": "12"
+          },
+          {
+            "elementName": "Revision",
+            "placeholder": "Revision 0",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "right",
+            "textSize": "12"
+          }
+        ],
+        [
+          {
+            "elementName": "formType",
+            "placeholder": "SYSTEM FORMS",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "left",
+            "textSize": "13"
+          },
+          {
+            "elementName": "SUBCONTRACTOR’S SAFETY & HEALTH PERFORMANCE EVALUATION",
+            "placeholder": "SUBCONTRACTOR’S SAFETY & HEALTH PERFORMANCE EVALUATION",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "center",
+            "textSize": "13"
+          }
+        ]
+      ]
+    },
+    {
+      "sectionName": "Information",
+      "sectionText": " ",
+      "sectionFont": "12",
+      "numRows": 2,
+      "rowElements": [
+        [
+          {
+            "elementName": "Name of Contractor",
+            "elementHeader": "",
+            "placeholder": "Name of Contractor",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          },
+          {
+            "elementName": "Trade",
+            "elementHeader": "",
+            "placeholder": "Trade",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "Project/ Worksite",
+            "elementHeader": "",
+            "placeholder": "Project/ Worksite",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          },
+          {
+            "elementName": "Date of Evaluation",
+            "elementHeader": "",
+            "placeholder": "Date of Evaluation",
+            "placeholderPosition": "front",
+            "elementType": "Textinput",
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "PART I: PARTICIPATION IN SAFETY ",
+      "sectionText": "PART I: PARTICIPATION IN SAFETY ",
+      "sectionFont": "13",
+      "numRows": 6,
+      "rowElements": [
+        [
+          {
+            "elementName": "Grade",
+            "placeholder": "1 (POOR)   2 (BELOW AVERAGE   3 (AVERAGE)   4 (ABOVE AVERAGE)   5 (GOOD)",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "center",
+            "textSize": "12"
+          }
+        ],
+        [
+          {
+            "elementName": "1.1 Attendance in Safety Meeting",
+            "elementHeader": "Attendance in Safety Meeting",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "1.2 Tool Box Meeting",
+            "elementHeader": "Tool Box Meeting",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "1.3. Compliance To Rules & Regulation",
+            "elementHeader": "Compliance To Rules & Regulation",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "1.4. Safety Promotional Activities",
+            "elementHeader": "Safety Promotional Activities",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "1.5. Document Submission",
+            "elementHeader": "Document Submission",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "PART II: SAFETY TRAINING AND COMPETENCIES (PERCENTAGE OF ATTENDANCE)  ",
+      "sectionText": "PART II: SAFETY TRAINING AND COMPETENCIES (PERCENTAGE OF ATTENDANCE)  ",
+      "sectionFont": "13",
+      "numRows": 6,
+      "rowElements": [
+        [
+          {
+            "elementName": "Grade",
+            "placeholder": "1 (POOR)   2 (BELOW AVERAGE   3 (AVERAGE)   4 (ABOVE AVERAGE)   5 (GOOD)",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "center",
+            "textSize": "12"
+          }
+        ],
+        [
+          {
+            "elementName": "2.6. Statutory Safety Training Course",
+            "elementHeader": "Statutory Safety Training Course",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "2.7 Safety Trade Course",
+            "elementHeader": "Safety Trade Course",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "2.8 Mass Safety Talk",
+            "elementHeader": "Mass Safety Talk",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "2.8 WSH Safety Coordinator/ Supervisor",
+            "elementHeader": "WSH Safety Coordinator/ Supervisor",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "2.10 Other Safety Training",
+            "elementHeader": "Other Safety Training",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "PART III: ACCIDENT/ INCIDENT PREVIEW",
+      "sectionText": "PART III: ACCIDENT/ INCIDENT PREVIEW",
+      "sectionFont": "13",
+      "numRows": 6,
+      "rowElements": [
+        [
+          {
+            "elementName": "Grade",
+            "placeholder": "1 (POOR)   2 (BELOW AVERAGE   3 (AVERAGE)   4 (ABOVE AVERAGE)   5 (GOOD)",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "center",
+            "textSize": "12"
+          }
+        ],
+        [
+          {
+            "elementName": "3.11. Effort in Accident Prevention",
+            "elementHeader": "Effort in Accident Prevention",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "3.12 Safe Work Practice/ Permit To Work",
+            "elementHeader": "Safe Work Practice/ Permit To Work",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "3.13 Incident Severity & Frequency Rate",
+            "elementHeader": "Incident Severity & Frequency Rate",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "3.14 Safety Offence",
+            "elementHeader": "Safety Offence",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "3.15 Safety Inspection And Rectification",
+            "elementHeader": "Safety Inspection And Rectification",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "PART IV: MAINTENANCE OF EQUIPMENT ",
+      "sectionText": "PART IV: MAINTENANCE OF EQUIPMENT ",
+      "sectionFont": "13",
+      "numRows": 6,
+      "rowElements": [
+        [
+          {
+            "elementName": "Grade",
+            "placeholder": "1 (POOR)   2 (BELOW AVERAGE   3 (AVERAGE)   4 (ABOVE AVERAGE)   5 (GOOD)",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "center",
+            "textSize": "12"
+          }
+        ],
+        [
+          {
+            "elementName": "4.16 Explosive Powered Tool/ Cutting Tool",
+            "elementHeader": "Explosive Powered Tool/ Cutting Tool",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "4.17 Ladder",
+            "elementHeader": "Ladder",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "4.18 Lifting Gear/ Appliance/ Machine",
+            "elementHeader": "Lifting Gear/ Appliance/ Machine",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "4.19 Electrical Equipment/ Compressor",
+            "elementHeader": "Electrical Equipment/ Compressor",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "4.20 Other Machineries",
+            "elementHeader": "Other Machineries",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "PART V: GENERAL HOUSEKEEPING & Others",
+      "sectionText": "PART V: GENERAL HOUSEKEEPING & Others ",
+      "sectionFont": "13",
+      "numRows": 6,
+      "rowElements": [
+        [
+          {
+            "elementName": "Grade",
+            "placeholder": "1 (POOR)   2 (BELOW AVERAGE   3 (AVERAGE)   4 (ABOVE AVERAGE)   5 (GOOD)",
+            "elementType": "Text",
+            "compulsory": false,
+            "alignment": "center",
+            "textSize": "12"
+          }
+        ],
+        [
+          {
+            "elementName": "5.21 Subcon Snr Mgt Commitment to HS",
+            "elementHeader": "Subcon Snr Mgt Commitment to HS",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "5.22 Compliance with PPE",
+            "elementHeader": "Compliance with PPE",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "5.23. Housekeeping & Cleanliness at Site",
+            "elementHeader": "Housekeeping & Cleanliness at Site",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "5.24 Housekeeping & Cleanliness at Store",
+            "elementHeader": "Housekeeping & Cleanliness at Store",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ],
+        [
+          {
+            "elementName": "5.25 Housekeeping & Cleanliness at Quarter",
+            "elementHeader": "Other Machineries",
+            "elementType": "Radio",
+            "elementOrientation": "horizontal",
+            "options": [
+              {
+                "optionType": "Radio",
+                "optionName": "1 (POOR)",
+                "optionValue": "1 (POOR)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "2 (BELOW AVERAGE)",
+                "optionValue": "2 (BELOW AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "3 (AVERAGE)",
+                "optionValue": "3 (AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "4 (ABOVE AVERAGE)",
+                "optionValue": "4 (ABOVE AVERAGE)"
+              },
+              {
+                "optionType": "Radio",
+                "optionName": "5 (GOOD)",
+                "optionValue": "5 (GOOD)"
+              }
+            ],
+            "compulsory": true
+          }
+        ]
+      ],
+      "fillFor": "Vendor"
+    },
+    {
+      "sectionName": "Score Calculation",
+      "sectionText": " ",
+      "numRows": 2,
+      "rowElements": [
+        [
+          {
+            "elementName": "TOTAL SCORE",
+            "elementHeader": "TOTAL SCORE",
+            "elementType": "Textarea",
+            "compulsory": true
+          },
+          {
+            "elementName": "OVERALL PERFORMANCE STANDARD",
+            "elementHeader": "OVERALL PERFORMANCE STANDARD",
+            "elementType": "Textarea",
+            "compulsory": false
+          }
+        ],
+        [
+          {
+            "elementName": "Comments",
+            "elementHeader": "Comments",
+            "elementType": "Textarea",
+            "compulsory": false
+          }
+        ]
+      ],
+      "fillFor": "Administrative Personnel"
+    },
+    {
+      "sectionName": "Evaluation Info",
+      "sectionText": "EVALUATION DONE BY",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Name of Safety Coordinator",
+            "elementHeader": "",
+            "placeholder": "Name of Safety Coordinator",
+            "placeholderPosition": "under",
+            "elementType": "Textinput",
+            "compulsory": true
+          },
+          {
+            "elementName": "SafetyCoordinatorSignature",
+            "elementHeader": "",
+            "placeholder": "Signature",
+            "placeholderPosition": "under",
+            "elementType": "Textinput",
+            "compulsory": false
+          },
+          {
+            "elementName": "SafetyCoordinatorDate",
+            "elementHeader": "",
+            "placeholder": " Date",
+            "placeholderPosition": "under",
+            "elementType": "Textinput",
+            "compulsory": false
+          }
+        ]
+      ],
+      "fillFor": "AdministrativePersonnel"
+    },
+    {
+      "sectionName": "Approve Info",
+      "sectionText": "APPROVED BY",
+      "numRows": 1,
+      "rowElements": [
+        [
+          {
+            "elementName": "Name of Director",
+            "elementHeader": "",
+            "placeholder": "Name of Director",
+            "placeholderPosition": "under",
+            "elementType": "Textinput",
+            "compulsory": true
+          },
+          {
+            "elementName": "DirectorSignature",
+            "elementHeader": "",
+            "placeholder": "Signature",
+            "placeholderPosition": "under",
+            "elementType": "Textinput",
+            "compulsory": false
+          },
+          {
+            "elementName": "DirectorDate",
+            "elementHeader": "",
+            "placeholder": " Date",
+            "placeholderPosition": "under",
+            "elementType": "Textinput",
+            "compulsory": false
+          }
+        ]
+      ],
+      "fillFor": "Approver"
+    }
+  ],
+  "version": 1,
+  "_class": "com.mongodb.quickstart.models.Form"
+}]
