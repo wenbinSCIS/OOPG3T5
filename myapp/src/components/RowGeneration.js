@@ -19,6 +19,8 @@ function GenerateRow(props) {
   var allData = props.allData; //useState prop from main
   var setallData = props.setallData; //setState prop from main
 
+  const [margin,setMargin] = useState(-7);
+
   useEffect(() => {
     const newElements = {};
     for (let i = 0; i < info.length; i++) {
@@ -45,6 +47,9 @@ function GenerateRow(props) {
           ...prevState,
           ...newElements,
         }));
+      }
+      else if (element["elementType"] === "Text") {
+        setMargin(0);
       }
     }
   }, [allData]);
@@ -245,7 +250,7 @@ function GenerateRow(props) {
           direction="row"
           alignItems="center"
           spacing={2}
-          sx={{ justifyContent: "flex-end", marginBottom:-7 }}
+          sx={{ justifyContent: "flex-end", marginBottom:margin }}
         >
           <IconButton onClick={() => handleMoveDown(props.index)}>
             <ExpandCircleDownIcon fontSize="large" />

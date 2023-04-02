@@ -6,7 +6,6 @@ import TextInput from './TextInput';
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import IconButton from "@mui/material/IconButton";
 
-
 function Radio({ data, onChange, options, title, size, false_header, name, orientation, generateFor , handleDelete, fillFor}) {
 
   var [selectedOption, setSelectedOption] = useState('');
@@ -61,7 +60,7 @@ function Radio({ data, onChange, options, title, size, false_header, name, orien
           />
         </IconButton>
       )}
-      <div className={number} style={{ margin: 0, marginLeft: -15 }}>
+      <div className={number} style={{marginLeft: 0 }}>
         {title.length > 0 && (
           <InputGroup.Text
             style={{

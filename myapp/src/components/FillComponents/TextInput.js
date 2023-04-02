@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import Text from "./Text";
-import CloseButton from "react-bootstrap/CloseButton";
 
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import IconButton from "@mui/material/IconButton";
@@ -21,21 +20,22 @@ function TextInput(props) {
 
   return (
     <div className={number} style={{ margin: 0 }}>
-      {props.generateFor === "AdminCreation" && props.isFromOtherElement !== true && (
-        <IconButton
-          onClick={(event) => {
-            const newEvent = Object.assign({}, event, {
-              target: { value: props.name },
-            });
-            props.handleDelete(newEvent);
-          }}
-        >
-          <HighlightOffIcon
-            fontSize="large"
-            sx={{ color: "red", marginLeft: -1 }}
-          />
-        </IconButton>
-      )}
+      {props.generateFor === "AdminCreation" &&
+        props.isFromOtherElement !== true && (
+          <IconButton
+            onClick={(event) => {
+              const newEvent = Object.assign({}, event, {
+                target: { value: props.name },
+              });
+              props.handleDelete(newEvent);
+            }}
+          >
+            <HighlightOffIcon
+              fontSize="large"
+              sx={{ color: "red", marginLeft: -1 }}
+            />
+          </IconButton>
+        )}
       {props.title.length > 0 && (
         <label style={{ margin: 0, color: "deepskyblue" }}>{props.title}</label>
       )}

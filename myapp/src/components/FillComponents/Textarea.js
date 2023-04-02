@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import CloseButton from 'react-bootstrap/CloseButton';
+
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import IconButton from "@mui/material/IconButton";
 
 function Textarea(props) {
     /* const [value, setValue] = useState('');
@@ -13,12 +15,24 @@ function Textarea(props) {
     
     
     return (
-      <div className={number} style={{margin:0}}>
-         {
-          props.generateFor==="AdminCreation" &&
-          <CloseButton variant='blue' onClick={props.handleDelete} value={props.name}/>
-          }
-        <label style={{margin:0,color: "black"}}>{props.title}</label>
+      <div className={number} style={{ margin: 0 }}>
+        {props.generateFor === "AdminCreation" &&
+          props.isFromOtherElement !== true && (
+            <IconButton
+              onClick={(event) => {
+                const newEvent = Object.assign({}, event, {
+                  target: { value: props.name },
+                });
+                props.handleDelete(newEvent);
+              }}
+            >
+              <HighlightOffIcon
+                fontSize="large"
+                sx={{ color: "red", marginLeft: -1 }}
+              />
+            </IconButton>
+          )}
+        <label style={{ margin: 0, color: "black" }}>{props.title}</label>
         <br></br>
         <textarea
           name={props.name}
@@ -30,14 +44,14 @@ function Textarea(props) {
           rows="4"
           cols="50"
           style={{
-            backgroundColor:  props.generateFor !== props.fillFor ? "#e1e2e3" : "#fafbfc",
-            cursor: props.generateFor !== props.fillFor ? "not-allowed" : "auto",
-            pointerEvents: props.generateFor !== props.fillFor ? "none" : "auto"
+            backgroundColor:
+              props.generateFor !== props.fillFor ? "#e1e2e3" : "#fafbfc",
+            cursor:
+              props.generateFor !== props.fillFor ? "not-allowed" : "auto",
+            pointerEvents:
+              props.generateFor !== props.fillFor ? "none" : "auto",
           }}
-          
-        >
-        </textarea>
-        
+        ></textarea>
       </div>
     );
   }
