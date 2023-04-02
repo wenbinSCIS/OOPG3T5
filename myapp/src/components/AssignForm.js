@@ -5,76 +5,7 @@ import Header from './Header';
 import Button from '@mui/material/Button';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import axios from 'axios';
-
-
-
-const mockProjects = [
-  { id: 1, name: 'Project 1', forms: [1, 2, 3] },
-  { id: 2, name: 'Project 2', forms: [4, 5, 6] },
-];
-
-const mockForms = [
-  { id: 1, name: 'Form 1' },
-  { id: 2, name: 'Form 2' },
-  { id: 3, name: 'Form 3' },
-  { id: 4, name: 'Form 4' },
-  { id: 5, name: 'Form 5' },
-  { id: 6, name: 'Form 6' },
-];
-// var mockUsers = [{
-//   "username": "abc@gmail.com",
-//   "hashedPassword": "4d09016fe9a256f2a8b731437850f7dcf2278f9b737035172ec92376afcb0c64",
-//   "passwordSalt": "IlW2sNyGVLMdlksRoelRW9KLvXqjYk78Jrmxjvtezpw=",
-//   "userType": "Vendor",
-//   "project": [
-//       {
-//           "projectId": "safe",
-//           "projectName": "safety forms",
-//           "assignedForm": [
-//               {
-//                   "formName": "QLI-QHSP-10-F01 New Vendor Assessment Form",
-//                   "status": "In Progress",
-//                   "description": "Needs to be completed",
-//                   "formVersion": 1.1
-//               },
-//               {
-//                   "formName": "QLI-QHSP-10-F04 Subcontractors Safety _ Health Pre-Evaluation",
-//                   "status": "In Progress",
-//                   "description": "Needs to be completed",
-//                   "formVersion": 1.1
-//               }
-//           ],
-//           "status": "Ongoing"
-//       },
-//       {
-//           "projectId": "Bank",
-//           "projectName": "Bankruptcy Forms",
-//           "assignedForm": [
-//               {
-//                   "formName": "Leave of absence",
-//                   "status": "Pending Approval",
-//                   "description": "Needs to be completed",
-//                   "formVersion": 1.1
-//               },
-//               {
-//                   "formName": "Notice of termination",
-//                   "status": "In Progress",
-//                   "description": "Needs to be completed",
-//                   "formVersion": 1.1
-//               }
-//           ],
-//           "status": "Ongoing"
-//       }
-//   ],
-//   "companyInfo": {
-//       "companyName": "Company A",
-//       "registrationNo": "123456",
-//       "contactNo": "91234567",
-//       "emailAddress": "companyA@gmail.com",
-//       "natureOfBusiness": "Illegal",
-//       "gSTNo": "123"
-//   }
-// }]
+import { useNavigate } from 'react-router-dom';
 const AssignForm = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [selectedProject, setSelectedProject] = useState(null);
@@ -84,7 +15,14 @@ const AssignForm = () => {
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [formRender, setFormRender] = useState(null)
     const [allUsers, setAllUsers] = useState(null)
+    const navigate = useNavigate();
 
+    useEffect(() => {
+      if (sessionStorage.getItem('userType')!=="Admin"){
+        alert("You are not logged in as a Admin")
+        navigate('/')
+      }
+    })
     var vendorUsers = []
     async function loadVendorUsers(){
       var url = "http://localhost:8080/user/getUserByUserType" 
