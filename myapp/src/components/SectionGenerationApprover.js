@@ -34,7 +34,7 @@ function GenerateSectionApproval(props) {
         to_return.push(<GenerateRow info = {curr_row} allData = {allData} setallData={setallData} generateFor = {props.generateFor} fillFor = {props.fillFor}></GenerateRow>)
     }
     return (
-        <div className='row mb-3 pt-3'>
+        <div className='row pt-3' style={{backgroundColor: props.generateFor !== props.fillFor && "#Ebebec"}}>
             <h5>{sectionText}</h5>
             {to_return}
             { 

@@ -199,7 +199,7 @@ export default function VendorAssessmentFormApprover() {
         <AdminSidebar></AdminSidebar>
       <div className="container-fluid">
       <Header/>
-      <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: "#fcf5e9"}}>
+      <div className="container" style={{border:"1px grey", borderStyle: "ridge",  minHeight:"100vh",backgroundColor: "#f9f9fb"}}>
         {to_return}
         {
           isPrint==false &&
