@@ -77,7 +77,6 @@ const AddButton = ({
   //   setShowModal2(false);
   // };
 
-
   // sectionNames and elementNames used for validation to ensure that there are no duplicate sectionNames or elementNames
   const [sectionNames, setSectionNames] = useState(sectionNamesList);
   const [elementNames, setElementNames] = useState(elementNamesList);
@@ -96,7 +95,7 @@ const AddButton = ({
   //   newWindow.document.write("</body></html>");
   // };
 
-  const currentSection = {sectionData: "12"};
+  const currentSection = { sectionData: "12", fillFor: "Vendor" };
 
   return (
     <>
