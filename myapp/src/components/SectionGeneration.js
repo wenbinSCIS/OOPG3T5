@@ -6,10 +6,10 @@ function GenerateSection(props) {
   var setallData = props.setallData; //setState prop from main
 
   const rows = props["section"]["numRows"];
-  console.log(
-    "These are the number of rows in Section Generation",
-    rows
-  );
+  // console.log(
+  //   "These are the number of rows in Section Generation",
+  //   rows
+  // );
   const rowElementsFastUpdate = props["section"]["rowElements"]; // compensate for usestate being slow (deprecated - only useful for to return)
   const [rowElements, setRowElements] = useState(
     props["section"]["rowElements"]
@@ -19,14 +19,14 @@ function GenerateSection(props) {
     setRowElements(props.section.rowElements);
   }, [props.section.rowElements]);
 
-  console.log(
-    "These are the row elements within Section Generation",
-    rowElements
-  );
+  // console.log(
+  //   "These are the row elements within Section Generation",
+  //   rowElements
+  // );
   const to_return = [];
   var sectionText = props["section"]["sectionText"];
 
-  console.log(props.fillFor);
+  //console.log(props.fillFor);
 
   function handleMoveRowUpSectionGeneration(index) {
     if (index === 0) return; // No-op if the element is already at the top

@@ -168,30 +168,42 @@ console.log(isUserInputLoaded)
         var elements = aSection[j]
         for(let element of elements){
           if(element["compulsory"]){
-            if(element["elementName"] in allData==false ){
+            if(allData[element["elementName"]] == undefined ){
+              console.log(element["elementName"] + "Undefined")
               returnAlerts.push(<a style={{color:"red", fontSize:"15px", fontStyle: "italic"}}>{"*"+element["elementName"]+" is compulsory, please fill it in"}</a>)
               returnAlerts.push(<br/>)
             }
             else if(allData[element["elementName"]]=="" || allData[element["elementName"]]==null){
+              console.log(element["elementName"] + "empty or null")
               returnAlerts.push(<a style={{color:"red", fontSize:"15px", fontStyle: "italic"}}>{"*"+element["elementName"]+" is compulsory, please fill it in"}</a>)
               returnAlerts.push(<br/>)
             }
-            else{
+            else{ // table checker
               let counter = 0;
-              for(let x=0;x<element["elementName"].length;x++){
-                if (element["elementName"][x] == {}){
-                  console.log("here")
+              for(let x=0;x<allData[element["elementName"]].length;x++){
+                if (Object.keys(allData[element["elementName"]][x]).length == 0){
+                  counter+=1
+                }
+                else{
+                  let innerCounter = 0;
+                  for(let key in allData[element["elementName"]][x]){
+                    if(allData[element["elementName"]][x][key] == "" || allData[element["elementName"]][x][key] == null){
+                      innerCounter+=1
+                      console.log(innerCounter)
+                    }
+                }
+                if(innerCounter == Object.keys(allData[element["elementName"]][x]).length){
                   counter+=1
                 }
               }
-              if(counter==element["elementName"].length){
+              if(counter==allData[element["elementName"]].length){
                 returnAlerts.push(<a style={{color:"red", fontSize:"15px", fontStyle: "italic"}}>{"*"+element["elementName"]+" is compulsory, please fill it in"}</a>)
                 returnAlerts.push(<br/>)
               }
             }
           }
         }
-        
+      }
       }
     }
     setAlerts(returnAlerts)
@@ -247,6 +259,8 @@ console.log(isUserInputLoaded)
 
 
   const to_return = []
+
+  console.log(allData)
   if (formData && isUserInputLoaded!=null) {
     var sections = formData['sections']
     for (let i = 0; i < sections.length; i++) {
