@@ -30,6 +30,8 @@ mkdir C:\data\db
 
 Download and install [Node.js](https://nodejs.org/en) (Recommended version for most users)
 
+Install NPM
+
 ```
 cd myapp
 npm install
@@ -49,10 +51,9 @@ Under the database OOPDB, create 2 more collections "formInputCollection" and "u
 
 ![image](https://user-images.githubusercontent.com/85857168/229339236-167d378f-1951-4328-baf7-00e736641eb0.png)
 
-Under each collection import the corresponding .json data
+Under the collections "form_elements" and "userCollection" import the corresponding .json data
 
 ![image](https://user-images.githubusercontent.com/85857168/229339285-3a88ebfd-148c-42f5-8d84-3b439e1d6ea4.png)
-
 
 
 run setup.bat in the terminal
