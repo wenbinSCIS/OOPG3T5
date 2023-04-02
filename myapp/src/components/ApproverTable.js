@@ -22,15 +22,20 @@ function ApproverTable({ data }) {
     const mailDetail = {
       "recipient":item.companyInfo.emailAddress,
       "subject":"Reminder to complete your assigned WorkFlow",
-      "msgBody":"Dear valued vendor, please be reminded to"
+      "msgBody": `Dear ${item.companyName}, you have an uncompleted/unsubmitted assigned ${item.formName} form.
+      Please submit them ASAP. Thank you!`
   }
+
     try {
       console.log(typeof(mailDetail))
       console.log(typeof(JSON.stringify(mailDetail)))
       const response = await fetch('http://localhost:8080/user/send-mail', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization'
         },
         body: JSON.stringify(mailDetail)
       });

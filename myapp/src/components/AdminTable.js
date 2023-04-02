@@ -17,7 +17,35 @@ function AdminTable({ data }) {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  const sendEmail = async (item) => {
+    console.log(item)
+    const mailDetail = {
+      "recipient": item.companyInfo.emailAddress,
+      "subject":"Reminder to complete your assigned WorkFlow",
+      "msgBody": `Dear ${item.companyName}, you have an uncompleted/unsubmitted assigned ${item.formName} form.
+      Please submit them ASAP. Thank you!`
+  }
 
+    try {
+      console.log(typeof(mailDetail))
+      console.log(typeof(JSON.stringify(mailDetail)))
+      const response = await fetch('http://localhost:8080/user/send-mail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+        },
+        body: JSON.stringify(mailDetail)
+      });
+      
+      const result = response;
+      alert("Email Sent")
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   
 
@@ -31,6 +59,7 @@ function AdminTable({ data }) {
     <th className="gray-th">Version</th>
     <th className="gray-th">Status</th>
     <th className="gray-th">Action</th>
+    <th className="gray-th">Email</th>
           </tr>
         </MDBTableHead>
         <MDBTableBody>
@@ -43,6 +72,11 @@ function AdminTable({ data }) {
               <td>
               <Button variant="outlined" outline rounded color='success' href={`/vendor`} onClick={()=>{sessionStorage.setItem('formName', item.formName);sessionStorage.setItem('formVersion', item.formVersion);sessionStorage.setItem('companyName', item.companyName);sessionStorage.setItem('companyInfo', JSON.stringify(item.companyInfo));sessionStorage.setItem('vendorUsername', item.vendorUsername)}}>Review</Button>
               </td>
+              <td>
+              <Button variant="outlined" outline rounded color='success' onClick={() => sendEmail(item)}>
+                Send Email
+              </Button>
+            </td>
             </tr>
           ))}
         </MDBTableBody>
