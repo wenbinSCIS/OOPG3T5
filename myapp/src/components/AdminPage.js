@@ -272,7 +272,7 @@ particularly handleAddComponent
   /* returning the Page */
   return (
     <>
-      <section className="d-flex">
+      <section id="hero" className="d-flex">
         <AdminSidebar />
         <div className="container">
           <Header />
