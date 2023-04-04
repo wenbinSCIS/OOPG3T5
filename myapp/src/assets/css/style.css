@@ -246,7 +246,6 @@ ol li {
 
 /* section normal style  */
 section {
-  padding: 60px 0;
   overflow: hidden;
 }
 
@@ -277,7 +276,7 @@ section {
   width: 100%;
   position: relative;
   overflow: hidden;
-  padding: 0 0 100px 0;
+  padding: 0 0 0 0;
 
 }
 
@@ -389,7 +388,7 @@ section {
 /* footer style */
 
 .footer {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   background: #eff2f8;
   padding: 30px 0px;
 }

@@ -92,7 +92,7 @@ const AssignForm = () => {
         formName : newForm.formName,
         formVersion : newForm.version,
         status : "Not started",
-        description : "xdd",
+        description : "Not started",
       }
       setSelectedForms([...selectedForms, newAssignedForm])
       // project.assignedForm.push(newForm)
