@@ -5,6 +5,9 @@ import "./AdminPage.css";
 
 import EditPanel from "./Buttons/EditPanel";
 import AddButton from "./Buttons/AddButton";
+import Header from "./Header";
+import Footer from "./Footer";
+import Totop from "./Totop";
 
 import SaveComponent from "./AdminPageComponents/SaveComponent";
 import UpdateComponent from "./AdminPageComponents/UpdateComponent";
@@ -268,126 +271,139 @@ particularly handleAddComponent
 
   /* returning the Page */
   return (
-    <section className="d-flex">
-      <AdminSidebar />
-      <div className="container">
-        <FormSelector
-          forms={availableForms}
-          onChange={handleLoadForm}
-          loadForms={loadExistingForms}
-        />
-        <div className="button-container">
-          <Button
-            alignItems="center"
-            variant="outlined"
-            disabled={loadFormDisabled}
-            onClick={() => loadSelectedForm(selectedForm, selectedVersion)}
+    <>
+      <section className="d-flex">
+        <AdminSidebar />
+        <div className="container">
+          <Header />
+          <h2
+            className="text-g"
+            style={{ fontWeight: "bold", fontSize: 30, color: "black" }}
           >
-            <AutorenewIcon />
-            &nbsp;Load Form
-          </Button>
-        </div>
-        <hr></hr>
-        <div>
-          {formComponents.map((component, index) => (
-            <div key={index}>
-              {/* <hr /> */}
-              <EditPanel
-                MoveDown={() => handleMoveComponentDown(index)}
-                MoveUp={() => handleMoveComponentUp(index)}
-                // Edit={() => handleMoveComponentUp(index)}
-                Delete={() => handleRemoveComponent(index)}
-                sectionNamesList={sectionNames}
-                elementNamesList={elementNames}
-                formComponents={formComponents}
-                setFormComponents={setFormComponents}
-                allData={allData}
-                setallData={setallData}
-                index={index}
-              />
-              <GenerateSection
-                section={component}
-                allData={allData}
-                setallData={setallData}
-              ></GenerateSection>
-              <hr />
-            </div>
-          ))}
-          <div className="button-container" style={{ display: "block" }}>
-            <div style={{ textAlign: "center", display: "block" }}>
-              <AddButton
-                sectionNamesList={sectionNames}
-                elementNamesList={elementNames}
-                formComponents={formComponents}
-                setFormComponents={setFormComponents}
-                allData={allData}
-                setallData={setallData}
-              />
-            </div>
-          </div>
+            Form Creation
+          </h2>
+          <FormSelector
+            forms={availableForms}
+            onChange={handleLoadForm}
+            loadForms={loadExistingForms}
+          />
           <div className="button-container">
-            <input
-              type="text"
-              className="centered-textbox"
-              placeholder="Form name"
-              onChange={handleNameSaveAs}
-              style={{
-                width: "180px",
-                height: "30px",
-                padding: "12px",
-                border: "1px solid #ccc",
-                borderRadius: "7px",
-              }}
-            />
-            <input
-              type="text"
-              className="centered-textbox"
-              placeholder="Version number"
-              onChange={handleVersionSaveAs}
-              //value={versionNumber}
-              style={{
-                width: "180px",
-                height: "30px",
-                padding: "12px",
-                border: "1px solid #ccc",
-                borderRadius: "7px",
-                margin: "1em",
-              }}
-            />
-            <SaveComponent
-              className="centered-button"
-              saveComponents={() => saveComponents()}
-              isSaved={isSaved}
-              text={saveText}
-              formName={formName}
-              versionNumber={versionNumber}
-              //formsAvailable={formsAvailable}
-              isVersionNumberEmpty={isVersionNumberEmpty}
-              isFormNameEmpty={isFormNameEmpty}
-              formComponents={formComponents}
-            />
-            <br></br>
+            <Button
+              alignItems="center"
+              variant="outlined"
+              disabled={loadFormDisabled}
+              onClick={() => loadSelectedForm(selectedForm, selectedVersion)}
+            >
+              <AutorenewIcon />
+              &nbsp;Load Form
+            </Button>
           </div>
-          <div
-            className="parent-container"
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <div className="centered-row">
-              <UpdateComponent
+          <hr></hr>
+          <div>
+            {formComponents.map((component, index) => (
+              <div key={index}>
+                {/* <hr /> */}
+                <EditPanel
+                  MoveDown={() => handleMoveComponentDown(index)}
+                  MoveUp={() => handleMoveComponentUp(index)}
+                  // Edit={() => handleMoveComponentUp(index)}
+                  Delete={() => handleRemoveComponent(index)}
+                  sectionNamesList={sectionNames}
+                  elementNamesList={elementNames}
+                  formComponents={formComponents}
+                  setFormComponents={setFormComponents}
+                  allData={allData}
+                  setallData={setallData}
+                  index={index}
+                />
+                <GenerateSection
+                  section={component}
+                  allData={allData}
+                  setallData={setallData}
+                ></GenerateSection>
+                <hr />
+              </div>
+            ))}
+            <div className="button-container" style={{ display: "block" }}>
+              <div style={{ textAlign: "center", display: "block" }}>
+                <AddButton
+                  sectionNamesList={sectionNames}
+                  elementNamesList={elementNames}
+                  formComponents={formComponents}
+                  setFormComponents={setFormComponents}
+                  allData={allData}
+                  setallData={setallData}
+                />
+              </div>
+            </div>
+            <div className="button-container">
+              <input
+                type="text"
+                className="centered-textbox"
+                placeholder="Form name"
+                onChange={handleNameSaveAs}
+                style={{
+                  width: "180px",
+                  height: "30px",
+                  padding: "12px",
+                  border: "1px solid #ccc",
+                  borderRadius: "7px",
+                }}
+              />
+              <input
+                type="text"
+                className="centered-textbox"
+                placeholder="Version number"
+                onChange={handleVersionSaveAs}
+                //value={versionNumber}
+                style={{
+                  width: "180px",
+                  height: "30px",
+                  padding: "12px",
+                  border: "1px solid #ccc",
+                  borderRadius: "7px",
+                  margin: "1em",
+                }}
+              />
+              <SaveComponent
                 className="centered-button"
-                UpdateFormByNameAndVersion={() => UpdateFormByNameAndVersion()}
+                saveComponents={() => saveComponents()}
                 isSaved={isSaved}
                 text={saveText}
                 formName={formName}
                 versionNumber={versionNumber}
+                //formsAvailable={formsAvailable}
+                isVersionNumberEmpty={isVersionNumberEmpty}
+                isFormNameEmpty={isFormNameEmpty}
                 formComponents={formComponents}
               />
+              <br></br>
+            </div>
+            <div
+              className="parent-container"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <div className="centered-row">
+                <UpdateComponent
+                  className="centered-button"
+                  UpdateFormByNameAndVersion={() =>
+                    UpdateFormByNameAndVersion()
+                  }
+                  isSaved={isSaved}
+                  text={saveText}
+                  formName={formName}
+                  versionNumber={versionNumber}
+                  formComponents={formComponents}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div style={{ position: "absolute", bottom: 50, width: "100%" }}></div>
-    </section>
+        {/* <div style={{ position: "absolute", bottom: 50, width: "100%" }}></div> */}
+      </section>
+      <Totop />
+      <Footer />
+    </>
   );
 }
 
