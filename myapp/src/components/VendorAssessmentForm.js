@@ -270,7 +270,7 @@ console.log(isUserInputLoaded)
       to_return.push(<GenerateSection comments = {approverComments} section={each_section} allData = {allData} setallData = {setallData} fillFor = {fillFor} generateFor = {generateFor}></GenerateSection>)
     }}
   return (
-    <section  className='d-flex' >
+    <section id="hero" className='d-flex' >
       {sessionStorage.getItem('userType')==='Vendor' ? (<Sidebar ></Sidebar>):(<AdminSidebar />)}
 
       
