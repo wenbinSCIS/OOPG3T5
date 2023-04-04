@@ -98,6 +98,10 @@ editor is active or disabled
     if (id === "sectionText") {
       setSectionText(value);
     }
+    
+    if (id === "fillFor") {
+      setFillFor(value);
+    }
   };
 
   const [isActive, setIsActive] = useState(true);
